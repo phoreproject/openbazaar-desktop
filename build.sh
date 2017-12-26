@@ -11,7 +11,7 @@
 
 
 ELECTRONVER=1.8.7
-NODEJSVER=5.1.1
+NODEJSVER=6
 
 OS="${1}"
 if [ -z "${2}" ]; then
@@ -86,7 +86,7 @@ case "$TRAVIS_OS_NAME" in
     electron-packager . ${APPNAME} --platform=linux --arch=ia32 --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist
 
     echo 'Move go server to electron app'
-    mkdir dist/${APPNAME}-linux-ia32/resources/openbazaar-go/ 
+    mkdir dist/${APPNAME}-linux-ia32/resources/openbazaar-go/
     cp -rf temp/openbazaar-go-linux-386 dist/${APPNAME}-linux-ia32/resources/openbazaar-go
     mv dist/${APPNAME}-linux-ia32/resources/openbazaar-go/openbazaar-go-linux-386 dist/${APPNAME}-linux-ia32/resources/openbazaar-go/openbazaard
     rm -rf dist/${APPNAME}-linux-ia32/resources/app/.travis
@@ -156,7 +156,7 @@ case "$TRAVIS_OS_NAME" in
 
     # Retrieve Latest Server Binaries
     cd temp/
-    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/OpenBazaar/openbazaar-go/releases/$SERVERTAG > release.txt
+    curl https://api.github.com/repos/phoreproject/openbazaar-go/releases/$SERVERTAG > release.txt
     cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
 

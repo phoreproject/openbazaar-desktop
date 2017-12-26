@@ -119,7 +119,7 @@ describe('the currency utility module', () => {
         'the resulting value', () => {
         expect(cur.convertAndFormatCurrency(500, 'USD', 'PHR', { locale: 'en-US' }))
           .to
-          .equal('₿0.66613376');
+          .equal('0.66613376 PHR');
       });
 
       it('which will convert between PHR and a fiat currency properly localize ' +
