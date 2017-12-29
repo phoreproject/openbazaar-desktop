@@ -14,15 +14,14 @@ ELECTRONVER=1.8.7
 NODEJSVER=6
 
 OS="${1}"
-if [ -z "${2}" ]; then
-SERVERTAG='latest'
-else
-SERVERTAG=tags/${2}
-fi
-echo "Building with openbazaar-go/$SERVERTAG"
 
 # Get Version
-PACKAGE_VERSION=$(node -p 'require("./package").version')
+PACKAGE_VERSION=$(cat package.json \
+  | grep version \
+  | head -1 \
+  | awk -F: '{ print $2 }' \
+  | sed 's/[",]//g' \
+  | tr -d '[[:space:]]')
 echo "OpenBazaar Version: $PACKAGE_VERSION"
 
 # Create temp/build dirs
@@ -64,9 +63,6 @@ case "$TRAVIS_OS_NAME" in
     npm install -g --save-dev electron-installer-debian --silent
     npm install -g --save-dev electron-installer-redhat --silent
 
-    # Install libgconf2-4
-    sudo apt-get install libgconf2-4
-
     # Install rpmbuild
     sudo apt-get install rpm
 
@@ -76,14 +72,14 @@ case "$TRAVIS_OS_NAME" in
     # Retrieve Latest Server Binaries
     sudo apt-get install jq
     cd temp/
-    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/OpenBazaar/openbazaar-go/releases/$SERVERTAG > release.txt
-    cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
+    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/OpenBazaar/openbazaar-go/releases > release.txt
+    cat release.txt | jq -r ".[0].assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
 
     APPNAME="openbazaar2"
 
     echo "Packaging Electron application"
-    electron-packager . ${APPNAME} --platform=linux --arch=ia32 --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist
+    electron-packager . ${APPNAME} --platform=linux --arch=ia32 --version=${ELECTRONVER} --overwrite --prune --out=dist
 
     echo 'Move go server to electron app'
     mkdir dist/${APPNAME}-linux-ia32/resources/openbazaar-go/
@@ -101,7 +97,7 @@ case "$TRAVIS_OS_NAME" in
     echo 'Building Linux 64-bit Installer....'
 
     echo "Packaging Electron application"
-    electron-packager . ${APPNAME} --platform=linux --arch=x64 --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist
+    electron-packager . ${APPNAME} --platform=linux --arch=x64 --version=${ELECTRONVER} --overwrite --prune --out=dist
 
     echo 'Move go server to electron app'
     mkdir dist/${APPNAME}-linux-x64/resources/openbazaar-go/
@@ -114,12 +110,12 @@ case "$TRAVIS_OS_NAME" in
     electron-installer-debian --config .travis/config_amd64.json
 
     echo 'Create RPM archive'
-    electron-installer-redhat --config .travis/config_x86_64.json
+    electron-installer-redhat --config .travis/config_amd64.json
 
     APPNAME="openbazaar2client"
 
     echo "Packaging Electron application"
-    electron-packager . ${APPNAME} --platform=linux --arch=ia32 --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist
+    electron-packager . ${APPNAME} --platform=linux --arch=ia32 --version=${ELECTRONVER} --overwrite --prune --out=dist
 
     echo 'Create debian archive'
     electron-installer-debian --config .travis/config_ia32.client.json
@@ -130,13 +126,13 @@ case "$TRAVIS_OS_NAME" in
     echo 'Building Linux 64-bit Installer....'
 
     echo "Packaging Electron application"
-    electron-packager . ${APPNAME} --platform=linux --arch=x64 --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist
+    electron-packager . ${APPNAME} --platform=linux --arch=x64 --version=${ELECTRONVER} --overwrite --prune --out=dist
 
     echo 'Create debian archive'
     electron-installer-debian --config .travis/config_amd64.client.json
 
     echo 'Create RPM archive'
-    electron-installer-redhat --config .travis/config_x86_64.client.json
+    electron-installer-redhat --config .travis/config_amd64.client.json
 
     ;;
 
@@ -156,8 +152,7 @@ case "$TRAVIS_OS_NAME" in
 
     # Retrieve Latest Server Binaries
     cd temp/
-    curl https://api.github.com/repos/phoreproject/openbazaar-go/releases/$SERVERTAG > release.txt
-    cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
+    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/openbazaar-go/releases | jq -r ".[0].assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
 
     # WINDOWS 32
@@ -177,7 +172,6 @@ case "$TRAVIS_OS_NAME" in
     echo 'Building Installer...'
     grunt create-windows-installer --appname=OpenBazaar2 --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2-win32-ia32 --outdir=dist/win32
     mv dist/win32/OpenBazaar2Setup.exe dist/win32/OpenBazaar2-$PACKAGE_VERSION-Setup-32.exe
-    mv dist/win32/RELEASES dist/RELEASES
 
     #### CLIENT ONLY
     echo 'Running Electron Packager...'
@@ -186,12 +180,6 @@ case "$TRAVIS_OS_NAME" in
     echo 'Building Installer...'
     grunt create-windows-installer --appname=OpenBazaar2Client --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2Client-win32-ia32 --outdir=dist/win32
     mv dist/win32/OpenBazaar2ClientSetup.exe dist/win32/OpenBazaar2Client-$PACKAGE_VERSION-Setup-32.exe
-
-    echo 'Sign the installer'
-    signcode -t http://timestamp.digicert.com -a sha1 -spc .travis/ob1.cert.spc -pvk .travis/ob1.pvk -n "OpenBazaar $PACKAGE_VERSION" dist/win32/OpenBazaar2-$PACKAGE_VERSION-Setup-32.exe
-    signcode -t http://timestamp.digicert.com -a sha1 -spc .travis/ob1.cert.spc -pvk .travis/ob1.pvk -n "OpenBazaarClient $PACKAGE_VERSION" dist/win32/OpenBazaar2Client-$PACKAGE_VERSION-Setup-32.exe
-
-    rm dist/win32/RELEASES
 
     # WINDOWS 64
     echo 'Building Windows 64-bit Installer...'
@@ -219,12 +207,6 @@ case "$TRAVIS_OS_NAME" in
     echo 'Building Installer...'
     grunt create-windows-installer --appname=OpenBazaar2Client --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2Client-win32-x64 --outdir=dist/win64
     mv dist/win64/OpenBazaar2ClientSetup.exe dist/win64/OpenBazaar2Client-$PACKAGE_VERSION-Setup-64.exe
-
-    echo 'Sign the installer'
-    signcode -t http://timestamp.digicert.com -a sha1 -spc .travis/ob1.cert.spc -pvk .travis/ob1.pvk -n "OpenBazaar $PACKAGE_VERSION" dist/win64/OpenBazaar2-$PACKAGE_VERSION-Setup-64.exe
-    signcode -t http://timestamp.digicert.com -a sha1 -spc .travis/ob1.cert.spc -pvk .travis/ob1.pvk -n "OpenBazaarClient $PACKAGE_VERSION" dist/win64/OpenBazaar2Client-$PACKAGE_VERSION-Setup-64.exe
-
-    mv dist/RELEASES dist/win32/RELEASES
 
     # OSX
     echo 'Building OSX Installer'
