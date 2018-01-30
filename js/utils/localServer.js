@@ -85,7 +85,11 @@ export default class LocalServer {
     }
 
     this._isRunning = true;
-    let serverStartArgs = ['start', '--runseparatewallet', `--daemonlocation=${this.serverPath + this.daemonFilename}`, ...commandLineArgs];
+    let serverStartArgs = ['start',
+      '--runseparatewallet',
+      `--daemonlocation=${this.serverPath + this.daemonFilename}`,
+      ...commandLineArgs,
+    ];
 
     // wire in our auth cookie
     if (global.authCookie) {
