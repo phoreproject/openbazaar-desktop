@@ -144,13 +144,13 @@
       "declined": "%{vendorName} はあなたの注文をキャンセルしました。",
       "canceled": "%{buyerName} は購入注文をキャンセルしました。",
       "refunded": "%{vendorName} はあなたの注文に返金しました。",
-      "fulfillment": "%{vendorName} はあなたの注文を実行しました。?",
+      "fulfillment": "%{vendorName} はあなたの注文を実行しました。",
       "orderComplete": "%{buyerName} は注文へのフィードバックを残しています。",
       "disputeOpen": "%{disputerName} はあなたとの紛争を開始しました。",
       "disputeOpenMod": "%{disputerName} は %{disputeeName} という名前の紛争を開きました。",
       "disputeUpdate": "%{disputeeName} は %{disputerName} における契約内容をシェアしています。",
       "disputeClose": "%{otherPartyName} との紛争は終了しました。",
-      "disputeAccepted": "%{otherPartyName} との紛争が承認されました。?",
+      "disputeAccepted": "%{otherPartyName} との紛争が承認されました。",
       "follow": "%{name} があなたをフォローしました。",
       "moderatorAdd": "%{name} があなたを仲裁者に追加しました。",
       "moderatorRemove": "%{name} があなたを仲裁者から取り除きました。"
@@ -171,7 +171,7 @@
     "createListing": "出品の作成",
     "purchases": "購入",
     "sales": "販売",
-    "cases": "問題?",
+    "cases": "紛争一覧",
     "settings": "設定",
     "help": "ヘルプ",
     "toolTip": {
@@ -222,9 +222,9 @@
     "searchStore": "検索",
     "moderator": "仲裁者",
     "termsOfService": "利用規約",
-    "FIXED": "%{amount} ごとの紛争",
-    "PERCENTAGE": "%{percentage}% の紛争",
-    "FIXED_PLUS_PERCENTAGE": "%{amount} (+%{percentage}%) ごとの紛争?",
+    "FIXED": "紛争ごとに %{amount}",
+    "PERCENTAGE": "紛争ごとに %{percentage}%",
+    "FIXED_PLUS_PERCENTAGE": "紛争ごとに %{amount} (+%{percentage}%)",
     "addModerator": "詳細を見る",
     "removeModerator": "仲裁者から除外",
     "information": "情報",
@@ -264,7 +264,7 @@
       "countListings": "%{smart_count} 出品 |||| %{smart_count} 出品",
       "countListingsFound": "%{countListings} 点見つかりました",
       "inactive": "あなたのストアは有効ではなく現在公開されていません。 %{link}",
-      "inactiveLink": "変更?",
+      "inactiveLink": "変更",
       "listingDataChangedPopin": "出品データは変更されました。",
       "shippingDataChangedPopin": "あなたの国/配送先住所が変更されました。 送料無料の出品に影響があります。",
       "freeShippingBanner": "送料無料",
@@ -309,23 +309,23 @@
     "tipFollow": "フォロー",
     "tipUnfollow": "フォロー解除",
     "tipModAdd": "仲裁者として追加",
-    "tipModRemove": "仲裁者から除外?"
+    "tipModRemove": "仲裁者から除外"
   },
   "moderatorCard": {
-    "view": "見る?",
+    "view": "見る",
     "FIXED": "%{amount}**",
     "PERCENTAGE": "%{percentage}%**",
     "FIXED_PLUS_PERCENTAGE": "%{amount} (+%{percentage}%)**",
     "failed": "この仲裁者の情報の取得に失敗しました。",
     "invalid": "このユーザーは現在仲裁者ではありません。",
-    "languages": "%{lang} と %{smart_count} 種類の言語 |||| %{lang} と %{smart_count} 種類の言語?"
+    "languages": "%{lang} と %{smart_count} 種類の言語 |||| %{lang} と %{smart_count} 種類の言語"
   },
   "moderatorDetails": {
     "messageButton": "メッセージ",
     "followButton": "フォロー",
     "unFollowButton": "フォロー解除",
     "location": "位置情報",
-    "recommendations": "推薦?",
+    "recommendations": "推薦",
     "serviceCharge": "手数料",
     "FIXED": "%{amount}**",
     "PERCENTAGE": "%{percentage}%**",
@@ -438,7 +438,7 @@
       "helperSecondaryColor": "body, 背景",
       "helperTextColor": "コピー, 詳細, 説明",
       "helperHighlightColor": "通知, アラート, バッジ",
-      "helperHighlightTextColor": "通知画面の色?",
+      "helperHighlightTextColor": "通知内文字の色",
       "placeholderAbout": "ページに載せたいことを何でも書いてください。",
       "placeholderName": "ページの名前",
       "placeholderHandle": "@ハンドル を入力してください",
@@ -656,7 +656,7 @@
     "handle": "ハンドル",
     "shortDescription": "簡単な説明",
     "about": "詳細",
-    "nsfwContent": "成年向けコンテンツ(NSFW, adult, 18+など)",
+    "nsfwContent": "成年向けコンテンツ(不適切, アダルト, 18+など)",
     "avatar": "アバター",
     "loadAvatar": "写真を選択",
     "loadAvatarHelp": "幅 %{minWidth}px, 高さ %{minHeight}px 以上にしてください",
@@ -712,7 +712,7 @@
     "builtInServerName": "ビルトインサーバー - %{cur}",
     "statusBar": {
       "errorPreface": "エラー:",
-      "needHelpLink": "お困りですか?",
+      "needHelpLink": "お困りですか？",
       "viewLocalServerDebugLogLink": "デバッグログ",
       "errorConnectionLost": "%{errorPreface} %{serverName} への接続が失われました。 %{links}",
       "errorUnableToReachServer": "%{errorPreface} %{serverName} への接続に失敗しました。サーバーに接続できません。 %{links}",
@@ -735,7 +735,7 @@
       "btnDisconnect": "切断",
       "statusConnected": "接続中",
       "deleteConfirm": {
-        "heading": "お間違いないですか?",
+        "heading": "削除の確認",
         "body": "サーバー設定は削除されます。これはサーバー自身には影響しません。",
         "btnCancel": "キャンセル",
         "btnDelete": "削除"
@@ -846,13 +846,13 @@
         },
         "retryFailDialogTitle": "再送金に失敗",
         "retryFailInsufficientFunds": "残高が不足しているため、トランザクションを完了できません。",
-        "feeBumpOf": "手数料? %{address}"
+        "feeBumpOf": "手数料は %{address} から引かれます"
       },
       "noTransactionsPlaceholder": "トランザクションはありません。",
       "newTransactionsPopin": "%{smart_count} 新しいトランザクション |||| %{smart_count} 新しいトランザクション",
       "backupWalletWarningTitle": "ウォレットの復元キーをバックアップ",
       "recoverySeedLink": "ウォレットの復元キーをバックアップ",
-      "backupWalletWarningBody": "1,2 個のトランザクションがあるように見えます。?%{link}."
+      "backupWalletWarningBody": "バックアップを取ることをお勧めします。%{link}."
     }
   },
   "formats": {
@@ -883,7 +883,7 @@
     "description": "説明",
     "noDescription": "説明文は入力されていません",
     "reviews": "レビュー",
-    "attachments": "追加?",
+    "attachments": "付属品",
     "refundPolicy": "返品の規約",
     "noRefundPolicy": "返品規約は入力されていません",
     "termsAndConditions": "商品規約",
@@ -959,7 +959,7 @@
     "btnTip": "この商品を通報する",
     "btnTipReported": "この商品は通報されました",
     "title": "商品の通報",
-    "message": "通報理由は何ですか?",
+    "message": "通報理由は何ですか？",
     "reasonOffensive": "攻撃的な内容",
     "reasonFraud": "詐欺・間違いを含む内容",
     "reasonIllegal": "カテゴリーに不適切な内容",
@@ -978,12 +978,12 @@
     "sectionNames": {
       "general": "一般",
       "photos": "画像",
-      "attachments": "追加?",
+      "attachments": "付属品",
       "shipping": "配送",
       "tags": "タグ",
       "tagsDetailed": "タグ(商品を検索しやすくするため)",
       "category": "カテゴリー",
-      "categoryDetailed": "カテゴリー(ストアの整理のため?)",
+      "categoryDetailed": "カテゴリー(ストアの整理のため)",
       "variants": "バリエーション",
       "variantsDetailed": "バリエーション(サイズ, 色, 材質など)",
       "inventory": "在庫",
@@ -1002,7 +1002,7 @@
     "helperType": "3タイプから選択しましょう",
     "helperShipping": "好きな配送方法を指定してください",
     "helperPhotos": "%{maxPhotos} 枚まで写真をアップロード可能",
-    "helperSKU": "商品の一意な識別子?",
+    "helperSKU": "商品の一意な識別子",
     "helperSKUWithVariants": "バリエーションが存在する場合、SKUは %{variantInventoryLink} セクションで定義できます",
     "variantInventoryLink": "バリエーションの管理",
     "helperCondition": "商品の全条件",
@@ -1124,10 +1124,10 @@
     }
   },
   "search": {
-    "title": "検索?",
+    "title": "検索",
     "searchBtn": "検索",
     "searchPlaceholder": "検索したい用語, #タグ を入力してください。",
-    "suggestions": "サジェスト?",
+    "suggestions": "サジェスト",
     "resultsFound": "<b>\"%{term}\"</b>により<b>%{totalResults} 商品</b>見つかりました |||| <b>\"%{term}\"</b>により<b>%{totalResults} 商品</b>見つかりました",
     "resultsTotal": "%{totalResults} 商品",
     "sortBy": "並び替え",
@@ -1265,7 +1265,7 @@
     },
     "completeSection": {
       "paymentSent": "送金されました！",
-      "purchases": "購入?",
+      "purchases": "購入一覧",
       "progressMessage": "購入いただきありがとうございます！注文の状況を確認したい場合、 %{link} をご覧ください。",
       "estimatedProcessing": "想定処理時間: %{time}",
       "noData": "指定されていません",
@@ -1488,7 +1488,7 @@
       "completeOrderForm": {
         "heading": "注文の完了",
         "maxReviewChars": "最大 %{max} 文字",
-        "reviewLabel": "レビュー内容?",
+        "reviewLabel": "レビュー内容",
         "anonCheckLabel": "名前を含み公開",
         "btnCompleteOrder": "注文の完了"
       },
@@ -1540,7 +1540,7 @@
           "refunded": "返金済み",
           "decided": "決定済み",
           "resolved": "解決済み",
-          "disputed": "紛争中?"
+          "disputed": "紛争開始"
         },
         "heading": "注文の詳細",
         "shipToHeading": "送り先",
@@ -1674,7 +1674,7 @@
   "itemModelErrors": {
     "provideTitle": "タイトルを入力してください。",
     "titleTooLong": "タイトルの文字数が最大値を越えています。",
-    "badConditionType": "条件は利用可能なタイプではありません。?",
+    "badConditionType": "条件は利用可能な型ではありません。",
     "descriptionTooLong": "説明文の文字数が最大値を越えています。",
     "provideAmount": "価格を入力してください。",
     "provideNumericAmount": "価格は数値で入力してください。小数点はピリオドで次のように書いてください。 \"0.00\".",
@@ -1795,18 +1795,18 @@
   "resolveDisputeModelErrors": {
     "provideAmount": "パーセンテージを入力してください。",
     "percentageOutOfRange": "パーセンテージは0から100の間にしてください。",
-    "providePercentageAsNumber": "売り手のパーセンテージを数字で入力してください。?",
-    "totalPercentageOutOfRange": "買い手と売り手のパーセンテージの合計は100を越えてはいけません。?",
-    "totalPercentageTooLow": "買い手と売り手のパーセンテージの合計は100にならなければいけません。?",
+    "providePercentageAsNumber": "売り手のパーセンテージを数字で入力してください。",
+    "totalPercentageOutOfRange": "買い手と売り手のパーセンテージの合計は100を越えてはいけません。",
+    "totalPercentageTooLow": "買い手と売り手のパーセンテージの合計は100にならなければいけません。",
     "provideResolution": "判断理由を入力してください。"
   },
   "searchProviderModelErrors": {
     "invalidName": "名前は文字列でなければなりません。",
     "invalidLogo": "ロゴのURLは正しいURLでなければなりません。",
     "invalidsearch": "正しい検索URLを入力してください。",
-    "invalidlistings": "正しい出品検索URLを入力してください。?",
-    "invalidtorsearch": "正しいTor検索URLを入力してください。?",
-    "invalidtorlistings": "正しいTor検索URLを入力してください。?"
+    "invalidlistings": "正しい出品検索URLを入力してください。",
+    "invalidtorsearch": "正しいTor検索URLを入力してください。",
+    "invalidtorlistings": "正しいTor検索URLを入力してください。"
   },
   "bitcoinCurrencyUnits": {
     "BTC": "BTC",
