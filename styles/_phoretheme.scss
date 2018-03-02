@@ -31,10 +31,6 @@ button,
   }
 }
 
-.clrPOverlay {
-  background-color: $overlayP;
-}
-
 .clrS {
   background-color: $secondary;
 
@@ -130,14 +126,6 @@ input[type=range][class~="clrS"] {
   @include textColor($emphasis2);
 }
 
-.clrTPriceAboveMarket {
-  @include textColor($error);
-}
-
-.clrTPriceBelowMarket {
-  @include textColor($emphasis1);
-}
-
 .clrBr {
   @include borderColor($border, $border3);
 }
@@ -156,10 +144,6 @@ input[type=range][class~="clrS"] {
 
 .clrBrT {
   @include borderColor($text, $text2);
-}
-
-.iconBtn {
-    color: $navIcon !important;
 }
 
 .clrBrDec1 {
@@ -193,14 +177,6 @@ input[type=range][class~="clrS"] {
   }
 }
 
-.clrBrAlert2 {
-  border-color: $alert2;
-}
-
-.clrBrInvis {
-  @include borderColor(transparent, transparent);
-}
-
 .clrBAtt1 {
   background-color: $emphasis1;
 }
@@ -221,21 +197,12 @@ input[type=range][class~="clrS"] {
   }
 }
 
-.clrBAlert2 {
-  background: $alert2Background;
-}
-
-.clrBAlert2Grad {
-  background: $alert2Gradient;
-  background-color: $alert2Background;
-}
-
 ::-webkit-scrollbar-track {
   background: $secondary;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $scroll;
+  background: $text3;
 
   &:hover {
     background: $text4;
@@ -341,16 +308,6 @@ input[type=range][class~="clrS"] {
   }
 }
 
-@mixin selectizeControlShadow($baseClass, $number) {
-  &.#{$baseClass}#{$number} {
-      box-shadow: none;
-
-      .selectize-input {
-        @extend .#{$baseClass}#{$number};
-      }
-  }
-}
-
 #appFrame {
   .selectize-control {
     .items {
@@ -358,11 +315,7 @@ input[type=range][class~="clrS"] {
         border-color: $border;
         background-color: $primary;
       }
-    }
-
-    @include selectizeControlShadow(clrSh, 1);
-    @include selectizeControlShadow(clrSh, 2);
-    @include selectizeControlShadow(clrSh, 3);
+    } 
   }
 
   .selectize-dropdown-content {
@@ -379,21 +332,15 @@ input[type=range][class~="clrS"] {
 
 .toolTip {
   &:before {
-    background-color: $colorbase;
+    background-color: $primary;
     border-color: $border;
     color: $text;
     box-shadow: 0 1px 2px rgba(0,0,0,0.4);
   }
 
   &:after {
-    background-color: $colorbase;
+    background-color: $primary;
     border-color: $border;
-  }
-}
-
-.arrowBoxTipWrap {
-  .arrowBox {
-    box-shadow: 0 1px 2px rgba(0,0,0,0.4);
   }
 }
 
@@ -513,38 +460,5 @@ input[type=range][class~="clrS"] {
     & > .active, & > :hover {
       color: $text;
     }
-  }
-}
-
-.cryptoTradingPair {
-  .fromCur, .toCur {
-    @include textColor($text, $text2, $text);
-  }
-
-  .pairingSeparator {
-    @include textColor($text2, $text3, $text);
-  }
-}
-
-.listingsGridCryptoListView {
-  .verifiedMod {
-    @include textColor($text, $text2, $text);
-  }
-}
-
-.searchWrapper {
-  .addressBarIndicators {
-    &:before {
-      background: linear-gradient(to right, transparent, $primary 50%);
-    }
-  }
-}
-
-.flexBtnWrapper .btnFlx {
-  border-color: $border;
-
-  &:hover, &:focus {
-    @include borderColor($border, $border3);
-    z-index: 1;
   }
 }
