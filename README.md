@@ -9,7 +9,7 @@ For full installable versions of the OpenBazaar app, with the server and client 
 ## Getting Started
 
 To create a local development copy of the reference client, clone the client repository into a directory of your choice:
-- `git clone https://github.com/OpenBazaar/openbazaar-desktop`
+- `git clone https://github.com/phoreproject/openbazaar-desktop`
 
 Make sure you have Node.js and NPM installed. Node versions older than 8.9.2 or NPM versions older than 5.5.1 may not work.
 
