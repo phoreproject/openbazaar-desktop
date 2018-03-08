@@ -1122,8 +1122,8 @@ export const translationLangs = [
     code: 'it_IT',
   },
   {
-    name: '日本語 (Japanese, Japan)',
-    code: 'ja_JP',
+    name: '日本語 (Japanese)',
+    code: 'ja',
   },
   // {
   //   name: '한국어 (Korean)',
