@@ -619,7 +619,7 @@
     "loadAvatarHelp": "幅 %{minWidth}px, 高さ %{minHeight}px 以上にしてください",
     "header": "カバー写真",
     "loadHeader": "写真を選択",
-    "loadHeaderHelp": "%幅{minWidth}px, 高さ%{minHeight}px 以上でなければいけません。",
+    "loadHeaderHelp": "幅 %{minWidth}px, 高さ%{minHeight}px 以上でなければいけません。",
     "socialSection": "ソーシャル",
     "website": "ウェブサイト",
     "email": "Eメール",
