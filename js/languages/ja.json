@@ -208,7 +208,7 @@
       "home": "ホーム",
       "store": "ストア",
       "following": "フォロー",
-      "followers": "フォロワー",
+      "followers": "フォロワー"
     },
     "followTab": {
       "noFollowers": "誰も %{name} をフォローしていません",
@@ -253,7 +253,7 @@
       "categoryFilter": {
         "heading": "カテゴリ",
         "showMore": "%{smart_count} 以上... |||| %{smart_count} 以上...",
-        "showLess": "以下",
+        "showLess": "以下"
       },
       "toolTip": {
         "contentView": "トグルビュー"
@@ -372,10 +372,10 @@
       "sectionName": "一般",
       "bitcoinUnit": "Phoreの単位",
       "bitcoinUnitTypes": {
-        "BTC": "PHR",
-        "MBTC": "mPHR",
-        "UBTC": "µPHR",
-        "SATOSHI": "Satoshi"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "一般の設定を保存しています...",
       "statusSaveComplete": "一般の設定を保存しました。",
@@ -478,8 +478,8 @@
         "peers": "ピア",
         "peersHelper": "接続しているピア",
         "peersBtn": "接続しているピアを表示",
-        "resync": "Rトランザクションの再読み込み",
-        "resyncHelper": "トランザクションの抜けを同期により解消しますS",
+        "resync": "トランザクションの再読み込み",
+        "resyncHelper": "トランザクションの抜けを同期により解消します",
         "reloadTransactionsWidget": {
           "resyncBtn": "トランザクションの再読み込み",
           "resyncComplete": "トランザクションは再読み込みされます。5分から10分ほどかかります。",
