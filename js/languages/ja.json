@@ -618,7 +618,7 @@
     "loadAvatar": "写真を選択",
     "loadAvatarHelp": "幅 %{minWidth}px, 高さ %{minHeight}px 以上にしてください",
     "header": "カバー写真",
-    "loadHeader": "写真を戦t泣く",
+    "loadHeader": "写真を選択",
     "loadHeaderHelp": "%幅{minWidth}px, 高さ%{minHeight}px 以上でなければいけません。",
     "socialSection": "ソーシャル",
     "website": "ウェブサイト",
