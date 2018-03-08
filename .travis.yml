@@ -8,10 +8,6 @@ matrix:
     - os: osx
     - os: osx
       env: CLIENT_VERSION=1
-cache:
-  directories:
-  - node_modules
-  - "/usr/local/Cellar"
 node_js:
 - '6'
 before_script:
@@ -26,9 +22,11 @@ deploy:
   file_glob: true
   file:
   - dist/win32/*.exe
+  - dist/win32/*.zip
   - dist/win32/*.nupkg
   - dist/win32/RELEASES
   - dist/win64/*.exe
+  - dist/win64/*.zip
   - dist/win64/*.nupkg
   - dist/win64/RELEASES-x64
   - dist/osx/*.dmg

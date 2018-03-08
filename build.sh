@@ -10,7 +10,7 @@
 ##
 
 
-ELECTRONVER=1.7.8
+ELECTRONVER=1.7.10
 NODEJSVER=6
 
 OS="${1}"
@@ -39,7 +39,7 @@ npm install npm-run-all -g --silent
 npm install grunt-cli -g --silent
 npm install grunt --save-dev --silent
 npm install grunt-electron-installer --save-dev --silent
-npm install --silent
+npm install
 
 echo 'Building OpenBazaar app...'
 npm run build
@@ -74,10 +74,6 @@ case "$TRAVIS_OS_NAME" in
       sudo apt-get install jq
       cd temp/
       curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/openbazaar-go/releases | jq -r ".[0].assets[].browser_download_url" | xargs -n 1 curl -L -O
-      curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/phore/releases | jq -r ".[0].assets[].browser_download_url" | xargs -n 1 curl -L -O
-      mkdir phore32 phore64
-      tar -xf phore-*-i686-pc-linux-gnu.tar.gz -C phore32
-      tar -xf phore-*-x86_64-linux-gnu.tar.gz -C phore64
       cd ..
     fi
 
@@ -91,10 +87,8 @@ case "$TRAVIS_OS_NAME" in
       mkdir dist/${APPNAME}-linux-ia32/resources/openbazaar-go/
       cp -rf temp/openbazaar-go-linux-386 dist/${APPNAME}-linux-ia32/resources/openbazaar-go
       mv dist/${APPNAME}-linux-ia32/resources/openbazaar-go/openbazaar-go-linux-386 dist/${APPNAME}-linux-ia32/resources/openbazaar-go/openbazaard
-      mv temp/phore32/phore*/bin/phored dist/${APPNAME}-linux-ia32/resources/openbazaar-go/
       rm -rf dist/${APPNAME}-linux-ia32/resources/app/.travis
       chmod +x dist/${APPNAME}-linux-ia32/resources/openbazaar-go/openbazaard
-      chmod +x dist/${APPNAME}-linux-ia32/resources/openbazaar-go/phored
 
       echo 'Create debian archive'
       electron-installer-debian --config .travis/config_ia32.json
@@ -111,10 +105,8 @@ case "$TRAVIS_OS_NAME" in
       mkdir dist/${APPNAME}-linux-x64/resources/openbazaar-go/
       cp -rf temp/openbazaar-go-linux-amd64 dist/${APPNAME}-linux-x64/resources/openbazaar-go
       mv dist/${APPNAME}-linux-x64/resources/openbazaar-go/openbazaar-go-linux-amd64 dist/${APPNAME}-linux-x64/resources/openbazaar-go/openbazaard
-      mv temp/phore64/phore*/bin/phored dist/${APPNAME}-linux-x64/resources/openbazaar-go/
       rm -rf dist/${APPNAME}-linux-x64/resources/app/.travis
       chmod +x dist/${APPNAME}-linux-x64/resources/openbazaar-go/openbazaard
-      chmod +x dist/${APPNAME}-linux-x64/resources/openbazaar-go/phored
 
       echo 'Create debian archive'
       electron-installer-debian --config .travis/config_amd64.json
@@ -151,6 +143,7 @@ case "$TRAVIS_OS_NAME" in
 
     brew update
     brew install jq
+    brew link jq
     curl -L https://dl.bintray.com/develar/bin/7za -o /tmp/7za
     chmod +x /tmp/7za
     curl -L https://dl.bintray.com/develar/bin/wine.7z -o /tmp/wine.7z
@@ -160,15 +153,11 @@ case "$TRAVIS_OS_NAME" in
     brew install freetype graphicsmagick
     brew link xz
     brew install mono
+    brew link mono
 
     # Retrieve Latest Server Binaries
     cd temp/
     curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/openbazaar-go/releases | jq -r ".[0].assets[].browser_download_url" | xargs -n 1 curl -L -O
-    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/phore/releases | jq -r ".[0].assets[].browser_download_url" | xargs -n 1 curl -L -O
-    mkdir phore-win32 phore-win64 phore-osx64
-    unzip phore-*-win32.zip -d phore-win32
-    unzip phore-*-win64.zip -d phore-win64
-    tar -xf phore-*-osx64.tar.gz -C phore-osx64
     cd ..
 
     # WINDOWS 32
@@ -177,27 +166,28 @@ case "$TRAVIS_OS_NAME" in
 
     if [ -z "$CLIENT_VERSION" ]; then
       echo 'Running Electron Packager...'
-      electron-packager . OpenBazaar2 --asar --out=dist --protocol-name=OpenBazaar --win32metadata.ProductName="OpenBazaar2" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2.exe --protocol=ob --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
+      electron-packager . OpenBazaar2 --asar --out=dist --protocol-name=OpenBazaar --win32metadata.ProductName="OpenBazaar2" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2.exe --protocol=ob --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
       echo 'Copying server binary into application folder...'
       cp -rf temp/openbazaar-go-windows-4.0-386.exe dist/OpenBazaar2-win32-ia32/resources/
       cp -rf temp/libwinpthread-1.win32.dll dist/OpenBazaar2-win32-ia32/resources/libwinpthread-1.dll
       mkdir dist/OpenBazaar2-win32-ia32/resources/openbazaar-go
       mv dist/OpenBazaar2-win32-ia32/resources/openbazaar-go-windows-4.0-386.exe dist/OpenBazaar2-win32-ia32/resources/openbazaar-go/openbazaard.exe
-      mv temp/phore-win32/phore-*/bin/phored.exe dist/OpenBazaar2-win32-ia32/resources/openbazaar-go/phored.exe
       mv dist/OpenBazaar2-win32-ia32/resources/libwinpthread-1.dll dist/OpenBazaar2-win32-ia32/resources/openbazaar-go/libwinpthread-1.dll
 
-      echo 'Building Installer...'
-      grunt create-windows-installer --appname=OpenBazaar2 --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2-win32-ia32 --outdir=dist/win32
-      mv dist/win32/OpenBazaar2Setup.exe dist/win32/OpenBazaar2-$PACKAGE_VERSION-Setup-32.exe
+      echo 'Building ZIP file...'
+      cd dist
+      zip -r win64/OpenBazaar2-$PACKAGE_VERSION-Windows-32.zip OpenBazaar2-win32-ia32
+      cd ..
     else
       #### CLIENT ONLY
       echo 'Running Electron Packager...'
       electron-packager . OpenBazaar2Client --asar --out=dist --protocol-name=OpenBazaar --win32metadata.ProductName="OpenBazaar2Client" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2Client.exe --protocol=ob --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
-      echo 'Building Installer...'
-      grunt create-windows-installer --appname=OpenBazaar2Client --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2Client-win32-ia32 --outdir=dist/win32
-      mv dist/win32/OpenBazaar2ClientSetup.exe dist/win32/OpenBazaar2Client-$PACKAGE_VERSION-Setup-32.exe
+      echo 'Building ZIP file...'
+      cd dist
+      zip -r win64/OpenBazaar2Client-$PACKAGE_VERSION-Windows-32.zip OpenBazaar2Client-win32-ia32
+      cd ..
     fi
 
     # WINDOWS 64
@@ -212,21 +202,22 @@ case "$TRAVIS_OS_NAME" in
       cp -rf temp/openbazaar-go-windows-4.0-amd64.exe dist/OpenBazaar2-win32-x64/resources/
       cp -rf temp/libwinpthread-1.win64.dll dist/OpenBazaar2-win32-x64/resources/libwinpthread-1.dll
       mkdir dist/OpenBazaar2-win32-x64/resources/openbazaar-go
-      mv temp/phore-win64/phore-*/bin/phored.exe dist/OpenBazaar2-win32-x64/resources/openbazaar-go/phored.exe
       mv dist/OpenBazaar2-win32-x64/resources/openbazaar-go-windows-4.0-amd64.exe dist/OpenBazaar2-win32-x64/resources/openbazaar-go/openbazaard.exe
       mv dist/OpenBazaar2-win32-x64/resources/libwinpthread-1.dll dist/OpenBazaar2-win32-x64/resources/openbazaar-go/libwinpthread-1.dll
 
-      echo 'Building Installer...'
-      grunt create-windows-installer --appname=OpenBazaar2 --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2-win32-x64 --outdir=dist/win64
-      mv dist/win64/OpenBazaar2Setup.exe dist/win64/OpenBazaar2-$PACKAGE_VERSION-Setup-64.exe
+      echo 'Building ZIP file...'
+      cd dist
+      zip -r win64/OpenBazaar2-$PACKAGE_VERSION-Windows-x64.zip OpenBazaar2-win32-x64
+      cd ..
     else
       #### CLIENT ONLY
       echo 'Running Electron Packager...'
       electron-packager . OpenBazaar2Client --asar --out=dist --protocol-name=OpenBazaar --win32metadata.ProductName="OpenBazaar2Client" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2Client.exe --protocol=ob --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
-      echo 'Building Installer...'
-      grunt create-windows-installer --appname=OpenBazaar2Client --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2Client-win32-x64 --outdir=dist/win64
-      mv dist/win64/OpenBazaar2ClientSetup.exe dist/win64/OpenBazaar2Client-$PACKAGE_VERSION-Setup-64.exe
+      echo 'Building ZIP file...'
+      cd dist
+      zip -r win64/OpenBazaar2Client-$PACKAGE_VERSION-Windows-x64.zip OpenBazaar2Client-win32-x64
+      cd ..
     fi
 
     # OSX
@@ -240,9 +231,7 @@ case "$TRAVIS_OS_NAME" in
     # Sign openbazaar-go binary
     echo 'Signing Go binary'
     mv temp/openbazaar-go-darwin-10.6-amd64 dist/osx/openbazaard
-    mv temp/phore-osx64/phore-*/bin/phored dist/osx/phored
     codesign --force --sign "$SIGNING_IDENTITY" dist/osx/openbazaard
-    codesign --force --sign "$SIGNING_IDENTITY" dist/osx/phored
 
     echo 'Running Electron Packager...'
     if [ -z "$CLIENT_VERSION" ]; then
@@ -253,7 +242,6 @@ case "$TRAVIS_OS_NAME" in
 
       echo 'Moving binary to correct folder'
       mv dist/osx/openbazaard dist/OpenBazaar2-darwin-x64/OpenBazaar2.app/Contents/Resources/openbazaar-go/openbazaard
-      mv dist/osx/phored dist/OpenBazaar2-darwin-x64/OpenBazaar2.app/Contents/Resources/openbazaar-go/phored
       chmod +x dist/OpenBazaar2-darwin-x64/OpenBazaar2.app/Contents/Resources/openbazaar-go/openbazaard
     else
       electron-packager . OpenBazaar2Client --out=dist -app-category-type=public.app-category.business --protocol-name=OpenBazaar --protocol=ob --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION

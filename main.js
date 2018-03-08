@@ -25,7 +25,7 @@ function isOSWin64() {
 
 const plat = process.platform === 'win32' ? `${isOSWin64() ? 'win64' : 'win32'}` : process.platform;
 
-const feedURL = `https://updates2.openbazaar.org:5001/update/${plat}/${version}`;
+const feedURL = `https://hazel-server-imflzbzzpa.now.sh/update/${plat}/${version}`;
 
 global.serverLog = '';
 
@@ -88,8 +88,6 @@ if (handleStartupEvent()) {
 const serverPath = `${__dirname}${path.sep}..${path.sep}openbazaar-go${path.sep}`;
 const serverFilename = process.platform === 'darwin' || process.platform === 'linux' ?
   'openbazaard' : 'openbazaard.exe';
-const daemonFilename = process.platform === 'darwin' || process.platform === 'linux' ?
-  'phored' : 'phored.exe';
 const isBundledApp = fs.existsSync(serverPath + serverFilename);
 global.isBundledApp = isBundledApp;
 let localServer;
@@ -98,7 +96,6 @@ if (isBundledApp) {
   global.localServer = localServer = new LocalServer({
     serverPath,
     serverFilename,
-    daemonFilename,
     errorLogPath: `${__dirname}${path.sep}..${path.sep}..${path.sep}error.log`,
     // IMPORTANT: From the main process, only bind events to the localServer instance
     // unsing the functions in the mainProcLocalServerEvents module. The reasons for that
@@ -194,7 +191,7 @@ function createWindow() {
           if (updatesSupported) {
             checkForUpdates();
           } else {
-            shell.openExternal('https://www.openbazaar.org/download/');
+            shell.openExternal('https://github.com/phoreproject/openbazaar-desktop/releases');
           }
         },
       },
