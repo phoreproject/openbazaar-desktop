@@ -28,7 +28,7 @@
           </button>
         </div>
         <div class="flexRow gutterH rowLg">
-          <div class="col6">
+          <div class="col12">
             <%= ob.processingButton({
               className: 'btn btnThin width100 clrP clrBr clrSh2 js-payFromWallet',
               textClassName: 'flexCent',
@@ -46,7 +46,7 @@
           <% } %>
         </div>
         <div class="txBase clrT2">
-          <% if (serverCur.code === 'BTC') { %>
+          <% if (serverCur.code === 'PHR') { %>
           <p>
             <%= ob.polyT('purchase.pendingSection.altcoinNote') %> <button class="btnAsLink js-fundWallet"><%= ob.polyT('purchase.pendingSection.altcoinLink') %></button>
           </p>
@@ -63,7 +63,7 @@
   </div>
 </div>
 <div class="tx6 clrT2">
-  <% if (serverCur.code === 'BTC') { %>
+  <% if (serverCur.code === 'PHR') { %>
     <% const link = `<a class="clrTEm" href="https://www.openbazaar.org/bitcoin">${ob.polyT('purchase.pendingSection.note1Link')}</a>`; %>
     <p><%= ob.polyT('purchase.pendingSection.note1', { link }) %></p>
   <% } %>
