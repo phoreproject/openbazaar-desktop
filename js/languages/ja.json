@@ -1,55 +1,33 @@
 {
   "publish": {
-    "failedRetryTitle": "公開の再起動にエラーが発生しました。",
-    "statusPublishing": "ネットワークに更新を公開しています",
+    "unpublishedConfirmTitle": "未アップロードのコンテンツ",
+    "unpublishedConfirmBody": "アップロードが完了していないコンテンツがあります。今閉じた場合、一部のデータは他の人から表示できませんがよろしいですか？",
+    "unpublishedConfirmYes": "はい",
+    "unpublishedConfirmNo": "いいえ",
+    "failedRetryTitle": "アップロードの再試行にエラーが発生しました。",
+    "statusPublishing": "データをアップロード中...",
     "retryLink": "再試行",
-    "statusPublishFailed": "公開に失敗しました。 %{retryLink}",
-    "statusPublishComplete": "公開に成功しました。"
-  },
-  "localServerShutdownDialog": {
-    "title": "ビルトインサーバーを停止しています",
-    "body": "ビルトインサーバーを停止中です。この処理には数分かかることがありますが、重要なクリーンアップ作業をしていますので、強制停止はおやめください。処理の完了後、自動的にこのアプリは終了します。"
+    "statusPublishFailed": "アップロードに失敗しました。 %{retryLink}",
+    "statusPublishComplete": "アップロードに成功しました。"
   },
   "follow": {
     "typeFollow": "フォローしています",
     "typeUnfollow": "フォローしていません",
-    "followErrorTitle": "エラーが起きました。 %{type} %{user}",
+    "followErrorTitle": "エラーが発生しました。 %{type} %{user}",
     "followBtn": "フォロー",
     "unfollowBtn": "フォロー解除"
   },
   "feeLevels": {
-    "PRIORITY": "高",
-    "NORMAL": "中",
+    "PRIORITY": "優先度",
+    "NORMAL": "通常",
     "ECONOMIC": "低"
   },
   "feeChangeWidget": {
-    "btnChange": "お釣り",
-    "label": "%{cur} fee:"
-  },
-  "walletSetup": {
-    "heading": "OpenBazaarのウォレット設定",
-    "currencyLabel": "通貨",
-    "currencyHelper": "ウォレットで利用する通貨を選択してください。",
-    "currencyHelper2": "上で選択した通貨で送金・処理を許可します。現在はこの設定を再変更できませんので、よく考えてお選びください。",
-    "curInUseTip": "このウォレットの通貨で既にビルトインサーバーを起動しています。",
-    "zcashBinaryLabel": "Zcash Binary",
-    "fullNodeLink": "here",
-    "zcashBinaryHelper": "A Zcash full node is required. Download a Zcash full node %{fullNodeLink}. Once installed, enter the path to your zcashd binary above.",
-    "btnBrowse": "参照",
-    "btnNext": "次へ"
-  },
-  "unsupportedCryptoCurDialog": {
-    "title": "サポートされていない通貨",
-    "body": "このサーバーはクライアントの対応していない通貨 (%{curCode}) を利用しているため続行できません。%{connectLink} より別のサーバーへアクセスしてください。",
-    "connectLink": "接続"
-  },
-  "setValidCurDialog": {
-    "title": "不正な地域通貨です",
-    "body": "あなたの地域通貨は %{currency} と指定されていますが、現在このクライアントでは対応しておりません。%{settingsLink} に別の通貨を選択し保存してください。",
-    "settingsLink": "設定"
+    "label": "手数料:",
+    "btnChange": "変更"
   },
   "consoleWarning": {
-    "heading": "Stop!",
+    "heading": "注意",
     "line1": "これは開発者向けのコンソールです。誰かにこのウィンドウを開くよう頼まれたのであれば、アカウント・資金を詐取しようとしている可能性があります。",
     "line2": "このウィンドウを閉じてください。"
   },
@@ -70,14 +48,11 @@
     },
     "install": "今すぐインストール"
   },
-  "formattedCurrency": {
-    "unrecognizedCurrencyTip": "価格が不明な通貨で表示されているため、価格の情報を提供できません。 because the price is in an unrecognized currency."
-  },
   "addressBarPlaceholder": "検索単語かOpenBazaar ID, @ハンドル を入力してください。",
   "testnet": "テストモード",
   "testnetTooltip": "テストモードでは試験運用のためのテストネットのコインを利用します。",
   "tabMenuHeading": "メニュー",
-  "currencyPairing": "%{convertedCurValue} (%{baseCurValue})",
+  "fiatBtcPairing": "%{fiatAmount} (%{btcAmount})",
   "copiedToClipboard": "クリップボードにコピー",
   "copiedToClipboardShort": "コピーしました",
   "refreshAlertPopInMessage": {
@@ -128,10 +103,9 @@
         "title": "検索プロバイダを取得できません。"
       }
     },
-    "connectMessaging": {
-      "cancelLink": "キャンセル",
-      "connectAttemptMsg": "%{serverName} へ接続中... %{cancelLink}",
-      "zecBinaryInit": "Initializing the zcash binary. This may take a few minutes. %{cancelLink}"
+    "startupLoadingModal": {
+      "canceLink": "キャンセル",
+      "connectAttemptMsg": "%{serverName}へ接続中. %{canceLink}"
     }
   },
   "notifications": {
@@ -173,7 +147,6 @@
     "sales": "販売",
     "cases": "紛争一覧",
     "settings": "設定",
-    "help": "ヘルプ",
     "toolTip": {
       "back": "戻る",
       "forward": "次へ",
@@ -183,7 +156,7 @@
       "notifications": "通知",
       "nav": "ナビゲーション",
       "close": "閉じる",
-      "currentPrice": "現在の %{cur} の価格"
+      "currentPrice": "現在の Phore の価格"
     },
     "serversMenu": {
       "newServer": "新しいサーバー",
@@ -210,7 +183,7 @@
     }
   },
   "userPage": {
-    "followsYou": "Follows You",
+    "followsYou": "あなたをフォローしています",
     "message": "メッセージ",
     "customize": "カスタム",
     "createListing": "出品を作成",
@@ -235,8 +208,7 @@
       "home": "ホーム",
       "store": "ストア",
       "following": "フォロー",
-      "followers": "フォロワー",
-      "reputation": "評価"
+      "followers": "フォロワー"
     },
     "followTab": {
       "noFollowers": "誰も %{name} をフォローしていません",
@@ -281,8 +253,7 @@
       "categoryFilter": {
         "heading": "カテゴリ",
         "showMore": "%{smart_count} 以上... |||| %{smart_count} 以上...",
-        "showLess": "以下",
-        "all": "全て"
+        "showLess": "以下"
       },
       "toolTip": {
         "contentView": "トグルビュー"
@@ -294,12 +265,6 @@
       "following": "フォロー",
       "followers": "フォロワー"
     }
-  },
-  "reputation": {
-    "averageRating": "総合レーティング",
-    "totalReviews": "閲覧 |||| 閲覧数",
-    "noTitle": "出品のタイトルが見つかりません"
-
   },
   "userShort": {
     "userLoading": "読み込み中...",
@@ -332,7 +297,7 @@
     "FIXED_PLUS_PERCENTAGE": "%{amount} (+%{percentage})**",
     "termsOfService": "利用規約",
     "addAsModeratorButton": "仲裁者として追加",
-    "disclaimer": "**仲裁者の手数料は紛争の発生したときのみ適用されます。",
+    "disclaimer": "**仲裁者の手数料は紛争が発生したときのみ適用されます。",
     "languages": "言語"
   },
   "about": {
@@ -353,8 +318,6 @@
       "btnCopyAddress": "アドレスをコピー",
       "btnOpenInWallet" : "ウォレットで開く",
       "bannerCountDonations": "%{donationCountFloor}+ 寄付を受け取りました！",
-      "bitcoinIntroLine": "Bitcoinの寄付は次のアドレスで受け付けています:",
-      "bchWarning": "Bitcoin Cashは受け付けておりません。",
       "unableToOpenInWallet": {
         "title": "ウォレットで開けません",
         "body": "支払いが処理中のため、ウォレットでアドレスを開けません。送金の完了後もう一度お試しください。"
@@ -365,20 +328,20 @@
       "sectionHeader": "OpenBazaar MIT ライセンス",
       "licensePreface": "OpenBazaar は MIT ライセンスに基づくオープンソースソフトウェアです。このライセンスは他のオープンソースプロジェクトやプロプライエタリソフトウェアにソースを再使用・デザインの改変を許可するものです。下にライセンス全文を記載します。",
       "header": "The MIT License (MIT)",
-      "copyright": "Copright &copy; 2016 OpenBazaar Developers",
+      "copyright": "Copright &copy; 2016 OpenBazaar 開発者チーム",
       "paragraphs": {
-        "permission": "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:",
-        "inclusion": "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.",
+        "permission": "本ソフトウェアおよび関連するドキュメント（以下「ソフトウェア」という）のコピーを取得した者は、本ソフトウェアを制限なく使用することができます（本ソフトウェアの使用、コピー、変更の権利を含み、これに限定されません）。本ソフトウェアを複製、転載、複製、出版、配布、再許諾、および/または販売すること、および本ソフトウェアの提供を受ける者は次に従ってください:",
+        "inclusion": "上記の著作権表示およびこの許可通知は、本ソフトウェアのすべてのコピーまたは部分に含まれるものとします。",
         "indemnity": "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
       }
     },
     "contributorsTab": {
-      "linkText": "コントリビューター",
+      "linkText": "Contributors",
       "sectionHeader": "OpenBazaar Contributors",
       "listPreface": "This is a partial list of people who have contributed to the project, either through code or other assistance."
     },
     "storyTab": {
-      "linkText": "歴史",
+      "linkText": "The Story",
       "sectionHeader": "The Story of OpenBazaar",
       "paragraphs": {
         "taakisDarkMarket": "In April 2014 at a secretive Toronto hackathon a project called \"Dark Market\" was created. Amir Taaki lead a small team of developers to build a proof of concept for a decentralized marketplace. The software was completely peer to peer with no central organization controlling it. The Dark Market entry won the hackathon, but Amir and his team decided not to continue work on the project.",
@@ -388,16 +351,10 @@
         "foundedAndFunded": "They founded a company, OB1, with a $1 million venture capital investment from Union Square Ventures and Andreessen Horowitz, and immediately began hiring developers to build a better version of the software from the ground up.",
         "marketOpening": "In April 2016 the first full release of the software was published, and tens of thousands of people around the world downloaded OpenBazaar and began buying and selling with each other directly, using Bitcoin.",
         "toInfinityAndBeyond": "The initial team's work secured them a $3 million second round investment in the fall of 2016. Building on their ground-breaking work in version 1, an expanded OB1 set to work on OpenBazaar 2, with the aim of making trade free for even more people around the world.",
-        "cashCTA": "寄付する",
+        "cashCTA": "Donate now",
         "or": "or",
         "codeCTA": "get involved."
       }
-    },
-    "helpTab": {
-      "linkText": "ヘルプ",
-      "sectionHeader": "ヘルプ",
-      "supportLink": "OpenBazaar.orgのサポートページ",
-      "text": "%{supportLink} でOpenBazaarについてのヘルプを確認できます。多くのガイド, FAQがあるので問題は解決されるかもしれません。"
     }
   },
   "settings": {
@@ -413,12 +370,12 @@
       "helperTranslations": "%{helperTranslationsLink}でOpenBazaarの翻訳を支援してください。",
       "helperTranslationsLink": "Transifex",
       "sectionName": "一般",
-      "bitcoinUnit": "bitcoinの単位",
+      "bitcoinUnit": "Phoreの単位",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Satoshi (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "一般の設定を保存しています...",
       "statusSaveComplete": "一般の設定を保存しました。",
@@ -462,11 +419,11 @@
       "locationLabel": "住所"
     },
     "addressesTab": {
-      "placeholderName": "Your name / name of recipient",
-      "placeholderAddress": "427 N Greenfield Road",
-      "placeholderCity": "シカゴ",
-      "placeholderState": "IL",
-      "placeholderPostalCode": "60654",
+      "placeholderName": "あなたの名前 / 受取人の名前",
+      "placeholderAddress": "西新宿2丁目8-1",
+      "placeholderCity": "新宿区",
+      "placeholderState": "東京都",
+      "placeholderPostalCode": "163-8001",
       "placeholderNotes": "例: 配達物は○○へ置くように、など",
       "sectionName": "配送先住所",
       "statusDeletingAddress": "住所 %{name} を削除",
@@ -494,7 +451,7 @@
         "password": "パスワード",
         "serverAddress": "サーバーアドレス",
         "senderEmail": "送信元",
-        "recipientEmail": "送信ｓ",
+        "recipientEmail": "送信先",
         "placeholderServerAddress": "smtp.gmail.com:587",
         "placeholderUsername": "ユーザーネームを入力してください",
         "placeholderPassword": "Eメールアドレスのパスワード",
@@ -521,8 +478,8 @@
         "peers": "ピア",
         "peersHelper": "接続しているピア",
         "peersBtn": "接続しているピアを表示",
-        "resync": "Rトランザクションの再読み込み",
-        "resyncHelper": "トランザクションの抜けを同期により解消しますS",
+        "resync": "トランザクションの再読み込み",
+        "resyncHelper": "トランザクションの抜けを同期により解消します",
         "reloadTransactionsWidget": {
           "resyncBtn": "トランザクションの再読み込み",
           "resyncComplete": "トランザクションは再読み込みされます。5分から10分ほどかかります。",
@@ -557,7 +514,7 @@
       "transaction": {
         "sectionName": "トランザクション",
         "saveMetadata": "メタデータの保存",
-        "defaultFee": "手数料 %{cur}",
+        "defaultFee": "手数料",
         "low": "低",
         "medium": "中",
         "high": "高"
@@ -661,8 +618,8 @@
     "loadAvatar": "写真を選択",
     "loadAvatarHelp": "幅 %{minWidth}px, 高さ %{minHeight}px 以上にしてください",
     "header": "カバー写真",
-    "loadHeader": "写真を戦t泣く",
-    "loadHeaderHelp": "%幅{minWidth}px, 高さ%{minHeight}px 以上でなければいけません。",
+    "loadHeader": "写真を選択",
+    "loadHeaderHelp": "幅 %{minWidth}px, 高さ%{minHeight}px 以上でなければいけません。",
     "socialSection": "ソーシャル",
     "website": "ウェブサイト",
     "email": "Eメール",
@@ -682,7 +639,7 @@
     "highlightTextColor": "ハイライトの文字色",
     "textColor": "テキストの色",
     "addresses": {
-      "sectionName": "新しいアドレス",
+      "sectionName": "新しい住所",
       "name": "名前",
       "company": "会社",
       "street": "通り",
@@ -699,7 +656,7 @@
     "btnYes": "はい",
     "btnNo": "いいえ",
     "btnSave": "保存",
-    "btnAddAddress": "アドレスを追加",
+    "btnAddAddress": "住所を追加",
     "errors": {
       "saveError": "設定の保存にエラーが発生しました。"
     },
@@ -709,7 +666,7 @@
     }
   },
   "connectionManagement": {
-    "builtInServerName": "ビルトインサーバー - %{cur}",
+    "defaultServername": "ビルトインサーバー",
     "statusBar": {
       "errorPreface": "エラー:",
       "needHelpLink": "お困りですか？",
@@ -722,8 +679,7 @@
       "errorTorNotConfigured": "%{editLink} より %{serverName} の設定からTorを利用するかどうかを確認してください。 %{links}",
       "errorTorNotAvailable": "Torは確認できませんでした。%{editLink} より %{serverName} の設定ファイルをTorを利用しない、スタートしないようにしてください。 %{links}",
       "cancelConnAttempt": "キャンセル",
-      "connectAttemptMsg": "%{serverName} への接続を試みています... %{cancelConnAttempt}",
-      "waitForServerStopMsg": "%{serverName} を停止しています... 数分ほどかかるかもしれません。"
+      "connectAttemptMsg": "%{serverName} への接続を試みています... %{cancelConnAttempt}"
     },
     "configurations": {
       "tabName": "接続設定",
@@ -767,12 +723,6 @@
       "torPwPlaceholder": "ハッシュされていない Tor コントロールパスワード",
       "warning": "警告:",
       "torServerWarning": "%{warning} 匿名性のために、サーバーをTorで起動することが重要です。",
-      "lblServerType": "タイプ",
-      "helperServerType": "サーバータイプを選択",
-      "serverTypeBuiltin": "ビルトイン(ローカル)",
-      "serverTypeBuiltinTip": "このサーバーは、このコンピュータ上のこのアプリにより制御, 実行されます。ほとんどのユーザーに推奨しています。",
-      "serverTypeStandalone": "スタンドアロン(advanced)",
-      "serverTypeStandaloneTip": "このサーバーは、手動でインストールしコマンドラインから制御されます。リモートコンピュータにインストールすることもでき、接続前に実行している必要があります。",
       "saveConfirm": {
         "title": "接続の確認",
         "body": "リモートのサーバーに接続するときは SSLをオンにすることをお勧めします。",
@@ -795,27 +745,27 @@
     "fundsHeader": "資金",
     "btnReceiveMoney": "通貨を受け取る",
     "btnSendMoney": "通貨を送る",
-    "valueInCurrencyLabel": "%{currency} での価値",
+    "btcCurrencyLabel": "Phore",
+    "valueInCurrencyLabel": "%{currency}での価値",
     "transactionsLabel": "トランザクション",
     "receiveMoney": {
       "title": "通貨を受け取る",
-      "btnCancel": "キャンセル",
-      "needCoinLink": "%{cur} が必要ですか？"
+      "needBitcoin": "Phoreが必要ですか?",
+      "btnCancel": "キャンセル"
     },
     "sendMoney": {
       "toLabel": "送り先",
-      "toPlaceholder": "%{cur} アドレスを入力してください",
+      "toPlaceholder": "Phore アドレスを入力してください",
       "amountLabel": "数量",
       "noteLabel": "メモ",
       "notePlaceholder": "あなただけが閲覧可能です",
       "sendBtn": "送金",
       "clear": "クリア",
-      "sendPaymentFailDialogTitle": "送金できません",
-      "errorInvalidAddress": "送金先アドレスが間違っています。"
+      "sendPaymentFailDialogTitle": "送金できません"
     },
     "spendConfirmBox": {
       "heading": "送金の確認",
-      "body": "送金手数料を含んでいます %{currencyPairing}",
+      "body": "送金手数料を含んでいます %{fiatBtcPairing}",
       "errorHeading": "送金できません",
       "bodyInsufficientFunds": "残高が不足しています。取引手数料にもご注意ください。",
       "bodyDustAmount": "取引金額が小さすぎてネットワークの最低量を下回っています。",
@@ -828,15 +778,15 @@
     "transactions": {
       "header": "トランザクション",
       "transaction": {
-        "outgoingText": "%{currencyPairing} を%{address}へ送金",
-        "incomingText": "%{currencyPairing} 受け取りました",
+        "outgoingText": "%{fiatBtcPairing} を%{address}へ送金",
+        "incomingText": "%{fiatBtcPairing} 受け取りました",
         "timeAgoAndConfirmCount": "%{timeAgo} (%{confirmationsCount} 確認) |||| %{timeAgo} (%{confirmationsCount} 確認)",
         "viewDetailsBtn": "詳細を見る",
         "retryTransactionBtn": "手数料を増やす",
         "retryPaymentConfirmBox": {
           "title": "再送金",
-          "body": "%{currencyPairing}%{asterisk} を手数料に追加し再送金します。",
-          "insufficientFundsBody": "少なくとも %{currencyPairing}%{asterisk} の残高が再送金に必要です。",
+          "body": "%{fiatBtcPairing}%{asterisk} を手数料に追加し再送金します。",
+          "insufficientFundsBody": "少なくとも %{fiatBtcPairing}%{asterisk} の残高が再送金に必要です。",
           "fetchError": "手数料の見積もりにエラーが発生しました: %{err}",
           "subText": "%{asterisk}想定金額",
           "btnCancel": "キャンセル",
@@ -898,12 +848,6 @@
     "allCountries": "どの国でも",
     "returnToStore": "ストアに戻る",
     "goToStore": "ストアへ行く",
-    "unableToPurchase": {
-      "incompatibleCrypto": "この商品は %{acceptedCurrencies} での支払いが可能ですが、あなたのウォレットは %{serverCur} での送金のみ対応しています。",
-      "unrecognizedCur": "この商品は対応していない通貨により価格設定されています。",
-      "noExchangeRateInfo": "この商品は現在交換レートが表示できない通貨により価格設定されています。",
-      "unpurchaseable": "この商品は購入できません。"
-    },
     "confirmDelete": {
       "title": "削除の確認",
       "body": "一度削除すると、復元できません。",
@@ -1004,13 +948,13 @@
     "helperSKU": "商品の一意な識別子",
     "helperSKUWithVariants": "バリエーションが存在する場合、SKUは %{variantInventoryLink} セクションで定義できます",
     "variantInventoryLink": "バリエーションの管理",
+    "helperPrice": "価格を円, Bitcoinなどお好きな通貨で決めてください",
     "helperCondition": "商品の全条件",
     "helperNSFW": "成人向け商品の場合 はい をマークしましょう",
     "helperTags": "タグの名前を入力してエンターを押すことでタグを追加しましょう。",
     "helperCategories": "入れ子のカテゴリーは対応していません(例: 靴 > ブーツ)。カテゴリー名を入力しエンターを押しましょう。",
     "helperReturnPolicy": "空欄の場合、商品ページに \"返品規約は入力されていません\"と表示されます",
     "helperTerms": "空欄の場合、商品ページに \"規約や条件は入力されていません\"と表示されます",
-    "helperPrice": "価格をJPY, USD, %{cur} 等で指定してください",
     "createListingLabel": "商品を作成",
     "editListingLabel": "商品を編集",
     "title": "タイトル",
@@ -1031,11 +975,6 @@
     "btnAddCoupon": "クーポンを追加",
     "primaryPhoto": "メインの写真",
     "viewListingLink": "商品を閲覧",
-    "unsupportedCurrencyDialog": {
-      "title": "未対応の通貨",
-      "body": "この商品は通貨(%{cur})を用いていますが、クライアントで対応していません。下から他の通貨を選び はい をクリックしてください。その際価格・通貨をご確認ください。",
-      "btnOk": "はい"
-    },
     "shippingOptions": {
       "optionHeading": "配送オプション #%{listPosition}",
       "shippingDestinations": "送り先",
@@ -1055,8 +994,8 @@
         "namePlaceholder": "例: 標準, 高速, 翌日",
         "estimatedDeliveryLabel": "想定の配達時間",
         "estimatedDeliveryPlaceholder": "例: 5-7 日",
-        "priceLabel": "価格 (元の商品)",
-        "additionalItemPriceLabel": "価格 (追加の商品)",
+        "priceLabel": "価格 (1個目の商品)",
+        "additionalItemPriceLabel": "価格 (2個目以降の商品)",
         "pricePlaceholder": "0.00",
         "addService": "+ サービス追加"
       },
@@ -1095,7 +1034,7 @@
       "doNotTrackHelperText": "購入者は欲しい数だけ注文できる",
       "trackByFixedHelperText": "数量は0まで減少し、それ以降は売り切れと表示されます。",
       "trackByVariantsHelperText": "在庫はバリエーションの組み合わせごとに確認されます",
-      "quantity": "Quantity"
+      "quantity": "数量"
     },
     "variantInventory": {
       "helperText": "数量が0のバリエーションの組は表示されません",
@@ -1165,7 +1104,7 @@
     "introScreen": {
       "connectionLbl": "接続:",
       "btnChange": "変更",
-      "introLine": "手数料も制限もほとんどない自由なマーケットプレイスです。%{cur} を稼ぐことができます。",
+      "introLine": "手数料も制限もほとんどない自由なマーケットプレイスです。Phore を稼ぐことができます。",
       "tagLine": "自由な売買を",
       "btnGetStarted": "始める"
     },
@@ -1183,10 +1122,7 @@
     },
     "tosScreen": {
       "heading": "利用規約",
-      "tos": "OpenBazaar は暗号通貨を用いて匿名性を担保しつつ二者間の自由な物品の売買を可能にするネットワークです。悪意を持って情報収集を行う業者がいるかもしれませんので、お気を付けください。\n\n
-      OpenBazaar のユーザーは居住区の法律に従い合法な物品のみを売買するようお願いいたします。OpenBazaar の開発者は非合法な利用・活動を認めず、その活動におけるいかなる損失に対しても負担いたしません。\n\n
-      OpenBazaar 開発者コミュニティは自由な売買プラットフォームを提供するために開発を続けています。しかしプログラムにはバグがつきものです。そのようなプログラムの問題による金銭的損失に対しても、我々は負担いたしません。\n\n
-      OpenBazaar は自由であり、全ての行動は自分のものであり、また責任も自分のものです。"
+      "tos": "OpenBazaar は暗号通貨を用いて匿名性を担保しつつ二者間の自由な物品の売買を可能にするネットワークです。悪意を持って情報収集を行う業者がいるかもしれませんので、お気を付けください。\n\nOpenBazaar のユーザーは居住区の法律に従い合法な物品のみを売買するようお願いいたします。OpenBazaar の開発者は非合法な利用・活動を認めず、その活動におけるいかなる損失に対しても負担いたしません。\n\nOpenBazaar 開発者コミュニティは自由な売買プラットフォームを提供するために開発を続けています。しかしプログラムにはバグがつきものです。そのようなプログラムの問題による金銭的損失に対しても、我々は負担いたしません。\n\nOpenBazaar は自由であり、全ての行動は自分のものであり、また責任も自分のものです。"
     }
   },
   "pageControls": {
@@ -1224,7 +1160,6 @@
     "memoPlaceholder": "ショップへの追加の情報を追加してください(オプション)。",
     "pay": "支払い >",
     "payNote": "支払い をクリックすると最後のステップへ進みます。",
-    "scamWarning": "警告: 詐欺の危険性",
     "pending": "処理中…",
     "pendingNote": "取引を完了させるため、資金を入金してください。",
     "close": "閉じる",
@@ -1368,7 +1303,7 @@
         "status": "状態"
       },
       "status": {
-        "PENDING": "Pending",
+        "PENDING": "保留中",
         "AWAITING_PAYMENT": "支払い待ち",
         "AWAITING_PICKUP": "受け取り待ち",
         "AWAITING_FULFILLMENT": "実行待ち",
@@ -1376,7 +1311,7 @@
         "FULFILLED": "実行済み",
         "COMPLETED": "完了",
         "CANCELED": "キャンセル",
-        "DECLINED": "Declined",
+        "DECLINED": "拒否されました",
         "REFUNDED": "返金済み",
         "DISPUTED": "紛争中",
         "DECIDED": "決定済み",
@@ -1428,9 +1363,9 @@
       "payment": {
         "firstPaymentHeading": "支払いの詳細",
         "paymentHeading": "支払い概要 #%{paymentNumber}",
-        "amountTo": "%{currencyPairing} を %{payeeName} へ",
-        "refundedTo": "%{currencyPairing} を %{payeeName} へ返金",
-        "refunded": "%{currencyPairing} 返金しました",
+        "amountTo": "%{fiatBtcPairing} を %{payeeName} へ",
+        "refundedTo": "%{fiatBtcPairing} を %{payeeName} へ返金",
+        "refunded": "%{fiatBtcPairing} 返金しました",
         "paidInFull": "支払い済み",
         "underpaidAmountShort": "支払い不足 (%{amountShort} 必要です)",
         "cancelBtn": "キャンセル",
@@ -1440,7 +1375,7 @@
         "veryManyConfirmationsCount": "%{countText} 確認",
         "rejectConfirm": {
           "title": "注文拒否の確認",
-          "body": "支払われた %{cur} が購入者に返金されました",
+          "body": "支払われた Phore が購入者に返金されました",
           "btnCancel": "キャンセル",
           "btnConfirm": "注文拒否"
         },
@@ -1448,8 +1383,8 @@
       },
       "refund": {
         "heading": "返金",
-        "refundedTo": "%{currencyPairing} を %{payeeName} へ返金しました",
-        "refunded": "%{currencyPairing} を返金",
+        "refundedTo": "%{fiatBtcPairing} を %{payeeName} へ返金しました",
+        "refunded": "%{fiatBtcPairing} を返金",
         "confirmationsCount": "%{smart_count} 確認 |||| %{smart_count} 確認数",
         "veryManyConfirmationsCount": "%{countText} 確認"
       },
@@ -1464,7 +1399,7 @@
         "fulfillBtn": "注文を実行",
         "refundConfirm": {
           "title": "返金の確認",
-          "body": "支払われた %{cur} が購入者に返金されます",
+          "body": "支払われた Phore が購入者に返金されます",
           "btnCancel": "キャンセル",
           "btnConfirm": "返金"
         }
@@ -1473,9 +1408,7 @@
         "heading": "実行済み",
         "shippedByLabel": "発送元:",
         "trackingNumberLabel": "追跡番号 #:",
-        "yourNoteLabel": "メモ:",
-        "noteFromVendorLabel": "出品者からのメモ:",
-        "noteFromStoreLabel": "%{store} からのメモ:",
+        "noteFromLabel": "%{store} からのメモ:",
         "copyLink": "コピー",
         "digitalReadyForDlHeading": "デジタルファイルはダウンロードの用意が完了しました！",
         "digitalReadyForDlText": "ファイルは現在移動中です。完了後ダウンロードが可能になります。",
@@ -1652,14 +1585,11 @@
     "invalidIp": "IPアドレスが間違っています。",
     "providePortAsNumber": "ポートは数字で入力してください。",
     "provideValidPortRange": "数字は 0 から 65535 以内で入力してください。",
-    "invalidTorProxy": "形式が間違っているようです。IPアドレス:ポート のように入力してください(例: 127.0.0.1:9150)。ポートは0から65535までです。",
-    "provideWalletCurrency": "ウォレットの通貨を選択してください。",
-    "provideZcashBinaryPath": "数値を入力してください。",
-    "invalidZcashBinaryPath": "入力したパスはシステム上に存在するファイルのみです。"
+    "invalidTorProxy": "形式が間違っているようです。IPアドレス:ポート のように入力してください(例: 127.0.0.1:9150)。ポートは0から65535までです。"
   },
   "shippingAddressModelErrors": {
     "provideName": "名前を入力してください。",
-    "provideCountry": "通貨名を入力してください。"
+    "provideCountry": "国名を入力してください。"
   },
   "listingModelErrors": {
     "returnPolicyTooLong": "返品規約の文字数が最大値を越えています。",
@@ -1743,11 +1673,10 @@
   },
   "spendModelErrors": {
     "provideAddress": "アドレスを入力してください。",
+    "invalidAddress": "入力されたアドレスは正しい Phore アドレスではないようです。",
     "provideAmountNumber": "数量は数字で入力してください。小数を入力する場合、例のようにピリオドで分けてください。 例\"0.00\"",
     "amountGreaterThanZero": "数量は0以上でなければなりません。",
-    "insufficientFunds": "入力された数量を送信できる十分な資金がありません。トランザクション手数料にも注意してください。",
-    "missingExchangeRateData": "その通貨に対して交換レートが存在しないため、 %{cur} を使用できません。他の通貨を選択してください。他の通貨のデータがない場合、%{serverCur} を使用します。",
-    "invalidAddress": "入力されたアドレスは正しい %{cur} アドレスではないようです。"
+    "insufficientFunds": "入力された数量を送信できる十分な資金がありません。トランザクション手数料にも注意してください。"
   },
   "orderModelErrors": {
     "mustHaveQuantity": "数量は1以上にしてください。",
@@ -1806,14 +1735,17 @@
     "invalidtorlistings": "正しいTor検索URLを入力してください。"
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
-  "cryptoCurrencyFormat": {
-    "curSymbolAmount": "%{symbol}%{amount}",
-    "curCodeAmount": "%{amount} %{code}"
+  "bitcoinCurrencyFormat": {
+    "shortBTC": "%{symbol}%{amount}",
+    "longBTC": "%{amount} %{symbol}",
+    "MBTC": "%{amount} %{symbol}",
+    "UBTC": "%{amount} %{symbol}",
+    "SATOSHI": "%{amount} %{symbol}"
   },
   "countries": {
     "AFGHANISTAN": "Afghanistan",
@@ -1926,7 +1858,7 @@
     "ISRAEL": "Israel",
     "ITALY": "Italy",
     "JAMAICA": "Jamaica",
-    "JAPAN": "日本",
+    "JAPAN": "Japan",
     "JERSEY": "Jersey",
     "JORDAN": "Jordan",
     "KAZAKHSTAN": "Kazakhstan",
@@ -2090,6 +2022,7 @@
     "BOB": "Boliviano",
     "BRL": "Brazilian Real",
     "BSD": "Bahamian Dollar",
+    "PHR": "Phore",
     "BTN": "Ngultrum",
     "BWP": "Pula",
     "BYR": "Belarussian Ruble",
@@ -2135,7 +2068,7 @@
     "ISK": "Iceland Krona",
     "JMD": "Jamaican Dollar",
     "JOD": "Jordanian Dinar",
-    "JPY": "日本円",
+    "JPY": "Yen",
     "KES": "Kenyan Shilling",
     "KGS": "Som",
     "KHR": "Riel",
@@ -2226,11 +2159,6 @@
     "ZAR": "Rand",
     "ZMW": "Zambian Kwacha",
     "ZWL": "Zimbabwe Dollar"
-  },
-  "cryptoCurrencies": {
-    "BTC": "Bitcoin",
-    "BCH": "Bitcoin Cash",
-    "ZEC": "Zcash"
   },
   "languages": {
     "af": "Afrikaans",
@@ -2351,8 +2279,8 @@
     "it": "Italian",
     "it-CH": "Italian (Switzerland)",
     "it-IT": "Italian (Italy)",
-    "ja": "日本語",
-    "ja-JP": "日本語 (Japan)",
+    "ja": "Japanese",
+    "ja-JP": "Japanese (Japan)",
     "ka": "Georgian",
     "ka-GE": "Georgian (Georgia)",
     "kk": "Kazakh",
