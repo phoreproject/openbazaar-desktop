@@ -1,12 +1,21 @@
 {
+<<<<<<< HEAD
+  "productName": "OpenBazaar",
+  "name": "openbazaar2",
+  "description": "Decentralized Peer to Peer Marketplace for Bitcoin",
+  "version": "2.0.18p",
+  "bin": "openbazaar2",
+  "maintainer": "OpenBazaar <project@openbazaar.org>",
+=======
   "productName": "PhoreMarketplace",
-  "name": "phoremarketplaceclient",
+  "name": "phoremarketplace",
   "description": "Decentralized Peer to Peer Marketplace for Phore",
   "version": "1.2.2",
-  "bin": "phoremarketplaceclient",
-  "maintainer": "Phore <admin@phore.io>",
+  "bin": "phoremarketplace",
+  "maintainer": "phore <admin@phore.io>",
+>>>>>>> Update branding and bump version number to 1.2.2
   "arch": "amd64",
-  "src": "dist/phoremarketplaceclient-linux-x64/",
+  "src": "dist/phoremarketplace-linux-x64/",
   "dest": "dist/linux64",
   "productDescription": "Decentralized Peer to Peer Marketplace for Phore",
   "intianOverrides": [

@@ -22,7 +22,7 @@ PACKAGE_VERSION=$(cat package.json \
   | awk -F: '{ print $2 }' \
   | sed 's/[",]//g' \
   | tr -d '[[:space:]]')
-echo "OpenBazaar Version: $PACKAGE_VERSION"
+echo "Phore Marketplace Version: $PACKAGE_VERSION"
 
 # Create temp/build dirs
 mkdir dist/
@@ -78,7 +78,7 @@ case "$TRAVIS_OS_NAME" in
     fi
 
     if [ -z "$CLIENT_VERSION" ]; then
-      APPNAME="openbazaar2"
+      APPNAME="phoremarketplace"
 
       echo "Packaging Electron application"
       electron-packager . ${APPNAME} --platform=linux --arch=ia32 --version=${ELECTRONVER} --overwrite --prune --out=dist
@@ -114,7 +114,7 @@ case "$TRAVIS_OS_NAME" in
       echo 'Create RPM archive'
       electron-installer-redhat --config .travis/config_amd64.json
     else
-      APPNAME="openbazaar2client"
+      APPNAME="phoremarketplaceclient"
 
       echo "Packaging Electron application"
       electron-packager . ${APPNAME} --platform=linux --arch=ia32 --version=${ELECTRONVER} --overwrite --prune --out=dist

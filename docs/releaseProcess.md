@@ -11,7 +11,7 @@ Before every release:
 
 TBD
 
-### OpenBazaar maintainer/release engineers, update version in sources
+### Phore Project maintainer/release engineers, update version in sources
 
 Update the following:
 
@@ -51,13 +51,13 @@ cd verify
 
 The list of files should be:
 ```
-OpenBazaar2-${VERSION}-full.nupkg
-OpenBazaar2-${VERSION}-Setup-32.exe
-OpenBazaar2-${VERSION}-Setup-64.exe
-OpenBazaar2-${VERSION}.dmg
-OpenBazaar2-mac-${VERSION}.zip
-openbazaar2_${VERSION}_amd64.deb
-openbazaar2_${VERSION}_i386.deb
+PhoreMarketplace-${VERSION}-full.nupkg
+PhoreMarketplace-${VERSION}-Setup-32.exe
+PhoreMarketplace-${VERSION}-Setup-64.exe
+PhoreMarketplace-${VERSION}.dmg
+PhoreMarketplace-mac-${VERSION}.zip
+PhoreMarketplace_${VERSION}_amd64.deb
+PhoreMarketplace_${VERSION}_i386.deb
 ```
 
 - Upload `SHA256SUMS.${VERSION}.asc` from last step, to the openbazaar.org server
