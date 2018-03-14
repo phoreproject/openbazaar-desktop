@@ -23,7 +23,7 @@ function isOSWin64() {
   return process.arch === 'x64' || process.env.hasOwnProperty('PROCESSOR_ARCHITEW6432');
 }
 
-const plat = process.platform === 'win32' ? `${isOSWin64() ? 'win64' : 'win32'}` : process.platform;
+const plat = process.platform === 'win32' ? `${isOSWin64() ? 'win' : 'win32'}` : process.platform;
 
 const feedURL = `https://hazel-server-imflzbzzpa.now.sh/update/${plat}/${version}`;
 
