@@ -175,19 +175,17 @@ case "$TRAVIS_OS_NAME" in
       mv dist/OpenBazaar2-win32-ia32/resources/openbazaar-go-windows-4.0-386.exe dist/OpenBazaar2-win32-ia32/resources/openbazaar-go/openbazaard.exe
       mv dist/OpenBazaar2-win32-ia32/resources/libwinpthread-1.dll dist/OpenBazaar2-win32-ia32/resources/openbazaar-go/libwinpthread-1.dll
 
-      echo 'Building ZIP file...'
-      cd dist
-      zip -r win64/OpenBazaar2-$PACKAGE_VERSION-Windows-32.zip OpenBazaar2-win32-ia32
-      cd ..
+      echo 'Building Installer...'
+      grunt create-windows-installer --appname=OpenBazaar2 --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2-win32-ia32 --outdir=dist/win32
+      mv dist/win32/OpenBazaar2Setup.exe dist/win32/OpenBazaar2-$PACKAGE_VERSION-Setup-32.exe
     else
       #### CLIENT ONLY
       echo 'Running Electron Packager...'
       electron-packager . OpenBazaar2Client --asar --out=dist --protocol-name=OpenBazaar --win32metadata.ProductName="OpenBazaar2Client" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2Client.exe --protocol=ob --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
-      echo 'Building ZIP file...'
-      cd dist
-      zip -r win64/OpenBazaar2Client-$PACKAGE_VERSION-Windows-32.zip OpenBazaar2Client-win32-ia32
-      cd ..
+      echo 'Building Installer...'
+      grunt create-windows-installer --appname=OpenBazaar2Client --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2Client-win32-ia32 --outdir=dist/win32
+      mv dist/win32/OpenBazaar2ClientSetup.exe dist/win32/OpenBazaar2Client-$PACKAGE_VERSION-Setup-32.exe
     fi
 
     # WINDOWS 64
@@ -205,19 +203,17 @@ case "$TRAVIS_OS_NAME" in
       mv dist/OpenBazaar2-win32-x64/resources/openbazaar-go-windows-4.0-amd64.exe dist/OpenBazaar2-win32-x64/resources/openbazaar-go/openbazaard.exe
       mv dist/OpenBazaar2-win32-x64/resources/libwinpthread-1.dll dist/OpenBazaar2-win32-x64/resources/openbazaar-go/libwinpthread-1.dll
 
-      echo 'Building ZIP file...'
-      cd dist
-      zip -r win64/OpenBazaar2-$PACKAGE_VERSION-Windows-x64.zip OpenBazaar2-win32-x64
-      cd ..
+      echo 'Building Installer...'
+      grunt create-windows-installer --appname=OpenBazaar2 --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2-win32-x64 --outdir=dist/win64
+      mv dist/win64/OpenBazaar2Setup.exe dist/win64/OpenBazaar2-$PACKAGE_VERSION-Setup-64.exe
     else
       #### CLIENT ONLY
       echo 'Running Electron Packager...'
       electron-packager . OpenBazaar2Client --asar --out=dist --protocol-name=OpenBazaar --win32metadata.ProductName="OpenBazaar2Client" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2Client.exe --protocol=ob --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
-      echo 'Building ZIP file...'
-      cd dist
-      zip -r win64/OpenBazaar2Client-$PACKAGE_VERSION-Windows-x64.zip OpenBazaar2Client-win32-x64
-      cd ..
+      echo 'Building Installer...'
+      grunt create-windows-installer --appname=OpenBazaar2Client --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2Client-win32-x64 --outdir=dist/win64
+      mv dist/win64/OpenBazaar2ClientSetup.exe dist/win64/OpenBazaar2Client-$PACKAGE_VERSION-Setup-64.exe
     fi
 
     # OSX
