@@ -36,7 +36,7 @@ function setFeedbackOptions() {
 export function addFeedback() {
   if (!window.doorbellOptions) setFeedbackOptions();
 
-  (function (w, d, t) {
+  (function load(w, d, t) {
     let hasLoaded = false;
     function l() {
       if (hasLoaded) {

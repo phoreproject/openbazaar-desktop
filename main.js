@@ -29,7 +29,7 @@ const feedURL = `https://hazel-server-imflzbzzpa.now.sh/update/${plat}/${version
 
 global.serverLog = '';
 
-const handleStartupEvent = function () {
+function handleStartupEvent() {
   if (process.platform !== 'win32') {
     return false;
   }
@@ -78,7 +78,7 @@ const handleStartupEvent = function () {
   }
 
   return true;
-};
+}
 
 if (handleStartupEvent()) {
   console.log('OpenBazaar started on Windows...');
@@ -113,13 +113,13 @@ let defaultUserDataPath;
 
 switch (process.platform) {
   case 'win32':
-    defaultUserDataPath = `${homedir()}\\OpenBazaar2.0-ClientData`;
+    defaultUserDataPath = `${homedir()}\\PhoreMarketplace-ClientData`;
     break;
   case 'darwin':
-    defaultUserDataPath = `${homedir()}/Library/Application Support/OpenBazaar2.0-ClientData`;
+    defaultUserDataPath = `${homedir()}/Library/Application Support/PhoreMarketplace-ClientData`;
     break;
   default:
-    defaultUserDataPath = `${homedir()}/.openbazaar2.0-clientData`;
+    defaultUserDataPath = `${homedir()}/.phoremarketplace-clientData`;
 }
 
 const userDataPath = argv.userData || defaultUserDataPath;
