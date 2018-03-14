@@ -1,6 +1,6 @@
 import {
   app, BrowserWindow, ipcMain,
-  Menu, Tray, session, crashReporter,
+  Menu, nativeImage, Tray, session, crashReporter,
   autoUpdater, shell, dialog,
 } from 'electron';
 import homedir from 'homedir';
@@ -393,10 +393,17 @@ function createWindow() {
   });
 
   // put logic here to set tray icon based on OS
+  // https://github.com/electron/electron/issues/7657#issuecomment-368236509
   let osTrayIcon = 'openbazaar-system-tray.png';
   if (process.platform === 'darwin') osTrayIcon = 'openbazaar-mac-system-tray.png';
+  const iconPath = path.join(__dirname, 'imgs', osTrayIcon);
+  let trayIcon = nativeImage.createFromPath(iconPath);
+  trayIcon = trayIcon.resize({
+    width: 16,
+    height: 16,
+  });
 
-  trayMenu = new Tray(`${__dirname}/imgs/${osTrayIcon}`);
+  trayMenu = new Tray(trayIcon);
 
   let trayTemplate = [];
 

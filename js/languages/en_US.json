@@ -1325,8 +1325,8 @@
     "introScreen": {
       "connectionLbl": "Connection:",
       "btnChange": "Change",
-      "introLine": "A free marketplace. No fees. No restrictions. Earn %{cur}.",
-      "tagLine": "Buy and Sell Freely",
+      "introLine": "A free marketplace, built for Phore. No fees. No restrictions. Earn %{cur}.",
+      "tagLine": "Buying and selling on your terms.",
       "btnGetStarted": "Get Started"
     },
     "infoScreen": {

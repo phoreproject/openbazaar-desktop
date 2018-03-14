@@ -14,7 +14,7 @@ function setFeedbackOptions() {
   const serverVersion = sVer.substring(sVer.lastIndexOf(':') + 1, sVer.lastIndexOf('/'));
 
   window.doorbellOptions = {
-    appKey: 'lscnduocsmcCDtvh4DCZ4iQhGuCXZy4iexy7bIRa6wa5MFocLkSSutFU3zOii5k8',
+    appKey: 'HuESZLq4XdhUwFb5s4ICxvfGWyOoAKkYFYcG27oOecrj6C1tPQkkJaqpDQ197xEl',
     name: profile.name || 'profile data missing',
     onShow: () => recordEvent('Feedback_Show'),
     onError: (code, message) => recordEvent('Feedback_Error', { code, message }),
@@ -48,7 +48,7 @@ export function addFeedback() {
       g.id = 'doorbellScript';
       g.type = 'text/javascript';
       g.async = true;
-      g.src = `https://embed.doorbell.io/button/4990?t=${(new Date().getTime())}`;
+      g.src = `https://embed.doorbell.io/button/7995?t=${(new Date().getTime())}`;
       (d.getElementsByTagName('head')[0] || d.getElementsByTagName('body')[0]).appendChild(g);
     }
     if (w.attachEvent) {
