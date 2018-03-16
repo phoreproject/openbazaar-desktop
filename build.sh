@@ -167,25 +167,25 @@ case "$TRAVIS_OS_NAME" in
     if [ -z "$CLIENT_VERSION" ]; then
       echo 'Running Electron Packager...'
 
-      electron-packager . OpenBazaar2 --asar --out=dist --protocol-name=OpenBazaar --win32metadata.ProductName="OpenBazaar2" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2.exe --protocol=ob --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+      electron-packager . phoremarketplace --asar --out=dist --protocol-name=PhoreMarketplace --win32metadata.ProductName="Phore Marketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace for Phore' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=phrm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
       echo 'Copying server binary into application folder...'
-      cp -rf temp/openbazaar-go-windows-4.0-386.exe dist/OpenBazaar2-win32-ia32/resources/
-      cp -rf temp/libwinpthread-1.win32.dll dist/OpenBazaar2-win32-ia32/resources/libwinpthread-1.dll
-      mkdir dist/OpenBazaar2-win32-ia32/resources/openbazaar-go
-      mv dist/OpenBazaar2-win32-ia32/resources/openbazaar-go-windows-4.0-386.exe dist/OpenBazaar2-win32-ia32/resources/openbazaar-go/openbazaard.exe
-      mv dist/OpenBazaar2-win32-ia32/resources/libwinpthread-1.dll dist/OpenBazaar2-win32-ia32/resources/openbazaar-go/libwinpthread-1.dll
+      cp -rf temp/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/
+      cp -rf temp/libwinpthread-1.win32.dll dist/phoremrakteplace-win32-ia32/resources/libwinpthread-1.dll
+      mkdir dist/phoremarketplace-win32-ia32/resources/openbazaar-go
+      mv dist/phoremarketplace-win32-ia32/resources/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/openbazaar-go/openbazaard.exe
+      mv dist/phoremarketplace-win32-ia32/resources/libwinpthread-1.dll dist/phoremarketplace-win32-ia32/resources/openbazaar-go/libwinpthread-1.dll
 
       echo 'Building Installer...'
-      grunt create-windows-installer --appname=OpenBazaar2 --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2-win32-ia32 --outdir=dist/win32
-      mv dist/win32/OpenBazaar2Setup.exe dist/win32/OpenBazaar2-$PACKAGE_VERSION-Setup-32.exe
+      grunt create-windows-installer --appname=PhoreMarketplace --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplace-win32-ia32 --outdir=dist/win32
+      mv dist/win32/PhoreMarketplaceSetup.exe dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe
     else
       #### CLIENT ONLY
       echo 'Running Electron Packager...'
-      electron-packager . OpenBazaar2Client --asar --out=dist --protocol-name=OpenBazaar --win32metadata.ProductName="OpenBazaar2Client" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2Client.exe --protocol=ob --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+      electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --win32metadata.ProductName="Phore Marketplace Client" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace for Phore' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=ob --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
       echo 'Building Installer...'
-      grunt create-windows-installer --appname=OpenBazaar2Client --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2Client-win32-ia32 --outdir=dist/win32
-      mv dist/win32/OpenBazaar2ClientSetup.exe dist/win32/OpenBazaar2Client-$PACKAGE_VERSION-Setup-32.exe
+      grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-ia32 --outdir=dist/win32
+      mv dist/win32/PhoreMarketplaceClientSetup.exe dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
     fi
 
     # WINDOWS 64
@@ -194,7 +194,7 @@ case "$TRAVIS_OS_NAME" in
 
     if [ -z "$CLIENT_VERSION" ]; then
       echo 'Running Electron Packager...'
-      electron-packager . OpenBazaar2 --asar --out=dist --protocol-name=OpenBazaar --win32metadata.ProductName="OpenBazaar2" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2.exe --protocol=ob --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+      electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --win32metadata.ProductName="Phore Marketplace" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2.exe --protocol=ob --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
       echo 'Copying server binary into application folder...'
       cp -rf temp/openbazaar-go-windows-4.0-amd64.exe dist/OpenBazaar2-win32-x64/resources/
