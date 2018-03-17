@@ -48,7 +48,7 @@
     },
     "install": "今すぐインストール"
   },
-  "addressBarPlaceholder": "検索単語かOpenBazaar ID, @ハンドル を入力してください。",
+  "addressBarPlaceholder": "検索単語かPhore マーケットプレイス ID, @ハンドル を入力してください。",
   "testnet": "テストモード",
   "testnetTooltip": "テストモードでは試験運用のためのテストネットのコインを利用します。",
   "tabMenuHeading": "メニュー",
@@ -139,7 +139,7 @@
     "notConnectedMenuItem": "未接続",
     "torOnTooltip": "Torは有効",
     "discoverCalloutTitle": "検索",
-    "discoverCalloutBody": "OpenBazaar上の店舗を閲覧・購入する",
+    "discoverCalloutBody": "Phore マーケットプレイス上の店舗を閲覧・購入する",
     "myPage": "マイページ",
     "customizePage": "ページの編集",
     "createListing": "出品の作成",
@@ -223,7 +223,7 @@
     "modAddError": "この仲裁者を追加する際にエラーが発生しました。 \n %{errMsg}",
     "modRemoveError": "この仲裁者を取り除く際にエラーが発生しました。\n %{errMsg}",
     "storeWelcomeCalloutTitle": "あなたのストアへようこそ！",
-    "storeWelcomeCalloutBody": "あなたの OpenBazaar ストアはネットワークで利用可能です。 出品を作成するか、ページをカスタマイズしましょう！",
+    "storeWelcomeCalloutBody": "あなたの Phore マーケットプレイス ストアはネットワークで利用可能です。 出品を作成するか、ページをカスタマイズしましょう！",
     "storeWelcomeCalloutBtnClose": "閉じる",
     "store": {
       "retryStoreFetch": "再試行",
@@ -301,10 +301,10 @@
     "languages": "言語"
   },
   "about": {
-    "linkText": "OpenBazaarについて",
-    "brand": "OpenBazaar",
+    "linkText": "Phore マーケットプレイスについて",
+    "brand": "Phore マーケットプレイス",
     "blurbs": {
-      "tradeFree": "OpenBazaar は複数の国の開発者の協働により作られ、自由な取引のためのボランティアにより動作しています。"
+      "tradeFree": "Phore マーケットプレイス は複数の国の開発者の協働により作られ、自由な取引のためのボランティアにより動作しています。"
     },
     "version": "バージョン %{version}",
     "bothVersions": "クライアント %{cVer}, サーバー %{sVer}",
@@ -325,10 +325,10 @@
     },
     "licenseTab": {
       "linkText": "ライセンス",
-      "sectionHeader": "OpenBazaar MIT ライセンス",
-      "licensePreface": "OpenBazaar は MIT ライセンスに基づくオープンソースソフトウェアです。このライセンスは他のオープンソースプロジェクトやプロプライエタリソフトウェアにソースを再使用・デザインの改変を許可するものです。下にライセンス全文を記載します。",
+      "sectionHeader": "Phore マーケットプレイス MIT ライセンス",
+      "licensePreface": "Phore マーケットプレイス は MIT ライセンスに基づくオープンソースソフトウェアです。このライセンスは他のオープンソースプロジェクトやプロプライエタリソフトウェアにソースを再使用・デザインの改変を許可するものです。下にライセンス全文を記載します。",
       "header": "The MIT License (MIT)",
-      "copyright": "Copright &copy; 2016 OpenBazaar 開発者チーム",
+      "copyright": "Copright &copy; 2016 OpenBazaar 開発者チーム &copy; 2017-2018 Phore 開発者チーム",
       "paragraphs": {
         "permission": "本ソフトウェアおよび関連するドキュメント（以下「ソフトウェア」という）のコピーを取得した者は、本ソフトウェアを制限なく使用することができます（本ソフトウェアの使用、コピー、変更の権利を含み、これに限定されません）。本ソフトウェアを複製、転載、複製、出版、配布、再許諾、および/または販売すること、および本ソフトウェアの提供を受ける者は次に従ってください:",
         "inclusion": "上記の著作権表示およびこの許可通知は、本ソフトウェアのすべてのコピーまたは部分に含まれるものとします。",
@@ -337,24 +337,8 @@
     },
     "contributorsTab": {
       "linkText": "Contributors",
-      "sectionHeader": "OpenBazaar Contributors",
+      "sectionHeader": "OpenBazaar & Phore Contributors",
       "listPreface": "This is a partial list of people who have contributed to the project, either through code or other assistance."
-    },
-    "storyTab": {
-      "linkText": "The Story",
-      "sectionHeader": "The Story of OpenBazaar",
-      "paragraphs": {
-        "taakisDarkMarket": "In April 2014 at a secretive Toronto hackathon a project called \"Dark Market\" was created. Amir Taaki lead a small team of developers to build a proof of concept for a decentralized marketplace. The software was completely peer to peer with no central organization controlling it. The Dark Market entry won the hackathon, but Amir and his team decided not to continue work on the project.",
-        "briansOpenBazaar": "Brian Hoffman talked to Amir about Dark Market and learned they weren't going to continue development. He liked the idea of a decentralized marketplace, but didn't like the sole focus on darknet markets, so he forked the project and renamed it OpenBazaar",
-        "alphaTeamalphaRelease": "The idea of a permissionless marketplace was powerful, and people around the world joined Brian to help build this open source software. In September this team released the first test version of the software.",
-        "momentOfTruth": "Over the next few months the team continued improving the software and got an encouraging response from the Bitcoin community. They visited FOSSDEM (Free Open Source Software Developers European Meeting) in Brussels early in 2015, and presented the project to an enthusiastic crowd. Brian and a few core members of the team decided that it was time to turn the project from a part-time, volunteer effort into a serious, well-funded campaign to bring free trade to the world.",
-        "foundedAndFunded": "They founded a company, OB1, with a $1 million venture capital investment from Union Square Ventures and Andreessen Horowitz, and immediately began hiring developers to build a better version of the software from the ground up.",
-        "marketOpening": "In April 2016 the first full release of the software was published, and tens of thousands of people around the world downloaded OpenBazaar and began buying and selling with each other directly, using Bitcoin.",
-        "toInfinityAndBeyond": "The initial team's work secured them a $3 million second round investment in the fall of 2016. Building on their ground-breaking work in version 1, an expanded OB1 set to work on OpenBazaar 2, with the aim of making trade free for even more people around the world.",
-        "cashCTA": "Donate now",
-        "or": "or",
-        "codeCTA": "get involved."
-      }
     }
   },
   "settings": {
@@ -367,7 +351,7 @@
       "helperLanguage": "インターフェースの表示言語",
       "helperCountry": "主に利用する国",
       "helperCurrency": "価格を表示するのに使う通貨",
-      "helperTranslations": "%{helperTranslationsLink}でOpenBazaarの翻訳を支援してください。",
+      "helperTranslations": "%{helperTranslationsLink}でPhore マーケットプレイスの翻訳を支援してください。",
       "helperTranslationsLink": "Transifex",
       "sectionName": "一般",
       "bitcoinUnit": "Phoreの単位",
@@ -488,7 +472,7 @@
         "purge": "シェアファイルをパージ",
         "purgeHelper": "シェアしていたファイルのキャッシュを消去",
         "purgeBtn": "ファイルをパージ",
-        "purgeToolTip": "OpenBazaar はキャッシュされた他のユーザーとのコンテンツをシェアするので、共有したくないコンテンツを見た場合、このボタンを用いて削除しましょう。",
+        "purgeToolTip": "Phore マーケットプレイス はキャッシュされた他のユーザーとのコンテンツをシェアするので、共有したくないコンテンツを見た場合、このボタンを用いて削除しましょう。",
         "purgeError": "エラーが発生したため、キャッシュファイルは削除されていません。",
         "purgeComplete": "キャッシュファイルは削除されました。",
         "blockData": "ブロックデータ",
@@ -555,7 +539,7 @@
       "languages": "言語",
       "languagesHelper": "対応できる全ての言語を記入してください。(正しくコミュニケーションをとれるもの).",
       "acceptGuidelines": "%{acceptGuidelinesLink}を読みました。",
-      "acceptGuidelinesLink": "OpenBazaar 紛争解決ガイドライン",
+      "acceptGuidelinesLink": "Phore マーケットプレイス 紛争解決ガイドライン",
       "understandRequirements": "私は上記の条件に反しない限り、紛争を解決するためにサービスを提供しなければならないことを理解しています。",
       "status":{
         "saving": "仲裁設定を保存しています...",
@@ -1104,8 +1088,8 @@
     "introScreen": {
       "connectionLbl": "接続:",
       "btnChange": "変更",
-      "introLine": "手数料も制限もほとんどない自由なマーケットプレイスです。Phore を稼ぐことができます。",
-      "tagLine": "自由な売買を",
+      "introLine": "Phoreのために作られた手数料無料・制限なしの自由なマーケットプレイス",
+      "tagLine": "あなたの思うままに売買を",
       "btnGetStarted": "始める"
     },
     "infoScreen": {
@@ -1122,7 +1106,7 @@
     },
     "tosScreen": {
       "heading": "利用規約",
-      "tos": "OpenBazaar は暗号通貨を用いて匿名性を担保しつつ二者間の自由な物品の売買を可能にするネットワークです。悪意を持って情報収集を行う業者がいるかもしれませんので、お気を付けください。\n\nOpenBazaar のユーザーは居住区の法律に従い合法な物品のみを売買するようお願いいたします。OpenBazaar の開発者は非合法な利用・活動を認めず、その活動におけるいかなる損失に対しても負担いたしません。\n\nOpenBazaar 開発者コミュニティは自由な売買プラットフォームを提供するために開発を続けています。しかしプログラムにはバグがつきものです。そのようなプログラムの問題による金銭的損失に対しても、我々は負担いたしません。\n\nOpenBazaar は自由であり、全ての行動は自分のものであり、また責任も自分のものです。"
+      "tos": "Phore マーケットプレイス は暗号通貨を用いて匿名性を担保しつつ二者間の自由な物品の売買を可能にするネットワークです。悪意を持って情報収集を行う業者がいるかもしれませんので、お気を付けください。\n\nPhore マーケットプレイス のユーザーは居住区の法律に従い合法な物品のみを売買するようお願いいたします。Phore マーケットプレイス の開発者は非合法な利用・活動を認めず、その活動におけるいかなる損失に対しても負担いたしません。\n\nPhore マーケットプレイス 開発者コミュニティは自由な売買プラットフォームを提供するために開発を続けています。しかしプログラムにはバグがつきものです。そのようなプログラムの問題による金銭的損失に対しても、我々は負担いたしません。\n\nPhore マーケットプレイス は自由であり、全ての行動は自分のものであり、また責任も自分のものです。"
     }
   },
   "pageControls": {
@@ -1184,8 +1168,8 @@
       "to": "送り先: %{address}",
       "payFromWallet": "ウォレットから支払い",
       "payWithAlt": "アルトコインで支払い",
-      "note1": "Bitcoinについての説明が欲しい場合、次のリンクを確認してください。 %{link}.",
-      "note1Link": "Bitcoin が必要ですか？ OpenBazaar.org を確認しましょう。",
+      "note1": "Bitcoin/Phore についての説明が欲しい場合、次のリンクを確認してください。 %{link}.",
+      "note1Link": "Bitcoin/Phore が必要ですか？ phore.io を確認しましょう。",
       "note2": "支払いはエスクローにより安全に保持されます。問題が生じれば、異議申し立てが出来ます。",
       "note3": "*仲裁者手数料は紛争の発生時のみ生じます。",
       "note4": "支払いを行えば、少しの時間でインターフェースに更新されます。",
@@ -1208,8 +1192,8 @@
       "send": "送る",
       "share": {
         "title": "友人などにシェア",
-        "body": "OpenBazaarで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。 詳しくは %{link}",
-        "shareMsg": "@OpenBazaarで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。",
+        "body": "Phore マーケットプレイスで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。 詳しくは %{link}",
+        "shareMsg": "Phore マーケットプレイスで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。",
         "postToTwitter": "Twitterに投稿",
         "postToFacebook": "Facebookに投稿",
         "postToPinterest": "Pinterestに投稿",
