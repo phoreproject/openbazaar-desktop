@@ -194,26 +194,26 @@ case "$TRAVIS_OS_NAME" in
 
     if [ -z "$CLIENT_VERSION" ]; then
       echo 'Running Electron Packager...'
-      electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --win32metadata.ProductName="Phore Marketplace" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2.exe --protocol=ob --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+      electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --win32metadata.ProductName="Phore Marketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace for Phore' --win32metadata.OriginalFilename=OpenBazaar2.exe --protocol=ob --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
       echo 'Copying server binary into application folder...'
-      cp -rf temp/openbazaar-go-windows-4.0-amd64.exe dist/OpenBazaar2-win32-x64/resources/
-      cp -rf temp/libwinpthread-1.win64.dll dist/OpenBazaar2-win32-x64/resources/libwinpthread-1.dll
-      mkdir dist/OpenBazaar2-win32-x64/resources/openbazaar-go
-      mv dist/OpenBazaar2-win32-x64/resources/openbazaar-go-windows-4.0-amd64.exe dist/OpenBazaar2-win32-x64/resources/openbazaar-go/openbazaard.exe
-      mv dist/OpenBazaar2-win32-x64/resources/libwinpthread-1.dll dist/OpenBazaar2-win32-x64/resources/openbazaar-go/libwinpthread-1.dll
+      cp -rf temp/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/
+      cp -rf temp/libwinpthread-1.win64.dll dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll
+      mkdir dist/PhoreMarketplace-win32-x64/resources/openbazaar-go
+      mv dist/PhoreMarketplace-win32-x64/resources/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/openbazaar-go/openbazaard.exe
+      mv dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll dist/PhoreMarketplace-win32-x64/resources/openbazaar-go/libwinpthread-1.dll
 
       echo 'Building Installer...'
-      grunt create-windows-installer --appname=OpenBazaar2 --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2-win32-x64 --outdir=dist/win64
-      mv dist/win64/OpenBazaar2Setup.exe dist/win64/OpenBazaar2-$PACKAGE_VERSION-Setup-64.exe
+      grunt create-windows-installer --appname="Phore Marketplace" --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplace-win32-x64 --outdir=dist/win64
+      mv dist/win64/PhoreMarketplaceSetup.exe dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
     else
       #### CLIENT ONLY
       echo 'Running Electron Packager...'
-      electron-packager . OpenBazaar2Client --asar --out=dist --protocol-name=OpenBazaar --win32metadata.ProductName="OpenBazaar2Client" --win32metadata.CompanyName="OpenBazaar" --win32metadata.FileDescription='Decentralized p2p marketplace for Bitcoin' --win32metadata.OriginalFilename=OpenBazaar2Client.exe --protocol=ob --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+      electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --win32metadata.ProductName="Phore Marketplace Client" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace for Phore' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=ob --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
       echo 'Building Installer...'
-      grunt create-windows-installer --appname=OpenBazaar2Client --obversion=$PACKAGE_VERSION --appdir=dist/OpenBazaar2Client-win32-x64 --outdir=dist/win64
-      mv dist/win64/OpenBazaar2ClientSetup.exe dist/win64/OpenBazaar2Client-$PACKAGE_VERSION-Setup-64.exe
+      grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
+      mv dist/win64/OpenBazaar2ClientSetup.exe dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
     fi
 
     # OSX
@@ -231,42 +231,42 @@ case "$TRAVIS_OS_NAME" in
 
     echo 'Running Electron Packager...'
     if [ -z "$CLIENT_VERSION" ]; then
-      electron-packager . OpenBazaar2 --out=dist -app-category-type=public.app-category.business --protocol-name=OpenBazaar --protocol=ob --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
+      electron-packager . PhoreMarketplace --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --protocol=ob --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
 
       echo 'Creating openbazaar-go folder in the OS X .app'
-      mkdir dist/OpenBazaar2-darwin-x64/OpenBazaar2.app/Contents/Resources/openbazaar-go
+      mkdir dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go
 
       echo 'Moving binary to correct folder'
-      mv dist/osx/openbazaard dist/OpenBazaar2-darwin-x64/OpenBazaar2.app/Contents/Resources/openbazaar-go/openbazaard
-      chmod +x dist/OpenBazaar2-darwin-x64/OpenBazaar2.app/Contents/Resources/openbazaar-go/openbazaard
+      mv dist/osx/openbazaard dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go/openbazaard
+      chmod +x dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go/openbazaard
     else
-      electron-packager . OpenBazaar2Client --out=dist -app-category-type=public.app-category.business --protocol-name=OpenBazaar --protocol=ob --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
+      electron-packager . PhoreMarketplaceClient --out=dist -app-category-type=public.app-category.business --protocol-name=Phore --protocol=ob --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
     fi
 
     echo 'Codesign the .app'
     if [ -z "$CLIENT_VERSION" ]; then
-      codesign --force --deep --sign "$SIGNING_IDENTITY" dist/OpenBazaar2-darwin-x64/OpenBazaar2.app
-      electron-installer-dmg dist/OpenBazaar2-darwin-x64/OpenBazaar2.app OpenBazaar2-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/OpenBazaar2-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
+      codesign --force --deep --sign "$SIGNING_IDENTITY" dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app
+      electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplace.app PhoreMarketplace-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplace-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
     else
-      codesign --force --deep --sign "$SIGNING_IDENTITY" dist/OpenBazaar2Client-darwin-x64/OpenBazaar2Client.app
-      electron-installer-dmg dist/OpenBazaar2Client-darwin-x64/OpenBazaar2Client.app OpenBazaar2Client-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/OpenBazaar2Client-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
+      codesign --force --deep --sign "$SIGNING_IDENTITY" dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app
+      electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceClient-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
     fi
 
     echo 'Codesign the DMG and zip'
     if [ -z "$CLIENT_VERSION" ]; then
-      codesign --force --sign "$SIGNING_IDENTITY" dist/OpenBazaar2-darwin-x64/OpenBazaar2-$PACKAGE_VERSION.dmg
-      cd dist/OpenBazaar2-darwin-x64/
-      zip -q -r OpenBazaar2-mac-$PACKAGE_VERSION.zip OpenBazaar2.app
-      cp -r OpenBazaar2.app ../osx/
-      cp OpenBazaar2-mac-$PACKAGE_VERSION.zip ../osx/
-      cp OpenBazaar2-$PACKAGE_VERSION.dmg ../osx/
+      codesign --force --sign "$SIGNING_IDENTITY" dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
+      cd dist/PhoreMarketplace-darwin-x64/
+      zip -q -r PhoreMarketplace-mac-$PACKAGE_VERSION.zip PhoreMarketplace.app
+      cp -r PhoreMarketplace.app ../osx/
+      cp PhoreMarketplace-mac-$PACKAGE_VERSION.zip ../osx/
+      cp PhoreMarketplace-$PACKAGE_VERSION.dmg ../osx/
     else
-      codesign --force --sign "$SIGNING_IDENTITY" dist/OpenBazaar2Client-darwin-x64/OpenBazaar2Client-$PACKAGE_VERSION.dmg
-      cd dist/OpenBazaar2Client-darwin-x64/
-      zip -q -r OpenBazaar2Client-mac-$PACKAGE_VERSION.zip OpenBazaar2Client.app
-      cp -r OpenBazaar2Client.app ../osx/
-      cp OpenBazaar2Client-mac-$PACKAGE_VERSION.zip ../osx/
-      cp OpenBazaar2Client-$PACKAGE_VERSION.dmg ../osx/
+      codesign --force --sign "$SIGNING_IDENTITY" dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+      cd dist/PhoreMarketplaceClient-darwin-x64/
+      zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
+      cp -r PhoreMarketplaceClient.app ../osx/
+      cp PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip ../osx/
+      cp PhoreMarketplaceClient-$PACKAGE_VERSION.dmg ../osx/
     fi
 
     ;;
