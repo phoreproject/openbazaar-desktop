@@ -167,7 +167,7 @@ case "$TRAVIS_OS_NAME" in
     if [ -z "$CLIENT_VERSION" ]; then
       echo 'Running Electron Packager...'
 
-      electron-packager . phoremarketplace --asar --out=dist --protocol-name=PhoreMarketplace --win32metadata.ProductName="Phore Marketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace for Phore' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=phrm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+      electron-packager . phoremarketplace --asar --out=dist --protocol-name=PhoreMarketplace --win32metadata.ProductName="Phore Marketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace for Phore' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=ob --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
       echo 'Copying server binary into application folder...'
       cp -rf temp/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/
       cp -rf temp/libwinpthread-1.win32.dll dist/phoremrakteplace-win32-ia32/resources/libwinpthread-1.dll
@@ -246,27 +246,27 @@ case "$TRAVIS_OS_NAME" in
     echo 'Codesign the .app'
     if [ -z "$CLIENT_VERSION" ]; then
       codesign --force --deep --sign "$SIGNING_IDENTITY" dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app
-      electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplace.app PhoreMarketplace-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplace-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
+      electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplace.app Marketplace-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplace-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
     else
       codesign --force --deep --sign "$SIGNING_IDENTITY" dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app
-      electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceClient-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
+      electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app MarketplaceClient-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
     fi
 
     echo 'Codesign the DMG and zip'
     if [ -z "$CLIENT_VERSION" ]; then
-      codesign --force --sign "$SIGNING_IDENTITY" dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
+      codesign --force --sign "$SIGNING_IDENTITY" dist/PhoreMarketplace-darwin-x64/Marketplace-$PACKAGE_VERSION.dmg
       cd dist/PhoreMarketplace-darwin-x64/
-      zip -q -r PhoreMarketplace-mac-$PACKAGE_VERSION.zip PhoreMarketplace.app
+      zip -q -r Marketplace-mac-$PACKAGE_VERSION.zip PhoreMarketplace.app
       cp -r PhoreMarketplace.app ../osx/
-      cp PhoreMarketplace-mac-$PACKAGE_VERSION.zip ../osx/
-      cp PhoreMarketplace-$PACKAGE_VERSION.dmg ../osx/
+      cp Marketplace-mac-$PACKAGE_VERSION.zip ../osx/
+      cp Marketplace-$PACKAGE_VERSION.dmg ../osx/
     else
-      codesign --force --sign "$SIGNING_IDENTITY" dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+      codesign --force --sign "$SIGNING_IDENTITY" dist/PhoreMarketplaceClient-darwin-x64/MarketplaceClient-$PACKAGE_VERSION.dmg
       cd dist/PhoreMarketplaceClient-darwin-x64/
-      zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
+      zip -q -r MarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
       cp -r PhoreMarketplaceClient.app ../osx/
-      cp PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip ../osx/
-      cp PhoreMarketplaceClient-$PACKAGE_VERSION.dmg ../osx/
+      cp MarketplaceClient-mac-$PACKAGE_VERSION.zip ../osx/
+      cp MarketplaceClient-$PACKAGE_VERSION.dmg ../osx/
     fi
 
     ;;
