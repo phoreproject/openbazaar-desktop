@@ -2,7 +2,7 @@
   "productName": "PhoreMarketplace",
   "name": "phoremarketplaceclient",
   "description": "Decentralized Peer to Peer Marketplace for Phore",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "bin": "phoremarketplaceclient",
   "maintainer": "Phore <admin@phore.io>",
   "arch": "amd64",

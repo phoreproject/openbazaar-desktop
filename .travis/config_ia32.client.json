@@ -1,7 +1,7 @@
 {
   "productName": "PhoreMarketplace",
   "name": "phoremarketplaceclient",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "bin": "phoremarketplaceclient",
   "description": "Decentralized Peer to Peer Marketplace for Phore",
   "maintainer": "Phore <admin@phore.io>",
