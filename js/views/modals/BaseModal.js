@@ -157,10 +157,9 @@ export default class BaseModal extends baseVw {
       this._open = false;
       this.__trigger('close');
 
-      //// Dispatch event to listen for when Modal is closed
-      var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
+      // Dispatch event to listen for when modal is closed
+      const closeModal = new CustomEvent('closeModal', { detail: 'Close Modal window' });
       document.dispatchEvent(closeModal);
-      ////////
     }
 
     if (this.__options.removeOnClose) {
