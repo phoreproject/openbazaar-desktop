@@ -28,7 +28,7 @@ export default class extends BaseView {
   }
 
   className() {
-    return 'searchProviders flexRow gutterH';
+    return 'searchProviders flexRow gutterH flexVCent';
   }
 
   events() {
