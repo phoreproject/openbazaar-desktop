@@ -527,7 +527,9 @@ html {
   font-family: 'Hind','bitcoinregular', 'noto_sans';
 }
 
-
+.clrT2 {
+    color: #a2a2a2;
+}
 .brandLogo.navBtn {
   background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='29.21' height='34' viewBox='0 0 29.21 34'><path fill='%2300d188' d='M29.21,0l0,21a3.48,3.48,0,0,1-2.89,3.39L7.88,28.84v3.25L0,34V3.54A3.38,3.38,0,0,1,3.63,0ZM7.88,7.88V20.79l13.45-3.22V7.88Z'/></svg>") center center no-repeat;
   background-size: 65%;
@@ -544,6 +546,12 @@ html {
     width:1200px;
     margin: 0 calc((100% - 1200px) / 2) 0 auto;
   }
+  .userPage .pageContent .pageControls {
+    padding: 288px 0 40px 0;
+}
+.userPage .header {
+  height:361px;
+}
 }
 
 // /* Large screens ----------- */
@@ -782,7 +790,6 @@ text-decoration:none;
 
 .shop-location {
   padding-left:10px;
-  // background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6.5' height='9.5' viewBox='0 0 6.5 9.5'><path fill='%8e9194' d='M6.5,3.14A3.19,3.19,0,0,0,3.25,0,3.19,3.19,0,0,0,0,3.14,6.73,6.73,0,0,0,1.37,6.8L3.25,9.5,5.13,6.79h0A6.59,6.59,0,0,0,6.5,3.14ZM3.25,5A1.74,1.74,0,0,1,1.48,3.24,1.74,1.74,0,0,1,3.25,1.53,1.73,1.73,0,0,1,5,3.23,1.74,1.74,0,0,1,3.25,5Z'/></svg>") 0 0 no-repeat;
   background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='21' height='22' viewBox='0 0 21 22'><path fill='%238e9194' d='M6.5,3.14A3.19,3.19,0,0,0,3.25,0,3.19,3.19,0,0,0,0,3.14,6.73,6.73,0,0,0,1.37,6.8L3.25,9.5,5.13,6.79h0A6.59,6.59,0,0,0,6.5,3.14ZM3.25,5A1.74,1.74,0,0,1,1.48,3.24,1.74,1.74,0,0,1,3.25,1.53,1.73,1.73,0,0,1,5,3.23,1.74,1.74,0,0,1,3.25,5Z'/></svg>") 0 2px no-repeat;
 }
 
@@ -910,17 +917,7 @@ input[type="text"], input[type="number"], input[type="password"], input[type="em
   background:white;
 }
 
-// _buttons.scss
 
-// .btn:hover:not(.btnRadio):not(.btnAsLink), .btnRadio:hover:not(.btnRadio):not(.btnAsLink), .btnTxt:hover:not(.btnRadio):not(.btnAsLink), .btnTxtOnly:hover:not(.btnRadio):not(.btnAsLink), .btnAsLink:hover:not(.btnRadio):not(.btnAsLink), .iconBtn:hover:not(.btnRadio):not(.btnAsLink), .iconBtnSm:hover:not(.btnRadio):not(.btnAsLink), .iconBtnTn:hover:not(.btnRadio):not(.btnAsLink), .btnHg:hover:not(.btnRadio):not(.btnAsLink), .btn:focus:not(.btnRadio):not(.btnAsLink), .btnRadio:focus:not(.btnRadio):not(.btnAsLink), .btnTxt:focus:not(.btnRadio):not(.btnAsLink), .btnTxtOnly:focus:not(.btnRadio):not(.btnAsLink), .btnAsLink:focus:not(.btnRadio):not(.btnAsLink), .iconBtn:focus:not(.btnRadio):not(.btnAsLink), .iconBtnSm:focus:not(.btnRadio):not(.btnAsLink), .iconBtnTn:focus:not(.btnRadio):not(.btnAsLink), .btnHg:focus:not(.btnRadio):not(.btnAsLink) {
-//   text-decoration: none;
-//   cursor: pointer;
-// }
-// .btn {
-
-// }
-
-// 
 
 .btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm {
   border: none;
@@ -1133,18 +1130,17 @@ input.js-addressBar:focus {
 }
 
 .notificationsList{
-.spinner {
-  opacity:0.5;
-}
+  .spinner {
+    opacity:0.5;
+  }
   .spinner path, .spinner rect {
-    fill: white;
+      fill: white;
+  }
 }
 
-}
 .modalOpen .modal:not(.editListing):not(.navOverlay):not(.listingDetail):not(.purchase) {
   color: white!important;
   background: #121c29;
-
 
   .spinner {
     opacity:0.5;
@@ -1153,24 +1149,23 @@ input.js-addressBar:focus {
     fill: white;
   }
   
-input[type="checkbox"]:checked + label:before {
+  input[type="checkbox"]:checked + label:before {
     color:#00d188;
   }
 
   .select2-container .select2-dropdown, .select2-container .select2-selection, input[type="text"], input[type="number"], input[type="password"], input[type="email"], input[type="url"], textarea, .select2-container--focus .select2-selection__rendered, .select2Tags + .select2-container .select2-container--default .select2-selection--multiple .select2-selection__rendered, .trumbowyg-editor, .selectize-input, .selectize-control.single .selectize-input.input-active {
     border-color: #252525;
     background: rgba(0, 0, 0, 0.3);
-    background: rgba(255,255,255, 0.05);
+    background: rgba(255,255,255, 0.07);
     border-radius: 0.5rem;
     border-width: 2px;
     border: none;
   }
   
   input[type="text"], input[type="number"], input[type="password"], input[type="email"], input[type="url"], textarea, .select2-container--focus .select2-selection__rendered, .select2Tags + .select2-container .select2-container--default .select2-selection--multiple .select2-selection__rendered, .trumbowyg-editor {
-    color: #e4e4e4;
+    color: #c7c7c7
   }
   
-
   
   hr.clrBr {
     background: rgba(255,255,255, 0.08);
@@ -1406,4 +1401,32 @@ h2.listing-title {
 
 .listingsGrid.listingsGridListView .listingCard {
   border-radius:3px;
+}
+
+.confirmBox {
+  background: #162231;
+  border-radius: 3px;
+  h2 {
+    font-weight:500;
+  }
+  h3 {
+    color:white;
+  }
+
+  input {
+    background: rgba(255, 255, 255, 0.07);
+    border:none;
+    color:white;
+  }
+}
+
+.search .searchBar .searchBtn.js-searchBtn {
+  border-radius: 0 4rem 4rem 0;
+  line-height:36px;
+}
+
+#appFrame .selectize-control .items > *:not(input) {
+  opacity:0.85;
+  border-radius:3px;
+  margin:2px;
 }

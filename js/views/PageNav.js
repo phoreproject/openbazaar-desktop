@@ -296,11 +296,10 @@ export default class extends BaseVw {
     }
 
     if (isOpen) {
-      console.log('closed nav menu');
-                                    //// Dispatch event to listen for when Notifications Modal is closed
-                                    var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
-                                    document.dispatchEvent(closeModal);
-                                    ////////
+       //// Dispatch event to listen for when Notifications Modal is closed
+       var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
+       document.dispatchEvent(closeModal);
+      ////////
     }
 
   }
@@ -311,16 +310,12 @@ export default class extends BaseVw {
     this.$navOverlay.removeClass('open');
     this.$connManagementContainer.removeClass('open');
     
-
-
-              // console.log('closed nav menu');
-              if (isOpen) {
-                console.log('closed nav menu');
-                              //// Dispatch event to listen for when Notifications Modal is closed
-              var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
-              document.dispatchEvent(closeModal);
-              ////////
-              }
+    if (isOpen) {
+      //// Dispatch event to listen for when Notifications Modal is closed
+      var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
+      document.dispatchEvent(closeModal);
+      ////////
+    }
   }
 
   onNavListClick(e) {
