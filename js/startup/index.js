@@ -84,16 +84,14 @@ window.onfocus = () => {
 };
 
 
-setTimeout(() => {
+$(() => {
   document.addEventListener('closeModal', () => {
     $('.navBtn').removeClass('active');
-    setTimeout(() => {
-      if ($('.modal.wallet').length
-      && !$('.js-navList').hasClass('open')
-      && !$('.modal.settings').length) {
-        $('.js-navWalletBtn').addClass('active');
-      }
-    }, 10);
+    if ($('.modal.wallet').length
+        && !$('.js-navList').hasClass('open')
+        && !$('.modal.settings').length) {
+      $('.js-navWalletBtn').addClass('active');
+    }
   });
 
   $('.navBtn').on('click', () => {
@@ -103,12 +101,10 @@ setTimeout(() => {
 
   $('.js-navWalletBtn').on('click', () => {
     if ($('.modal.wallet').length
-    && !$('.js-notifContainer').hasClass('open')
-    && !$('.js-navList').hasClass('open')) {
-      setTimeout(() => {
-        $('.modalCloseBtn')[0].click();
-      }, 10);
+        && !$('.js-notifContainer').hasClass('open')
+        && !$('.js-navList').hasClass('open')) {
+      $('.modalCloseBtn')[0].click();
     }
   });
-}, 1000);
+});
 
