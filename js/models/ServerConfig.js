@@ -20,6 +20,11 @@ export default class extends BaseModel {
       SSL: false,
       default: false,
       useTor: false,
+      useSSH: false,
+      sshHost: '127.0.0.1',
+      sshUsername: 'root',
+      sshPassword: '',
+      sshKeyfile: '~/.ssh/id_rsa',
       confirmedTor: false,
       torProxy: '127.0.0.1:9150',
       dontShowTorExternalLinkWarning: false,
@@ -99,6 +104,29 @@ export default class extends BaseModel {
       }
     }
 
+    if (attrs.useSSH) {
+      let valid = true;
+      const split = attrs.torProxy.split(':');
+
+      if (split.length !== 2) {
+        valid = false;
+      } else {
+        if (!is.ip(split[0])) {
+          valid = false;
+        } else if (!is.within(parseInt(split[1], 10), -1, 65536)) {
+          valid = false;
+        }
+      }
+
+      if (!valid) {
+        addError('sshTunnel', app.polyglot.t('serverConfigModelErrors.invalidSSHHost'));
+      }
+
+      if (!attrs.sshPassword && !attrs.sshKeyfile) {
+        addError('sshTunnel', app.polyglot.t('serverConfigModelErrors.invalidSSHPassword'));
+      }
+    }
+
     if (!attrs.default) {
       if (attrs.port === undefined || attrs.port === '') {
         addError('port', app.polyglot.t('serverConfigModelErrors.provideValue'));
@@ -155,8 +183,8 @@ export default class extends BaseModel {
    * your machine. It may be the local bundled server or it may be a locally
    * run stand-alone server.
    */
-  isLocalServer(ip = this.get('serverIp')) {
-    return ip === 'localhost' || ip === '127.0.0.1';
+  isLocalServer(ip = this.get('serverIp'), useSSH = this.get('useSSH')) {
+    return (ip === 'localhost' || ip === '127.0.0.1') && !useSSH;
   }
 
   isTorPwRequired() {

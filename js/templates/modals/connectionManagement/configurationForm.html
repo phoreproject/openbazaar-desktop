@@ -108,6 +108,16 @@
         <label for="serverConfigUseTor"><%= ob.polyT('connectionManagement.configurationForm.useTor') %></label>
       </div>
     </div>
+    <div class="flexRow">
+      <div class="col3">
+        <label><%= ob.polyT('connectionManagement.configurationForm.sshLabel') %></label>
+      </div>
+      <div class="col9">
+          <% if (ob.errors.useSSH) print(ob.formErrorTmpl({ errors: ob.errors.useSSH })) %>
+        <input type="checkbox" id="serverConfigUseSSH" name="useSSH" <% if (ob.useSSH) print('checked') %> />
+        <label for="serverConfigUseSSH"><%= ob.polyT('connectionManagement.configurationForm.useSSH') %></label>
+      </div>
+    </div>
     <div class="js-torDetails torDetails padMdKids padStack <% if (!ob.useTor) print('hide') %>">
       <% if (!ob.default) { %>
       <div>
@@ -132,6 +142,48 @@
         <div class="col9">
           <% if (ob.errors.torPassword) print(ob.formErrorTmpl({ errors: ob.errors.torPassword })) %>
           <input type="password" class="clrBr clrSh2" name="torPassword" id="serverConfigTorPw" value="<%= ob.torPassword %>" placeholder="<%= ob.polyT('connectionManagement.configurationForm.torPwPlaceholder') %>">
+        </div>
+      </div>
+    </div>
+    <div class="js-sshDetails torDetails padMdKids padStack <% if (!ob.useSSH) print('hide') %>">
+      <div class="flexRow">
+        <div class="col3">
+          <label class="required"><%= ob.polyT('connectionManagement.configurationForm.sshHostLabel') %></label>
+        </div>
+        <div class="col9">
+          <input type="text" class="clrBr clrSh2 required" name="sshHost" id="serverConfigHost" value="<%= ob.sshHost %>" placeholder="<%= ob.polyT('connectionManagement.configurationForm.sshHostPlaceholder') %>">
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="col3">
+          <label class="required"><%= ob.polyT('connectionManagement.configurationForm.sshUsernameLabel') %></label>
+        </div>
+        <div class="col9">
+          <input type="text" class="clrBr clrSh2 required" name="sshUsername" id="sshConfigUsername" value="<%= ob.sshUsername %>" placeholder="<%= ob.polyT('connectionManagement.configurationForm.sshUsernamePlaceholder') %>">
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="col3">
+          <label><%= ob.polyT('connectionManagement.configurationForm.sshPasswordLabel') %></label>
+        </div>
+        <div class="col9">
+          <input type="password" class="clrBr clrSh2" name="sshPassword" id="serverConfigPassword" value="<%= ob.sshPassword %>" placeholder="<%= ob.polyT('connectionManagement.configurationForm.sshPasswordPlaceholder') %>">
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="col3">
+          <label><%= ob.polyT('connectionManagement.configurationForm.sshKeyfileLabel') %></label>
+        </div>
+        <div class="col9">
+          <div class="flexRow">
+            <div class="col9">
+              <input type="text" class="clrBr clrSh2" name="sshKeyFile" id="serverConfigKeyfile" value="<%= ob.sshKeyfile %>"/>
+            </div>
+            <div class="col3">
+              <input type="file" class="choose-file" name="sshKeyFileSelector" value="<%= ob.sshKeyfile %>" id="serverConfigKeyfileChooser" hidden>
+              <a class="btn clrP clrBr clrSh2 center-button-with-input js-select-key">Select key</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

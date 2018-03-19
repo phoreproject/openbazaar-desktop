@@ -3,6 +3,8 @@ import { remote, ipcRenderer } from 'electron';
 import _ from 'underscore';
 import $ from 'jquery';
 import { Events } from 'backbone';
+import sshTunnel from 'open-ssh-tunnel';
+import fs from 'fs';
 import Socket from '../utils/Socket';
 import { guid } from './';
 import app from '../app';
@@ -33,6 +35,7 @@ export { events };
 const getLocalServer = _.once(() => (remote.getGlobal('localServer')));
 
 let currentConnection = null;
+let currentSSHServer = null;
 let debugLog = '';
 
 function log(msg) {
@@ -142,6 +145,10 @@ function authenticate(server) {
  * If we're currently connected to a server, this method will disconnect the connection.
  */
 export function disconnect() {
+  if (currentSSHServer !== null) {
+    currentSSHServer.close();
+    currentSSHServer = null;
+  }
   const curCon = getCurrentConnection();
   if (curCon && curCon.socket) curCon.socket.close();
 }
@@ -401,25 +408,59 @@ export default function connect(server, options = {}) {
           });
         }
       } else {
-        socketConnectAttempt = socketConnect(socket)
-          .done(() => {
-            if (server.needsAuthentication()) {
-              innerConnectDeferred.notify('authenticating');
-              authenticate(server)
-                .done(() => innerConnectDeferred.resolve('connected'))
-                .fail((reason, e) => {
-                  innerConnectDeferred.reject('authentication-failed', { failedAuthEvent: e });
-                });
-            } else {
-              innerConnectDeferred.resolve('connected');
-            }
-          }).fail((reason, e) => {
-            if (reason === 'canceled') {
-              innerConnectDeferred.reject('canceled');
-            } else {
-              innerConnectDeferred.reject('socket-connect-failed', { socketCloseEvent: e });
-            }
-          });
+        const afterSSHInitialized = (sshServer) => {
+          currentSSHServer = sshServer;
+          socketConnect(socket)
+            .done(() => {
+              if (server.needsAuthentication()) {
+                innerConnectDeferred.notify('authenticating');
+                authenticate(server)
+                  .done(() => innerConnectDeferred.resolve('connected'))
+                  .fail((reason, e) => {
+                    sshServer.close();
+                    innerConnectDeferred.reject('authentication-failed', { failedAuthEvent: e });
+                  });
+              } else {
+                innerConnectDeferred.resolve('connected');
+              }
+            }).fail((reason, e) => {
+              if (reason === 'canceled') {
+                sshServer.close();
+                innerConnectDeferred.reject('canceled');
+              } else {
+                sshServer.close();
+                innerConnectDeferred.reject('socket-connect-failed', { socketCloseEvent: e });
+              }
+            });
+        };
+        if (server.get('useSSH')) {
+          const keyExists = fs.existsSync(server.get('sshKeyfile'));
+          if (!keyExists && !server.get('sshPassword')) {
+            innerConnectDeferred.reject('invalid-ssh-key-file');
+            return;
+          }
+          let privateKey = undefined;
+          if (keyExists) {
+            privateKey = fs.readFileSync(server.get('sshKeyfile'));
+          }
+          sshTunnel({
+            host: server.get('sshHost'),
+            username: server.get('sshUsername'),
+            password: server.get('sshPassword'),
+            srcPort: 5002,
+            srcAddr: '127.0.0.1',
+            dstPort: 5002,
+            dstAddr: '127.0.0.1',
+            readyTimeout: 5000,
+            forwardTimeout: 5000,
+            localPort: 5002,
+            localAddr: '127.0.0.1',
+            privateKey,
+          }).then(afterSSHInitialized)
+          .catch((e) => innerConnectDeferred.reject('ssh-connection-failed', e));
+        } else {
+          afterSSHInitialized({ close: () => 0 }); // harmless hack to fake an SSH server interface
+        }
       }
     };
 

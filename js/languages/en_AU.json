@@ -715,6 +715,16 @@
       "placeholderPort": "The port to your server",
       "torLabel": "Tor",
       "useTor": "Use Tor",
+      "sshLabel": "SSH Tunnel",
+      "useSSH": "Use an SSH tunnel",
+      "sshHostLabel": "SSH Host",
+      "sshHostPlaceholder": "127.0.0.1:22",
+      "sshUsernameLabel": "SSH Username",
+      "sshUsernamePlaceholder": "root",
+      "sshPasswordLabel": "SSH Password",
+      "sshPasswordPlaceholder": "Password if using password-based authentication otherwise blank",
+      "sshKeyfileLabel": "SSH Private Key",
+      "sshKeyfilePlaceholder": "~/.ssh/id_rsa",
       "configureTorMessage": "Tor has been detected. If you would like to use Tor, please check the \"Use Tor\" box below and specify your \"Tor SOCKS5 proxy\" setting. Click Save to confirm your decision.",
       "torNotAvailableMessage": "Tor was not detected. If you would like to proceed without Tor, uncheck \"Use Tor\" below and click Save. Otherwise start up Tor and then retry connecting.",
       "torProxyLabel": "Tor SOCKS5 proxy",
@@ -1585,7 +1595,9 @@
     "invalidIp": "This does not appear to be a valid IP address.",
     "providePortAsNumber": "Please provide a port as a number.",
     "provideValidPortRange": "Please provide a number between 0 and 65535.",
-    "invalidTorProxy": "The value does not appear to be in the right format. It should be in the format ip-address:port, e.g. 127.0.0.1:9150. The port must be a number between 0 and 65535."
+    "invalidTorProxy": "The value does not appear to be in the right format. It should be in the format ip-address:port, e.g. 127.0.0.1:9150. The port must be a number between 0 and 65535.",
+    "invalidSSHPassword": "Please provide either a password or key file.",
+    "invalidSSHHost": "Please provide a valid IP address"
   },
   "shippingAddressModelErrors": {
     "provideName": "Please provide a name.",
