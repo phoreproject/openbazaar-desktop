@@ -1437,3 +1437,17 @@ h2.listing-title {
   top: 1px;
   transform: rotate(-45deg);
 }
+
+.connectionManagement .configurations .statusBarOuterWrap {
+  background: #162231;
+  height: 57px;
+  border-radius: 3px;
+}
+
+.connectionManagement .configurations .borderFillIn {
+  display:none;
+}
+
+.clrBr:hover, .clrBr:focus {
+  border-color: rgba(59, 67, 74, 0.35);
+}
