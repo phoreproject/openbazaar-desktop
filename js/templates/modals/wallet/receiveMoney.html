@@ -25,7 +25,7 @@
         <% serverCur = ob.currencyMod.getServerCurrency() %>
         <% if (serverCur.needCoinLink) { %>
           <%= ob.crypto.cryptoIcon({ className: 'margRSm'}) %>
-          <a href="<%= serverCur.needCoinLink %>" class="clrT txB txU">
+          <a href="<%= serverCur.needCoinLink %>" class="clrT">
             <%= ob.polyT('wallet.receiveMoney.needCoinLink', { cur: serverCur.name }) %>
           </a>
         <% } %>
