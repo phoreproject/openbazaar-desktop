@@ -745,7 +745,6 @@ text-decoration:none;
   background:white;
   border-radius:4px;
   border:none;
-  overflow:hidden;
   box-shadow: 0px 1px 3px rgba(0,0,0,.08)!important;
 }
 
@@ -919,7 +918,7 @@ input[type="text"], input[type="number"], input[type="password"], input[type="em
 
 
 
-.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm {
+.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed {
   border: none;
   background: #00d188;
   border-radius: 4rem;
@@ -1405,7 +1404,10 @@ h2.listing-title {
 
 .confirmBox {
   background: #162231;
+  border: 1px solid rgba(59, 67, 74, 0.35);
   border-radius: 3px;
+  padding:30px;
+  color:white;
   h2 {
     font-weight:500;
   }
@@ -1450,4 +1452,13 @@ h2.listing-title {
 
 .clrBr:hover, .clrBr:focus {
   border-color: rgba(59, 67, 74, 0.35);
+}
+
+
+.listingCard .deleteConfirm {
+  left: 12px;
+    top: -28px;
+  hr {
+    display:none;
+  }
 }
