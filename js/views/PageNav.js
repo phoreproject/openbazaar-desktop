@@ -289,16 +289,38 @@ export default class extends BaseVw {
     const isOpen = this.$navList.hasClass('open');
     this.$navList.toggleClass('open', !isOpen);
     this.$navOverlay.toggleClass('open', !isOpen);
+     
 
     if (!isOpen) {
       this.$connManagementContainer.removeClass('open');
     }
+
+    if (isOpen) {
+      console.log('closed nav menu');
+                                    //// Dispatch event to listen for when Notifications Modal is closed
+                                    var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
+                                    document.dispatchEvent(closeModal);
+                                    ////////
+    }
+
   }
 
   closeNavMenu() {
+    const isOpen = this.$navList.hasClass('open');
     this.$navList.removeClass('open');
     this.$navOverlay.removeClass('open');
     this.$connManagementContainer.removeClass('open');
+    
+
+
+              // console.log('closed nav menu');
+              if (isOpen) {
+                console.log('closed nav menu');
+                              //// Dispatch event to listen for when Notifications Modal is closed
+              var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
+              document.dispatchEvent(closeModal);
+              ////////
+              }
   }
 
   onNavListClick(e) {
@@ -322,6 +344,7 @@ export default class extends BaseVw {
     if (this.isNotificationsOpen()) {
       this.closeNotifications();
       this.$navOverlay.removeClass('open');
+
     } else {
       this.$navOverlay.addClass('open');
 
@@ -352,6 +375,11 @@ export default class extends BaseVw {
     if (opts.closeNavList) this.$navList.removeClass('open');
     this.getCachedEl('.js-notifContainer').removeClass('open');
     if (opts.closeOverlay) this.$navOverlay.removeClass('open');
+
+                //// Dispatch event to listen for when Notifications Modal is closed
+                var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
+                document.dispatchEvent(closeModal);
+                ////////
 
     if (this.notifications) {
       const count = this.unreadNotifCount;

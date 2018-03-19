@@ -74,3 +74,44 @@ export function handleLinks() {
     e.preventDefault();
   });
 }
+
+window.onblur = function() {
+  //document.documentElement.classList.toggle("window-blurred");
+  document.documentElement.classList.add("window-blurred");
+}
+
+window.onfocus = function() {
+  //document.documentElement.classList.toggle("window-blurred");
+  document.documentElement.classList.remove("window-blurred");
+}
+
+
+setTimeout(
+  function() {
+
+      document.addEventListener("closeModal", function() {
+          $('.navBtn').removeClass("active");
+          // console.log('closed modal');
+          setTimeout(
+            function() {
+          if ($('.modal.wallet').length && !$('.js-navList').hasClass("open") && !$('.modal.settings').length)  {
+              $('.js-navWalletBtn').addClass("active");
+          }
+        }, 10);
+      });
+
+      $(".navBtn").on("click", function() {
+          $(".navBtn").removeClass("active");
+          $(this).addClass("active");
+      });
+
+      $(".js-navWalletBtn").on("click", function() {
+          if ($('.modal.wallet').length && !$('.js-notifContainer').hasClass("open") && !$('.js-navList').hasClass("open")) {
+              setTimeout(function() {
+                  $(".modalCloseBtn")[0].click();
+              }, 10);
+          }
+      });
+
+}, 1000);
+

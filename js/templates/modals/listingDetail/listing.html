@@ -41,10 +41,10 @@
 <div class="listingContent flexColRow gutterVMd2">
   <div class="contentBox padLg clrP clrBr clrSh3">
     <div class="flex gutterHLg">
-      <h2 class="txUnb flexExpand"><%= ob.item.title %></h2>
+      <!-- <h2 class="txUnb flexExpand"><%= ob.item.title %></h2>
       <h2 class="txUnb flexNoShrink js-price">
         <%= ob.convertAndFormatCurrency(ob.item.price, ob.metadata.pricingCurrency, ob.displayCurrency) %>
-      </h2>
+      </h2> -->
     </div>
     <div class="flex gutterHLg">
       <div class="mainImageWrapper">
@@ -62,6 +62,10 @@
         </div>
       </div>
       <div class="flexExpand">
+          <div>
+              <h2 class="txUnb flexExpand listing-title"><%= ob.item.title %></h2>
+              <h2 class="txUnb flexNoShrink js-price"><%= ob.convertAndFormatCurrency(ob.item.price, ob.metadata.pricingCurrency, ob.displayCurrency) %></h2>
+                </div>
         <div class="buyBox clrP clrBr">
           <div class="flexColRows flexHCent gutterV">
             <% ob.item.options.forEach((item) => { %>

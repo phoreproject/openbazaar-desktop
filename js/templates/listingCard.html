@@ -39,17 +39,17 @@
         </div>
       </a>
     <% } %>
-    <div class="rowSm">
+    <div class="">
       <% const tooltipClass = ob.title.length > 60 ? 'toolTip' : 'toolTipNoWrap' %>
       <div class="<%= tooltipClass %> toolTipTop inlineBlock <% if(ob.vendor) print('trimWidth') %>" data-tip="<%= ob.title %>">
-        <a class="clrT clamp"><%= ob.title %></a>
+        <a class="listing-title-catalog clrT clamp"><%= ob.title %></a>
       </div>
     </div>
     <div class="flex">
       <div class="flexExpand tx5b">
         <% print(`${ob.formatRating(ob.averageRating, ob.ratingCount)}`) %>
       </div>
-      <div class="txB">
+      <div class="listing-price-catalog">
         <%= ob.convertAndFormatCurrency(ob.price.amount, ob.price.currencyCode, ob.displayCurrency) %>
       </div>
     </div>

@@ -1,4 +1,4 @@
-<h2 class="h3 txCtr txUnl"><%= ob.polyT('wallet.btnSendMoney') %></h2>
+<!-- <h2 class="h3 txCtr txUnl"><%= ob.polyT('wallet.btnSendMoney') %></h2> -->
 <form class="padMdKids padStack">
   <div class="flexRow gutterHLg">
     <div class="col2">
@@ -6,7 +6,7 @@
         <label for="walletSendTo" class="required"><%= ob.polyT('wallet.sendMoney.toLabel') %></label>
       </div>
     </div>
-    <div class="col9">
+    <div class="col10">
       <% if (ob.errors.address) print(ob.formErrorTmpl({ errors: ob.errors.address })) %>
       <input type="text" class="clrBr clrSh2 <% if (ob.saveInProgress) print('disabled') %>" name="address" id="walletSendTo" value="<%= ob.address %>" placeholder="<%= ob.polyT('wallet.sendMoney.toPlaceholder') %>">
     </div>
@@ -17,7 +17,7 @@
         <label for="walletSendAmount" class="required"><%= ob.polyT('wallet.sendMoney.amountLabel') %></label>
       </div>
     </div>
-    <div class="col9">
+    <div class="col10">
       <% if (ob.errors.amount) print(ob.formErrorTmpl({ errors: ob.errors.amount })) %>
       <div class="inputSelect <% if (ob.saveInProgress) print('disabled') %>">
         <input type="text" class="clrBr clrP clrSh2" name="amount" id="walletSendAmount" value="<%= ob.amount %>" data-var-type="number" placeholder="0.00">
@@ -35,7 +35,7 @@
         <label for="walletSendNote"><%= ob.polyT('wallet.sendMoney.noteLabel') %></label>
       </div>
     </div>
-    <div class="col9">
+    <div class="col10">
       <% if (ob.errors.memo) print(ob.formErrorTmpl({ errors: ob.errors.memo })) %>
       <input type="text" class="clrBr clrSh2 <% if (ob.saveInProgress) print('disabled') %>" name="memo" id="walletSendNote" value="<%= ob.memo %>" placeholder="<%= ob.polyT('wallet.sendMoney.notePlaceholder') %>">
     </div>
@@ -43,7 +43,7 @@
   <div class="flexVCent">
     <div class="margL js-feeChangeContainer"></div>
     <div class="flexExpand">
-      <div class="flexHRight flexVCent gutterH col11">
+      <div class="flexHRight flexVCent gutterH col12">
         <a class="js-sendMoneyClear"><%= ob.polyT('wallet.sendMoney.clear') %></a>
         <%= ob.processingButton({
           className: `js-btnSend btn clrBAttGrad clrBrDec1 clrTOnEmph ${ob.saveInProgress ? 'processing' : ''}`,

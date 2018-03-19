@@ -1,15 +1,15 @@
 <div class="popInMessageHolder js-popInMessages"></div>
-<div class="userPageSearchBar flex gutterHSm <% if (ob.isFetching || ob.fetchFailed || !ob.listingCount) print('disabled') %>">
+<!-- <div class="userPageSearchBar flex gutterHSm <% if (ob.isFetching || ob.fetchFailed || !ob.listingCount) print('disabled') %>">
   <div class="flexExpand">
     <div class="searchWrapper">
       <input type="text" class="ctrl searchInput clrP clrBr clrSh2 js-searchInput"
              placeholder="<%= ob.polyT('userPage.searchStore') %>">
     </div>
   </div>
-  <div>
-    <div class="clrT2 clrSh2">
+  <div> -->
+    <!-- <div class="clrT2 clrSh2">
       <a class="iconBtn clrP clrBr toolTipNoWrap js-toggleListGridView" data-tip="<%= ob.polyT('userPage.store.toolTip.contentView') %>"><i class="ion-android-apps gridViewIcon"></i><i class="ion-navicon listViewIcon"></i></i></a>
-    </div>
+    </div> -->
   </div>
 </div>
 <% if (ob.isFetching) { %>
@@ -25,7 +25,28 @@
   </div>
 <% } else if (!ob.isFetching) { %>
   <div class="flex">
+  
     <div class="col storeFilters <% if (!ob.listingCount) print('disabled') %>">
+
+      <div class="padMd">
+        <!-- <div class="userPageSearchBar flex gutterHSm <% if (ob.isFetching || ob.fetchFailed || !ob.listingCount) print('disabled') %>">
+  <div class="flexExpand">
+    <div class="searchWrapper">
+      <input type="text" class="ctrl searchInput clrP clrBr clrSh2 js-searchInput"
+             placeholder="<%= ob.polyT('userPage.searchStore') %>">
+    </div>
+  </div>
+  <div> -->
+      <div class="userPageSearchBar flex gutterHSm ">
+          <div class="flexExpand">
+            <div class="searchWrapper">
+              <input type="text" class="ctrl searchInput clrP clrBr clrSh2 js-searchInput" placeholder="Search">
+            </div>
+          </div>
+          <div></div></div>
+
+  </div>
+
       <div class="clrP clrBr padMd clrT clrSh2 contentBox">
         <div class="txB row"><%= ob.polyT('userPage.store.shippingFilter.heading') %></div>
         <div class="flexVCent tx5 rowSm">
@@ -61,7 +82,9 @@
               <!-- <option value="RATING">Rating</option> -->
             </select>
             <div class="select2Small js-sortBySelectDropdownContainer"></div>
+            <a class="iconBtn clrP clrBr toolTipNoWrap js-toggleListGridView" data-tip="<%= ob.polyT('userPage.store.toolTip.contentView') %>"><i class="ion-android-apps gridViewIcon"></i><i class="ion-navicon listViewIcon"></i></i></a>
           </div>
+   
         </div>
       </div>
         <div class="contentBox row pad clrP clrBr js-inactiveWarning <% if (ob.vendor) print('hide') %>">
