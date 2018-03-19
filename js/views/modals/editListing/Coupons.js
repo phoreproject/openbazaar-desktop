@@ -87,7 +87,7 @@ export default class extends BaseView {
 
     const view = this.createChild(Coupon, {
       model,
-      getCurrency: () => ('USD'),
+      getCurrency: () => ('PHR'),
       couponErrors,
       ...options,
     });

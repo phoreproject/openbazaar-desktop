@@ -8,7 +8,7 @@ export default class extends baseVw {
     super(options);
 
     this._state = {
-      userCurrency: 'USD',
+      userCurrency: 'PHR',
       ...options.initialState || {},
     };
   }

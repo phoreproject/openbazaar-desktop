@@ -22,7 +22,7 @@ export default class extends BaseVw {
     this.orderId = options.orderId;
 
     this._state = {
-      userCurrency: app.settings.get('localCurrency') || 'USD',
+      userCurrency: app.settings.get('localCurrency') || 'PHR',
       showAcceptButton: false,
       acceptConfirmOn: false,
       ...options.initialState || {},
