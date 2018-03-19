@@ -1430,3 +1430,10 @@ h2.listing-title {
   border-radius:3px;
   margin:2px;
 }
+
+.pageNav.macStyleWindowControls .windowControls a.navMax i:before {
+  height: 11px;
+  width: 3px;
+  top: 1px;
+  transform: rotate(-45deg);
+}
