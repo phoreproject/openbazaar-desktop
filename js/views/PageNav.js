@@ -289,19 +289,18 @@ export default class extends BaseVw {
     const isOpen = this.$navList.hasClass('open');
     this.$navList.toggleClass('open', !isOpen);
     this.$navOverlay.toggleClass('open', !isOpen);
-     
 
     if (!isOpen) {
       this.$connManagementContainer.removeClass('open');
     }
 
     if (isOpen) {
-       //// Dispatch event to listen for when Notifications Modal is closed
-       var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
-       document.dispatchEvent(closeModal);
-      ////////
+      // Dispatch event to listen for when Notifications Modal is closed
+      const closeModal = new CustomEvent('closeModal', {
+        detail: 'Close Modal window',
+      });
+      document.dispatchEvent(closeModal);
     }
-
   }
 
   closeNavMenu() {
@@ -309,12 +308,11 @@ export default class extends BaseVw {
     this.$navList.removeClass('open');
     this.$navOverlay.removeClass('open');
     this.$connManagementContainer.removeClass('open');
-    
+
     if (isOpen) {
-      //// Dispatch event to listen for when Notifications Modal is closed
-      var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
+      // Dispatch event to listen for when notifications modal is closed
+      const closeModal = new CustomEvent('closeModal', { detail: 'Close Modal window' });
       document.dispatchEvent(closeModal);
-      ////////
     }
   }
 
@@ -339,7 +337,6 @@ export default class extends BaseVw {
     if (this.isNotificationsOpen()) {
       this.closeNotifications();
       this.$navOverlay.removeClass('open');
-
     } else {
       this.$navOverlay.addClass('open');
 
@@ -371,10 +368,9 @@ export default class extends BaseVw {
     this.getCachedEl('.js-notifContainer').removeClass('open');
     if (opts.closeOverlay) this.$navOverlay.removeClass('open');
 
-                //// Dispatch event to listen for when Notifications Modal is closed
-                var closeModal = new CustomEvent("closeModal", { "detail": "Close Modal window" });
-                document.dispatchEvent(closeModal);
-                ////////
+    // Dispatch event to listen for when notifications modal is closed
+    const closeModal = new CustomEvent('closeModal', { detail: 'Close Modal window' });
+    document.dispatchEvent(closeModal);
 
     if (this.notifications) {
       const count = this.unreadNotifCount;
