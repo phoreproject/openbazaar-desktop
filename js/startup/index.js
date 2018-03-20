@@ -7,7 +7,6 @@ import $ from 'jquery';
 import { getBody } from '../utils/selectors';
 import { getCurrentConnection } from '../utils/serverConnect';
 import app from '../app';
-import { getWallet, getSettingsModal } from '../utils/modalManager';
 
 export function fixLinuxZoomIssue() {
   // fix zoom issue on Linux hiDPI
