@@ -9,7 +9,7 @@ import app from '../app';
 import $ from 'jquery';
 import {
   launchEditListingModal, launchAboutModal,
-  launchWallet, launchSettingsModal,
+  launchWallet, launchSettingsModal, getWallet,
 } from '../utils/modalManager';
 import Listing from '../models/listing/Listing';
 import { getAvatarBgImage } from '../utils/responsive';
@@ -87,10 +87,14 @@ export default class extends BaseVw {
     });
   }
 
-  onClickTab(e) {
-    console.log(e);
-    this.$('.navBtn').removeClass('active');
-    this.$(e.target).addClass('active');
+  onClickTab() {
+    $('.navBtn').removeClass('active');
+    if ($('.js-notifContainer').hasClass('open')) {
+      $('.navBtn').removeClass('active');
+      $('.js-navNotifBtn').addClass('active');
+    } else if (getWallet() && getWallet().isOpen()) {
+      $('.js-navWalletBtn').addClass('active');
+    }
   }
 
   onSocketMessage(e) {
@@ -452,7 +456,15 @@ export default class extends BaseVw {
   }
 
   navWalletClick() {
-    launchWallet();
+    const wallet = getWallet();
+    if (!wallet || !wallet.isOpen()) {
+      launchWallet();
+    } else {
+      console.log($('.js-navWalletBtn')[0].className);
+      wallet.close();
+      $('.js-navWalletBtn').removeClass('active');
+      console.log($('.js-navWalletBtn')[0].className);
+    }
   }
 
   navCreateListingClick() {

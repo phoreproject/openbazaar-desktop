@@ -83,16 +83,3 @@ window.onblur = () => {
 window.onfocus = () => {
   document.documentElement.classList.remove('window-blurred');
 };
-
-
-document.addEventListener('closeModal', () => {
-  const wallet = getWallet();
-  if (wallet && wallet.isOpen()
-      && (!getSettingsModal() || !getSettingsModal().isOpen())
-      && !$('.js-navList').hasClass('open')) {
-    $('.navBtn').removeClass('active');
-    $('.js-navWalletBtn').addClass('active');
-  } else {
-    $('.navBtn').removeClass('active');
-  }
-});
