@@ -7,6 +7,7 @@ import { getBody } from '../utils/selectors';
 import app from '../app';
 import Backbone from 'backbone';
 import TorExternalLinkWarning from '../views/modals/TorExternalLinkWarning';
+import { getWallet, getSettingsModal } from '../utils/modalManager';
 
 export function fixLinuxZoomIssue() {
   // fix zoom issue on Linux hiDPI
@@ -84,27 +85,14 @@ window.onfocus = () => {
 };
 
 
-$(() => {
-  document.addEventListener('closeModal', () => {
+document.addEventListener('closeModal', () => {
+  const wallet = getWallet();
+  if (wallet && wallet.isOpen()
+      && (!getSettingsModal() || !getSettingsModal().isOpen())
+      && !$('.js-navList').hasClass('open')) {
     $('.navBtn').removeClass('active');
-    if ($('.modal.wallet').length
-        && !$('.js-navList').hasClass('open')
-        && !$('.modal.settings').length) {
-      $('.js-navWalletBtn').addClass('active');
-    }
-  });
-
-  $('.navBtn').on('click', () => {
+    $('.js-navWalletBtn').addClass('active');
+  } else {
     $('.navBtn').removeClass('active');
-    $(this).addClass('active');
-  });
-
-  $('.js-navWalletBtn').on('click', () => {
-    if ($('.modal.wallet').length
-        && !$('.js-notifContainer').hasClass('open')
-        && !$('.js-navList').hasClass('open')) {
-      $('.modalCloseBtn')[0].click();
-    }
-  });
+  }
 });
-

@@ -113,3 +113,7 @@ export function launchWallet(modalOptions = {}) {
 export function getWallet() {
   return _wallet;
 }
+
+export function getSettingsModal() {
+  return settingsModal;
+}

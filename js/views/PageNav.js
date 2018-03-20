@@ -43,6 +43,7 @@ export default class extends BaseVw {
         'click .js-navNotifBtn': 'onClickNavNotifBtn',
         'click .js-notifContainer': 'onClickNotifContainer',
         'click .js-notificationListItem a[href]': 'onClickNotificationLink',
+        'click .navBtn': 'onClickTab',
       },
       navigable: false,
       ...options,
@@ -84,6 +85,12 @@ export default class extends BaseVw {
       this.getCachedEl('.js-notifUnreadBadge').addClass('hide');
       this.stopListening(e.socket, 'message', this.onSocketMessage);
     });
+  }
+
+  onClickTab(e) {
+    console.log(e);
+    this.$('.navBtn').removeClass('active');
+    this.$(e.target).addClass('active');
   }
 
   onSocketMessage(e) {
