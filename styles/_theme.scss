@@ -1264,9 +1264,7 @@ input.js-addressBar:focus {
 }
 
 
-.search {
-  padding-top:50px;
-}
+
 .search .searchBar .searchBtn {
   border-radius: 0 4rem 4rem 0;
 }
@@ -1466,4 +1464,8 @@ h2.listing-title {
 .editOverlay button {
   background: rgba(0,0,0,0.6);
   padding:0!important;
+}
+
+#appFrame #contentFrame #pageContainer {
+  padding-top: 85px;
 }
