@@ -18,6 +18,9 @@ import PageNavServersMenu from './PageNavServersMenu';
 import AddressBarIndicators from './AddressBarIndicators';
 import { getNotifDisplayData } from '../collections/Notifications';
 import Notifications from './notifications/Notificiations';
+import { getOpenModals } from '../views/modals/BaseModal';
+import Wallet from './modals/wallet/Wallet';
+
 
 export default class extends BaseVw {
   constructor(options) {
@@ -92,13 +95,13 @@ export default class extends BaseVw {
 
   updateTabs() {
     $('.navBtn').removeClass('active');
+    const openModals = getOpenModals();
+    const topModal = openModals[openModals.length - 1];
     if ($('.js-notifContainer').hasClass('open')) {
-      $('.navBtn').removeClass('active');
       $('.js-navNotifBtn').addClass('active');
     } else if ($('.js-navList').hasClass('open')) {
-      $('.navBtn').removeClass('active');
       $('.js-navListBtn').addClass('active');
-    } else if (getWallet() && getWallet().isOpen()) {
+    } else if (topModal instanceof Wallet) {
       $('.js-navWalletBtn').addClass('active');
     }
   }
@@ -289,6 +292,7 @@ export default class extends BaseVw {
     // there's a flicker frmo the old page to the new page.
     setTimeout(() => {
       this.closeNavMenu();
+      this.updateTabs();
     });
   }
 
