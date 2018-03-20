@@ -1601,5 +1601,14 @@ h2.listing-title {
 
 
 .pageNav .navListWrapper {
-  right:-15px;
+  right:-2px;
+}
+
+.userPage .pageContent .pageControls .storeWelcomeCallout {
+  left: 0;
+    transform: translateX(430px);
+    top: 20px;
+    .btn {
+      color:white;
+    }
 }
