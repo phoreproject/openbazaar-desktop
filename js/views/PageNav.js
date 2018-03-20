@@ -460,10 +460,8 @@ export default class extends BaseVw {
     if (!wallet || !wallet.isOpen()) {
       launchWallet();
     } else {
-      console.log($('.js-navWalletBtn')[0].className);
       wallet.close();
       $('.js-navWalletBtn').removeClass('active');
-      console.log($('.js-navWalletBtn')[0].className);
     }
   }
 
