@@ -441,11 +441,13 @@ export default class extends BaseVw {
 
   navWalletClick() {
     const wallet = getWallet();
-    if (!wallet || !wallet.isOpen()) {
+    if ((!wallet || !wallet.isOpen())) {
       launchWallet();
     } else {
-      wallet.close();
-      $('.js-navWalletBtn').removeClass('active');
+      if (!$('.js-notifContainer').hasClass('open') && !$('.js-navList').hasClass('open')) {
+        wallet.close();
+        $('.js-navWalletBtn').removeClass('active');
+      }
     }
   }
 
