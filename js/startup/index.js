@@ -7,7 +7,6 @@ import { getBody } from '../utils/selectors';
 import app from '../app';
 import Backbone from 'backbone';
 import TorExternalLinkWarning from '../views/modals/TorExternalLinkWarning';
-import { getWallet, getSettingsModal } from '../utils/modalManager';
 
 export function fixLinuxZoomIssue() {
   // fix zoom issue on Linux hiDPI
