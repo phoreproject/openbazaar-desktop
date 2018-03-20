@@ -46,7 +46,7 @@ export default class extends BaseVw {
         'click .js-navNotifBtn': 'onClickNavNotifBtn',
         'click .js-notifContainer': 'onClickNotifContainer',
         'click .js-notificationListItem a[href]': 'onClickNotificationLink',
-        'click .navBtn': 'onClickTab',
+        'click .navBtn': 'updateTabs',
       },
       navigable: false,
       ...options,
@@ -90,11 +90,14 @@ export default class extends BaseVw {
     });
   }
 
-  onClickTab() {
+  updateTabs() {
     $('.navBtn').removeClass('active');
     if ($('.js-notifContainer').hasClass('open')) {
       $('.navBtn').removeClass('active');
       $('.js-navNotifBtn').addClass('active');
+    } else if ($('.js-navList').hasClass('open')) {
+      $('.navBtn').removeClass('active');
+      $('.js-navListBtn').addClass('active');
     } else if (getWallet() && getWallet().isOpen()) {
       $('.js-navWalletBtn').addClass('active');
     }
@@ -307,27 +310,12 @@ export default class extends BaseVw {
     if (!isOpen) {
       this.$connManagementContainer.removeClass('open');
     }
-
-    if (isOpen) {
-      // Dispatch event to listen for when Notifications Modal is closed
-      const closeModal = new CustomEvent('closeModal', {
-        detail: 'Close Modal window',
-      });
-      document.dispatchEvent(closeModal);
-    }
   }
 
   closeNavMenu() {
-    const isOpen = this.$navList.hasClass('open');
     this.$navList.removeClass('open');
     this.$navOverlay.removeClass('open');
     this.$connManagementContainer.removeClass('open');
-
-    if (isOpen) {
-      // Dispatch event to listen for when notifications modal is closed
-      const closeModal = new CustomEvent('closeModal', { detail: 'Close Modal window' });
-      document.dispatchEvent(closeModal);
-    }
   }
 
   onNavListClick(e) {
@@ -381,11 +369,6 @@ export default class extends BaseVw {
     if (opts.closeNavList) this.$navList.removeClass('open');
     this.getCachedEl('.js-notifContainer').removeClass('open');
     if (opts.closeOverlay) this.$navOverlay.removeClass('open');
-
-    // Dispatch event to listen for when notifications modal is closed
-    const closeModal = new CustomEvent('closeModal', { detail: 'Close Modal window' });
-    document.dispatchEvent(closeModal);
-
     if (this.notifications) {
       const count = this.unreadNotifCount;
       if (this.unreadNotifCount) {
@@ -409,6 +392,7 @@ export default class extends BaseVw {
   onDocClick() {
     this.closeNotifications();
     this.closeNavMenu();
+    this.updateTabs();
   }
 
   onFocusInAddressBar() {
