@@ -9,7 +9,7 @@ module.exports = function setup(grunt) {
         productName: 'OpenBazaar',
         name: 'openbazaar2',
         arch: 'amd64',
-        version: '1.3.0',
+        version: '1.3.1',
         bin: 'openbazaar2',
         maintainer: 'OpenBazaar <project@openbazaar.org>',
         rename(dest) {
