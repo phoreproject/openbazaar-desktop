@@ -566,9 +566,6 @@ html {
   color: #888 !important;
 }
 
-
-
-
 .pageNav .navBar #AvatarBtn:hover {
   border-color:#00d188;
 }
@@ -861,7 +858,7 @@ text-decoration:none;
 
 .js-discover {
   background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 25 25'><path fill='%23FFF' d='M24.57,3.37A2.9,2.9,0,0,0,21.66.44h0L13.11,0A2.73,2.73,0,0,0,11,.89L.88,11.05a2.85,2.85,0,0,0,0,4.12l8.94,8.94a2.86,2.86,0,0,0,4.14,0L24.11,14a2.7,2.7,0,0,0,.89-2.1ZM23.43,13.2,13.23,23.4l0,0a1.83,1.83,0,0,1-2.65,0l-9-9A2,2,0,0,1,1,13.11a2,2,0,0,1,.58-1.34L11.77,1.6l0,0A1.69,1.69,0,0,1,13.08,1l8.55.44A1.87,1.87,0,0,1,23.54,3.4L24,11.89A1.7,1.7,0,0,1,23.43,13.2Z'/><circle fill='%23FFF' cx='19.23' cy='5.64' r='1.07'/></svg>") center center no-repeat!important;
-  background-size: 70%;
+  background-size: 70%!important;
   background-position: center center;
 }
 
