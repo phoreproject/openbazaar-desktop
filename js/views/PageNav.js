@@ -408,7 +408,7 @@ export default class extends BaseVw {
       const text = this.$addressBar.val().trim();
       this.$addressBar.val(text);
 
-      const firstTerm = text.startsWith('ob://') ?
+      const firstTerm = text.startsWith('pm://') ?
         text.slice(5)
           .split(' ')[0]
           .split('/')[0] :
@@ -420,7 +420,7 @@ export default class extends BaseVw {
       } else if (firstTerm.charAt(0) === '@' && firstTerm.length > 1) {
         // a handle
         app.router.navigate(text.split(' ')[0], { trigger: true });
-      } else if (text.startsWith('ob://')) {
+      } else if (text.startsWith('pm://')) {
         // trying to show a specific page
         app.router.navigate(text.split(' ')[0], { trigger: true });
       } else {

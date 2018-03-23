@@ -33,15 +33,15 @@ export default class ObRouter extends Router {
     this.guidHandleMap = new Map();
 
     const routes = [
-      [/^(?:ob:\/\/)@([^\/]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'userViaHandle'],
+      [/^(?:pm:\/\/)@([^\/]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'userViaHandle'],
       [/^@([^\/]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'userViaHandle'],
-      [/^(?:ob:\/\/)(Qm[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
+      [/^(?:pm:\/\/)(Qm[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
       [/^(Qm[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
-      ['(ob://)transactions(/)', 'transactions'],
-      ['(ob://)transactions/:tab(/)', 'transactions'],
-      ['(ob://)connected-peers(/)', 'connectedPeers'],
-      ['(ob://)search(?query)', 'search'],
-      ['(ob://)*path', 'pageNotFound'],
+      ['(pm://)transactions(/)', 'transactions'],
+      ['(pm://)transactions/:tab(/)', 'transactions'],
+      ['(pm://)connected-peers(/)', 'connectedPeers'],
+      ['(pm://)search(?query)', 'search'],
+      ['(pm://)*path', 'pageNotFound'],
     ];
 
     routes.slice(0)
@@ -137,7 +137,7 @@ export default class ObRouter extends Router {
       standardized = standardized.slice(1);
     }
 
-    if (standardized.startsWith('ob://')) {
+    if (standardized.startsWith('pm://')) {
       standardized = standardized.slice(5);
     }
 
@@ -167,7 +167,7 @@ export default class ObRouter extends Router {
         }
       }
 
-      displayRoute = `ob://${displayRoute}`;
+      displayRoute = `pm://${displayRoute}`;
     }
 
     app.pageNav.setAddressBar(displayRoute);

@@ -53,7 +53,7 @@ export function processMessage(message) {
         if (wordsToAnchorify.includes(w)) return;
 
         if ((w.startsWith('@') && w.length > 1) ||
-          (w.startsWith('ob://') && w.length > 5) ||
+          (w.startsWith('pm://') && w.length > 5) ||
           (w.startsWith('http://') && w.length >= 11) ||
           (w.startsWith('https://') && w.length >= 12) ||
           (w.startsWith('www.') && w.length >= 8)) {
@@ -70,8 +70,8 @@ export function processMessage(message) {
   processedMessage = $message.html();
 
   wordsToAnchorify.forEach(word => {
-    let href = !is.url(word) && !word.startsWith('ob://') ?
-      `#ob://${word}` : word;
+    let href = !is.url(word) && !word.startsWith('pm://') ?
+      `#pm://${word}` : word;
 
     if (is.url(word)) {
       const link = document.createElement('a');

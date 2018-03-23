@@ -362,7 +362,7 @@ export default class extends baseVw {
     }
 
     let baseRoute = location.hash.split('?')[0];
-    baseRoute = baseRoute.startsWith('#ob://') ?
+    baseRoute = baseRoute.startsWith('#pm://') ?
       baseRoute.slice(6) : baseRoute.slice(1);
 
     app.router.navigate(`${baseRoute}?${$.param(queryFilter)}`, { replace: true });
