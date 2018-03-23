@@ -618,24 +618,31 @@ html {
   background-size: 65%;
   background-position: center center;
 }
-#appFrame #contentFrame #pageContainer .pageContent, #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
-  transition:none;
-  // transition: margin 0.2s ease;
-}
+// #appFrame #contentFrame #pageContainer .pageContent, #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
+//   transition:none;
+//   // transition: margin 0.2s ease;
+// }
 
-/* Desktops and laptops ----------- */
-@media only screen  and (min-width : 1224px) {
-  #appFrame #contentFrame #pageContainer .pageContent, #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
-    width:1200px;
-    margin: 0 calc((100% - 1200px) / 2) 0 auto;
-  }
-  .userPage .pageContent .pageControls {
-    padding: 288px 0 40px 0;
-}
-.userPage .header {
-  height:361px;
-}
-}
+// /* Desktops and laptops ----------- */
+// @media only screen  and (min-width : 1224px) {
+//   #appFrame #contentFrame #pageContainer .pageContent, #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
+//     width:1200px;
+//     margin: 0 calc((100% - 1200px) / 2) 0 auto;
+//   }
+//   .userPage .pageContent .pageControls {
+//     padding: 288px 0 40px 0;
+// }
+// .userPage .header {
+//   height:361px;
+// }
+
+// .chatOpen #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
+//   margin: 0 calc((100% - 1200px) / 2) 0 auto!important;
+// }
+
+
+// }
+
 
 // /* Large screens ----------- */
 // @media only screen  and (min-width : 1824px) {
@@ -678,9 +685,6 @@ html {
   color:white;
 }
 
-.window-blurred #appFrame #pageNavContainer .clrBr {
-  background:#162231;
-}
 
 
 .clrP {
@@ -731,6 +735,7 @@ text-indent:-999999px;
 
 #doorbell-button {
   background: #162231;
+  left: 200px;
 }
 
 #appFrame #contentFrame #pageContainer #pageTabBar {
@@ -750,7 +755,7 @@ text-indent:-999999px;
 
 #appFrame #contentFrame #pageContainer #pageTabBar h1 a.clrT {
   color:white;
-  font-weight:600;
+  font-weight:500;
   display:block;
   transition: all 0.15s ease;
   -webkit-transition:all 0.15s ease;
@@ -776,7 +781,6 @@ text-decoration:none;
   border-bottom:3px solid white;
   font-weight:500;
 }
-
 
 
 #pageTabBar {
@@ -904,7 +908,11 @@ text-decoration:none;
 .js-navBack {
   background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9.46' height='17.76' viewBox='0 0 9.46 17.76'><polygon fill='%23FFF' points='10.17 0.91 9.26 0 0 9.23 9.17 18.37 9.26 18.46 10.17 17.55 1.82 9.23 10.17 0.9'/></svg>") center center no-repeat;
 }
-
+section:not(#pageNavContainer) .js-navBack{
+  background-position: left 10px center;
+  background-size: 5px;
+  padding-left: 3.5rem;
+}
 .js-navFwd {
   background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9.46' height='17.76' viewBox='0 0 9.46 17.76'><polygon fill='%23FFF'  points='0 0.91 0.91 0 10.17 9.23 1 18.37 0.91 18.46 0 17.55 8.35 9.23 0 0.91'/></svg>") center center no-repeat;
 }
@@ -1060,7 +1068,7 @@ input[type="text"], input[type="number"], input[type="password"], input[type="em
 
 
 
-.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed {
+.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted{
   border: none;
   background: #00d188;
   border-radius: 4rem;
@@ -1135,13 +1143,13 @@ hr.clrBr {
 }
 
 
-.btn.clrP.clrBr:not(.js-save) {
+.btn.clrP:not(.js-save):not(.js-emojiMenuTrigger){
   border-radius: 4rem;
   text-transform: uppercase;
   font-family: 'Montserrat';
   letter-spacing: 1px;
   font-size: 1.2rem;
-  border: 2px solid #ccc;
+  border: 2px solid #ccc!important;
   padding-top:2px;
 }
 
@@ -1190,8 +1198,11 @@ input.js-addressBar:focus {
   color: rgba(255,255,255,0.85);
 }
 
+.window-blurred #appFrame #pageNavContainer nav.navBar {
+  background:#162231;
+}
 
-.window-blurred .winControl {
+.window-blurred .macStyleWindowControls .winControl {
   background:#dcdcdc!important;
   border-color:#dcdcdc!important;
 }
@@ -1466,8 +1477,8 @@ input.js-addressBar:focus {
 }
 .select2-container .select2-selection--single .select2-selection__rendered {
   padding-left:14px;
+  font-weight:500;
 }
-
 
 
 a.clrTEm {
@@ -1507,7 +1518,7 @@ a[data-tab="home"] {
 }
 
 h2.listing-title {
-  font-size:4rem;
+  font-size:3rem;
   margin-bottom:0;
 }
 
@@ -1610,7 +1621,6 @@ h2.listing-title {
   }
 }
 
-
 .editOverlay button {
   background: rgba(0,0,0,0.6);
   padding:0!important;
@@ -1624,9 +1634,7 @@ h2.listing-title {
 #appFrame #contentFrame #pageContainer #pageTabBar {
   left: auto;
   right: 12px;
-  //  right:0;
 }
-
 
 .pageNav .navListWrapper {
   right:-2px;
@@ -1645,4 +1653,224 @@ h2.listing-title {
 .popInMessage {
   background: #162231;
   color:white;
+}
+
+
+.onboarding .modalContent .introScreen .mainContent {
+  height:auto;
+}
+
+.onboarding {
+  .brandingBox {
+    display:none;
+  }
+
+}
+
+.onboarding .headline span {
+  font-family: 'Montserrat';
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  margin-bottom: 4rem;
+  display: block;
+}
+
+.onboarding .modalContent .infoScreen form {
+  width: 400px;
+}
+
+.chatConversation .convoFooter {
+  background:white;
+  z-index:2;
+  border:none;
+}
+
+
+
+.chatOpen #appFrame #chatContainer {
+  border-radius: 3px 0 0 0;
+}
+
+
+.chatConversation .convoFooter > div {
+  padding-top: 4.5px;
+}
+
+#chatCloseBtn {
+
+  top: auto;
+  bottom: 10px;
+  right: 0px;
+  position: relative;
+  opacity:0;
+  border-radius:50%;
+  background:rgba(252, 252, 252, 0.5);
+}
+
+.chatOpen #chatCloseBtn:hover {
+  background:rgba(252, 252, 252, 0.65);
+}
+
+.chatOpen #chatCloseBtn {
+  right:auto;
+  opacity:1;
+
+}
+
+#chatCloseBtn.ion-ios-close-empty:before{
+  color: black;
+  font-weight: bold!important;
+  content:'\f3d6';
+}
+
+
+.chatOpen #appFrame #chatContainer {
+background:none;
+}
+#appFrame #chatContainer {
+  display: flex;
+  flex-direction: column-reverse;
+  background: none;
+  padding-bottom: 0rem;
+  top:144px;
+}
+
+#appFrame #chatConvoContainer {
+  right:12px;
+  border-radius:3px;
+}
+
+#appFrame #chatContainer {
+  right:12px;
+  background:none;
+  height: calc(100% - 150px);
+}
+
+.chat .chatIcon {
+  border:none;
+}
+.chatOpen #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
+  margin: 0 calc((100% - 990px) / 2) 0 auto;
+}
+
+.storeWelcomeCallout hr {
+  display:none;
+}
+
+.chatOpen #chatContainer .chat .chatHead {
+  background:rgba(255,255,255,0.80);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.08);
+  border-radius:3px;
+  padding:0.5rem;
+}
+
+.chatOpen #chatContainer .chat .chatHead:hover {
+  background:rgba(255,255,255,0.85);
+}
+.chatHead.active {
+  border-left:3px solid #00d188;
+  background: white!important;
+}
+
+#chatContainer .chat .chatHead .headContent{
+  background:none;
+}
+
+#chatContainer .chat .chatHead .handleGuid {
+  font-weight:bold;
+}
+
+
+.chatConversation, .chatConversation .convoHeader, #chatContainer {
+  border:none!important;
+}
+
+.chatConversation .subMenu {
+  background:white;
+  border-radius:3px;
+}
+
+.chatConversation .convoHeader {
+  background:#222e3e;
+  border-radius:3px;
+  a {
+    color:white;
+  }
+}
+
+.chatConversation .emojiMenuContainer {
+  z-index: 1;
+  background: white;
+  border:none;
+  box-shadow: 0px -3px 8px 0px rgba(0,0,0,0.08);
+  margin-top:0;
+}
+
+
+.chatConvoOpen #appFrame #chatContainer {
+  height: calc(100% - 523px);
+}
+
+
+.js-convoProfileHeaderContainer .clamp {
+  display:none;
+}
+
+.phraseBox {
+  border-radius: 3px;
+    line-height: 1;
+    padding: 6px 6px 3px 6px;
+}
+
+
+.chatConversation .convoMessagesWindow {
+  padding-bottom:2rem;
+}
+
+.chatConversation .convoMessagesWindow .typingIndicator {
+  background:white;
+  border-radius: 0 0 3px 3px;
+  border:0;
+}
+
+.js-chatHeadsContainer {
+  padding:3px;
+}
+
+.listingDetail .modalContent .listingContent .tagWrapper .tag {
+  height:25px;
+}
+
+.js-convoMessagesWindow {
+  background:white;
+}
+.chatConversation {
+  padding:3px 3px 0 3px;
+  background:none;
+}
+
+
+@media (max-width: 1440px)
+{
+  .chatOpen #appFrame #contentFrame #pageContainer .pageContent {
+      width:930px;
+  }
+
+  .chatOpen .listingsGrid .listingCard {
+    width:200px;
+  }
+}
+
+.pageControls .socialBtns .btn {
+  color:white;
+}
+
+.js-freeShippingLabel {
+  color: #00d188;
+  background: none;
+  font-size:1.75rem;
+}
+
+.topControls {
+  padding-left:1rem;
 }
