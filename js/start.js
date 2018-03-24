@@ -595,6 +595,7 @@ function start() {
           } else {
             if (metricsOn) addMetrics();
             Backbone.history.start();
+            app.pageNav.updateTabs();
           }
 
           // load chat

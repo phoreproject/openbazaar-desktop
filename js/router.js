@@ -53,6 +53,7 @@ export default class ObRouter extends Router {
 
     $(window).on('hashchange', () => {
       this.setAddressBarText();
+      app.pageNav.updateTabs();
       if (window.Countly) {
         window.Countly.q.push(['track_pageview', location.hash]);
       }
