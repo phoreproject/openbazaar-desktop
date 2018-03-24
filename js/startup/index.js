@@ -42,6 +42,7 @@ export function handleLinks() {
     if (link.protocol !== location.protocol || openExternally) {
       if (link.protocol === 'ob:' && !openExternally) {
         Backbone.history.navigate(href.slice(5), true);
+        app.pageNav.updateTabs();
       } else {
         // external link
         const activeServer = app.serverConfigs.activeServer;
@@ -69,6 +70,7 @@ export function handleLinks() {
       }
 
       Backbone.history.navigate(href, true);
+      app.pageNav.updateTabs();
     }
 
     e.preventDefault();

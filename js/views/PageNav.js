@@ -94,12 +94,18 @@ export default class extends BaseVw {
     $('.navBtn').removeClass('active');
     const openModals = getOpenModals();
     const topModal = openModals[openModals.length - 1];
+
+    const endURL = Backbone.history.getFragment();
+    const path = endURL.split("?")[0]
+
     if ($('.js-notifContainer').hasClass('open')) {
       $('.js-navNotifBtn').addClass('active');
     } else if ($('.js-navList').hasClass('open')) {
       $('.js-navListBtn').addClass('active');
     } else if (topModal instanceof Wallet) {
       $('.js-navWalletBtn').addClass('active');
+    } else if (path === 'search') {
+      $('.js-discover').addClass('active');
     }
   }
 

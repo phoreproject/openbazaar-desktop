@@ -417,6 +417,7 @@ function start() {
         }
 
         Backbone.history.start();
+        app.pageNav.updateTabs();        
 
         // load chat
         const chatConvos = new ChatHeads();

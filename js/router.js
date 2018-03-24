@@ -49,6 +49,7 @@ export default class ObRouter extends Router {
 
     $(window).on('hashchange', () => {
       this.setAddressBarText();
+      app.pageNav.updateTabs();
     });
 
     ipcRenderer.on('external-route', (e, route) => {
