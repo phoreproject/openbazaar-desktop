@@ -61,9 +61,9 @@
         </p>
       </div>
       <div class="flex gutterH contentBottom">
-        <div class="flexExpand">
+        <!-- <div class="flexExpand">
           <span class="clrT2 clamp tx5b"><%= ob.parseEmojis('📍') %> <%= ob.location || ob.polyT('userPage.noLocation') %></span>
-        </div>
+        </div> -->
         <a class="tx6 flexNoShrink ratingStrip js-rating">
           <% print(`${ob.formatRating(ob.stats.averageRating, ob.stats.ratingCount)}`) %>
         </a>
@@ -75,3 +75,4 @@
     <% } %>
   </div>
 </div>
+
