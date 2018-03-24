@@ -535,32 +535,47 @@ html {
   background-size: 65%;
   background-position: center center;
 }
-#appFrame #contentFrame #pageContainer .pageContent, #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
-  transition:none;
-  // transition: margin 0.2s ease;
-}
+// #appFrame #contentFrame #pageContainer .pageContent, #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
+//   transition:none;
+//   // transition: margin 0.2s ease;
+// }
 
+.userPage .header {
+  transition: all 0.5s ease;
+}
 /* Desktops and laptops ----------- */
 @media only screen  and (min-width : 1224px) {
-  #appFrame #contentFrame #pageContainer .pageContent, #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
-    width:1200px;
-    margin: 0 calc((100% - 1200px) / 2) 0 auto;
+//   #appFrame #contentFrame #pageContainer .pageContent, #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
+//     width:1200px;
+//     margin: 0 calc((100% - 1200px) / 2) 0 auto;
+//   }
+//   .userPage .pageContent .pageControls {
+//     padding: 288px 0 40px 0;
+// }
+// .userPage .header {
+//   height:361px;
+// }
+
+// .chatOpen #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
+//   margin: 0 calc((100% - 1200px) / 2) 0 auto!important;
+// }
+  .userPage .header {
+    margin-bottom: 10px!important;
+    height:360px;
   }
-  .userPage .pageContent .pageControls {
-    padding: 288px 0 40px 0;
-}
-.userPage .header {
-  height:361px;
-}
 }
 
-// /* Large screens ----------- */
-// @media only screen  and (min-width : 1824px) {
-//   #appFrame #contentFrame #pageContainer .pageContent, #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
-//     width:1400px;
-//     margin: 0 calc((100% - 1400px) / 2) 0 auto;
-//   }
-// }
+/* Large screens ----------- */
+@media only screen  and (min-width : 1824px) {
+  // #appFrame #contentFrame #pageContainer .pageContent, #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
+  //   width:1400px;
+  //   margin: 0 calc((100% - 1400px) / 2) 0 auto;
+  // }
+  .userPage .header {
+    // margin-bottom: 40px!important;
+    height:500px;
+  }
+}
 
 .iconBtn {
   color: #888 !important;
@@ -596,9 +611,6 @@ html {
   color:white;
 }
 
-.window-blurred #appFrame #pageNavContainer .clrBr {
-  background:#162231;
-}
 
 
 .clrP {
@@ -609,26 +621,24 @@ html {
    margin-left:8px;
 }
 
-.js-customize, .js-createListing {
-  height: 24px;
-  width: 24px;
-  opacity:0.75;
+// .js-customize, .js-createListing {
+//   height: 24px;
+//   width: 24px;
+//   opacity:0.75;
 
-background:yellow;
-text-indent:-999999px;
-&:hover {
-  opacity:1;
-}
-
-}
-
-.js-customize {
-  margin-left:1rem;
-}
-
-// .js-createListing {
-//   margin-left:0.25rem;
+// background:yellow;
+// text-indent:-999999px;
+// &:hover {
+//   opacity:1;
 // }
+
+// }
+
+// .js-customize {
+//   margin-left:1rem;
+// }
+
+
 
 .pageNav .navBar .brandLogo {
   margin-left:12px;
@@ -645,10 +655,13 @@ text-indent:-999999px;
 
 .userPage .header {
   z-index:0;
+  position:relative;
+  margin-bottom:0;
 }
 
 #doorbell-button {
   background: #162231;
+  left: 30px;
 }
 
 #appFrame #contentFrame #pageContainer #pageTabBar {
@@ -668,7 +681,7 @@ text-indent:-999999px;
 
 #appFrame #contentFrame #pageContainer #pageTabBar h1 a.clrT {
   color:white;
-  font-weight:600;
+  font-weight:500;
   display:block;
   transition: all 0.15s ease;
   -webkit-transition:all 0.15s ease;
@@ -694,7 +707,6 @@ text-decoration:none;
   border-bottom:3px solid white;
   font-weight:500;
 }
-
 
 
 #pageTabBar {
@@ -815,12 +827,19 @@ text-decoration:none;
 
 
 .clrS, body {
-  background:rgb(252,252,252);
+  // background:rgb(252,252,252);
+  background: #f9f9f9;
 }
 
 
 .js-navBack {
   background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9.46' height='17.76' viewBox='0 0 9.46 17.76'><polygon fill='%23FFF' points='10.17 0.91 9.26 0 0 9.23 9.17 18.37 9.26 18.46 10.17 17.55 1.82 9.23 10.17 0.9'/></svg>") center center no-repeat;
+}
+
+section:not(#pageNavContainer) .js-navBack{
+  background-position: left 10px center;
+  background-size: 5px;
+  padding-left: 3.5rem;
 }
 	
 .js-navFwd { 
@@ -845,15 +864,55 @@ text-decoration:none;
   background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='21' height='22' viewBox='0 0 21 22'><path fill='%238e9194' d='M6.5,3.14A3.19,3.19,0,0,0,3.25,0,3.19,3.19,0,0,0,0,3.14,6.73,6.73,0,0,0,1.37,6.8L3.25,9.5,5.13,6.79h0A6.59,6.59,0,0,0,6.5,3.14ZM3.25,5A1.74,1.74,0,0,1,1.48,3.24,1.74,1.74,0,0,1,3.25,1.53,1.73,1.73,0,0,1,5,3.23,1.74,1.74,0,0,1,3.25,5Z'/></svg>") 0 2px no-repeat;
 }
 
-
 .js-customize {
-  background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='21.25' height='21.25' viewBox='0 0 21.25 21.25'><path fill='%23FFF' d='M21.13,11.8V9.2L18.37,8a6.65,6.65,0,0,0-.58-1.41L18.91,3.9,17.08,2.06,14.35,3.18a8.2,8.2,0,0,0-1.41-.58L11.8-.12H9.2L8,2.63a6.65,6.65,0,0,0-1.41.58L3.9,2.09,2.06,3.92,3.18,6.65A8.2,8.2,0,0,0,2.6,8.06L-.12,9.2v2.6L2.63,13a6.65,6.65,0,0,0,.58,1.41L2.09,17.1l1.83,1.84,2.73-1.12a8.2,8.2,0,0,0,1.41.58L9.2,21.12h2.6L13,18.37a6.65,6.65,0,0,0,1.41-.58l2.73,1.12,1.84-1.83-1.12-2.73a8.2,8.2,0,0,0,.58-1.41Zm-3.08,5.1L16.93,18,14.32,17l-.15.09a6.75,6.75,0,0,1-1.58.65l-.18.05L11.3,20.38H9.7L8.61,17.77l-.18-.05a7.1,7.1,0,0,1-1.57-.64L6.7,17,4.1,18.05,3,16.93,4,14.32,4,14.17a6.75,6.75,0,0,1-.65-1.58l0-.18L.63,11.3V9.7l2.6-1.09,0-.18a6.91,6.91,0,0,1,.64-1.57L4,6.7,3,4.1,4.07,3,6.68,4,6.83,4A6.75,6.75,0,0,1,8.41,3.3l.18,0L9.7.62h1.6l1.09,2.61.18,0a7.1,7.1,0,0,1,1.57.64L14.3,4,16.9,3,18,4.07,17,6.68l.09.15a6.75,6.75,0,0,1,.65,1.58l.05.18L20.38,9.7v1.6l-2.61,1.09-.05.18a6.91,6.91,0,0,1-.64,1.57L17,14.3Z' transform='translate(0.12 0.13)'/><path fill='%23FFF' d='M10.5,7A3.52,3.52,0,1,0,14,10.5,3.53,3.53,0,0,0,10.5,7Zm0,6.29a2.77,2.77,0,1,1,2.77-2.77A2.77,2.77,0,0,1,10.5,13.27Z' transform='translate(0.12 0.13)'/></svg>") center center no-repeat;
+  background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='21.25' height='21.25' viewBox='0 0 21.25 21.25'><path fill='%23262626' d='M21.13,11.8V9.2L18.37,8a6.65,6.65,0,0,0-.58-1.41L18.91,3.9,17.08,2.06,14.35,3.18a8.2,8.2,0,0,0-1.41-.58L11.8-.12H9.2L8,2.63a6.65,6.65,0,0,0-1.41.58L3.9,2.09,2.06,3.92,3.18,6.65A8.2,8.2,0,0,0,2.6,8.06L-.12,9.2v2.6L2.63,13a6.65,6.65,0,0,0,.58,1.41L2.09,17.1l1.83,1.84,2.73-1.12a8.2,8.2,0,0,0,1.41.58L9.2,21.12h2.6L13,18.37a6.65,6.65,0,0,0,1.41-.58l2.73,1.12,1.84-1.83-1.12-2.73a8.2,8.2,0,0,0,.58-1.41Zm-3.08,5.1L16.93,18,14.32,17l-.15.09a6.75,6.75,0,0,1-1.58.65l-.18.05L11.3,20.38H9.7L8.61,17.77l-.18-.05a7.1,7.1,0,0,1-1.57-.64L6.7,17,4.1,18.05,3,16.93,4,14.32,4,14.17a6.75,6.75,0,0,1-.65-1.58l0-.18L.63,11.3V9.7l2.6-1.09,0-.18a6.91,6.91,0,0,1,.64-1.57L4,6.7,3,4.1,4.07,3,6.68,4,6.83,4A6.75,6.75,0,0,1,8.41,3.3l.18,0L9.7.62h1.6l1.09,2.61.18,0a7.1,7.1,0,0,1,1.57.64L14.3,4,16.9,3,18,4.07,17,6.68l.09.15a6.75,6.75,0,0,1,.65,1.58l.05.18L20.38,9.7v1.6l-2.61,1.09-.05.18a6.91,6.91,0,0,1-.64,1.57L17,14.3Z' transform='translate(0.12 0.13)'/><path fill='%23262626' d='M10.5,7A3.52,3.52,0,1,0,14,10.5,3.53,3.53,0,0,0,10.5,7Zm0,6.29a2.77,2.77,0,1,1,2.77-2.77A2.77,2.77,0,0,1,10.5,13.27Z' transform='translate(0.12 0.13)'/></svg>") center center no-repeat;
+  background-position: 12px center;
+  padding-left: 36px;
+  background-size: 16px;
 }
 
 .js-createListing {
-  background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20.47' height='20.53' viewBox='0 0 20.47 20.53'><path fill='%23FFF' d='M10.68,5.36H9.79V9.82H5.34v.89H9.79v4.47h.89V10.71h4.45V9.82H10.68ZM15.57,0H4.89A4.9,4.9,0,0,0,0,4.91V15.62a4.9,4.9,0,0,0,4.89,4.91H15.57a4.9,4.9,0,0,0,4.9-4.91V4.91A4.9,4.9,0,0,0,15.57,0Zm4,15.62a4,4,0,0,1-4,4H4.89a4,4,0,0,1-4-4V4.91a4,4,0,0,1,4-4H15.57a4,4,0,0,1,4,4Z' transform='translate(0)'/></svg>") center center no-repeat;
+  background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20.47' height='20.53' viewBox='0 0 20.47 20.53'><path fill='%23262626' d='M10.68,5.36H9.79V9.82H5.34v.89H9.79v4.47h.89V10.71h4.45V9.82H10.68ZM15.57,0H4.89A4.9,4.9,0,0,0,0,4.91V15.62a4.9,4.9,0,0,0,4.89,4.91H15.57a4.9,4.9,0,0,0,4.9-4.91V4.91A4.9,4.9,0,0,0,15.57,0Zm4,15.62a4,4,0,0,1-4,4H4.89a4,4,0,0,1-4-4V4.91a4,4,0,0,1,4-4H15.57a4,4,0,0,1,4,4Z' transform='translate(0)'/></svg>") center center no-repeat;
+  background-position: 12px center;
+  padding-left: 36px;
+  background-size: 16px;
 }
 
+
+.js-followUnfollowBtn {
+  padding-left:18px;
+}
+.js-followUnfollowBtn:before {
+ 
+  padding-right: 8px;
+  font-size: 14px;
+}
+
+.ion-ios-email-outline {
+  padding-left: 18px;
+}
+
+.ion-ios-email-outline:before {
+  content: "\f422";
+  padding-right: 8px;
+  font-size: 20px;
+}
+
+// .js-messageBtn:before {
+//   display: inline-block;
+//   font-family: "Ionicons";
+//   speak: none;
+//   font-style: normal;
+//   font-weight: normal;
+//   font-variant: normal;
+//   text-transform: none;
+//   text-rendering: auto;
+//   line-height: 1;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+// }
+
+// \f422
 
 .js-discover {
   background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 25 25'><path fill='%23FFF' d='M24.57,3.37A2.9,2.9,0,0,0,21.66.44h0L13.11,0A2.73,2.73,0,0,0,11,.89L.88,11.05a2.85,2.85,0,0,0,0,4.12l8.94,8.94a2.86,2.86,0,0,0,4.14,0L24.11,14a2.7,2.7,0,0,0,.89-2.1ZM23.43,13.2,13.23,23.4l0,0a1.83,1.83,0,0,1-2.65,0l-9-9A2,2,0,0,1,1,13.11a2,2,0,0,1,.58-1.34L11.77,1.6l0,0A1.69,1.69,0,0,1,13.08,1l8.55.44A1.87,1.87,0,0,1,23.54,3.4L24,11.89A1.7,1.7,0,0,1,23.43,13.2Z'/><circle fill='%23FFF' cx='19.23' cy='5.64' r='1.07'/></svg>") center center no-repeat!important;
@@ -978,7 +1037,7 @@ input[type="text"], input[type="number"], input[type="password"], input[type="em
 
 
 
-.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed {
+.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted{
   border: none;
   background: #00d188;
   border-radius: 4rem;
@@ -1053,13 +1112,13 @@ hr.clrBr {
 }
 
 
-.btn.clrP.clrBr:not(.js-save) {
+.btn.clrP:not(.js-save):not(.js-emojiMenuTrigger){
   border-radius: 4rem;
   text-transform: uppercase;
   font-family: 'Montserrat';
   letter-spacing: 1px;
   font-size: 1.2rem;
-  border: 2px solid #ccc;
+  border: 2px solid #ccc!important;
   padding-top:2px;
 }
 
@@ -1108,8 +1167,11 @@ input.js-addressBar:focus {
   color: rgba(255,255,255,0.85);
 }
 
+.window-blurred #appFrame #pageNavContainer nav.navBar {
+  background:#162231;
+}
 
-.window-blurred .winControl {
+.window-blurred .macStyleWindowControls .winControl {
   background:#dcdcdc!important;
   border-color:#dcdcdc!important;
 }
@@ -1384,8 +1446,8 @@ input.js-addressBar:focus {
 }
 .select2-container .select2-selection--single .select2-selection__rendered {
   padding-left:14px;
+  font-weight:500;
 }
-
 
 
 a.clrTEm {
@@ -1425,7 +1487,7 @@ a[data-tab="home"] {
 }
 
 h2.listing-title {
-  font-size:4rem;
+  font-size:3rem;
   margin-bottom:0;
 }
 
@@ -1528,7 +1590,6 @@ h2.listing-title {
   }
 }
 
-
 .editOverlay button {
   background: rgba(0,0,0,0.6);
   padding:0!important;
@@ -1542,9 +1603,7 @@ h2.listing-title {
 #appFrame #contentFrame #pageContainer #pageTabBar {
   left: auto;
   right: 12px;
-  //  right:0;
 }
-
 
 .pageNav .navListWrapper {
   right:-2px;
@@ -1563,4 +1622,285 @@ h2.listing-title {
 .popInMessage {
   background: #162231;
   color:white;
+}
+
+
+.onboarding .modalContent .introScreen .mainContent {
+  height:auto;
+}
+
+.onboarding {
+  .brandingBox {
+    display:none;
+  }
+
+}
+
+.onboarding .headline span {
+  font-family: 'Montserrat';
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  margin-bottom: 4rem;
+  display: block;
+}
+
+.onboarding .modalContent .infoScreen form {
+  width: 400px;
+}
+
+.chatConversation .convoFooter {
+  background:white;
+  z-index:2;
+  border:none;
+}
+
+
+.chatOpen #appFrame #chatContainer {
+  border-radius: 3px 0 0 0;
+}
+
+.chatConversation .convoFooter > div {
+  padding-top: 4.5px;
+}
+
+#chatCloseBtn {
+  top: auto;
+  bottom: 10px;
+  right: 0px;
+  position: relative;
+  opacity:0;
+  border-radius:50%;
+  background:rgba(252, 252, 252, 0.5);
+}
+
+.chatOpen #chatCloseBtn:hover {
+  background:rgba(252, 252, 252, 0.65);
+}
+
+.chatOpen #chatCloseBtn {
+  right:auto;
+  opacity:1;
+  
+}
+
+#chatCloseBtn.ion-ios-close-empty:before{
+  color: black;
+  font-weight: bold!important;
+  content:'\f3d6';
+}
+
+
+.chatOpen #appFrame #chatContainer {
+background:none;
+}
+#appFrame #chatContainer {
+  display: flex;
+  flex-direction: column-reverse;
+  background: none;
+  padding-bottom: 0rem;
+  top:144px;
+}
+
+#appFrame #chatConvoContainer {
+  right:12px;
+  border-radius:3px;
+}
+
+#appFrame #chatContainer {
+  right:12px;
+  background:none;
+  height: calc(100% - 150px);
+}
+
+.chat .chatIcon {
+  border:none;
+}
+.chatOpen #appFrame #contentFrame #pageContainer #pageTabBar .pageTabs {
+  margin: 0 calc((100% - 990px) / 2) 0 auto;
+}
+
+.storeWelcomeCallout hr {
+  display:none;
+}
+
+.chatOpen #chatContainer .chat .chatHead {
+  background:rgba(255,255,255,0.80);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.08);
+  border-radius:3px;
+  padding:0.5rem;
+}
+
+.chatOpen #chatContainer .chat .chatHead:hover {
+  background:rgba(255,255,255,0.85);
+}
+.chatHead.active {
+  border-left:3px solid #00d188;
+  background: white!important;
+}
+
+#chatContainer .chat .chatHead .headContent{
+  background:none;
+}
+
+#chatContainer .chat .chatHead .handleGuid {
+  font-weight:bold;
+}
+
+
+.chatConversation, .chatConversation .convoHeader, #chatContainer {
+  border:none!important;
+}
+
+.chatConversation .subMenu {
+  background:white;
+  border-radius:3px;
+}
+
+.chatConversation .convoHeader {
+  background:#222e3e;
+  border-radius:3px;
+  a {
+    color:white;
+  }
+}
+
+.chatConversation .emojiMenuContainer {
+  z-index: 1;
+  background: white;
+  border:none;
+  box-shadow: 0px -3px 8px 0px rgba(0,0,0,0.08);
+  margin-top:0;
+}
+
+
+.chatConvoOpen #appFrame #chatContainer {
+  height: calc(100% - 523px);
+}
+
+
+.js-convoProfileHeaderContainer .clamp {
+  display:none;
+}
+
+.phraseBox {
+  border-radius: 3px;
+    line-height: 1;
+    padding: 6px 6px 3px 6px;
+}
+
+
+.chatConversation .convoMessagesWindow {
+  padding-bottom:2rem;
+}
+
+.chatConversation .convoMessagesWindow .typingIndicator {
+  background:white;
+  border-radius: 0 0 3px 3px;
+  border:0;
+}
+
+.js-chatHeadsContainer {
+  padding:3px;
+}
+
+.listingDetail .modalContent .listingContent .tagWrapper .tag {
+  height:25px;
+}
+
+.js-convoMessagesWindow {
+  background:white;
+}
+.chatConversation {
+  padding:3px 3px 0 3px;
+  background:none;
+}
+
+
+@media (max-width: 1440px)
+{
+  .chatOpen #appFrame #contentFrame #pageContainer .pageContent {
+      width:930px;
+  }
+
+  .chatOpen .listingsGrid:not(.listingsGridListView) .listingCard {
+    width:200px;
+  }
+}
+
+.pageControls .socialBtns .btn {
+  color:white;
+  color:black;
+}
+
+.js-freeShippingLabel {
+  color: #00d188;
+  background: none;
+  font-size:1.75rem;
+}
+
+.topControls {
+  padding-left:1rem;
+}
+
+.userCard .contentBox {
+  border-radius:3px;
+  overflow:hidden;
+  border-radius:4px;
+  box-shadow:0px 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+.userCard .js-userName strong {
+  font-weight: 500;
+}
+
+.userPage .pageContent .pageControls .tabTitle {
+  font-weight: 300!important;
+    text-shadow: none;
+    color: black;
+    text-align: left;
+    font-size: 44px;
+    -webkit-font-smoothing: antialiased;
+    
+}
+
+.userPage .pageContent .pageControls {
+  padding: 268px 0px 80px;
+  padding: 0 0 40px 0;
+}
+
+.userCard .content {
+  height:75px;
+}
+
+.userCard .shortHeader .userIcon {
+  border:0;
+}
+
+.userCard .userDescription {
+  color: #bcbcbc;
+}
+
+.listingContent {
+  padding-top:6rem;
+}
+
+.chatConversation .emojiMenuTrigger {
+  width:35px;
+  height:35px;
+  display:block;
+}
+
+
+.storeFilters .padMd {
+  padding-left:0;
+  padding-top:0;
+}
+
+.btn.ion-ios-loop-strong {
+  padding-left: 16px;
+}
+
+#statusBar .statusMessage {
+  // padding-left:200px!important;
+  text-align:center!important;
 }
