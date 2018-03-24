@@ -13,7 +13,6 @@ import Listings from '../../collections/Listings';
 import Followers from '../../collections/Followers';
 import MiniProfile from '../MiniProfile';
 import SocialBtns from '../components/SocialBtns';
-import Home from './Home';
 import Store from './Store';
 import Follow from './Follow';
 import Reputation from './Reputation';

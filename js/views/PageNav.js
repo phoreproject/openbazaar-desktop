@@ -96,7 +96,7 @@ export default class extends BaseVw {
     const topModal = openModals[openModals.length - 1];
 
     const endURL = Backbone.history.getFragment();
-    const path = endURL.split("?")[0]
+    const path = endURL.split('?')[0];
 
     if ($('.js-notifContainer').hasClass('open')) {
       $('.js-navNotifBtn').addClass('active');
