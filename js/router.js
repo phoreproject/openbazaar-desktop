@@ -328,7 +328,6 @@ export default class ObRouter extends Router {
 
   get userStates() {
     return [
-      'home',
       'store',
       'following',
       'followers',
@@ -513,13 +512,6 @@ export default class ObRouter extends Router {
           this.pageNotFound();
           return;
         }
-
-        // You've attempted to find a user with no particular tab. Since store is not available
-        // we'll take you to the home tab.
-        this.navigate(`${guid}/home/${deepRouteParts ? deepRouteParts.join('/') : ''}`, {
-          replace: true,
-          trigger: true,
-        });
         return;
       }
 
