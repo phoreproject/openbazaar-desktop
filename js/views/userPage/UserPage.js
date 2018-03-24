@@ -30,7 +30,7 @@ export default class extends baseVw {
     this.ownPage = this.model.id === app.profile.id;
     this.state = options.state || 'store';
     this.tabViewCache = {};
-    this.tabViews = { Home, Store, Follow, Reputation };
+    this.tabViews = { Store, Follow, Reputation };
 
     const stats = this.model.get('stats');
     this._followingCount = stats.get('followingCount');
