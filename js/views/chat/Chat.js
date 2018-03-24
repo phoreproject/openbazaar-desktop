@@ -78,7 +78,7 @@ export default class extends baseVw {
       'click .js-bottomUnreadBanner': 'onClickBottomUnreadBanner',
       'click .js-fetchStateHead': 'onClickFetchStateHead',
       'click .js-retryFetchConvos': 'onClickRetryConvoFetch',
-      'click .js-chatClose': 'onClickChatClose'
+      'click .js-chatClose': 'onClickChatClose',
     };
   }
 
