@@ -167,7 +167,7 @@ describe('the currency utility module', () => {
         .equal('523.12345678 PHR');
     });
 
-    it('properly localizes a BTC amount with the correct bitcoin units', () => {
+    it('properly localizes a PHR amount with the correct phore units', () => {
       expect(cur.formatCurrency(523.3456, 'PHR', {
         btcUnit: 'PHR',
       })).to
@@ -198,9 +198,9 @@ describe('the currency utility module', () => {
         const deferred = $.Deferred();
 
         deferred.resolve({
-          // The api is actually returning a non 1 for the bitcoin value, which seems
+          // The api is actually returning a non 1 for the phore value, which seems
           // like a bug, but it will allow us to test that if we call our conversion
-          // functions to convert from or to BTC, it will ignore that BTC exchange rate
+          // functions to convert from or to PHR, it will ignore that PHR exchange rate
           // and use an implied 1.
           PHR: 1.02,
           PLN: 3148.48,
