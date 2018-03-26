@@ -2003,3 +2003,34 @@ a.listing-title-catalog {
 .listingCard .gridViewContent .borderTop {
   border-color: rgba(59, 67, 74, 0.05);
 }
+
+
+.search .searchProviders .discoverLogo {
+  height: 65px;
+  width: 65px;
+  margin-top:2px;
+}
+
+.js-searchLogo, .search .searchProviders .providersBar{
+  display:none;
+}
+
+.searchBar:before {
+  content: "";
+    background-image: url(../../imgs/emojis/72X72/1f50d.png);
+    background-repeat: no-repeat;
+    background-size: 28px;
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 12px;
+    color: inherit;
+}
+
+.search-provider {
+  display:none;
+}
+
+
