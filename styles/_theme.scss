@@ -542,6 +542,7 @@ html {
 
 .userPage .header {
   transition: all 0.5s ease;
+  margin-bottom: 40px!important;
 }
 /* Desktops and laptops ----------- */
 @media only screen  and (min-width : 1224px) {
@@ -560,7 +561,7 @@ html {
 //   margin: 0 calc((100% - 1200px) / 2) 0 auto!important;
 // }
   .userPage .header {
-    margin-bottom: 10px!important;
+    
     height:360px;
   }
 }
@@ -976,7 +977,7 @@ section:not(#pageNavContainer) .js-navBack{
 .toolTip:not(.processing):before, .toolTipNoWrap:not(.processing):before {
   background-color: rgba(255,255,255,0.85);
   border-radius: 3px;
-  font-size: 8px;
+  font-size: 10px;
   padding: 3px 5px;
   line-height: 1.2;
   margin-top:8px;
@@ -985,8 +986,7 @@ section:not(#pageNavContainer) .js-navBack{
 
 
 .toolTip:not(.processing):after, .toolTipNoWrap:not(.processing):after {
-
-content:none;
+  content:none;
 }
 
 .modal.navOverlay {
@@ -1000,6 +1000,8 @@ content:none;
 
 .modal:not(.navOverlay)  {
   background: rgb(252, 252, 252);
+  background: #f9f9f9;
+  background: white;
 }
 
 .modal .contentBox {
@@ -1031,13 +1033,17 @@ input[type="text"], input[type="number"], input[type="password"], input[type="em
   border-width:1px;
 }
 
+.trumbowyg-box .trumbowyg-editor {
+border-radius: 0 0 0.5rem 0.5rem;
+}
+
 #confirmPay {
   background:white;
 }
 
 
 
-.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted{
+.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn {
   border: none;
   background: #00d188;
   border-radius: 4rem;
@@ -1053,6 +1059,19 @@ input[type="text"], input[type="number"], input[type="password"], input[type="em
 }
 
 
+.search .searchBar .searchInput {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right-width: 0;
+  border-bottom-left-radius: 4rem;
+  border-top-left-radius: 4rem;
+}
+
+
+.search .searchBar .searchInput.withLogo {
+  text-indent:36px;
+}
+
 .listingDetail .modalContent .listingContent .buyBox {
   border:none;
 }
@@ -1065,10 +1084,15 @@ input[type="text"], input[type="number"], input[type="password"], input[type="em
   box-shadow:none;
 }
 
-.js-tab {
+.tabbedModal .tabColumn .tab {
   font-size:1.7rem;
+  
 }
 
+
+.settings.tabbedModal .tabColumn .tab {
+  color: rgba(255, 255, 255, 0.35);
+}
 
 h2.h3 {
   font-size: 4.5rem;
@@ -1111,8 +1135,7 @@ hr.clrBr {
   padding-top:30px;
 }
 
-
-.btn.clrP:not(.js-save):not(.js-emojiMenuTrigger){
+.btn.clrP:not(.js-save):not(.js-emojiMenuTrigger):not(.js-addAddress):not(.js-searchBtn):not(.iconBtn), .chatOpen #chatCloseBtn, .jsModalClose, .cornerTR{
   border-radius: 4rem;
   text-transform: uppercase;
   font-family: 'Montserrat';
@@ -1120,6 +1143,10 @@ hr.clrBr {
   font-size: 1.2rem;
   border: 2px solid #ccc!important;
   padding-top:2px;
+  &.processing{
+    border:none!important;
+    font-size:0!important;
+  }
 }
 
 .js-avatarRight, .js-avatarLeft, .js-toggleListGridView {
@@ -1131,7 +1158,6 @@ hr.clrBr {
   box-shadow: none;
 }
 
-
 h2.h4.clrT, h3 {
   text-transform: none;
   font-size: 24px;
@@ -1140,7 +1166,7 @@ h2.h4.clrT, h3 {
 }
 
 
-.js-scrollToSection, .settingsAdvanced .contentBox:not(:last-child) {
+.js-scrollToSection, .settingsAdvanced .contentBox:not(:last-child), .inventoryManagementSection {
   border-bottom: 1px solid rgba(0,0,0,0.25)!important;
   padding-bottom: 50px;
 }
@@ -1496,9 +1522,8 @@ h2.listing-title {
   height:430px;
 }
 
-
 .listing-title-catalog {
-  font-size:1.75rem;
+  font-size:1.5rem;
 }
 
 .listing-price-catalog {
@@ -1511,7 +1536,6 @@ h2.listing-title {
 
 .txGlow {
   text-shadow: #a2a2a2 0 1px 3px;
-
 }
 
 .listingsGridListView .listingCard {
@@ -1540,11 +1564,26 @@ h2.listing-title {
     border:none;
     color:white;
   }
+
+  hr {
+    display:none;
+  }
+}
+
+.purchase #confirmPay {
+  width:300px;
+  left:-100px;
+  color:#262626;
+  // background:#162231;
+  h3 {
+    color:#262626;
+  }
 }
 
 .search .searchBar .searchBtn.js-searchBtn {
   border-radius: 0 4rem 4rem 0;
-  line-height:36px;
+  line-height:42px;
+  color:white;
 }
 
 #appFrame .selectize-control .items > *:not(input) {
@@ -1590,9 +1629,10 @@ h2.listing-title {
   }
 }
 
-.editOverlay button {
-  background: rgba(0,0,0,0.6);
+.editOverlay button, .editOverlay a:not(.js-deleteConfirmed), .reportBtn button {
+  background: rgba(18, 28, 41, 0.6);
   padding:0!important;
+  color:white!important;
 }
 
 #appFrame #contentFrame #pageContainer {
@@ -1618,12 +1658,10 @@ h2.listing-title {
     }
 }
 
-
 .popInMessage {
   background: #162231;
   color:white;
 }
-
 
 .onboarding .modalContent .introScreen .mainContent {
   height:auto;
@@ -1791,6 +1829,7 @@ background:none;
 
 .chatConversation .convoMessagesWindow {
   padding-bottom:2rem;
+  background:white;
 }
 
 .chatConversation .convoMessagesWindow .typingIndicator {
@@ -1805,6 +1844,7 @@ background:none;
 
 .listingDetail .modalContent .listingContent .tagWrapper .tag {
   height:25px;
+  margin-bottom:0;
 }
 
 .js-convoMessagesWindow {
@@ -1840,6 +1880,10 @@ background:none;
 
 .topControls {
   padding-left:1rem;
+  margin-bottom:4rem;
+}
+.modal.modalScrollPage .modalContent .topControls {
+  margin-bottom:4rem;
 }
 
 .userCard .contentBox {
@@ -1880,9 +1924,6 @@ background:none;
   color: #bcbcbc;
 }
 
-.listingContent {
-  padding-top:6rem;
-}
 
 .chatConversation .emojiMenuTrigger {
   width:35px;
@@ -1903,4 +1944,62 @@ background:none;
 #statusBar .statusMessage {
   // padding-left:200px!important;
   text-align:center!important;
+}
+
+.listingDetail .modalContent .listingContent .mainImageWrapper .mainImage {
+  border:none;
+}
+
+.listingDetail .modalContent .listingContent .photoSection{
+  background:none;
+  border: 1px solid rgba(59, 67, 74, 0.1);
+    border-radius: 0.5rem;
+}
+
+.js-convoMessagesWindow {
+  background: none;
+}
+
+h2.js-price {
+  font-weight:bold;
+}
+
+.search .searchBar .searchLogo {
+  left:14px;
+}
+
+.renderjson a.disclosure {
+  color: #00d188;
+}
+
+.orderDetail .convoMessage {
+  border-bottom: 1px solid rgba(59, 67, 74, 0.35);
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+}
+
+.transactions .pageContent .filters .filter {
+  border-radius:3px;
+}
+
+.editListing .modalContent .tile {
+  border-radius:4px;
+}
+
+
+.inventoryManagementSection hr {
+  display:none;
+}
+
+
+.listingCard .gridViewContent .trimWidth {
+  width:100%;
+}
+
+a.listing-title-catalog {
+  margin-bottom: 0.5rem;
+}
+
+.listingCard .gridViewContent .borderTop {
+  border-color: rgba(59, 67, 74, 0.05);
 }

@@ -64,7 +64,7 @@
       <div class="flexExpand">
           <div>
               <h2 class="txUnb flexExpand listing-title"><%= ob.item.title %></h2>
-              <h2 class="txUnb flexNoShrink js-price"><%= ob.convertAndFormatCurrency(ob.item.price, ob.metadata.pricingCurrency, ob.displayCurrency) %></h2>
+              <h2 class="flexNoShrink js-price"><%= ob.convertAndFormatCurrency(ob.item.price, ob.metadata.pricingCurrency, ob.displayCurrency) %></h2>
                 </div>
         <div class="buyBox clrP clrBr">
           <div class="flexColRows flexHCent gutterV">
@@ -102,7 +102,7 @@
           <% } %>
         </div>
         <hr class="rowLg">
-        <h5><%= ob.polyT('listingDetail.tags') %></h5>
+        <h2 class="txUnb"><%= ob.polyT('listingDetail.tags') %></h2>
         <div class="tagWrapper">
           <% ob.item.tags.forEach(function(tag){
           print(`<a class="btn tag clrSh2 clrBr" href="#search?q=${tag}">#${ob.parseEmojis(tag)}</a>`);
