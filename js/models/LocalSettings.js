@@ -50,7 +50,7 @@ export default class extends Model {
       language,
       listingsGridViewType: 'grid',
       bitcoinUnit: 'PHR',
-      searchProvider: 'https://search.ob1.io/search/listings',
+      searchProvider: 'https://search.phore.io/search/listings',
       dontShowTorExternalLinkWarning: false,
     };
   }

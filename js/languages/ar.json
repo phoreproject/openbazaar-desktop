@@ -48,7 +48,7 @@
     },
     "install": "التثبيت الآن"
   },
-  "addressBarPlaceholder": "Type a @handle, OpenBazaar ID or search term",
+  "addressBarPlaceholder": "Type a @handle, PhoreMarketplace ID or search term",
   "testnet": "وضع الاختبار",
   "testnetTooltip": "يستخدم وضع الاختبار عملات testnet، والتي تهدف لأغراض الاختبار فقط.",
   "tabMenuHeading": "قائمة",
@@ -488,7 +488,7 @@
         "purge": "Purge Shared Files",
         "purgeHelper": "حذف الملفات المخزنة مؤقتا التي تشاركها مع الآخرين",
         "purgeBtn": "Purge Files",
-        "purgeToolTip": "OpenBazaar shares cached content you have viewed with other users. If you have viewed text or images you don't want to share, this button will delete them. This will not affect any files that belong to you.",
+        "purgeToolTip": "PhoreMarketplace shares cached content you have viewed with other users. If you have viewed text or images you don't want to share, this button will delete them. This will not affect any files that belong to you.",
         "purgeError": "حدث خطأ، ربما لم يتم حذف الملفات المخزنة مؤقتا.",
         "purgeComplete": "تم حذف الملفات المخزنة مؤقتا (كاش).",
         "blockData": "Block Data",
@@ -755,7 +755,7 @@
     },
     "sendMoney": {
       "toLabel": "إلى",
-      "toPlaceholder": "ضع عنوان Bitcoin",
+      "toPlaceholder": "ضع عنوان Phore",
       "amountLabel": "كمية",
       "noteLabel": "ملاحظة",
       "notePlaceholder": "يرى فقط من قبلك",
@@ -1184,8 +1184,8 @@
       "to": "إلى: %{address}",
       "payFromWallet": "الدفع من المحفظة",
       "payWithAlt": "ادفع بعملة Altcoins",
-      "note1": "If you need help getting started with Bitcoin, please read %{link}.",
-      "note1Link": "تحتاج بيتكوين؟ على OpenBazaar.org",
+      "note1": "If you need help getting started with Phore, please read %{link}.",
+      "note1Link": "تحتاج بيتكوين؟ على Phore.io",
       "note2": "Your payment will be held securely in escrow. If any issues arise, you’ll have the ability to open a dispute.",
       "note3": "* لا تنطبق رسوم خدمة المشرف إلا إذا تم فتح نزاع.",
       "note4": "بمجرد الدفع، قد يستغرق الأمر قليلا لتحديث الواجهة.",
@@ -1193,7 +1193,7 @@
       "altcoinLink": "لا يزال بإمكانك تمويل محفظة أوبن بازار PM الخاصة بك بعملة altcoins..",
       "walletNote": "<b>External wallets</b> that don't support Segregated Witness may not be able to pay for transactions.",
       "walletLink": "You can send funds to your PM wallet instead.",
-      "feeNote": "<b>Remember to cover any fees</b> when you send funds to your OpenBazaar wallet."
+      "feeNote": "<b>Remember to cover any fees</b> when you send funds to your PhoreMarketplace wallet."
     },
     "completeSection": {
       "paymentSent": "تم ارسال الدفعه!",
@@ -1208,8 +1208,8 @@
       "send": "ارسل   ",
       "share": {
         "title": "شارك مع أصدقائك",
-        "body": "I just made a purchase on OpenBazaar, the free marketplace without fees or restrictions. Learn more at %{link}.",
-        "shareMsg": "I just made a purchase on @OpenBazaar, the free marketplace without fees or restrictions.",
+        "body": "I just made a purchase on PhoreMarketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
+        "shareMsg": "I just made a purchase on PhoreMarketplace @PhoreCrypto, the free marketplace without fees or restrictions.",
         "postToTwitter": "نشر على تويتر",
         "postToFacebook": "نشر على فيسبوك",
         "postToPinterest": "نشر على بينتريست",
@@ -1375,7 +1375,7 @@
         "veryManyConfirmationsCount": "%{countText} تأكيدات",
         "rejectConfirm": {
           "title": "هل أنت متأكد؟",
-          "body": "The original amount in bitcoin will be returned to the buyer",
+          "body": "The original amount in phore will be returned to the buyer",
           "btnCancel": "إلغاء",
           "btnConfirm": "نعم, أرفض"
         },
@@ -1399,7 +1399,7 @@
         "fulfillBtn": "الوفاء بالطلبات",
         "refundConfirm": {
           "title": "هل أنت متأكد؟",
-          "body": "The original amount in bitcoin will be returned to the buyer",
+          "body": "The original amount in phore will be returned to the buyer",
           "btnCancel": "إلغاء",
           "btnConfirm": "نعم، استرداد"
         }
@@ -1673,7 +1673,7 @@
   },
   "spendModelErrors": {
     "provideAddress": "يرجى وضع عنوان.",
-    "invalidAddress": "العنوان المقدم لايبدو أنه عنوان bitcoin صالح.",
+    "invalidAddress": "العنوان المقدم لايبدو أنه عنوان phore صالح.",
     "provideAmountNumber": "Please provide an amount as a number. If including a decimal, a period should be used as the seperator, for example \"0.00\".",
     "amountGreaterThanZero": "الكمية يجب أن تكون أكبر من صفر",
     "insufficientFunds": "You have insufficient funds to send such an amount. Be sure to account for the transaction fee."

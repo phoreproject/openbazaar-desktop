@@ -1,8 +1,8 @@
 {
   "name": "openbazaar-desktop",
-  "productName": "OpenBazaar Desktop Client",
+  "productName": "Phore Marketplace Desktop Client",
   "version": "1.3.2",
-  "description": "Decentralized p2p marketplace for Bitcoin",
+  "description": "Decentralized p2p marketplace for Phore",
   "main": "bootstrapper.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development npm-run-all sass:build process-index --parallel sass:watch index:watch browsersync start-app",
@@ -24,14 +24,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OpenBazaar/openbazaar-desktop.git"
+    "url": "git+https://github.com/phoreproject/openbazaar-desktop.git"
   },
   "author": "OB1",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/OpenBazaar/openbazaar-desktop/issues"
+    "url": "https://github.com/phoreproject/openbazaar-desktop/issues"
   },
-  "homepage": "https://github.com/OpenBazaar/openbazaar-desktop#readme",
+  "homepage": "https://github.com/phoreproject/openbazaar-desktop#readme",
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-eslint": "^6.0.5",

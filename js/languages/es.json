@@ -23,7 +23,7 @@
     "ECONOMIC": "Económico"
   },
   "feeChangeWidget": {
-    "label": "Comisión Bitcoin:",
+    "label": "Comisión Phore:",
     "btnChange": "cambiar"
   },
   "consoleWarning": {
@@ -48,7 +48,7 @@
     },
     "install": "Instalar ahora"
   },
-  "addressBarPlaceholder": "Escriba una @manija, OpenBazaar ID o término de búsqueda.",
+  "addressBarPlaceholder": "Escriba una @manija, PhoreMarketplace ID o término de búsqueda.",
   "testnet": "Modo de prueba.",
   "testnetTooltip": "\"Modo de prueba\" utiliza monedas/divisas de la red-de-prueba, las cuales son utilizadas con propósito de prueba solamente.",
   "tabMenuHeading": "MENÚ",
@@ -139,7 +139,7 @@
     "notConnectedMenuItem": "Desconectado",
     "torOnTooltip": "Tor activo",
     "discoverCalloutTitle": "Descubre",
-    "discoverCalloutBody": "Navegar y comprar en cientos de tiendas en OpenBazaar",
+    "discoverCalloutBody": "Navegar y comprar en cientos de tiendas en PhoreMarketplace",
     "myPage": "Mi p&aacute;gina",
     "customizePage": "Personalizar P&aacute;gina",
     "createListing": "Nuevo Listado",
@@ -156,7 +156,7 @@
       "notifications": "Notificaciones",
       "nav": "Navegación",
       "close": "Cerrar",
-      "currentPrice": "Precio actual del bitcoin"
+      "currentPrice": "Precio actual del phore"
     },
     "serversMenu": {
       "newServer": "Nuevo Servidor",
@@ -223,7 +223,7 @@
     "modAddError": "Hubo un error al añadir a este moderador.\n%{errMsg}",
     "modRemoveError": "Hubo un error al eliminar a este moderador.\n%{errMsg}",
     "storeWelcomeCalloutTitle": "Bienvenido a tu tienda!",
-    "storeWelcomeCalloutBody": "Su tienda en OpenBazaar ya está en la red. Empiece por crear algunos listados o personalizando su página.",
+    "storeWelcomeCalloutBody": "Su tienda en PhoreMarketplace ya está en la red. Empiece por crear algunos listados o personalizando su página.",
     "storeWelcomeCalloutBtnClose": "Cierre",
     "store": {
       "retryStoreFetch": "Re-intente",
@@ -301,10 +301,10 @@
     "languages": "Lenguajes"
   },
   "about": {
-    "linkText": "Acerca de OpenBazaar",
-    "brand": "OpenBazaar",
+    "linkText": "Acerca de PhoreMarketplace",
+    "brand": "PhoreMarketplace",
     "blurbs": {
-      "tradeFree": "OpenBazaar es posible gracias a una comunidad internacional de desarrolladores y voluntarios que contribuyen con su tiempo para ayudar a hacer el comercio libre."
+      "tradeFree": "PhoreMarketplace es posible gracias a una comunidad internacional de desarrolladores y voluntarios que contribuyen con su tiempo para ayudar a hacer el comercio libre."
     },
     "version": "versión %{version}",
     "bothVersions": "cliente %{cVer}, servidor %{sVer}",
@@ -325,8 +325,8 @@
     },
     "licenseTab": {
       "linkText": "Licencia",
-      "sectionHeader": "Licencia MIT OpenBazaar",
-      "licensePreface": "OpenBazaar es un software de código abierto con licencia MIT. Esta licencia es permisiva y está diseñada para permitir a las personas reutilizar completamente el código para otros proyectos de código abierto o para software privado. Abajo está el texto completo de la licencia.",
+      "sectionHeader": "Licencia MIT PhoreMarketplace",
+      "licensePreface": "PhoreMarketplace es un software de código abierto con licencia MIT. Esta licencia es permisiva y está diseñada para permitir a las personas reutilizar completamente el código para otros proyectos de código abierto o para software privado. Abajo está el texto completo de la licencia.",
       "header": "La Licencia MIT (MIT)",
       "copyright": "Derechos autorales &copy; 2016 Personas desarrolladoras de OpenBazaar",
       "paragraphs": {
@@ -367,10 +367,10 @@
       "helperLanguage": "Mostrar los elementos de la interfaz en",
       "helperCountry": "El país en el que reside mayoritariamente",
       "helperCurrency": "Mostrar precios en",
-      "helperTranslations": "Ayudar a traducir OpenBazaar en %{helperTranslationsLink}",
+      "helperTranslations": "Ayudar a traducir PhoreMarketplace en %{helperTranslationsLink}",
       "helperTranslationsLink": "Transifex",
       "sectionName": "General",
-      "bitcoinUnit": "Unidad de Bitcoin",
+      "bitcoinUnit": "Unidad de Phore",
       "bitcoinUnitTypes": {
         "PHR": "PHR",
         "mPHR": "mPHR",
@@ -488,7 +488,7 @@
         "purge": "Eliminar Archivos Compartidos",
         "purgeHelper": "Borrar archivos en la cache que estás compartiendo con otros",
         "purgeBtn": "Eliminar Archivos",
-        "purgeToolTip": "OpenBazaar comparte contenido cacheado que has visto con otros usuarios. Si has visto texto o imágenes que no quieres compartir, este botón los borrará. Esto no afectará a ningún archivo que te pertenezca.",
+        "purgeToolTip": "PhoreMarketplace comparte contenido cacheado que has visto con otros usuarios. Si has visto texto o imágenes que no quieres compartir, este botón los borrará. Esto no afectará a ningún archivo que te pertenezca.",
         "purgeError": "Hubo un error, tus archivos en la cache puede que no hayan sido borrados.",
         "purgeComplete": "Tus archivos en la cache han sido borrados.",
         "blockData": "Bloque de Datos",
@@ -514,7 +514,7 @@
       "transaction": {
         "sectionName": "Transacciones",
         "saveMetadata": "Guardar Metadatos",
-        "defaultFee": "Comisión de la red Bitcoin",
+        "defaultFee": "Comisión de la red Phore",
         "low": "Económico",
         "medium": "Normal",
         "high": "Prioridad"
@@ -555,7 +555,7 @@
       "languages": "Lenguajes",
       "languagesHelper": "Escribe todos los idiomas que domines (ej: puedes comunicarte claramente en).",
       "acceptGuidelines": "He leído %{acceptGuidelinesLink} recomendado",
-      "acceptGuidelinesLink": "Lineamientos para la Resolución de Disputas de OpenBazaar",
+      "acceptGuidelinesLink": "Lineamientos para la Resolución de Disputas de PhoreMarketplace",
       "understandRequirements": "Entiendo que debo ofrecer mis servicios para resolver disputas a cualquiera que lo pida, a menos que violen los términos descritos anteriormente.",
       "status":{
         "saving": "Guardando las configuraciones de moderación...",
@@ -750,12 +750,12 @@
     "transactionsLabel": "Transacciones",
     "receiveMoney": {
       "title": "Recibir Dinero",
-      "needBitcoin": "¿Necesitas Bitcoin?",
+      "needBitcoin": "¿Necesitas Phore?",
       "btnCancel": "Cancelar"
     },
     "sendMoney": {
       "toLabel": "Para",
-      "toPlaceholder": "Ingresa una Dirección Bitcoin",
+      "toPlaceholder": "Ingresa una Dirección Phore",
       "amountLabel": "Monto",
       "noteLabel": "Nota",
       "notePlaceholder": "Sólo visto por ti",
@@ -948,7 +948,7 @@
     "helperSKU": "A unique identifier for your listing",
     "helperSKUWithVariants": "When variants are present, Skus can be declared in the %{variantInventoryLink} section",
     "variantInventoryLink": "Variant Inventory",
-    "helperPrice": "Pongo su precio en Dolares, Yuan, Bitcoin, lo que sea",
+    "helperPrice": "Pongo su precio en Dolares, Yuan, Phore, lo que sea",
     "helperCondition": "La condición general de tu publicación",
     "helperNSFW": "Mark yes if the listing is NSFW",
     "helperTags": "Agregar varias etiquetas. Introduzca nombre de etiqueta, presione intro, repita.",
@@ -1104,7 +1104,7 @@
     "introScreen": {
       "connectionLbl": "Conexión:",
       "btnChange": "Cambiar",
-      "introLine": "Un mercado libre. Sin tasas. Sin restricciones. Gana Bitcoin.",
+      "introLine": "Un mercado libre. Sin tasas. Sin restricciones. Gana Phore.",
       "tagLine": "Compra y vende libremente",
       "btnGetStarted": "Comenzar"
     },
@@ -1122,7 +1122,7 @@
     },
     "tosScreen": {
       "heading": "Términos de servicio",
-      "tos": "OpenBazaar es una red para comerciar bienes y servicios directamente entre la gente - utilizando Bitcoin - sin ninguna organización central que controle la plataforma. Esto significa que usted es responsable de su propia actividad en la red..\n\nLo usuarios de OpenBazaar no son anónimos por defecto. La mayoría de las comunicaciones entre las partes son cifradas, pero las direcciones IP son públicas y pueden ser asociadas con su actividad en la red. Partes maliciosas podrían utilizar esta información contra usted; proteger su privacidad es su propia responsabilidad.\n\nLos usuarios de OpenBazaar se deben adherir a las leyes su propia jurisdicción local así como a su sentido común. Los desarrolladores de OpenBazaar no condonan - y no son responsables - de ningún uso de la plataforma para actividades ilegales.\n\nLa comunidad de desarrolladores de OpenBazaar ha trabajado duro para entregar al mundo una plataforma de comercio libre. Pero como ocurre con cualquier software, se encontrarán bugs. Los desarrolladores no son responsables de ninguna pérdida monetaria que pueda asociarse a problemas con su software.\n\nUsing OpenBazaar usted se responsabiliza de sus propias acciones en la red de OpenBazaar."
+      "tos": "PhoreMarketplace es una red para comerciar bienes y servicios directamente entre la gente - utilizando Phore - sin ninguna organización central que controle la plataforma. Esto significa que usted es responsable de su propia actividad en la red..\n\nLo usuarios de PhoreMarketplace no son anónimos por defecto. La mayoría de las comunicaciones entre las partes son cifradas, pero las direcciones IP son públicas y pueden ser asociadas con su actividad en la red. Partes maliciosas podrían utilizar esta información contra usted; proteger su privacidad es su propia responsabilidad.\n\nLos usuarios de PhoreMarketplace se deben adherir a las leyes su propia jurisdicción local así como a su sentido común. Los desarrolladores de PhoreMarketplace no condonan - y no son responsables - de ningún uso de la plataforma para actividades ilegales.\n\nLa comunidad de desarrolladores de PhoreMarketplace ha trabajado duro para entregar al mundo una plataforma de comercio libre. Pero como ocurre con cualquier software, se encontrarán bugs. Los desarrolladores no son responsables de ninguna pérdida monetaria que pueda asociarse a problemas con su software.\n\nUsing PhoreMarketplace usted se responsabiliza de sus propias acciones en la red de PhoreMarketplace."
     }
   },
   "pageControls": {
@@ -1184,8 +1184,8 @@
       "to": "A: %{address}",
       "payFromWallet": "Pagar de billetera",
       "payWithAlt": "Pagar con altcoins",
-      "note1": "If you need help getting started with Bitcoin, please read %{link}.",
-      "note1Link": "Necesitas Bitcoin? en OpenBazaar.org",
+      "note1": "If you need help getting started with Phore, please read %{link}.",
+      "note1Link": "Necesitas Phore? en Phore.io",
       "note2": "Your payment will be held securely in escrow. If any issues arise, you’ll have the ability to open a dispute.",
       "note3": "*The moderator service fee only applies if a dispute is opened.",
       "note4": "Once you have paid, it may take a bit for the interface to update.",
@@ -1193,7 +1193,7 @@
       "altcoinLink": "You can still fund your PM wallet with altcoins.",
       "walletNote": "<b>External wallets</b> that don't support Segregated Witness may not be able to pay for transactions.",
       "walletLink": "You can send funds to your PM wallet instead.",
-      "feeNote": "<b>Remember to cover any fees</b> when you send funds to your OpenBazaar wallet."
+      "feeNote": "<b>Remember to cover any fees</b> when you send funds to your PhoreMarketplace wallet."
     },
     "completeSection": {
       "paymentSent": "Su pago fue enviado!",
@@ -1208,8 +1208,8 @@
       "send": "Enviar",
       "share": {
         "title": "Compartir con amigos",
-        "body": "I just made a purchase on OpenBazaar, the free marketplace without fees or restrictions. Learn more at %{link}.",
-        "shareMsg": "I just made a purchase on @OpenBazaar, the free marketplace without fees or restrictions.",
+        "body": "I just made a purchase on PhoreMarketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
+        "shareMsg": "I just made a purchase on PhoreMarketplace @PhoreCrypto, the free marketplace without fees or restrictions.",
         "postToTwitter": "Publicar en Twitter",
         "postToFacebook": "Publicar en Facebook",
         "postToPinterest": "Publicar en Pinterest",
@@ -1375,7 +1375,7 @@
         "veryManyConfirmationsCount": "%{countText} confirmations",
         "rejectConfirm": {
           "title": "¿Estás seguro?",
-          "body": "The original amount in bitcoin will be returned to the buyer",
+          "body": "The original amount in phore will be returned to the buyer",
           "btnCancel": "Cancelar",
           "btnConfirm": "Sí, Rechazar"
         },
@@ -1399,7 +1399,7 @@
         "fulfillBtn": "Fulfill Order",
         "refundConfirm": {
           "title": "¿Estás seguro?",
-          "body": "The original amount in bitcoin will be returned to the buyer",
+          "body": "The original amount in phore will be returned to the buyer",
           "btnCancel": "Cancelar",
           "btnConfirm": "Yes, Refund"
         }
@@ -1673,7 +1673,7 @@
   },
   "spendModelErrors": {
     "provideAddress": "Por favor provea una dirección.",
-    "invalidAddress": "La dirección proveída no parece ser una dirección valida de bitcoin.",
+    "invalidAddress": "La dirección proveída no parece ser una dirección valida de phore.",
     "provideAmountNumber": "Please provide an amount as a number. If including a decimal, a period should be used as the seperator, for example \"0.00\".",
     "amountGreaterThanZero": "La cantidad deber ser mayor que cero.",
     "insufficientFunds": "No tiene fondos suficientes para enviar esa cantidad. Asegúrese de contar con el cargo de la transacción."

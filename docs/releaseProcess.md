@@ -60,21 +60,22 @@ PhoreMarketplace_${VERSION}_amd64.deb
 PhoreMarketplace_${VERSION}_i386.deb
 ```
 
-- Upload `SHA256SUMS.${VERSION}.asc` from last step, to the openbazaar.org server
-  into `../domains/openbazaar.org/html/releases`
+- Upload `SHA256SUMS.${VERSION}.asc` from last step, to the phoreproject GitHub
 
-- Update OpenBazaar.org version
+- Update Phore.io version
 
   - Update website downloads page
 
 - Announce the release:
 
-  - OpenBazaar Slack
+  - Phore Discord
 
-  - OpenBazaar Twitter (@openbazaar)
+  - Phore Telegram
 
-  - blog.openbazaar.org blog post
+  - Phore Twitter (@PhoreCrypto)
 
-  - /r/Bitcoin, /r/btc, /r/OpenBazaar
+  - Phore.io blog post
 
-  - Facebook
+  - Phore subreddit /r/PhoreProject
+
+  - Phore Bitcointalk thread

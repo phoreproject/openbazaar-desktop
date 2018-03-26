@@ -23,7 +23,7 @@
     "ECONOMIC": "Economisch"
   },
   "feeChangeWidget": {
-    "label": "Bitcoin fee:",
+    "label": "Phore fee:",
     "btnChange": "change"
   },
   "consoleWarning": {
@@ -48,7 +48,7 @@
     },
     "install": "Nu installeren"
   },
-  "addressBarPlaceholder": "Type een @handle, OpenBazaar ID of zoek term",
+  "addressBarPlaceholder": "Type een @handle, PhoreMarketplace ID of zoek term",
   "testnet": "Test Modus",
   "testnetTooltip": "Test Modus gebruikt testnet coins, deze zijn slechts bedoelt voor testdoeleinden.",
   "tabMenuHeading": "MENU",
@@ -139,7 +139,7 @@
     "notConnectedMenuItem": "Niet verbonden",
     "torOnTooltip": "Tor actief",
     "discoverCalloutTitle": "Ontdek",
-    "discoverCalloutBody": "Browse en winkel bij honderden winkels op OpenBazaar",
+    "discoverCalloutBody": "Browse en winkel bij honderden winkels op PhoreMarketplace",
     "myPage": "Mijn Pagina",
     "customizePage": "Pas Pagina Aan",
     "createListing": "Creeer verkoopartikel",
@@ -156,7 +156,7 @@
       "notifications": "Notificaties",
       "nav": "Navigatie",
       "close": "Sluit",
-      "currentPrice": "Huidige Bitcoin prijs"
+      "currentPrice": "Huidige Phore prijs"
     },
     "serversMenu": {
       "newServer": "Nieuwe Server",
@@ -223,7 +223,7 @@
     "modAddError": "Er was een fout bij het toevoegen van deze moderator %{errMsg}",
     "modRemoveError": "Er was een fout bij het verwijderen van deze moderator %{errMsg}",
     "storeWelcomeCalloutTitle": "Welkom in jouw winkel!",
-    "storeWelcomeCalloutBody": "Jouw OpenBazaar winkel is nu live op het netwerk. Begin met het aanmaken van een verkoopartikel.",
+    "storeWelcomeCalloutBody": "Jouw PhoreMarketplace winkel is nu live op het netwerk. Begin met het aanmaken van een verkoopartikel.",
     "storeWelcomeCalloutBtnClose": "Sluit",
     "store": {
       "retryStoreFetch": "Probeer opnieuw",
@@ -301,10 +301,10 @@
     "languages": "Talen"
   },
   "about": {
-    "linkText": "Over OpenBazaar",
-    "brand": "OpenBazaar",
+    "linkText": "Over PhoreMarketplace",
+    "brand": "PhoreMarketplace",
     "blurbs": {
-      "tradeFree": "OpenBazaar is mogelijk gemaakt door een internationale gemeenschap van ontwikkelaars en vrijwilligers die met hun tijd bijdragen om vrije handel mogelijk te maken."
+      "tradeFree": "PhoreMarketplace is mogelijk gemaakt door een internationale gemeenschap van ontwikkelaars en vrijwilligers die met hun tijd bijdragen om vrije handel mogelijk te maken."
     },
     "version": "versie %{version}",
     "bothVersions": "client %{cVer}, server %{sVer}",
@@ -325,8 +325,8 @@
     },
     "licenseTab": {
       "linkText": "Licentie",
-      "sectionHeader": "OpenBazaar MIT Licentie",
-      "licensePreface": "OpenBazaar is open source software onder de MIT license. Deze licentie is ermissive en ontworpen om mensen de mogelijkheidte geven om de code volledigte hergebruiken voor andere open source projecten of voor proprietary software. De volledige licentie tekst staat hieronder.",
+      "sectionHeader": "PhoreMarketplace MIT Licentie",
+      "licensePreface": "PhoreMarketplace is open source software onder de MIT license. Deze licentie is ermissive en ontworpen om mensen de mogelijkheidte geven om de code volledigte hergebruiken voor andere open source projecten of voor proprietary software. De volledige licentie tekst staat hieronder.",
       "header": "De MIT Licentie (MIT)",
       "copyright": "Copright &copy; 2016 OpenBazaar Developers",
       "paragraphs": {
@@ -367,10 +367,10 @@
       "helperLanguage": "Toon interface elementen in",
       "helperCountry": "Land waar je hoofdzakelijk verblijft",
       "helperCurrency": "Laat prijzen zien in ",
-      "helperTranslations": "Help OpenBazaar te vertalen op %{helperTranslationLink}",
+      "helperTranslations": "Help PhoreMarketplace te vertalen op %{helperTranslationLink}",
       "helperTranslationsLink": "Transifex",
       "sectionName": "Algemeen",
-      "bitcoinUnit": "Bitcoin Eenheid",
+      "bitcoinUnit": "Phore Eenheid",
       "bitcoinUnitTypes": {
         "PHR": "PHR",
         "mPHR": "mPHR",
@@ -488,7 +488,7 @@
         "purge": "Gedeelte bestanden opschonen",
         "purgeHelper": "Verwijder gecachte bestanden die je deelt met anderen",
         "purgeBtn": "Bestanden opschonen",
-        "purgeToolTip": "OpenBazaar deelt gecachte content die hebt bekeken met andere gebruikers. Als je tekst of afbeeldingen bekeken hebt die je niet wilt delen, dan verwijderd deze button deze. Dit heeft geen invloed op bestanden die van jou zijn.",
+        "purgeToolTip": "PhoreMarketplace deelt gecachte content die hebt bekeken met andere gebruikers. Als je tekst of afbeeldingen bekeken hebt die je niet wilt delen, dan verwijderd deze button deze. Dit heeft geen invloed op bestanden die van jou zijn.",
         "purgeError": "Er is een fout opgetreden, jouw gecachte bestanden zijn mogelijk niet verwijderd.",
         "purgeComplete": "Jouw gecachte bestanden zijn verwijderd.",
         "blockData": "Blokkeer Data",
@@ -514,7 +514,7 @@
       "transaction": {
         "sectionName": "Transactions",
         "saveMetadata": "Metadata opslaan",
-        "defaultFee": "Bitcoin Fee",
+        "defaultFee": "Phore Fee",
         "low": "Economisch",
         "medium": "Normaal",
         "high": "Prioriteit"
@@ -555,7 +555,7 @@
       "languages": "Talen",
       "languagesHelper": "Geef alle talen op die je ondersteunt (b.v.: je kunt duidelijk communiceren in).",
       "acceptGuidelines": "Ik hebt de aanbevolen %{acceptGuidelinesLink} gelezen",
-      "acceptGuidelinesLink": " OpenBazaar Richtlijnen Geschillenbeslechting.",
+      "acceptGuidelinesLink": " PhoreMarketplace Richtlijnen Geschillenbeslechting.",
       "understandRequirements": "Ik begrijp dat ik mijn diensten moet aanbieden om geschillen te beslechten aan iedereen die dit vraagt, tenzij ze in overtreding zijn m.b.t. de hierboven beschreven voorwaarden.",
       "status":{
         "saving": "Moderator instellingen worden opgeslagen",
@@ -750,12 +750,12 @@
     "transactionsLabel": "Transactions",
     "receiveMoney": {
       "title": "Ontvang geld",
-      "needBitcoin": "Bitcoin nodig?",
+      "needBitcoin": "Phore nodig?",
       "btnCancel": "Annuleer"
     },
     "sendMoney": {
       "toLabel": "Naar",
-      "toPlaceholder": "Voer een Bitcoin adres in",
+      "toPlaceholder": "Voer een Phore adres in",
       "amountLabel": "Hoeveelheid",
       "noteLabel": "Notitie",
       "notePlaceholder": "Alleen voor jou zichtbaar",
@@ -948,7 +948,7 @@
     "helperSKU": "Een unieke identificator voor je verkoopartikel",
     "helperSKUWithVariants": "In geval van uitvoeringen kunnen verhandelbare eenheden opgegeven worden in de %{variantInventoryLink} sectie",
     "variantInventoryLink": "Variatie voorraad",
-    "helperPrice": "Zet je prijs in Dollars, Yuan, Bitcoin, of iets anders",
+    "helperPrice": "Zet je prijs in Dollars, Yuan, Phore, of iets anders",
     "helperCondition": "De staat van je verkoopartikel",
     "helperNSFW": "Markeer ja als dit verkoopartikel niet geschikt is voor op het werk (Not suitable for work)",
     "helperTags": "Voeg veel tags toe. Voer een tag naam in en druk enter, herhaal.",
@@ -1104,7 +1104,7 @@
     "introScreen": {
       "connectionLbl": "Verbinding:",
       "btnChange": "Verander",
-      "introLine": "Een vrije marktplaats. Geen kosten. Geen beperkingen. Verdien Bitcoin.",
+      "introLine": "Een vrije marktplaats. Geen kosten. Geen beperkingen. Verdien Phore.",
       "tagLine": "Vrije koop en verkoop ",
       "btnGetStarted": "Begin"
     },
@@ -1122,7 +1122,7 @@
     },
     "tosScreen": {
       "heading": "Leveringsvoorwaarden",
-      "tos": "OpenBazaar is een netwerk voor het verhandelen van goederen en services, direct van koper naar verkoper - gebruik makend van Bitcoin - zonder een centrale organisatie die het platform controleert. Dit betekent dat je zelf verantwoordelijk bent voor je activiteit op het netwerk.\n\nOpenBazaar gebruikers zijn standaard niet anoniem. De meeste communicatie tussen partijen is encrypted, maar IP adressen zijn publiek zichtbaar en kunnen geassocieerd worden met activiteit  op het netwerk. Malafide partijen kunnen deze informatie tegen jouw gebruiken; jouw privacy beschermen is jouw eigen verantwoordelijkheid.\n\nOpenBazaar gebruikers moeten zelf relevante wetgeving in acht nemen evenals hun geweten. De OpenBazaar ontwikkelaars geven geen goedkeuring aan - en zijn niet verantwoordelijk voor - het gebruik van het platform voor illegale activiteiten. \n\nDe OpenBazaar community van developers  heeft hard gewerkt om de wereld een gratis platform te bieden voor vrije handel. Maar zoals met elke software zullen bugs gevonden worden. De developers zijn niet verantwoordelijk voor financiele verliezen geassocieerd met problemen in de software. Bij gebruik van OpenBazaar ben je zelf verantwoordelijk voor je eigen acties op het OpenBazaar netwerk."
+      "tos": "PhoreMarketplace is een netwerk voor het verhandelen van goederen en services, direct van koper naar verkoper - gebruik makend van Phore - zonder een centrale organisatie die het platform controleert. Dit betekent dat je zelf verantwoordelijk bent voor je activiteit op het netwerk.\n\nPhoreMarketplace gebruikers zijn standaard niet anoniem. De meeste communicatie tussen partijen is encrypted, maar IP adressen zijn publiek zichtbaar en kunnen geassocieerd worden met activiteit  op het netwerk. Malafide partijen kunnen deze informatie tegen jouw gebruiken; jouw privacy beschermen is jouw eigen verantwoordelijkheid.\n\nPhoreMarketplace gebruikers moeten zelf relevante wetgeving in acht nemen evenals hun geweten. De PhoreMarketplace ontwikkelaars geven geen goedkeuring aan - en zijn niet verantwoordelijk voor - het gebruik van het platform voor illegale activiteiten. \n\nDe PhoreMarketplace community van developers  heeft hard gewerkt om de wereld een gratis platform te bieden voor vrije handel. Maar zoals met elke software zullen bugs gevonden worden. De developers zijn niet verantwoordelijk voor financiele verliezen geassocieerd met problemen in de software. Bij gebruik van PhoreMarketplace ben je zelf verantwoordelijk voor je eigen acties op het PhoreMarketplace netwerk."
     }
   },
   "pageControls": {
@@ -1184,8 +1184,8 @@
       "to": "Naar: %{address}",
       "payFromWallet": "Betaal uit wallet",
       "payWithAlt": "Betaal met Altcoins",
-      "note1": "Als u hulp nodig heeft om met Bitcoin te starten, lees door via de volgende link %{link}.",
-      "note1Link": "Bitcoin Nodig? op OpenBazaar.org",
+      "note1": "Als u hulp nodig heeft om met Phore te starten, lees door via de volgende link %{link}.",
+      "note1Link": "Phore Nodig? op Phore.io",
       "note2": "Uw betaling wordt beveiligd in borgstelling gezet. Als u problemen ervaart, kunt u een geschil openen.",
       "note3": "De moderator service toeslag is alleen van toepassing als een geschil wordt geopend.",
       "note4": "Als u heeft betaald, duurt het even voor het scherm ververst wordt.",
@@ -1193,7 +1193,7 @@
       "altcoinLink": "You can still fund your PM wallet with altcoins.",
       "walletNote": "<b>External wallets</b> that don't support Segregated Witness may not be able to pay for transactions.",
       "walletLink": "You can send funds to your PM wallet instead.",
-      "feeNote": "<b>Remember to cover any fees</b> when you send funds to your OpenBazaar wallet."
+      "feeNote": "<b>Remember to cover any fees</b> when you send funds to your PhoreMarketplace wallet."
     },
     "completeSection": {
       "paymentSent": "Betaling Verzonden!",
@@ -1208,8 +1208,8 @@
       "send": "Verzend",
       "share": {
         "title": "Share with friends",
-        "body": "I just made a purchase on OpenBazaar, the free marketplace without fees or restrictions. Learn more at %{link}.",
-        "shareMsg": "I just made a purchase on @OpenBazaar, the free marketplace without fees or restrictions.",
+        "body": "I just made a purchase on PhoreMarketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
+        "shareMsg": "I just made a purchase on PhoreMarketplace @PhoreCrypto, the free marketplace without fees or restrictions.",
         "postToTwitter": "Post to Twitter",
         "postToFacebook": "Post to Facebook",
         "postToPinterest": "Post to Pinterest",
@@ -1375,7 +1375,7 @@
         "veryManyConfirmationsCount": "%{countText} bevestigingen",
         "rejectConfirm": {
           "title": "Weet u het zeker?",
-          "body": "De originele hoeveelheid in bitcoin zal worden terugbetaald aan de koper",
+          "body": "De originele hoeveelheid in phore zal worden terugbetaald aan de koper",
           "btnCancel": "Annuleer",
           "btnConfirm": "Ja, afwijzen"
         },
@@ -1399,7 +1399,7 @@
         "fulfillBtn": "Order voldoen",
         "refundConfirm": {
           "title": "Weet u het zeker?",
-          "body": "De originele hoeveelheid in bitcoin zal worden terugbetaald aan de koper ",
+          "body": "De originele hoeveelheid in phore zal worden terugbetaald aan de koper ",
           "btnCancel": "Annuleer",
           "btnConfirm": "Ja, restitueren"
         }
@@ -1673,7 +1673,7 @@
   },
   "spendModelErrors": {
     "provideAddress": "Voer adres in.",
-    "invalidAddress": "Het opgegeven adres lijkt geen geldig Bitcoin adres te zijn.",
+    "invalidAddress": "Het opgegeven adres lijkt geen geldig Phore adres te zijn.",
     "provideAmountNumber": "Please provide an amount as a number. If including a decimal, a period should be used as the seperator, for example \"0.00\".",
     "amountGreaterThanZero": "Bedrag moet  groter zijn dan nul.",
     "insufficientFunds": "U heeft onvoldoende saldo om dit bedrag te versturen. Houdt rekening met de transactie toeslag."
