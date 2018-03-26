@@ -9,7 +9,7 @@ module.exports = function setup(grunt) {
         productName: 'PhoreMarketplace',
         name: 'openbazaar2',
         arch: 'amd64',
-        version: '1.3.1',
+        version: '1.3.3',
         bin: 'openbazaar2',
         maintainer: 'Phore <admin@phore.io>',
         rename(dest) {
