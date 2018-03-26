@@ -41,7 +41,7 @@ npm install grunt --save-dev --silent
 npm install grunt-electron-installer --save-dev --silent
 npm install
 
-echo 'Building OpenBazaar app...'
+echo 'Building PhoreMarketplace app...'
 npm run build
 
 echo 'Copying transpiled files into js folder...'

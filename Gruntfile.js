@@ -6,16 +6,16 @@ module.exports = function setup(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     'electron-installer-debian': {
       options: {
-        productName: 'OpenBazaar',
+        productName: 'PhoreMarketplace',
         name: 'openbazaar2',
         arch: 'amd64',
         version: '1.3.1',
         bin: 'openbazaar2',
-        maintainer: 'OpenBazaar <project@openbazaar.org>',
+        maintainer: 'Phore <admin@phore.io>',
         rename(dest) {
           return `${dest}<%= name %>_<%= version %>_<%= arch %>.deb`;
         },
-        productDescription: 'Decentralized Peer to Peer Marketplace for Bitcoin',
+        productDescription: 'Decentralized Peer to Peer Marketplace for Phore',
         lintianOverrides: [
           'changelog-file-missing-in-native-package',
           'executable-not-elf-or-script',
@@ -39,12 +39,12 @@ module.exports = function setup(grunt) {
         outputDirectory: grunt.option('outdir'),
         name: grunt.option('appname'),
         productName: grunt.option('appname'),
-        authors: 'OpenBazaar',
-        owners: 'OpenBazaar',
+        authors: 'PhoreBlockchain',
+        owners: 'PhoreBlockchain',
         exe: `${grunt.option('appname')}.exe`,
         description: `${grunt.option('appname')}`,
         version: grunt.option('obversion') || '',
-        title: 'OpenBazaar',
+        title: 'PhoreMarketplace',
         iconUrl: 'https://www.openbazaar.org/wp-content/uploads/2017/07/windows-icon.ico',
         setupIcon: 'imgs/windows-icon.ico',
         skipUpdateIcon: true,
