@@ -57,7 +57,6 @@ export default class extends baseVw {
     if (is.not.url(this.providerUrl)) {
       // use the first default temporarily to construct the tempUrl below
       this.sProvider = app.searchProviders.get(defaultSearchProviders[0].id);
-      this.mustSelectDefault = true;
       recordEvent('Discover_InvalidDefaultProvider', { url: this.providerUrl });
     }
 
