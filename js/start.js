@@ -254,7 +254,7 @@ function onboard() {
     .open();
 
   onboarding.on('onboarding-complete', () => {
-    location.hash = `${app.profile.id}/store`;
+    location.hash = 'search';
     onboardDeferred.resolve();
     onboarding.remove();
   });
