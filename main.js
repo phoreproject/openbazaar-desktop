@@ -25,7 +25,7 @@ function isOSWin64() {
 
 const plat = process.platform === 'win32' ? `${isOSWin64() ? 'win' : 'win32'}` : process.platform;
 
-const feedURL = `https://hazel-server-imflzbzzpa.now.sh/update/${plat}/${version}`;
+// const feedURL = `https://hazel-server-imflzbzzpa.now.sh/update/${plat}/${version}`;
 
 global.serverLog = '';
 
