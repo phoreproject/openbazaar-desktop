@@ -17,13 +17,14 @@ import { bindLocalServerEvent } from './js/utils/mainProcLocalServerEvents';
 let mainWindow;
 let trayMenu;
 let closeConfirmed = false;
-const version = app.getVersion();
+// const version = app.getVersion();
 
-function isOSWin64() {
-  return process.arch === 'x64' || process.env.hasOwnProperty('PROCESSOR_ARCHITEW6432');
-}
+// function isOSWin64() {
+//   return process.arch === 'x64' || process.env.hasOwnProperty('PROCESSOR_ARCHITEW6432');
+// }
 
-const plat = process.platform === 'win32' ? `${isOSWin64() ? 'win' : 'win32'}` : process.platform;
+// const plat = process.platform === 'win32' ?
+//  `${isOSWin64() ? 'win' : 'win32'}` : process.platform;
 
 // const feedURL = `https://hazel-server-imflzbzzpa.now.sh/update/${plat}/${version}`;
 
