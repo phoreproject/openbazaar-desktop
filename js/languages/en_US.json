@@ -140,7 +140,7 @@
     "torOnTooltip": "Tor active",
     "discoverCalloutTitle": "Discover",
     "discoverCalloutBody": "Browse and shop hundreds of stores on Phore Marketplace",
-    "myPage": "My Page",
+    "myPage": "My Store",
     "customizePage": "Customize Page",
     "createListing": "Create Listing",
     "purchases": "Purchases",
@@ -1069,7 +1069,7 @@
     "chooseDefaultMsg": "This provider will be used as the default for future seaches until you set a new one.",
     "providers": {
         "transactions": "Transactions",
-        "myPage": "My Page"
+        "myPage": "My Store"
     },
     "errors": {
       "searchFailTitle": "The search query to %{provider} has failed. Choose another provider above.",
