@@ -37,7 +37,6 @@
   <% } %>
 </div>
 
-
 <div class="listingContent flexColRow gutterVMd2">
   <div class="contentBox padLg clrP clrBr clrSh3">
     <div class="flex gutterHLg">
@@ -56,9 +55,9 @@
         <% } %>
         ></div>
         <div class="txCtr">
-          <a class="tx5 js-gotoPhotos">
+          <!-- <a class="tx5 js-gotoPhotos">
             <u><%= ob.polyT('listingDetail.viewPhotos', { count: ob.item.images.length, smart_count: ob.item.images.length }) %></u>
-          </a>
+          </a> -->
         </div>
       </div>
       <div class="flexExpand">
@@ -93,7 +92,7 @@
             </div>
           </div>
         </div>
-        <div class="flexHCent gutterHLg tx5 rowLg">
+        <div class="flexHLeft gutterHLg tx5 rowLg product-types">
           <div>
             <%= ob.polyT('listingDetail.type', { type: `<b>${ob.polyT(`formats.${ob.metadata.contractType}`)}</b>` }) %>
           </div>
@@ -101,7 +100,7 @@
             <div><%= ob.polyT('listingDetail.condition', { condition: `<b>${ob.polyT(`conditionTypes.${ob.item.condition.toUpperCase()}`)}</b>` }) %></div>
           <% } %>
         </div>
-        <hr class="rowLg">
+        <!-- <hr class="rowLg"> -->
         <h2 class="txUnb"><%= ob.polyT('listingDetail.tags') %></h2>
         <div class="tagWrapper">
           <% ob.item.tags.forEach(function(tag){

@@ -790,7 +790,6 @@ text-decoration:none;
     background:transparent!important;
   }
 
-
 // Sidebar filters
 .storeFilters .txB {
   font-size:2.5rem;
@@ -818,7 +817,6 @@ text-decoration:none;
   width:100%;
 }
 
-
 .contentBox {
   border:none;
 }
@@ -829,7 +827,8 @@ text-decoration:none;
 
 .clrS, body {
   // background:rgb(252,252,252);
-  background: #f9f9f9;
+  // background: #f9f9f9;
+  background:white;
 }
 
 
@@ -873,10 +872,13 @@ section:not(#pageNavContainer) .js-navBack{
 }
 
 .js-createListing {
-  background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20.47' height='20.53' viewBox='0 0 20.47 20.53'><path fill='%23262626' d='M10.68,5.36H9.79V9.82H5.34v.89H9.79v4.47h.89V10.71h4.45V9.82H10.68ZM15.57,0H4.89A4.9,4.9,0,0,0,0,4.91V15.62a4.9,4.9,0,0,0,4.89,4.91H15.57a4.9,4.9,0,0,0,4.9-4.91V4.91A4.9,4.9,0,0,0,15.57,0Zm4,15.62a4,4,0,0,1-4,4H4.89a4,4,0,0,1-4-4V4.91a4,4,0,0,1,4-4H15.57a4,4,0,0,1,4,4Z' transform='translate(0)'/></svg>") center center no-repeat;
-  background-position: 12px center;
-  padding-left: 36px;
+  background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20.47' height='20.53' viewBox='0 0 20.47 20.53'><path fill='%23FFF' d='M10.68,5.36H9.79V9.82H5.34v.89H9.79v4.47h.89V10.71h4.45V9.82H10.68ZM15.57,0H4.89A4.9,4.9,0,0,0,0,4.91V15.62a4.9,4.9,0,0,0,4.89,4.91H15.57a4.9,4.9,0,0,0,4.9-4.91V4.91A4.9,4.9,0,0,0,15.57,0Zm4,15.62a4,4,0,0,1-4,4H4.89a4,4,0,0,1-4-4V4.91a4,4,0,0,1,4-4H15.57a4,4,0,0,1,4,4Z' transform='translate(0)'/></svg>") center center no-repeat;
+  background-position: 16px center;
+  padding-left: 40px;
   background-size: 16px;
+  background-color: #00d188;
+    border: 0!important;
+    color: white!important;
 }
 
 
@@ -1043,7 +1045,7 @@ border-radius: 0 0 0.5rem 0.5rem;
 
 
 
-.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn {
+.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit {
   border: none;
   background: #00d188;
   border-radius: 4rem;
@@ -1073,7 +1075,10 @@ border-radius: 0 0 0.5rem 0.5rem;
 }
 
 .listingDetail .modalContent .listingContent .buyBox {
-  border:none;
+  // border:none;
+  border: 1px solid rgba(59, 67, 74, 0.1);
+    border-radius: 0.5rem;
+    padding: 30px 40px 22px;
 }
 
 .wallet .sendReceiveContainer{
@@ -1141,7 +1146,7 @@ hr.clrBr {
   font-family: 'Montserrat';
   letter-spacing: 1px;
   font-size: 1.2rem;
-  border: 2px solid #ccc!important;
+  border: 2px solid #ccc;
   padding-top:2px;
   &.processing{
     border:none!important;
@@ -1547,7 +1552,8 @@ h2.listing-title {
 }
 
 .confirmBox {
-  background: #162231;
+  // background: #162231;
+  background: rgba(22, 34, 49, 0.95);
   border: 1px solid rgba(59, 67, 74, 0.35);
   border-radius: 3px;
   padding:30px;
@@ -1629,11 +1635,12 @@ h2.listing-title {
   }
 }
 
-.editOverlay button, .editOverlay a:not(.js-deleteConfirmed), .reportBtn button {
+.editOverlay button, .editOverlay a:not(.js-deleteConfirmed):not(.js-deleteConfirmCancel), .reportBtn button {
   background: rgba(18, 28, 41, 0.6);
   padding:0!important;
   color:white!important;
 }
+
 
 #appFrame #contentFrame #pageContainer {
   padding-top: 85px;
@@ -1652,7 +1659,7 @@ h2.listing-title {
 .userPage .pageContent .pageControls .storeWelcomeCallout {
   left: 0;
     transform: translateX(430px);
-    top: 20px;
+    top: 60px;
     .btn {
       color:white;
     }
@@ -2034,3 +2041,26 @@ a.listing-title-catalog {
 }
 
 
+.stateProgressBar .stateSection.active .stateCircle, .stateProgressBar .stateSection.active .stateTrack {
+  background-color: #00d188;
+}
+
+.stateProgressBar .stateSection.active .stateCircle .ion-ios-checkmark-empty {
+  display: inline;
+  padding-top: 0.5rem;
+}
+
+
+.border {
+  border-radius:0.5rem;
+}
+
+
+.listingDetail .modalContent .listingContent .photoSection .photoPrev, .listingDetail .modalContent .listingContent .photoSection .photoNext, .listingDetail .modalContent .listingContent .photoSection .photoStrip {
+  background-color:rgba(18, 28, 41, 0.5);
+}
+
+
+.product-types > div {
+  margin-bottom:0.5rem;
+}
