@@ -565,7 +565,7 @@ function createWindow() {
       checkForUpdates();
     });
 
-    autoUpdater.setFeedURL(feedURL);
+    // autoUpdater.setFeedURL(feedURL);
   }
 
   mainWindow.webContents.on('dom-ready', () => {
