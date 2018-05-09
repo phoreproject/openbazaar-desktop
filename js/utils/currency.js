@@ -193,6 +193,8 @@ export function getExchangeRate(currency) {
     throw new Error('Please provide a currency.');
   }
 
+  console.log(exchangeRates, currency)
+
   return exchangeRates[currency];
 }
 
