@@ -416,6 +416,7 @@ function start() {
           location.replace(`${href}#${app.profile.id}`);
         }
 
+
         Backbone.history.start();
         app.pageNav.updateTabs();
 

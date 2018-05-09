@@ -95,6 +95,8 @@ export default class extends BaseVw {
     const openModals = getOpenModals();
     const topModal = openModals[openModals.length - 1];
 
+    if (!Backbone.History.started) return;
+
     const endURL = Backbone.history.getFragment();
     const path = endURL.split('?')[0];
 
