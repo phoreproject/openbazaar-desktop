@@ -15,7 +15,7 @@ export default class Profile extends BaseModel {
       handle: '',
       location: '',
       moderator: false,
-      name: `OB ${(Math.floor(Math.random() * 2116316159) + 60466176).toString(36)}`,
+      name: `PM ${(Math.floor(Math.random() * 2116316159) + 60466176).toString(36)}`,
       nsfw: false,
       shortDescription: '',
       avatarHashes: new Image(),
