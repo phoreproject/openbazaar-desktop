@@ -20,8 +20,8 @@ export default class extends baseVw {
   }
 
   getCurrentPrice() {
-    let convertCurrency = "USD";
-    if (this.localCurrency != "PHR") {
+    let convertCurrency = 'USD';
+    if (this.localCurrency !== 'PHR') {
       convertCurrency = this.localCurrency;
     }
     return getExchangeRate(convertCurrency);
