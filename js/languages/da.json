@@ -523,10 +523,10 @@
       "sectionName": "Generelt",
       "bitcoinUnit": "Bitcon-enhed",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Satoshi (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Gemmer generelle indstillinger…",
       "statusSaveComplete": "Generelle indstillinger er gemt.",
@@ -2091,10 +2091,10 @@
     "invalidtorlistings": "You must provide a valid Tor listings search URL."
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

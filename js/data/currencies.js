@@ -11,6 +11,10 @@ const currencies = [
     code: 'AFN',
   },
   {
+    name: 'Phore',
+    code: 'PHR',
+  },
+  {
     name: 'Euro',
     code: 'EUR',
   },

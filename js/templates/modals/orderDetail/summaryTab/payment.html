@@ -18,7 +18,7 @@
     <%
       let statusIconClass = 'clrTEm'; // full payment
       let statusIcon = 'ion-ios-checkmark-empty'; // full payment
-      
+
       if (ob.amountShort > 0) {  // partial payment
         statusIconClass = 'clrTErr';
         statusIcon = 'ion-ios-close-empty';
@@ -59,7 +59,7 @@
       <div class="flex gutterH">
         <%
           let confirmationsText;
-          
+
           if (ob.confirmations < 10000) {
             confirmationsText = ob.polyT('orderDetail.summaryTab.payment.confirmationsCount', {
               smart_count: ob.confirmations,
@@ -67,14 +67,14 @@
           } else {
             confirmationsText = ob.polyT('orderDetail.summaryTab.payment.veryManyConfirmationsCount', {
               countText: ob.abbrNum(ob.confirmations),
-            });          
+            });
           }
         %>
         <div class="" style="flex-shrink: 0"><%= confirmationsText %></div>
         <div class="" style="flex-shrink: 0;max-width: 80px">
           <div class="noOverflow"><a class="clrT2 js-txidLink" href="<%= ob.currencyMod.getBlockChainTxUrl(ob.txid, ob.isTestnet) %>"><%= ob.txid %></a></div>
         </div>
-        <% 
+        <%
           let subText = ob.polyT('orderDetail.summaryTab.payment.paidInFull');
 
           if (ob.amountShort > 0) {

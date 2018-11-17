@@ -72,7 +72,7 @@
       <% } %>
     </div>
   </div>
-</td>  
+</td>
 <% }) %>
 <td class="clrBr priceCol txRgt">
   <span class="ulOnHover">
@@ -96,7 +96,7 @@
           <a class="txU tx6 invisible"><%= ob.polyT('transactions.transactionsTable.btnReject') %></a>
           <%= ob.spinner({ className: 'spinnerSm center' }) %>
         </span>
-      <%          
+      <%
         } else {
       %>
         <a class="txU tx6 js-rejectOrder <% if (ob.acceptOrderInProgress) print('disabled') %>"><%= ob.polyT('transactions.transactionsTable.btnReject') %></a>
@@ -115,13 +115,13 @@
           <a class="txU tx6 invisible"><%= ob.polyT('transactions.transactionsTable.btnCancel') %></a>
           <%= ob.spinner({ className: 'spinnerSm center' }) %>
         </span>
-    <%          
+    <%
         } else {
     %>
       <a class="txU tx6 js-cancelOrder"><%= ob.polyT('transactions.transactionsTable.btnCancel') %></a>
     <%  }
       } else {
-        const statusText = ob.polyT(`transactions.transactionsTable.status.${ob.state}`); 
+        const statusText = ob.polyT(`transactions.transactionsTable.status.${ob.state}`);
         print(`<span class="ulOnHover">${statusText}</span>`);
       }
     } else {

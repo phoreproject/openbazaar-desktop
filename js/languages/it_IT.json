@@ -523,10 +523,10 @@
       "sectionName": "Generale",
       "bitcoinUnit": "Bitcoin",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Satoshi (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Salvo le impostazioni generali...",
       "statusSaveComplete": "Impostazioni generali salvate.",
@@ -2091,10 +2091,10 @@
     "invalidtorlistings": "Devi fornire un URL di ricerca dell'annuncio Tor valido."
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "Satoshi"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

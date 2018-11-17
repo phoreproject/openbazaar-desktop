@@ -11,7 +11,7 @@
         <%= ob.crypto.cryptoIcon({
           code: ob.paymentCoin,
           className: 'clrBr',
-        }) %>      
+        }) %>
       <% } %>
     </div>
     <div class="flexExpand tx5">
@@ -32,14 +32,14 @@
         } else {
           infoLine = ob.polyT(`orderDetail.summaryTab.payment.refunded`, {
             currencyPairing: priceFrag,
-          });        
+          });
         }
       %>
       <div class="rowTn txB"><%= infoLine %></div>
       <div class="flex gutterH">
         <%
           let confirmationsText;
-          
+
           if (ob.confirmations < 10000) {
             confirmationsText = ob.polyT('orderDetail.summaryTab.payment.confirmationsCount', {
               smart_count: ob.confirmations,
@@ -47,7 +47,7 @@
           } else {
             confirmationsText = ob.polyT('orderDetail.summaryTab.payment.veryManyConfirmationsCount', {
               countText: ob.abbrNum(ob.confirmations),
-            });          
+            });
           }
         %>
         <div class="" style="flex-shrink: 0"><%= confirmationsText %></div>

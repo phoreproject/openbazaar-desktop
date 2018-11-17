@@ -207,7 +207,7 @@ export function formatCurrency(amount, currency, options) {
   const opts = {
     locale: app && app.localSettings && app.localSettings.standardizedTranslatedLang() || 'en-US',
     btcUnit: app && app.localSettings &&
-      app.localSettings.get('bitcoinUnit') || 'BTC',
+      app.localSettings.get('bitcoinUnit') || 'PHR',
     // For crypto currencies, if a symbol is specified in the cryptoCurrencies data
     // module, it will be displayed in liu of the currency code.
     useCryptoSymbol: true,
@@ -257,23 +257,23 @@ export function formatCurrency(amount, currency, options) {
     let bitcoinConvertUnit;
     let amt = amount;
 
-    if (cur === 'BTC' || cur === 'TBTC') {
+    if (cur === 'PHR' || cur === 'TPHR') {
       switch (opts.btcUnit) {
-        case 'MBTC':
-          bitcoinConvertUnit = curSymbol = 'mBTC';
+        case 'mPHR':
+          bitcoinConvertUnit = curSymbol = 'mPHR';
           break;
-        case 'UBTC':
-          bitcoinConvertUnit = curSymbol = 'μBTC';
+        case 'uPHR':
+          bitcoinConvertUnit = curSymbol = 'uPHR';
           break;
-        case 'SATOSHI':
+        case 'pSAT':
           curSymbol = 'sat';
-          bitcoinConvertUnit = 'Satoshi';
+          bitcoinConvertUnit = 'pSAT';
           break;
         default:
-          bitcoinConvertUnit = 'BTC';
+          bitcoinConvertUnit = 'PHR';
       }
 
-      amt = bitcoinConvert(amount, 'BTC', bitcoinConvertUnit);
+      amt = bitcoinConvert(amount, 'PHR', bitcoinConvertUnit);
     }
 
     const formattedAmount = formattedCurrency = new Intl.NumberFormat(opts.locale, {
@@ -439,7 +439,7 @@ export function convertCurrency(amount, fromCur, toCur) {
 export function convertAndFormatCurrency(amount, fromCur, toCur, options = {}) {
   const opts = {
     locale: app && app.localSettings && app.localSettings.standardizedTranslatedLang() || 'en-US',
-    btcUnit: app && app.localSettings && app.localSettings.get('bitcoinUnit') || 'BTC',
+    btcUnit: app && app.localSettings && app.localSettings.get('bitcoinUnit') || 'PHR',
     skipConvertOnError: true,
     ...options,
   };

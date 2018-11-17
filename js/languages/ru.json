@@ -523,10 +523,10 @@
       "sectionName": "Главное",
       "bitcoinUnit": "Bitcoin Unit",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Satoshi (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Сохранение основных настроек...",
       "statusSaveComplete": "Основные настройки сохранены.",
@@ -2091,10 +2091,10 @@
     "invalidtorlistings": "Необходимо указать допустимый URL-адрес поиска в списках Tor."
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "Satoshi"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

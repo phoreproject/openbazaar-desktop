@@ -523,10 +523,10 @@
       "sectionName": "Algemeen",
       "bitcoinUnit": "Bitcoin Eenheid",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Satoshi (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Algemene instellingen worden opgeslagen...",
       "statusSaveComplete": "Algemene instellingen opgeslagen.",
@@ -2091,10 +2091,10 @@
     "invalidtorlistings": "Je moet een geldige URL invoeren voor Tor search."
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "Satoshi"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

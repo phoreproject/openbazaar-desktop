@@ -126,7 +126,7 @@ export default Spend;
  */
 export function spend(fields) {
   const attrs = {
-    currency: app && app.settings && app.settings.get('localCurrency') || 'BTC',
+    currency: app && app.settings && app.settings.get('localCurrency') || 'PHR',
     feeLevel: app &&
       app.localSettings && app.localSettings.get('defaultTransactionFee') || 'PRIORITY',
     memo: '',

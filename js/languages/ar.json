@@ -523,10 +523,10 @@
       "sectionName": "عام",
       "bitcoinUnit": "وحدة بيتكوين.",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "ساتوشي (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "جار حفظ الإعدادات العامة ...",
       "statusSaveComplete": "تم حفظ الإعدادات العامة.",
@@ -2091,10 +2091,10 @@
     "invalidtorlistings": "يجب وضع رابط بحث قوائم Tor صالح"
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "µBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",
