@@ -847,7 +847,7 @@ text-decoration:none;
   background:#c5c5c5;
 }
 
-.js-notifContainer &::-webkit-scrollbar-track {
+.js-notifContainer ::-webkit-scrollbar-track {
   background:transparent!important;
 }
 
