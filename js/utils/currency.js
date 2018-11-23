@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import app from '../app';
 import $ from 'jquery';
-import bitcoinConvert from 'bitcoin-convert';
+import phoredConvert from '../phored/phored-convert';
 import { upToFixed } from './number';
 import { Events } from 'backbone';
 import { getCurrencyByCode } from '../data/currencies';
@@ -262,8 +262,8 @@ export function formatCurrency(amount, currency, options) {
         case 'mPHR':
           bitcoinConvertUnit = curSymbol = 'mPHR';
           break;
-        case 'uPHR':
-          bitcoinConvertUnit = curSymbol = 'uPHR';
+        case 'μPHR':
+          bitcoinConvertUnit = curSymbol = 'μPHR';
           break;
         case 'pSAT':
           curSymbol = 'sat';
@@ -273,7 +273,7 @@ export function formatCurrency(amount, currency, options) {
           bitcoinConvertUnit = 'PHR';
       }
 
-      amt = bitcoinConvert(amount, 'PHR', bitcoinConvertUnit);
+      amt = phoredConvert(amount, 'PHR', bitcoinConvertUnit);
     }
 
     const formattedAmount = formattedCurrency = new Intl.NumberFormat(opts.locale, {
