@@ -22,7 +22,7 @@ describe('the currency utility module', () => {
   });
 
   it('correctly converts a PHR price from an integer to a decimal', () => {
-    expect(cur.integerToDecimal(271453590, 'PHR')).to.equal(2.71453590);
+    expect(cur.integerToDecimal(271453590, 'BTC')).to.equal(2.71453590);
   });
 
   it('correctly converts a fiat amount from a decimal to an integer', () => {
@@ -34,8 +34,8 @@ describe('the currency utility module', () => {
     expect(cur.decimalToInteger(1.23678, 'USD')).to.equal(124);
   });
 
-  it('correctly converts a PHR price from a decimal to an integer', () => {
-    expect(cur.decimalToInteger(2.71, 'PHR')).to.equal(271000000);
+  it('correctly converts a BTC price from a decimal to an integer', () => {
+    expect(cur.decimalToInteger(2.71, 'BTC')).to.equal(271000000);
   });
 
   it('correctly formats a non-crypto price to 2 decimal place', () => {
@@ -112,7 +112,7 @@ describe('the currency utility module', () => {
         'the resulting value', () => {
         expect(cur.convertAndFormatCurrency(500, 'USD', 'PLN', { locale: 'en-US' }))
           .to
-          .equal('PLN2,097.31');
+          .equal('PLN 2,097.31');
       });
 
       it('which will convert between a fiat currency and PHR and properly localize ' +
