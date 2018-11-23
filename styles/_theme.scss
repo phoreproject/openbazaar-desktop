@@ -535,9 +535,6 @@ input[type=range][class~="clrS"] {
 
 .searchWrapper {
   .addressBarIndicators {
-    &:before {
-      background: linear-gradient(to right, transparent, $primary 50%);
-    }
   }
 }
 
