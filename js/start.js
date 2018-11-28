@@ -315,6 +315,7 @@ function fetchVerifiedMods() {
 
 const fetchStartupDataDeferred = $.Deferred();
 let ownFollowingFetch;
+let followersFetch;
 let exchangeRatesFetch;
 let walletBalanceFetch;
 let searchProvidersFetch;
@@ -322,6 +323,8 @@ let searchProvidersFetch;
 function fetchStartupData() {
   ownFollowingFetch = !ownFollowingFetch || ownFollowingFetch.state() === 'rejected' ?
     app.ownFollowing.fetch() : ownFollowingFetch;
+  followersFetch = !followersFetch || followersFetch.state() === 'rejected' ?
+    app.followers.fetch() : followersFetch;
   exchangeRatesFetch = !exchangeRatesFetch || exchangeRatesFetch.state() === 'rejected' ?
     fetchExchangeRates() : exchangeRatesFetch;
   walletBalanceFetch = !walletBalanceFetch || walletBalanceFetch.state() === 'rejected' ?
@@ -331,6 +334,7 @@ function fetchStartupData() {
 
   const fetches = [
     ownFollowingFetch,
+    followersFetch,
     exchangeRatesFetch,
     walletBalanceFetch,
     searchProvidersFetch,
@@ -551,6 +555,11 @@ function start() {
 
     app.ownFollowing = new Followers([], {
       type: 'following',
+      peerId: app.profile.id,
+    });
+
+    app.followers = new Followers([], {
+      type: 'followers',
       peerId: app.profile.id,
     });
 

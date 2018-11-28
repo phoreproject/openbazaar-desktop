@@ -43,6 +43,7 @@ export default class extends baseVw {
       }
     } else {
       this._followingCount = app.ownFollowing.length;
+      this._followerCount = app.followers.length;
     }
 
     this.listenTo(this.model.get('headerHashes'), 'change', () => this.updateHeader());
