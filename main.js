@@ -179,7 +179,7 @@ function createWindow() {
     {
       label: 'Website',
       click() {
-        shell.openExternal('https://openbazaar.org');
+        shell.openExternal('https://phore.io');
       },
     },
     // until the documentation page is updated, don't show it
@@ -194,7 +194,7 @@ function createWindow() {
     {
       label: 'Support',
       click() {
-        shell.openExternal('https://openbazaar.org/support');
+        shell.openExternal('https://phore.io');
       },
     },
   ];
@@ -477,7 +477,7 @@ function createWindow() {
     minWidth: 1170,
     minHeight: 700,
     center: true,
-    title: 'OpenBazaar',
+    title: 'PhoreMarketplace',
     frame: false,
     icon: `${__dirname}/imgs/icon.png`,
   });
@@ -565,8 +565,6 @@ function createWindow() {
     ipcMain.on('checkForUpdate', () => {
       checkForUpdates();
     });
-
-    // autoUpdater.setFeedURL(feedURL);
   }
 
   mainWindow.webContents.on('dom-ready', () => {
