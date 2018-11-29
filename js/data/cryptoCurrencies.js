@@ -8,6 +8,32 @@ import bech32 from 'bech32';
 
 const currencies = [
   {
+    code: 'PHR',
+    testnetCode: 'TPHR',
+    baseUnit: 100000000,
+    averageModeratedTransactionSize: 184,
+    qrCodeText: address => `phore:${address}`,
+    icon: 'imgs/cryptoIcons/PHR-icon.png',
+    url: 'https://phore.io/',
+    getBlockChainAddressUrl: (address, isTestnet) => (
+      ''
+    ),
+    getBlockChainTxUrl: (txid, isTestnet) => (
+      ''
+    ),
+    canShapeShiftIntoWallet: false,
+    canShapeShiftIntoPurchase: false,
+    isValidAddress: address => {
+      if (typeof address !== 'string') {
+        throw new Error('Please provide a string.');
+      }
+      // TODO add address validation
+      return true;
+    },
+    supportsEscrowTimeout: true,
+    blockTime: 1000 * 60,
+  },
+  {
     code: 'BTC',
     testnetCode: 'TBTC',
     symbol: '₿',
