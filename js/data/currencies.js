@@ -11,10 +11,6 @@ const currencies = [
     code: 'AFN',
   },
   {
-    name: 'Phore',
-    code: 'PHR',
-  },
-  {
     name: 'Euro',
     code: 'EUR',
   },
@@ -666,7 +662,6 @@ export function getCurrencyByCode(code, options = {}) {
   }
 
   const currency = getIndexedCurrencies()[code];
-
   if (!currency && opts.includeCrypto) {
     return getCryptoCurByCode(code);
   }
