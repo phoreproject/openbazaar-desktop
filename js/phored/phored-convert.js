@@ -1,19 +1,17 @@
-'use strict';
-
 const Big = require('big.js');
 const units = {
-  'PHR': new Big(1),
-  'mPHR': new Big(0.001),
-  'μPHR': new Big(0.000001),
-  'pSAT': new Big(0.00000001),
+  PHR: new Big(1),
+  mPHR: new Big(0.001),
+  μPHR: new Big(0.000001),
+  pSAT: new Big(0.00000001),
 };
 
 function convert(from, fromUnit, toUnit, representation) {
-  let fromFactor = units[fromUnit];
+  const fromFactor = units[fromUnit];
   if (fromFactor === undefined) {
     throw new Error(`'${fromUnit}' is not a bitcoin unit`);
   }
-  let toFactor = units[toUnit];
+  const toFactor = units[toUnit];
   if (toFactor === undefined) {
     throw new Error(`'${toUnit}' is not a bitcoin unit`);
   }
@@ -29,7 +27,7 @@ function convert(from, fromUnit, toUnit, representation) {
     throw new Error(`'${representation}' is not a valid representation`);
   }
 
-  let result = new Big(from).times(fromFactor)
+  const result = new Big(from).times(fromFactor)
     .div(toFactor);
 
   if (!representation || representation === 'Number') {
@@ -48,15 +46,15 @@ convert.units = function () {
 };
 
 convert.addUnit = function addUnit(unit, factor) {
-  factor = new Big(factor);
-  let existing = units[unit];
-  if (existing && !existing.eq(factor)) {
+  const newFactor = new Big(factor);
+  const existing = units[unit];
+  if (existing && !existing.eq(newFactor)) {
     throw new Error(`'${unit}' already exists with a different conversion factor`);
   }
-  units[unit] = factor;
+  units[unit] = newFactor;
 };
 
-let predefinedUnits = convert.units();
+const predefinedUnits = convert.units();
 convert.removeUnit = function removeUnit(unit) {
   if (predefinedUnits.indexOf(unit) >= 0) {
     throw new Error(`'${unit}' is predefined and cannot be removed`);

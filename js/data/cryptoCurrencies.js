@@ -16,10 +16,10 @@ const currencies = [
     icon: 'imgs/cryptoIcons/PHR-icon.png',
     url: 'https://phore.io/',
     getBlockChainAddressUrl: (address, isTestnet) => (
-      ''
+      isTestnet ? '' : ''
     ),
     getBlockChainTxUrl: (txid, isTestnet) => (
-      ''
+      isTestnet ? '' : ''
     ),
     canShapeShiftIntoWallet: false,
     canShapeShiftIntoPurchase: false,
