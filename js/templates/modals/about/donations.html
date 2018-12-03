@@ -11,9 +11,6 @@
           <p><%= ob.polyT('about.donationsTab.bitcoinIntroLine') %></p>
         <% } %>
         <p class="js-copyAddress rowSm"><%= ob.obDonationAddress %></p>
-        <% if (serverCur !== 'BTC') { %>
-          <p class="clrTErr txUnl"><i class="ion-alert-circled"></i> <%= ob.polyT('about.donationsTab.bchWarning') %></p>
-        <% } %>
         <div class="js-copyNotification copyNotification clrT clrBr clrP">
           <%= ob.polyT('copiedToClipboardShort') %>
         </div>
