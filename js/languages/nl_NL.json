@@ -461,8 +461,7 @@
       "btnCopyAddress": "Kopieer adres",
       "btnOpenInWallet": "Open in Wallet",
       "bannerCountDonations": "%{donationCountFloor}+ Donaties ontvangen!",
-      "bitcoinIntroLine": "Bitcoin donaties kunnen verzonden worden naar het volgende adres:",
-      "bchWarning": "Stuur geen Bitcoin Cash naar dit adres.",
+      "bitcoinIntroLine": "Phore donaties kunnen verzonden worden naar het volgende adres:",
       "unableToOpenInWallet": {
         "title": "Kan niet openen in wallet",
         "body": "Kan het adres niet openen in de wallet omdat een betaling wordt verzonden. Wacht tot verzending afgerond is en probeer opnieuw."

@@ -461,8 +461,7 @@
       "btnCopyAddress": "Copiar Endereço",
       "btnOpenInWallet": "Abrir na Carteira",
       "bannerCountDonations": "Mais de %{donationCountFloor} Doações Rebidas!",
-      "bitcoinIntroLine": "As doações em Bitcoin podem ser enviadas para o seguinte endereço:",
-      "bchWarning": "Não envie Bitcoin Cash para esse endereço",
+      "bitcoinIntroLine": "As doações em Phore podem ser enviadas para o seguinte endereço:",
       "unableToOpenInWallet": {
         "title": "Não foi possível abrir na carteira",
         "body": "Não foi possível abrir o endereço na carteira porque um pagamento está sendo efetuado nesse momento. Por favor, aguarde até que o pagamento seja realizado e tente novamente mais tarde."

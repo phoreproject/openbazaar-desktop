@@ -461,8 +461,7 @@
       "btnCopyAddress": "Kopier Adresse",
       "btnOpenInWallet": "Åpne i Lommebok",
       "bannerCountDonations": "%{donationCountFloor}+ Donasjoner mottatt!",
-      "bitcoinIntroLine": "Bitcoin donasjoner kan sendes til følgende adresse:",
-      "bchWarning": "Ikke send Bitcoin Cash til denne adressen.",
+      "bitcoinIntroLine": "Phore donasjoner kan sendes til følgende adresse:",
       "unableToOpenInWallet": {
         "title": "Kunne ikke åpne i lommebok",
         "body": "Kunne ikke åpne adressen i lommeboken fordi en betaling holder på å bli sendt. Vennligst vent på at sendingen fullføres og forsøk igjen."

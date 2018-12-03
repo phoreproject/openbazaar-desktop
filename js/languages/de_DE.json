@@ -461,8 +461,7 @@
       "btnCopyAddress": "Adresse kopieren",
       "btnOpenInWallet": "In Wallet öffnen",
       "bannerCountDonations": "%{donationCountFloor}+ an Spenden empfangen!",
-      "bitcoinIntroLine": "Spenden in Bitcoin können an die folgende Adresse gesendet werden:",
-      "bchWarning": "Senden Sie kein Bitcoin Cash an diese Adresse",
+      "bitcoinIntroLine": "Spenden in Phore können an die folgende Adresse gesendet werden:",
       "unableToOpenInWallet": {
         "title": "Öffnen in Wallet nicht möglich",
         "body": "Die Adresse kann nicht in der Wallet geöffnet werden, da momentant eine Zahlung gesendet wird. Bitte warten Sie bis diese abgeschlossen wurde und versuchen Sie es anschließend erneut."

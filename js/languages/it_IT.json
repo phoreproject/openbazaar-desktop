@@ -461,8 +461,7 @@
       "btnCopyAddress": "Copia indirizzo",
       "btnOpenInWallet": "Apri nel portafoglio",
       "bannerCountDonations": "%{donationCountFloor}+ Donazioni ricevute!",
-      "bitcoinIntroLine": "Donazioni in Bitcoin possono essere inviate al seguente indirizzo:",
-      "bchWarning": "Non inviare Bitcoin Cash a questo indirizzo.",
+      "bitcoinIntroLine": "Donazioni in Phore possono essere inviate al seguente indirizzo:",
       "unableToOpenInWallet": {
         "title": "Non è stato possibile aprire l'indirizzo con il wallet.",
         "body": "Non è stato possibile aprire l'indirizzo con il portafoglio perché è in corso un pagamento. Aspetta fin quando il pagamento è completato e prova di nuovo."

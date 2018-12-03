@@ -461,8 +461,7 @@
       "btnCopyAddress": "Skopiuj adres",
       "btnOpenInWallet": "Otwórz w portfelu",
       "bannerCountDonations": "Otrzymaliśmy ponad %{donationCountFloor} darowizn!",
-      "bitcoinIntroLine": "Donacje w BTC można przesłać na poniższe adresy:",
-      "bchWarning": "Nie wysyłaj na te adresy Bitcoin Cash.",
+      "bitcoinIntroLine": "Donacje w Phore można przesłać na poniższe adresy:",
       "unableToOpenInWallet": {
         "title": "Nie można przejść do portfela",
         "body": "Nie można otworzyć adresu portfela, ponieważ trwa wysyłanie płatności. Spróbuj ponownie, gdy transakcja płatność zostanie zrealizowana."

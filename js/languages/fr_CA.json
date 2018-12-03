@@ -462,7 +462,6 @@
       "btnOpenInWallet": "Ouvrir dans le portefeuille",
       "bannerCountDonations": "%{donationCountFloor}+ Dons reçus!",
       "bitcoinIntroLine": "Bitcoin donations can be sent to the following address:",
-      "bchWarning": "Do not send Bitcoin Cash to this address.",
       "unableToOpenInWallet": {
         "title": "L'ouverture du portefeuille a échoué",
         "body": "Impossible d'ouvrir l'adresse dans le portefeuille car un paiement est en train d'être envoyé. Attendez que l'envoi soit terminé et réessayez."

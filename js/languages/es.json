@@ -461,8 +461,7 @@
       "btnCopyAddress": "Copiar Dirección",
       "btnOpenInWallet": "Abrir en Monedero",
       "bannerCountDonations": "¡%{donationCountFloor}+ Donaciones Recibidas!",
-      "bitcoinIntroLine": "Donaciones de Bitcoin se pueden enviar a la siguiente dirección:",
-      "bchWarning": "No envíes Bitcoin Cash a esta dirección.",
+      "bitcoinIntroLine": "Donaciones de Phore se pueden enviar a la siguiente dirección:",
       "unableToOpenInWallet": {
         "title": "Incapaz de abrir en el monedero",
         "body": "No se pudo abrir la dirección en el monedero porque un pago está en proceso de envío. Espere hasta que el envío se complete e intente de nuevo."

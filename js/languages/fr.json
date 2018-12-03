@@ -461,8 +461,7 @@
       "btnCopyAddress": "Copier l'adresse",
       "btnOpenInWallet": "Ouvrir dans le portefeuille",
       "bannerCountDonations": "%{donationCountFloor}+ Dons reçus !",
-      "bitcoinIntroLine": "Les dons en bitcoins peuvent être envoyés à l'adresse suivante :",
-      "bchWarning": "N’envoyez pas de Bitcoin Cash à cette adresse",
+      "bitcoinIntroLine": "Les dons en Phores peuvent être envoyés à l'adresse suivante :",
       "unableToOpenInWallet": {
         "title": "L'ouverture du portefeuille a échoué",
         "body": "Impossible d'ouvrir l'adresse dans le portefeuille car un paiement est en cours d'envoi. Attendez que l'envoi se termine et réessayez."

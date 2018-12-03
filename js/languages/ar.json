@@ -461,8 +461,7 @@
       "btnCopyAddress": "نسخ العنوان",
       "btnOpenInWallet": "فتح في المحفظة",
       "bannerCountDonations": "%{donationCountFloor}+ تبرعات مٌستقبلة!",
-      "bitcoinIntroLine": "تبرعات Bitcoin يمكن إرسالها إلى العنوان التالي:",
-      "bchWarning": "لا ترسل Bitcoin Cash إلى هذا العنوان.",
+      "bitcoinIntroLine": "تبرعات Phore يمكن إرسالها إلى العنوان التالي:",
       "unableToOpenInWallet": {
         "title": "تعذر الفتح في المحفظة",
         "body": "تعذر فتح العنوان في المحفظة لأن هناك عملية دفع قيد الإرسال. يرجى الانتظار حتى يكتمل الإرسال والمحاولة مرة أخرى."

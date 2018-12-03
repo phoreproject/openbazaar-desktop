@@ -461,8 +461,7 @@
       "btnCopyAddress": "Kopiér adresse",
       "btnOpenInWallet": "Åbn i tegnebog",
       "bannerCountDonations": "%{donationCountFloor} donationer modtaget!",
-      "bitcoinIntroLine": "Bitcoin donations can be sent to the following address:",
-      "bchWarning": "Do not send Bitcoin Cash to this address.",
+      "bitcoinIntroLine": "Phore donations can be sent to the following address:",
       "unableToOpenInWallet": {
         "title": "Kan ikke åbne i tegnebog",
         "body": "Kan ikke åbne adressen i tegnebogen, da en betaling er under afsendelse. Vent venligst indtil afsendelsen afsluttes og prøv da igen."
