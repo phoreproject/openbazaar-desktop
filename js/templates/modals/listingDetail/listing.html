@@ -76,7 +76,7 @@
     </div>
     <div class="flex gutterHLg">
       <div class="mainImageWrapper">
-        <div class="mainImage clrBr js-gotoPhotos"
+        <div class="mainImage clrBr js-gotoPhotos">
         <% if (ob.item.images.length) { %>
           style="background-image: url(<%= ob.getServerUrl(`ob/images/${ob.isHiRez() ? ob.item.images[0].large : ob.item.images[0].medium}`) %>), url('../imgs/defaultItem.png')"
         <% } else { %>
