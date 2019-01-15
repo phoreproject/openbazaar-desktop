@@ -2140,3 +2140,53 @@ a.listing-title-catalog {
 .product-types > div {
   margin-bottom:0.5rem;
 }
+
+
+.search #pageTabBar {
+  display:none;
+}
+
+#appFrame #contentFrame #pageContainer {
+  padding-top: 0;
+}
+
+.search .searchBar .searchInput {
+
+   
+}
+
+.search .searchBar .searchBtn.js-searchBtn {
+    height:50px;
+    border-radius: 4rem;
+    position: absolute;
+    right: 6px;
+    opacity:0;
+}
+
+.search .searchBar .searchInput.withLogo {
+  border-radius:4rem;
+  border:1px solid #ccc;
+  text-indent: 10px;
+    font-size: 18px;
+    background:whitesmoke;
+    height:60px;
+}
+
+
+.searchBar::before {
+  right:14px;
+  left:auto;
+}
+
+.sendMoney h2 {
+  display:none;
+}
+
+.searchWrapper:before { 
+  content:none;
+
+}
+
+.pageNav .navBar .addressBar {
+  text-indent:0;
+}
