@@ -583,7 +583,7 @@ function start() {
             // If for some reason the route to start on is empty, we'll change it to be
             // the user's profile.
             const href = location.href.replace(/(javascript:|#).*$/, '');
-            location.replace(`${href}#${app.profile.id}`);
+            location.replace(`${href}#search`);
           } else if (curConn.server &&
             curConn.server.id !== localStorage.serverIdAtLastStart) {
             // When switching servers, we'll land on the user page of the new node
