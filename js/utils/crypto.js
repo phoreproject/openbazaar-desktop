@@ -56,7 +56,7 @@ export function renderCryptoIcon(options = {}) {
   const defaultIcon = opts.defaultIcon ?
     `url(${opts.defaultIcon})` :
     '';
-  const style = `style="background-image: ${iconUrl}${defaultIcon}"`;
+  const style = `style="background-image: ${iconUrl}"`;
   return `<i class="cryptoIcon ${opts.className}" ${attrs} ${style}></i>`;
 }
 
