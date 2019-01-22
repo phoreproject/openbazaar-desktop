@@ -72,6 +72,7 @@ export default class extends baseVw {
     const resultsFrag = document.createDocumentFragment();
     const end = this.pageSize * (Number(this.serverPage) + 1) - (this.pageSize - models.length);
     const total = models.total;
+    const pagesCount = Math.ceil(total / this.pageSize);
     let start = 0;
     if (total) start = this.pageSize * Number(this.serverPage) + 1;
 
@@ -89,7 +90,8 @@ export default class extends baseVw {
     this.$resultsGrid.html(resultsFrag);
     // update the page controls
     // this.$displayText.html(app.polyglot.t('search.displaying', { start, end, total }));
-    this.pageControls.setState({ start, end, total });
+    this.pageControls.setState({ start, end, total, serverPage: this.serverPage,
+      lastPage: pagesCount - 1 });
     // hide the loading spinner
     this.$el.removeClass('loading');
     /*
@@ -141,16 +143,10 @@ export default class extends baseVw {
     }
   }
 
-  clickPagePrev() {
-    this.serverPage--;
-    this.loadPage(this.serverPage);
-    recordEvent('Discover_PrevPage');
-  }
-
-  clickPageNext() {
-    this.serverPage++;
-    this.loadPage(this.serverPage);
-    recordEvent('Discover_NextPage');
+  clickNumberedPage(pageNumber) {
+    this.serverPage = pageNumber;
+    this.loadPage();
+    recordEvent('Discover_ChangePage');
   }
 
   removeCardViews() {
@@ -178,8 +174,7 @@ export default class extends baseVw {
 
       if (this.pageControls) this.pageControls.remove();
       this.pageControls = this.createChild(PageControls);
-      this.listenTo(this.pageControls, 'clickNext', this.clickPageNext);
-      this.listenTo(this.pageControls, 'clickPrev', this.clickPagePrev);
+      this.listenTo(this.pageControls, 'onPageClick', this.clickNumberedPage);
       this.$('.js-pageControlsContainer').html(this.pageControls.render().el);
 
       this.loadPage();
