@@ -2198,3 +2198,16 @@ div.headline {
 .btnGetStarted {
   margin-top:20px;
 }
+
+.js-pageCnt:not(:first-child):not(:last-child) {
+  padding-right:12px;
+  padding-left:11px;
+}
+
+.js-pageCnt:hover {
+  background:#00d188;
+  color:white;
+  border-color:transparent;
+  border: 2px solid transparent!important;
+
+}
