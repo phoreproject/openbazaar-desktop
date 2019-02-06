@@ -118,15 +118,31 @@
       </div>
       <% if (ob.contractType !== 'CRYPTOCURRENCY') { %>
         <div>
-          <%=
-            ob.currencyMod.formattedCurrency(
+          <%
+            let localCurrencyFormattedValue = ob.currencyMod.formattedCurrency(
               ob.price.amount,
               ob.price.currencyCode,
               ob.displayCurrency,
               {
                 toolTipClass: 'toolTipTop',
               }
-            )
+            ) %>
+            <%= localCurrencyFormattedValue %>
+
+            <% if (ob.currencyMod.getServerCurrency().code !== ob.displayCurrency) {
+              let serverCurrencyFormattedValue = ob.currencyMod.formattedCurrency(
+                ob.price.amount,
+                ob.price.currencyCode,
+                ob.currencyMod.getServerCurrency().code,
+                {
+                toolTipClass: 'toolTipTop',
+                }
+              )
+              if (localCurrencyFormattedValue !== serverCurrencyFormattedValue) {
+                serverCurrencyFormattedValue = '(' + serverCurrencyFormattedValue + ' )' %>
+                <%= serverCurrencyFormattedValue %>
+              <% }
+            }
           %>
         </div>
       <% } else { %>

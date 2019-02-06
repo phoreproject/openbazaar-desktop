@@ -51,7 +51,7 @@ export default class extends Model {
       listingsGridViewType: 'grid',
       bitcoinUnit: 'PHR',
       verifiedModsProvider: 'https://search.phore.io/verified_moderators',
-      verifiedModsProviderTor: 'http://my7nrnmkscxr32zo.onion/verified_moderators',
+      verifiedModsProviderTor: '',
       dontShowTorExternalLinkWarning: false,
     };
   }
