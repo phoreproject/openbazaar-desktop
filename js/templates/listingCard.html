@@ -7,61 +7,62 @@
   if (ob.viewType === 'grid') {
 %>
 <div class="gridViewContent posR">
-  <div class="listingImage js-listingImage" style="<%= listingImageBgStyle %>">
     <div class="nsfwOverlay overlayPanel coverFull clrP">
-      <div class="flexCent">
-        <div>
-          <div class="flexCol flexHCent gutterV">
-            <div class="flexHCent gutterHSm tx3">
-              <%= ob.parseEmojis('😲') %>
-              <%= ob.parseEmojis('😱') %>
+        <div class="flexCent">
+          <div>
+            <div class="flexCol flexHCent gutterV">
+              <!-- <div class="flexHCent gutterHSm tx3">
+                <%= ob.parseEmojis('😲') %>
+                <%= ob.parseEmojis('😱') %>
+              </div> -->
+              <button class="btn clrP clrBr tx6 clrSh1 js-showNsfw"><%= ob.polyT('listingCard.btnShowMatureContent') %></button>
             </div>
-            <button class="btn clrP clrBr tx6 clrSh1 js-showNsfw"><%= ob.polyT('listingCard.btnShowMatureContent') %></button>
           </div>
         </div>
       </div>
-    </div>
-    <div class="blockedOverlay overlayPanel coverFull clrP">
-      <div class="flexCent">
-        <div>
-          <div class="flexCol flexHCent">
-            <i class="ion-eye-disabled tx1"></i>
-            <div><%= ob.polyT('listingCard.blockedUser') %></div>
+      <div class="blockedOverlay overlayPanel coverFull clrP">
+        <div class="flexCent">
+          <div>
+            <div class="flexCol flexHCent">
+              <i class="ion-eye-disabled tx1"></i>
+              <div><%= ob.polyT('listingCard.blockedUser') %></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <% if (ob.ownListing) { %>
-      <div class="editOverlay overlayPanel">
-        <div class="overlayPanelInner"></div>
-        <div class="flex gutterHSm">
-          <button class='iconBtnSm clrP clrBr toolTipNoWrap toolTipTop js-edit' data-tip="<%= ob.polyT('listingCard.editListingTooltip') %>"><span class="ion-edit"></span></button>
-          <button class='iconBtnSm clrP clrBr toolTipNoWrap toolTipTop js-clone' data-tip="<%= ob.polyT('listingCard.cloneListingTooltip') %>"><span class="ion-ios-copy"></span></button>
-          <div class="posR">
-            <a class='iconBtnSm clrP clrBr toolTipNoWrap toolTipTop js-delete' data-tip="<%= ob.polyT('listingCard.deleteListingTooltip') %>"><span class="ion-trash-b"></span></a>
-            <div class="js-deleteConfirmedBox confirmBox deleteConfirm tx5 arrowBoxBottom clrBr clrP clrT hide">
-              <div class="tx3 txB rowSm"><%= ob.polyT('listingCard.confirmDelete.title') %></div>
-              <p><%= ob.polyT('listingCard.confirmDelete.body') %></p>
-              <hr class="clrBr row" />
-              <div class="flexHRight flexVCent gutterHLg buttonBar">
-                <a class="js-deleteConfirmCancel"><%= ob.polyT('listingCard.confirmDelete.btnCancel') %></a>
-                <a class="btn clrBAttGrad clrBrDec1 clrTOnEmph js-deleteConfirmed"><%= ob.polyT('listingCard.confirmDelete.btnConfirm') %></a>
+      <% if (ob.ownListing) { %>
+        <div class="editOverlay overlayPanel">
+          <div class="overlayPanelInner"></div>
+          <div class="flex gutterHSm">
+            <button class='iconBtnSm clrP clrBr toolTipNoWrap toolTipTop js-edit' data-tip="<%= ob.polyT('listingCard.editListingTooltip') %>"><span class="ion-edit"></span></button>
+            <button class='iconBtnSm clrP clrBr toolTipNoWrap toolTipTop js-clone' data-tip="<%= ob.polyT('listingCard.cloneListingTooltip') %>"><span class="ion-ios-copy"></span></button>
+            <div class="posR">
+              <a class='iconBtnSm clrP clrBr toolTipNoWrap toolTipTop js-delete' data-tip="<%= ob.polyT('listingCard.deleteListingTooltip') %>"><span class="ion-trash-b"></span></a>
+              <div class="js-deleteConfirmedBox confirmBox deleteConfirm tx5 arrowBoxBottom clrBr clrP clrT hide">
+                <div class="tx3 txB rowSm"><%= ob.polyT('listingCard.confirmDelete.title') %></div>
+                <p><%= ob.polyT('listingCard.confirmDelete.body') %></p>
+                <hr class="clrBr row" />
+                <div class="flexHRight flexVCent gutterHLg buttonBar">
+                  <a class="js-deleteConfirmCancel"><%= ob.polyT('listingCard.confirmDelete.btnCancel') %></a>
+                  <a class="btn clrBAttGrad clrBrDec1 clrTOnEmph js-deleteConfirmed"><%= ob.polyT('listingCard.confirmDelete.btnConfirm') %></a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    <% } else { %>
-      <div class="additionalOverlay overlayPanel">
-        <div class="flex gutterHSm">
-          <div class="hideIfEmpty js-reportBtnWrapper"></div>
-          <div class="js-blockBtnWrapper"></div>
-          <% if (ob.nsfw) { %>
-            <button class="iconBtnSm clrP clrBr toolTipNoWrap toolTipTop btnHideNsfw js-hideNsfw" data-tip="<%= ob.polyT('listingCard.tipHideMatureContent') %>"><i class="ion-locked"></i></button>
-          <% } %>
+      <% } else { %>
+        <div class="additionalOverlay overlayPanel">
+          <div class="flex gutterHSm">
+            <div class="hideIfEmpty js-reportBtnWrapper"></div>
+            <div class="js-blockBtnWrapper"></div>
+            <% if (ob.nsfw) { %>
+              <button class="iconBtnSm clrP clrBr toolTipNoWrap toolTipTop btnHideNsfw js-hideNsfw" data-tip="<%= ob.polyT('listingCard.tipHideMatureContent') %>"><i class="ion-locked"></i></button>
+            <% } %>
+          </div>
         </div>
-      </div>
-    <% } %>
+      <% } %>
+  <div class="listingImage js-listingImage" style="<%= listingImageBgStyle %>">
+
   </div>
   <div class="pad clrBr borderTop infoArea">
     <!-- <% if (ob.vendor) { %>
