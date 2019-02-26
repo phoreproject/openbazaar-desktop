@@ -774,6 +774,8 @@ function setupWallet(server) {
       .render()
       .open()
       .on('walletSetupComplete', () => deferred.resolve());
+  } else if (server && server.get('builtIn')) {
+    server.save().done(() => deferred.resolve());
   } else {
     deferred.resolve();
   }
