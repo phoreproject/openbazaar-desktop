@@ -48,7 +48,7 @@
     "btnProceed": "Ja, fortsett"
   },
   "walletSetup": {
-    "heading": "Oppsett av lommebok for OpenBazaar",
+    "heading": "Oppsett av lommebok for Phore Marketplace",
     "currencyLabel": "Valuta",
     "currencyHelper": "Velg en valuta for din lommebok",
     "currencyHelper2": "Aksepter og send betalingen i den valgte valutaen over. Vennligst velg klokt, det er ikke for tiden mulig å bytte valuta etter at valget er gjort.",
@@ -111,7 +111,7 @@
   "formattedCurrency": {
     "unrecognizedCurrencyTip": "Unable to provide price information because it's priced in an unrecognized currency (%{cur})."
   },
-  "addressBarPlaceholder": "Skriv @navn, OpenBazaar ID eller søkeord",
+  "addressBarPlaceholder": "Skriv @navn, Phore Marketplace ID eller søkeord",
   "testnet": "Testmodus",
   "testnetTooltip": "Testmodus bruker testnettmynter, som kun er til testbruk.",
   "tabMenuHeading": "MENY",
@@ -222,7 +222,7 @@
     "notConnectedMenuItem": "Ikke Tilkoblet",
     "torOnTooltip": "Tor aktiv",
     "discoverCalloutTitle": "Oppdag",
-    "discoverCalloutBody": "Se og handle i hundrevis av butikker på OpenBazaar",
+    "discoverCalloutBody": "Se og handle i hundrevis av butikker på Phore Marketplace",
     "myPage": "Min side",
     "customizePage": "Tilpass siden",
     "createListing": "Opprett oppføring",
@@ -310,7 +310,7 @@
     "modAddError": "En feil oppstod ved tilleggelse av denne moderatoren.\n %{errMsg}",
     "modRemoveError": "En feil oppstod ved fjerning av denne moderatoren.\n %{errMsg}",
     "storeWelcomeCalloutTitle": "Velkommen til din butikk!",
-    "storeWelcomeCalloutBody": "Din OpenBazaar butikk er nå live på nettverket. Kom igang med å lage noen oppføringer eller å tilpasse siden din.",
+    "storeWelcomeCalloutBody": "Din Phore Marketplace butikk er nå live på nettverket. Kom igang med å lage noen oppføringer eller å tilpasse siden din.",
     "storeWelcomeCalloutBtnClose": "Lukk",
     "store": {
       "retryStoreFetch": "Forsøk på nytt",
@@ -368,7 +368,7 @@
       "failTextListing": "There was an issue retrieving %{listing}. Please try again.",
       "failTextListingLink": "store",
       "failTextListingWithLink": "There was an issue retrieving %{listing}. Please try again or browse other listings in the %{link}.",
-      "socialHeading": "OpenBazaar News & Discussions:",
+      "socialHeading": "Phore Marketplace News & Discussions:",
       "btnCancel": "Avbryt",
       "btnTryAgain": "Try Again"
     }
@@ -444,10 +444,10 @@
     "noCoinSupport": "Denne moderatoren støtter ikke %{coin}."
   },
   "about": {
-    "linkText": "Om OpenBazaar",
-    "brand": "OpenBazaar",
+    "linkText": "Om Phore Marketplace",
+    "brand": "Phore Marketplace",
     "blurbs": {
-      "tradeFree": "OpenBazaar er gjort mulig gjennom et internasjonalt fellesskap av utviklere og frivillige som bidrar med sin tid for å gjøre handel fri."
+      "tradeFree": "Phore Marketplace er gjort mulig gjennom et internasjonalt fellesskap av utviklere og frivillige som bidrar med sin tid for å gjøre handel fri."
     },
     "version": "versjon %{version}",
     "bothVersions": "klient %{cVer}, server %{sVer}",
@@ -472,7 +472,7 @@
       "sectionHeader": "OpenBazaar MIT Lisens",
       "licensePreface": "OpenBazaar er open source programvare under MIT lisensen. Denne lisensen er laget for å tillate folk å gjenbruke koden for andre open source prosjekter eller for proprietær programvare. Lisensteksten er gjengitt under i sin helhet.",
       "header": "MIT Lisensen (MIT)",
-      "copyright": "Copyright &copy; 2016 OpenBazaar Developers",
+      "copyright": "Copyright &copy; 2016 OpenBazaar Developers &copy; 2017-2019 Phore Developers",
       "paragraphs": {
         "permission": "Tillatelse gis herved, uten vederlag, til alle som skaffer en kopi av denne programvaren og tilhørende dokumentasjon (\"Programvaren\"), til å ha befatning med Programvaren uten begrensninger, inkludert ubegrensede rettigheter til å bruke, kopiere, modifisere, slå sammen, publisere, distribuere, viderelisensiere, og/eller selge kopier av Programvaren, og til å tillate personer Programvaren er tilpasset for til å gjøre dette, med følgende betingelser:",
         "inclusion": "Copyright-merknaden over og dette tillatelsesnotatet skal inkluderes i alle kopier eller vesentlige deler av programvaren.",
@@ -481,7 +481,7 @@
     },
     "contributorsTab": {
       "linkText": "Bidragsytere",
-      "sectionHeader": "OpenBazaar Bidragsytere",
+      "sectionHeader": "OpenBazaar & Phore Marketplace Bidragsytere",
       "listPreface": "Dette er en ufullstendig liste over personer som har bidratt til prosjektet, enten gjennom kode eller med annen hjelp."
     },
     "storyTab": {
@@ -503,8 +503,8 @@
     "helpTab": {
       "linkText": "Hjelp",
       "sectionHeader": "Hjelp",
-      "supportLink": "Brukerstøtte-siden på OpenBazaar.org",
-      "text": "Trenger du hjelp med OpenBazaar programvaren? Vennligst besøk %{supportLink}. Det er mange veivisere og OSS (Ofte stilte spørsmål) som kan hjelpe deg."
+      "supportLink": "Brukerstøtte-siden på Phore.io",
+      "text": "Trenger du hjelp med Phore Marketplace programvaren? Vennligst besøk %{supportLink}. Det er mange veivisere og OSS (Ofte stilte spørsmål) som kan hjelpe deg."
     }
   },
   "settings": {
@@ -639,7 +639,7 @@
         "purge": "Slett Delte Filer",
         "purgeHelper": "Slett mellomlagrede filer du deler med andre",
         "purgeBtn": "Slett Filer",
-        "purgeToolTip": "Openbazaar deler mellomlagret innhold du har sett på med andre brukere. Hvis du har sett på tekst eller bilder som du ikke vil dele så vil denne knappen slette dem. Dette vil ikke påvirke dine egne filer.",
+        "purgeToolTip": "Phore Marketplace deler mellomlagret innhold du har sett på med andre brukere. Hvis du har sett på tekst eller bilder som du ikke vil dele så vil denne knappen slette dem. Dette vil ikke påvirke dine egne filer.",
         "purgeError": "Det oppstod en feil, dine mellomlagrede filer har kanskje ikke blitt slettet.",
         "purgeComplete": "Dine mellomlagrede filer har blitt slettet.",
         "blockData": "Blokkdata",
@@ -712,7 +712,7 @@
       "languages": "Språk",
       "languagesHelper": "Skriv inn alle språk du kan støtte (som du kan kommunisere klart på).",
       "acceptGuidelines": "Jeg har lest den anbefalte %{acceptGuidelinesLink}",
-      "acceptGuidelinesLink": "OpenBazaar Retningslinjer for Tvisteløsning",
+      "acceptGuidelinesLink": "Phore Marketplace Retningslinjer for Tvisteløsning",
       "understandRequirements": "Jeg forstår at jeg må tilby mine tjenester for å løse tvister til hvem som helst som ber om dem, med mindre de bryter vilkårene beskrevet over.",
       "status": {
         "saving": "Lagrer moderatorinnstillinger...",
@@ -1342,7 +1342,7 @@
     },
     "tosScreen": {
       "heading": "Vilkår for Bruk",
-      "tos": "OpenBazaar er et nettverk for å handle varer og tjenester direkte mellom mennesker - ved bruk av kryptovaluta - uten noen sentral organisasjon som styrer plattformen. Dette betyr at du er ansvarlig for din egen aktivitet på nettverket.\n\nOpenBazaar brukere er ikke anonyme i utgangspunktet. Det meste av kommunikasjon mellom brukere er kryptert, men IP-adresser er offentlige og kan kobles til aktivitet på nettverket. Ondsinnede aktører kan bruke denne informasjonen mot deg; å beskytte ditt personvern er ditt eget ansvar.\n\nOpenBazaar brukere må følge loven i deres eget juridiske område samt deres samvittighet. OpenBazaar utviklerne støtter ikke - og er ikke ansvarlig for - bruk av plattformen for ulovlig aktivitet.\n\nFellesskapet av OpenBazaar utviklere har arbeidet hardt for å levere en fri plattform for handel til verden. Men som med all programvare vil det forekomme feil. Utviklerne er ikke ansvarlig for pengemessig tap i forbindelse med feil i programvaren.\n\nVed å bruke OpenBazaar er du ansvarlig for dine egne handlinger på OpenBazaar nettverket."
+      "tos": "Phore Marketplace er et nettverk for å handle varer og tjenester direkte mellom mennesker - ved bruk av kryptovaluta - uten noen sentral organisasjon som styrer plattformen. Dette betyr at du er ansvarlig for din egen aktivitet på nettverket.\n\nPhore Marketplace brukere er ikke anonyme i utgangspunktet. Det meste av kommunikasjon mellom brukere er kryptert, men IP-adresser er offentlige og kan kobles til aktivitet på nettverket. Ondsinnede aktører kan bruke denne informasjonen mot deg; å beskytte ditt personvern er ditt eget ansvar.\n\nPhore Marketplace brukere må følge loven i deres eget juridiske område samt deres samvittighet. Phore Marketplace utviklerne støtter ikke - og er ikke ansvarlig for - bruk av plattformen for ulovlig aktivitet.\n\nFellesskapet av Phore Marketplace utviklere har arbeidet hardt for å levere en fri plattform for handel til verden. Men som med all programvare vil det forekomme feil. Utviklerne er ikke ansvarlig for pengemessig tap i forbindelse med feil i programvaren.\n\nVed å bruke Phore Marketplace er du ansvarlig for dine egne handlinger på Phore Marketplace nettverket."
     }
   },
   "pageControls": {
@@ -1411,7 +1411,7 @@
       "payFromWallet": "Betal fra lommebok",
       "payWithAlt": "Betal med altcoins",
       "note1": "Hvis du trenger hjelp for å komme igang med Bitcoin, vennligst les %{link}.",
-      "note1Link": "Trenger du Bitcoin? på OpenBazaar.org",
+      "note1Link": "Trenger du Phore? på Phore.io",
       "note2": "Din betaling vil holdes sikker i escrow. Hvis et problem oppstår vil du kunne starte en tvistesak.",
       "note3": "*Moderatorgebyr gjelder kun om en tvist oppstår.",
       "note4": "Etter at du har betalt kan det ta litt tid før visningen oppdateres.",
@@ -1420,7 +1420,7 @@
       "altcoinLink": "Du kan likevel finansiere din OB lommebok med altcoins.",
       "walletNote": "<b>Eksterne lommebøker</b> som ikke støtter Segregated Witness vil kanskje ikke kunne betale for transaksjoner.",
       "walletLink": "Du kan sende penger til din OB lommebok istedenfor.",
-      "feeNote": "<b>Husk å dekke avgifter</b> når du sender penger til din OpenBazaar lommebok."
+      "feeNote": "<b>Husk å dekke avgifter</b> når du sender penger til din Phore lommebok."
     },
     "completeSection": {
       "paymentSent": "Betaling Sendt!",
@@ -1435,8 +1435,8 @@
       "send": "Send",
       "share": {
         "title": "Del med venner",
-        "body": "Jeg gjorde akkurat et kjøp på OpenBazaar, den frie markedsplassen uten avgifter eller begrensninger. Lær mer på %{link}.",
-        "shareMsg": "Jeg gjorde akkurat et kjøp på @OpenBazaar, den frie markedsplassen uten avgifter eller begrensninger.",
+        "body": "Jeg gjorde akkurat et kjøp på Phore Marketplace, den frie markedsplassen uten avgifter eller begrensninger. Lær mer på %{link}.",
+        "shareMsg": "Jeg gjorde akkurat et kjøp på @PhoreMarketplace, den frie markedsplassen uten avgifter eller begrensninger.",
         "postToTwitter": "Post på Twitter",
         "postToFacebook": "Post på Facebook",
         "postToPinterest": "Post på Pinterest",
@@ -1843,9 +1843,9 @@
   "metrics": {
     "title": "Optional Anonymous Metrics",
     "newVersion": "Please review the update to the analytics data agreement below and click “Activate.”",
-    "msg1": "Please help improve OpenBazaar by agreeing to share analytics data about your experience with the development team.",
-    "msg2": "By clicking “Activate,” you agree to share the data listed below with OB1 Company and its processors for the purposes described, and consent to the transfer of this data to servers located in the United States. You may stop the sharing of this data at any time by opening your settings, and clicking the Change Sharing Settings button in the Advanced section. If you are located in the European Economic Area, you may have certain rights with respect to this data, including the right of access, rectification, erasure, restriction of processing, objection to processing, and portability. You may contact us about these, or simply request us to stop using and delete the data we’ve collected, at any time by contacting data@ob1.io.",
-    "listTitle": "The following data will be collected by OB1 Company as you use OpenBazaar:",
+    "msg1": "Please help improve Phore Marketplace by agreeing to share analytics data about your experience with the development team.",
+    "msg2": "By clicking “Activate,” you agree to share the data listed below with Phore Blockchain Company and its processors for the purposes described, and consent to the transfer of this data to servers located in the United States. You may stop the sharing of this data at any time by opening your settings, and clicking the Change Sharing Settings button in the Advanced section. If you are located in the European Economic Area, you may have certain rights with respect to this data, including the right of access, rectification, erasure, restriction of processing, objection to processing, and portability. You may contact us about these, or simply request us to stop using and delete the data we’ve collected, at any time by contacting admin@phore.io.",
+    "listTitle": "The following data will be collected by Phore Blockchain Company as you use Phore Marketplace:",
     "list": {
       "device": "Your IP address and device information, for the purposes listed below.",
       "pages": "Which pages you load, such as the search page or store page. This lets us know which parts of the app are being used the most, and how users navigate through the app.",
@@ -1857,10 +1857,10 @@
       "app": "Details about your app, which include its version and whether it is installed from a downloadable package from source. This lets us understand the context of the other data collected, so it can be applied correctly.",
       "orders": "Basic information on actions you take with orders, such as its state when disputed, or if the order was moderated. This helps us identify problems in the order process.",
       "listings": "Basic information about on actions taken when creating and editing listings. This includes the type of listing, but no other information about it. This gives us data on potential problems with creating and editing listings.",
-      "path": "The path to your installation of OpenBazaar. This will share the name of any folders in the path to the installation folder, which may include your root and/or user folder. This is a side effect of the data collection process, and is not used by the OB1 team."
+      "path": "The path to your installation of Phore Marketplace. This will share the name of any folders in the path to the installation folder, which may include your root and/or user folder. This is a side effect of the data collection process, and is not used by the Phore team."
     },
     "disclaimer1": "No information that can be used to identify your orders or any of your transactions is shared with us. This data is always stored on your own computer, and cannot be accessed by anyone else.",
-    "disclaimer2": "As stated above, your sharing of this data is completely optional. You are not required to share this data in order to use OpenBazaar.",
+    "disclaimer2": "As stated above, your sharing of this data is completely optional. You are not required to share this data in order to use Phore Marketplace.",
     "acceptBtn": "Godta",
     "declineBtn": "Decline",
     "activateBtn": "Activate",

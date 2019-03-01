@@ -111,7 +111,7 @@
   "formattedCurrency": {
     "unrecognizedCurrencyTip": "يتعذر تقديم معلومات الأسعار لأنها مسعرة بعملة غير معروفة (%{cur})."
   },
-  "addressBarPlaceholder": "اكتب @handle، اوبن بازار ID أو مصطلح بحث",
+  "addressBarPlaceholder": "اكتب @handle، سوق الفور ID أو مصطلح بحث",
   "testnet": "وضع الاختبار",
   "testnetTooltip": "يستخدم وضع الاختبار عملات testnet، والتي تهدف لأغراض الاختبار فقط.",
   "tabMenuHeading": "قائمة",
@@ -368,7 +368,7 @@
       "failTextListing": "There was an issue retrieving %{listing}. Please try again.",
       "failTextListingLink": "store",
       "failTextListingWithLink": "There was an issue retrieving %{listing}. Please try again or browse other listings in the %{link}.",
-      "socialHeading": "OpenBazaar News & Discussions:",
+      "socialHeading": "Phore Marketplace News & Discussions:",
       "btnCancel": "إلغاء",
       "btnTryAgain": "حاول مجدداً"
     }
@@ -472,7 +472,7 @@
       "sectionHeader": "أوبن بازار ترخيص معهد ماساتشوستس للتكنولوجيا",
       "licensePreface": "أوبن بازار هو برنامج مفتوح المصدر تحت رخصة معهد ماساتشوستس للتكنولوجيا. هذا الترخيص متساهل ومصمم للسماح للأشخاص بإعادة استخدامه بالكامل لمشاريع أخرى مفتوحة المصدر أو البرامج صاحبة الملكية. نص الترخيص الكامل أدناه.",
       "header": "ترخيص معهد ماساتشوستس للتكنولوجيا (MIT)",
-      "copyright": "Copyright &copy; 2016 OpenBazaar Developers",
+      "copyright": "Copyright &copy; 2016 OpenBazaar Developers &copy; 2017-2019 Phore Developers",
       "paragraphs": {
         "permission": "يتم منح الإذن، مجانا، لأي شخص يحصل على نسخة من هذا البرنامج وملفات الوثائق المرتبطة به، للتعامل مع البرنامج دون قيود، بما في ذلك على سبيل المثال لا الحصر حقوق استخدام ونسخ وتعديل ودمج أو نشر أو توزيع أو ترخيص و / أو بيع نسخ من البرنامج، والسماح للأشخاص الذين يتم توفير البرامج لهم بذلك، مع مراعاة الشروط التالية:",
         "inclusion": "يجب تضمين إشعار حقوق الطبع والنشر المذكور أعلاه وإشعار الإذن هذا في جميع النسخ أو الأجزاء الكبيرة من البرنامج.",
@@ -503,8 +503,8 @@
     "helpTab": {
       "linkText": "مساعدة",
       "sectionHeader": "مساعدة",
-      "supportLink": "صفحة الدعم على OpenBazaar.org",
-      "text": "هل تحتاج مساعدة حول تطبيق اوبن بازار؟ يرجى زيارة %{supportLink}. هناك العديد من أدلة الدعم و الأسئلة الشائعة التي من المفترض أن تساعدك في حل مشكلتك."
+      "supportLink": "صفحة الدعم على Phore.io",
+      "text": "هل تحتاج مساعدة حول تطبيق ؟ يرجى زيارة %{supportLink}. هناك العديد من أدلة الدعم و الأسئلة الشائعة التي من المفترض أن تساعدك في حل مشكلتك."
     }
   },
   "settings": {
@@ -1411,7 +1411,7 @@
       "payFromWallet": "الدفع من المحفظة",
       "payWithAlt": "ادفع بعملة Altcoins",
       "note1": "إذا كنت بحاجة إلى مساعدة للبدء في استخدام Bitcoin ، فالرجاء قراءة ٪{link}.",
-      "note1Link": "تحتاج بيتكوين؟ على OpenBazaar.org",
+      "note1Link": "تحتاج بيتكوين؟ على Phore.io",
       "note2": "سيتم عقد دفعتك بشكل آمن في الضمان. إذا نشأت أي مشكلات، فستتمكن من فتح نزاع.",
       "note3": "* لا تنطبق رسوم خدمة المشرف إلا إذا تم فتح نزاع.",
       "note4": "بمجرد الدفع، قد يستغرق الأمر قليلا لتحديث الواجهة.",
@@ -1419,8 +1419,8 @@
       "altcoinNote": "<b>العملات المشفرة</b> ستتوفر عندما ShapeShift يتحدث ويدعم المزايا المطلوبة.",
       "altcoinLink": "لا يزال بإمكانك تمويل محفظة أوبن بازار OB الخاصة بك بعملة altcoins..",
       "walletNote": "<b>المحفظات الخارجية</b> التي لاتدعم ميزة Segregated Witness قد لا تكون قادرة على دفع ثمن الحوالات.",
-      "walletLink": "يمكنك إرسال الأموال إلى محفظة اوبن بازار بدلاً من ذلك.",
-      "feeNote": "<b>تذكير لتغطية أي رسوم</b> عند إرسال الأموال إلى محفظة اوبن بازار."
+      "walletLink": "يمكنك إرسال الأموال إلى محفظة سوق الفور بدلاً من ذلك.",
+      "feeNote": "<b>تذكير لتغطية أي رسوم</b> عند إرسال الأموال إلى محفظة سوق الفور."
     },
     "completeSection": {
       "paymentSent": "تم ارسال الدفعه!",
@@ -1435,8 +1435,8 @@
       "send": "ارسل   ",
       "share": {
         "title": "شارك مع أصدقائك",
-        "body": "لقد أجريت للتو عملية شراء على اوبن بازار، السوق الحر بدون رسوم أو قيود. اعرف المزيد على %{link}.",
-        "shareMsg": "لقد أجريت للتو عملية شراء على @OpenBazaar، السوق الحر بدون رسوم أو قيود.",
+        "body": "لقد أجريت للتو عملية شراء على سوق الفور، السوق الحر بدون رسوم أو قيود. اعرف المزيد على %{link}.",
+        "shareMsg": "لقد أجريت للتو عملية شراء على @PhoreMarketplace، السوق الحر بدون رسوم أو قيود.",
         "postToTwitter": "نشر على تويتر",
         "postToFacebook": "نشر على فيسبوك",
         "postToPinterest": "نشر على بينتريست",
@@ -1843,9 +1843,9 @@
   "metrics": {
     "title": "مقاييس المجهوهلية اختيارية",
     "newVersion": "Please review the update to the analytics data agreement below and click “Activate.”",
-    "msg1": "Please help improve OpenBazaar by agreeing to share analytics data about your experience with the development team.",
-    "msg2": "By clicking “Activate,” you agree to share the data listed below with OB1 Company and its processors for the purposes described, and consent to the transfer of this data to servers located in the United States. You may stop the sharing of this data at any time by opening your settings, and clicking the Change Sharing Settings button in the Advanced section. If you are located in the European Economic Area, you may have certain rights with respect to this data, including the right of access, rectification, erasure, restriction of processing, objection to processing, and portability. You may contact us about these, or simply request us to stop using and delete the data we’ve collected, at any time by contacting data@ob1.io.",
-    "listTitle": "The following data will be collected by OB1 Company as you use OpenBazaar:",
+    "msg1": "Please help improve Phore Marketplace by agreeing to share analytics data about your experience with the development team.",
+    "msg2": "By clicking “Activate,” you agree to share the data listed below with Phore Blockchain Company and its processors for the purposes described, and consent to the transfer of this data to servers located in the United States. You may stop the sharing of this data at any time by opening your settings, and clicking the Change Sharing Settings button in the Advanced section. If you are located in the European Economic Area, you may have certain rights with respect to this data, including the right of access, rectification, erasure, restriction of processing, objection to processing, and portability. You may contact us about these, or simply request us to stop using and delete the data we’ve collected, at any time by contacting admin@phore.io.",
+    "listTitle": "The following data will be collected by Phore Blockchain Company as you use Phore Marketplace:",
     "list": {
       "device": "Your IP address and device information, for the purposes listed below.",
       "pages": "Which pages you load, such as the search page or store page. This lets us know which parts of the app are being used the most, and how users navigate through the app.",
@@ -1857,10 +1857,10 @@
       "app": "Details about your app, which include its version and whether it is installed from a downloadable package from source. This lets us understand the context of the other data collected, so it can be applied correctly.",
       "orders": "Basic information on actions you take with orders, such as its state when disputed, or if the order was moderated. This helps us identify problems in the order process.",
       "listings": "Basic information about on actions taken when creating and editing listings. This includes the type of listing, but no other information about it. This gives us data on potential problems with creating and editing listings.",
-      "path": "The path to your installation of OpenBazaar. This will share the name of any folders in the path to the installation folder, which may include your root and/or user folder. This is a side effect of the data collection process, and is not used by the OB1 team."
+      "path": "The path to your installation of Phore Marketplace. This will share the name of any folders in the path to the installation folder, which may include your root and/or user folder. This is a side effect of the data collection process, and is not used by the OB1 team."
     },
     "disclaimer1": "No information that can be used to identify your orders or any of your transactions is shared with us. This data is always stored on your own computer, and cannot be accessed by anyone else.",
-    "disclaimer2": "As stated above, your sharing of this data is completely optional. You are not required to share this data in order to use OpenBazaar.",
+    "disclaimer2": "As stated above, your sharing of this data is completely optional. You are not required to share this data in order to use Phore Marketplace.",
     "acceptBtn": "قبول",
     "declineBtn": "رفض",
     "activateBtn": "تفعيل",
