@@ -4,6 +4,11 @@
       line-height: 1.5;
       margin-bottom: 5px;
     }
+
+    .helper {
+      padding: $padSm;
+      padding-left: 0;
+    }
   }
 
   .modalContent {
@@ -45,6 +50,23 @@
     }
 
     .tabContent {
+      .cryptoTypeWrap {
+        .cryptoCurrencyType {
+          .titleWrap {
+            .cryptoIcon {
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          .cryptoQuantityCoinType, .cryptoPriceModifierPercentSymbol {
+            position: absolute;
+            right: 15px;
+            top: 12px;
+          }
+        }
+      }
+
       .photoUploadSection {
         h2 {
           display: inline-block;
@@ -299,5 +321,57 @@
         }
       }
     }
+  }
+
+  .tab-shipping,
+  .shippingSection,
+  .conditionWrap {
+    display: none;
+  }
+
+  .cryptoTypeWrap {
+    display: none;
+  }  
+
+  &.TYPE_PHYSICAL_GOOD {
+    .tab-shipping,
+    .conditionWrap,
+    .shippingSection {
+      display: block;
+    }
+  }
+
+  &.TYPE_CRYPTOCURRENCY {
+    .tab-variants,
+    .tab-coupons {
+      display: none;
+    }
+
+    .modalContent {
+      .standardTypeWrap,
+      .variantsSection,
+      .inventoryManagementSection,
+      .couponsSection {
+        display: none;
+      }
+
+      .cryptoTypeWrap {
+        display: block;
+      }
+
+      .skuMatureContentRow {
+        display: none;
+      }
+    }
+  }
+
+  .viewListingLinks {
+    display: none;
+  }
+
+  &.editMode {
+    .viewListingLinks {
+      display: block;
+    }    
   }
 }

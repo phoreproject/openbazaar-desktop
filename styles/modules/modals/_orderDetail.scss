@@ -35,6 +35,16 @@
         vertical-align: top;
       }
     }
+
+    .contractMenuItem {
+      text-decoration: none;
+      cursor: default;
+
+      .contractLabel:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
   }
 
   .mainContent {
@@ -124,6 +134,7 @@
 
             & > span {
               word-break: break-word;
+              white-space: pre-wrap;
             }
 
             img {
@@ -251,11 +262,15 @@
       margin-top: $pad;
     }
 
+    .cryptoPaymentAddress {
+      flex-shrink: 1000;
+    }
+
     .statusIconCol {
       text-align: center;
       flex-shrink: 0;
 
-      span {
+      span, i {
         width: 35px;
         height: 35px;
         display: inline-block;
@@ -300,6 +315,15 @@
             padding-top: 8px;
           }
         }
+
+        &.ion-cash {
+          font-size: 24px;
+
+          &::before {
+            padding-top: 6px;
+            padding-left: 2px;
+          }
+        }
       }
     }
 
@@ -330,6 +354,17 @@
         position: absolute;
         transform: translateY(-2px);
         font-size: $tx6;
+      }
+
+      .memo {
+        white-space: pre-wrap;
+      }
+
+      .cryptoAddress {
+        .cryptoIcon {
+          position: relative;
+          top: 3px;
+        }
       }
     }
 
@@ -392,6 +427,27 @@
         display: none;
       }
     }
+
+    .timeoutInfo {
+      margin-top: 27px;
+      position: relative;
+
+      .headerIconWrap {
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 50%;
+        @include center(true, false);
+        transform: translate(-50%, -50%);
+
+        i {
+          font-size: $tx2b;
+        }
+      }
+
+      .innerContent {
+        padding-top: 25px;
+      }
+    }
   }
 
   .fulfillOrderTab, .disputeOrderTab, .resolveDisputeTab {
@@ -443,9 +499,77 @@
       }
     }
 
+    .vendorContractUnarrivedMsg,
+    .buyerContractUnarrivedMsg,
+    .vendorProcErrContractUnarrivedMsg {
+      display: none;
+    }
+
     label[for=resolveDisputeBuyerAmount],
     label[for=resolveDisputeVendorAmount] {
       line-height: 2rem;
+    }
+
+    @mixin contractUnavailable($field) {
+      label[for=resolveDispute#{capitalize($field)}Amount]::after {
+        display: none;
+      }
+
+      .input#{capitalize($field)}AmountWrap {
+        @include disabled;
+      }
+
+      .#{$field}ContractUnarrivedMsg {
+        display: block;
+      }
+    }
+
+    &.vendorContractUnavailable {
+      @include contractUnavailable(vendor);
+    }
+
+    &.buyerContractUnavailable {
+      @include contractUnavailable(buyer);
+    }
+
+    &.vendorProcessingError {
+      @include contractUnavailable(vendor);
+
+      .vendorProcErrContractUnarrivedMsg {
+        display: block;
+      }
+
+      .vendorContractUnarrivedMsg {
+        display: none;
+      }
+    }
+  }
+
+  .verifiedMod {
+
+    & > .badge {
+      position: relative;
+      top: -1px;
+      margin-right: 0.3em;
+    }
+
+    .tooltipWrapper {
+
+      .arrowBoxWrapper {
+        height: inherit;
+        width: 12px; // the same as the info icon
+        right: 0;
+
+        .arrowBox {
+          top: 11px;
+          left: 50%;
+
+          .badge {
+            top: -2px;
+            position: relative;
+          }
+        }
+      }
     }
   }
 }

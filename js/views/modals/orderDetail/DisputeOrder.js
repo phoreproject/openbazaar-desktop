@@ -3,6 +3,7 @@ import {
   openDispute,
   events as orderEvents,
 } from '../../../utils/order';
+import { recordEvent } from '../../../utils/metrics';
 import loadTemplate from '../../../utils/loadTemplate';
 import { checkValidParticipantObject } from './OrderDetail.js';
 import BaseVw from '../../baseVw';
@@ -13,7 +14,7 @@ export default class extends BaseVw {
     super(options);
 
     if (!this.model) {
-      throw new Error('Please provide an DisputeOrder model.');
+      throw new Error('Please provide a DisputeOrder model.');
     }
 
     checkValidParticipantObject(options.moderator, 'moderator');
@@ -54,6 +55,7 @@ export default class extends BaseVw {
     this.model.set({ orderId: id });
     this.render();
     this.trigger('clickCancel');
+    recordEvent('OrderDetails_DisputeSubmitCancel');
   }
 
   onClickSubmit() {
@@ -62,6 +64,7 @@ export default class extends BaseVw {
     this.model.set({}, { validate: true });
 
     if (!this.model.validationError) {
+      recordEvent('OrderDetails_DisputeSubmit');
       openDispute(this.model.id, this.model.toJSON());
     }
 
@@ -95,6 +98,7 @@ export default class extends BaseVw {
         ...this.model.toJSON(),
         errors: this.model.validationError || {},
         openingDispute: !!openingDispute(this.model.id),
+        timeoutMessage: this.options.timeoutMessage,
       }));
 
       const moderatorState = {

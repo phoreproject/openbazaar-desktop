@@ -7,3 +7,6 @@ prod
 mainBuilt.js
 error.log
 .idea
+package-lock.json
+
+\.vscode/

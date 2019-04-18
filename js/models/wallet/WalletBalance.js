@@ -8,10 +8,11 @@ export default class extends BaseModel {
   }
 
   parse(response) {
-    // Convert satoshi to BTC
+    // Convert from base units
     return {
-      confirmed: integerToDecimal(response.confirmed, true),
-      unconfirmed: integerToDecimal(response.unconfirmed, true),
+      ...response,
+      confirmed: integerToDecimal(response.confirmed, app.serverConfig.cryptoCurrency),
+      unconfirmed: integerToDecimal(response.unconfirmed, app.serverConfig.cryptoCurrency),
     };
   }
 }

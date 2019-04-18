@@ -77,6 +77,7 @@
         .addProvider {
           position: absolute;
           height: $thumb;
+          width: $thumb;
         }
       }
 
@@ -174,13 +175,21 @@
     padding-right: 5px;
 
     label {
-      line-height: 1.4em;
-      min-height: 1.4em;
+      font-size: $tx5b;
+      line-height: 1.3em;
+      min-height: 1.3em;
       padding: 0.3em 0px;
     }
 
     .select2 {
       margin-top: 12px;
+    }
+
+    .btnRadio, .checkboxCol {
+      label > span .emoji {
+        position: relative;
+        top: 0.1em;
+      }
     }
   }
 
@@ -203,6 +212,25 @@
       }
 
       .listingsGrid {
+        display: none;
+      }
+    }
+
+    .noResultsMessage {
+      display: none;
+    }
+
+    &.noResults {
+      .cryptoListViewHeader {
+        display: none;
+      }
+
+      .noResultsMessage {
+        display:block;
+      }
+
+      .pageControls,
+      .listingGrid {
         display: none;
       }
     }

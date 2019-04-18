@@ -1,4 +1,4 @@
-<div class="current-price">
-    <!-- <i class="phrIcon margRSm"></i> -->
-    1 <strong class="tx5">PHR</strong> = <%= ob.currentBTCPrice.toFixed(3) %> <strong class="tx5"> <%= ob.localCurrency == "PHR" ? "USD" : ob.localCurrency %></strong> 
-  </div>
+<div class="flexVCent clrP clrBr clrSh3 contentBox padSm toolTipNoWrap" data-tip="<%= ob.polyT('pageNav.toolTip.currentPrice', { cur: ob.currencyMod.getServerCurrency().name }) %>">
+  <%= ob.crypto.cryptoIcon({ className: 'margRSm'}) %>
+  <strong class="tx5"><%= ob.currencyMod.formatCurrency(ob.currentPrice, ob.localCurrency) %></strong>
+</div>

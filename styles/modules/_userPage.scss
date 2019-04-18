@@ -13,6 +13,25 @@
     left: 0;
     right: 0;
     pointer-events: none; // requires or it prevents scroll events over it
+
+    .blockedOverlay {
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+      display: none;
+
+      & > * {
+        height: 100%;
+      }
+    }
+  }
+
+  &.isBlocked {
+    .blockedOverlay {
+      display: block;
+    }
   }
 
   .pageContent {
@@ -62,6 +81,10 @@
       &.open {
         display: block;
       }
+    }
+
+    .userPageHome .aboutBox img {
+      max-width: 100%;
     }
 
     .userPageFollow {
@@ -114,6 +137,17 @@
         flex-basis: 228px;
         margin-right: $padMd;
 
+        .contentBox {
+          font-size: $tx5b;
+
+          input[type="radio"] + label {
+            font-size: $tx5b;
+            line-height: 1.3em;
+            min-height: 1.3em;
+            padding: 0.3em 0px;
+          }
+        }
+
         & > * {
           margin-bottom: $pad;
 
@@ -122,7 +156,7 @@
           }
         }
 
-        .categoryFilter {
+        .categoryOrTypeFilter {
           max-height: 250px;
           overflow: auto;
 
@@ -185,6 +219,69 @@
       .popInMessageHolder {
         z-index: 2; // so it's above the listing card overlays
       }
+    }
+
+    .userPageReputation {
+
+      .repBg {
+        font-size: 38px;
+        display: inline-flex;
+
+        & > .emoji {
+          margin-right: 0.2em;
+        }
+      }
+
+      .statsBox {
+        min-height: 150px;
+      }
+
+      .reviews {
+        .title {
+          display: none;
+        }
+
+        .noReviews {
+          text-align: center;
+        }
+
+        .loadMore {
+          padding-top: $padLg;
+          margin-top: $padLg;
+          border-top-style: solid;
+          border-top-width: 1px;
+        }
+      }
+    }
+  }
+}
+
+.userLoadingModal {
+  padding-bottom: 0;
+
+  header {
+    height: 80px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .contentWrap {
+    // minimize the size of the form jumping as we transition from loading to
+    // error states
+    min-height: 45px;
+  }
+
+  .socialIcons {
+    margin-bottom: 55px;
+    font-size: $tx3;
+
+    .non-ionic-icon {
+      width: 15px;
+      height: 15px;
+      position: relative;
+      top: -2px;
     }
   }
 }

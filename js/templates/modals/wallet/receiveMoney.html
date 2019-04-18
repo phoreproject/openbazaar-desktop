@@ -6,7 +6,7 @@
   </div>
   <div class="rowMd receiveAddressWrap <% if (ob.fetching) print('invisible') %>">
     <div class="copiedText hide js-copiedText">Copied</div>
-    <a class="js-receiveAddress clrT clrBr receiveAddressLink"><%= ob.address %></a>
+    <a class="js-receiveAddress clrT clrBr receiveAddressLink noOverflow"><%= ob.address %></a>
   </div>
   <div class="spinnerWrap <% if (!ob.fetching) print('hide') %>">
     <%= ob.spinner() %>
@@ -15,9 +15,20 @@
 <div class="flexCent buttonsWrap">
   <div>
     <div class="flexVCent gutterH">
+      <% if (ob.currencyMod.getServerCurrency().canShapeShiftIntoWallet) { %>
+      <button class="btn btnThin clrP clrBr clrSh2 flexNoShrink js-fundViaShapeshift">
+        <i class="shapeShiftIcon icon" style="background-image: url('../imgs/shapeShiftIcon.png');"></i>
+        <%= ob.polyT('wallet.receiveMoney.btnFundViaShapeshift') %>
+      </button>
+      <% } %>
       <div class="flexVCent">
-        <i class="phrIcon margRSm"></i>
-        <a href="https://phore.io/buy-phore" class="clrT"><%= ob.polyT('wallet.receiveMoney.needBitcoin') %></a>
+        <% serverCur = ob.currencyMod.getServerCurrency() %>
+        <% if (serverCur.needCoinLink) { %>
+          <%= ob.crypto.cryptoIcon({ className: 'margRSm'}) %>
+          <a href="<%= serverCur.needCoinLink %>" class="clrT">
+            <%= ob.polyT('wallet.receiveMoney.needCoinLink', { cur: serverCur.name }) %>
+          </a>
+        <% } %>
       </div>
     </div>
   </div>

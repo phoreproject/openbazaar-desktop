@@ -42,6 +42,7 @@ export function launchEditListingModal(modalOptions = {}) {
 export function launchAboutModal(modalOptions = {}) {
   if (aboutModal) {
     aboutModal.bringToTop();
+    if (modalOptions.initialTab) aboutModal.selectTab(modalOptions.initialTab);
   } else {
     aboutModal = new About({
       removeOnClose: true,
@@ -70,7 +71,7 @@ export function launchSettingsModal(modalOptions = {}) {
     settingsModal.on('modal-will-remove', () => (settingsModal = null));
   }
 
-  return aboutModal;
+  return settingsModal;
 }
 
 export function launchDebugLogModal(modalOptions = {}) {

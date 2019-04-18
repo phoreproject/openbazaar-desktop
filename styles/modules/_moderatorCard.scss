@@ -1,16 +1,18 @@
 .moderatorCard {
-  cursor: pointer;
-
-  .moderatorCardInner {
+  .moderatorCardInner .moderatorCardContent {
     padding: $padMd;
+    cursor: pointer;
 
     .moderatorCardMiddle {
       flex-grow: 1;
-      overflow: hidden;
       font-size: $tx5b;
 
       .moreLink {
         float: right;
+      }
+
+      .detailsRow {
+        align-items: center;
       }
     }
 
@@ -50,11 +52,9 @@
         margin: 0;
       }
     }
-  }
 
-  .moderatorCardSeperator {
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    margin: 0 $padMd;
+    .verifiedWrapper {
+      overflow: visible;
+    }
   }
 }

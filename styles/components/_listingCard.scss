@@ -20,6 +20,16 @@
       background-position: center;
     }
 
+    .infoArea {
+      position: relative;
+
+      .toolTip {
+        &::after, &::before {
+          z-index: 2;
+        }
+      }
+    }
+
     .listingIcons {
       position: absolute;
       top: 8px;
@@ -31,20 +41,36 @@
       z-index: 1;
       top: -#{$thumb / 2};
       right: 8px;
+
     }
 
     .trimWidth {
       width: calc(100% - #{$thumb});
     }
+
+    .verifiedModWrapper {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+
+      .badge, .warning {
+        position: static;
+      }
+    }
+
+    .additionalOverlay, .editOverlay {
+      bottom: 8px;
+      left: 8px;
+    }
+  }
+
+  .listingTitle {
+    word-break: break-word;
   }
 
   .overlayPanel {
     display: none;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     z-index: 1; // so it's above the overlay icons
 
     .overlayPanelInner {
@@ -58,16 +84,33 @@
       right: 0;
       bottom: 0;
     }
-  }
 
-  .editOverlay {
-    .btn {
-      z-index: 1;
+    &.coverFull {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
   }
 
-  .listingsGrid:not(.listingsGridListView) &:hover {
-    bottom: 4px;
+  .blockedAvatarOverlay {
+    display: none;
+
+    i {
+      font-size: 1.9rem;
+    }
+  }
+
+  .nsfwOverlay, .nsfwAvatarOverlay {
+    display: none;
+  }
+
+  .editOverlay {
+    top: auto;
+
+    .btn {
+      z-index: 1;
+    }
   }
 
   &:hover:not(.listingDeleting):not(.listingDeleted) {
@@ -76,8 +119,23 @@
     }
   }
 
+  .btnShowNsfw {
+    display: none;
+  }
+
+  .btnHideNsfw {
+    margin-right: 5px;
+  }
+
+  .reportBtnShell {
+    button {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
   &:hover {
-    .reportOverlay {
+    .additionalOverlay {
       display: flex;
     }
   }
@@ -137,45 +195,137 @@
   }
 
   .listViewContent {
-    display: none;
-
     .listingImage {
       width: 45px;
       height: 45px;
       background-size: cover;
     }
+
+    .verifiedModWrapper {
+      position: static;
+
+      .badge {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        top: 2px;
+      }
+
+      .warning {
+        position: relative;
+        font-size: $tx5;
+        top: 1px;
+      }
+    }
   }
 
-  // Some assumptions here:
-  // a.) We will only potentially have a "list view" style card
-  //     when the listingCard is inside a .listingsGrid.
-  // b.) The .listingsGridListView class will be applied to the
-  //     .listingsGrid element as opposed to each individual card.
-  //     This is so as you toggle to/from grid/list view, you only
-  //     change one class on a parent element and consequently have
-  //     only one DOM reflow/repaint.
-  .listingsGridListView & {
+  .listingsGridListView &,
+  .listingsGridCryptoListView & {
     padding: $pad;
     display: block;
     width: 100%;
     height: auto;
 
-    .listViewContent {
-      display: block;
+    .additionalOverlay {
+      @include center(false, true);
+      right: 5px;      
     }
 
-    .gridViewContent {
-      display: none;
+    .editOverlay {
+      @include center();
     }
+  }
 
-    // This isn't ideal, but there's inconistent spacing / widths of cols, plus there's variable
-    // content width on the price (e.g. some currencies may have quite large numbers)
+  .listingsGridListView & {
+    // The price column is a set width and the free shipping column is a maximum of 200px and 4 lines.
+    // This leaves the title/description/rating to flex to take up the remaining space.
     .priceCol {
-      padding-right: 20px;
+      width: 130px;
+      text-align: right;
     }
 
     .freeShipCol {
-      padding-right: 20px;
+      max-width: 200px;
+      word-break: break-word;
+    }
+  }
+
+  .listingsGridCryptoListView & {
+    height: 65px;
+
+    .verifiedModWrapper {
+      .badge {
+        position: relative;
+        top: 0px;
+        width: 16px;
+        height: 16px;
+      }
+
+      .unverified .warning {
+        font-size: 1.4rem;
+      }
+    }
+
+    .vendorCol {
+      .userIcon {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    .priceCol {
+      text-align: right;
+
+      .marketRelativity {
+        font-size: 1.1rem;
+      }
+    }
+
+    .inventoryCol {
+      text-align: right;
+    }
+
+    .tradeArrowCol {
+      text-align: center;
+
+      .pairingSeparator {
+        position: relative;
+        top: 2px;
+        left: -4px;
+        font-weight: bold;
+        
+        &::before {
+          font-size: 18px;
+        }        
+      }
+    }
+  }
+
+  &.blocked {
+    .blockedOverlay, .blockedAvatarOverlay {
+      display: block;
+    }
+  }
+
+  &.hideNsfw {
+    .nsfwOverlay, .nsfwAvatarOverlay {
+      display: block;
+    }
+
+    .additionalOverlay {
+      .btnShowNsfw {
+        display: block;
+      }
+    }
+
+    .listingsGridListView & {
+      .listingImage {
+        opacity: 0;
+      }
+    }
+
+    .btnHideNsfw {
+      display: none;
     }
   }
 }

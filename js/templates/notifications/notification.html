@@ -2,13 +2,14 @@
   <div class="unreadBorder clrBAtt1"></div>
   <div class="flexVCent gutterHSm pad">
     <%
-      const isOrderNotif = !!ob.notification.orderId;
+      const isOrderNotif = !!ob.notification.orderId || !!ob.notification.purchaseOrderId
+       || !!ob.notification.disputeCaseId;
       const imageFunc = isOrderNotif ?
         'getListingBgImage' : 'getAvatarBgImage';
     %>
     <% if (ob.notification.type === 'payment') { %>
     <div class="thumbCol flexNoShrink>">
-      <div class="phrIcon"></div>
+    <%= ob.crypto.cryptoIcon() %>
     </div>
     <% } else { %>
     <div class="thumbCol disc clrBr2 clrSh1 flexNoShrink <% if (isOrderNotif) print('listingImage') %>" style="<%= ob[imageFunc](ob.notification.thumbnail || ob.notification.avatarHashes || {}) %>"></div>

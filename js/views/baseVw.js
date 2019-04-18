@@ -236,7 +236,7 @@ export default class baseVw extends View {
    *   with the given state. Otherwise, the given state will be merged in.
    * @return {object} The create child view instance.
    */
-  setState(state, options = {}) {
+  setState(state = {}, options = {}) {
     const opts = {
       renderOnChange: true,
       replace: false,
@@ -244,15 +244,19 @@ export default class baseVw extends View {
     };
     let newState;
 
+    if (typeof state !== 'object') {
+      throw new Error('The state must be provided as an object.');
+    }
+
     if (opts.replace) {
       this._state = {};
     } else {
       newState = _.extend({}, this._state, state);
     }
 
-    if (opts.renderOnChange && !_.isEqual(this._state, newState)) {
+    if (!_.isEqual(this._state, newState)) {
       this._state = newState;
-      this.render();
+      if (opts.renderOnChange) this.render();
     }
 
     return this;

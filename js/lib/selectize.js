@@ -25,7 +25,7 @@
 /*jshint curly:false */
 /*jshint browser:true */
 
-import { _tagsDelimiter } from '../utils/selectize';
+import { _tagsDelimiter } from '../utils/lib/selectize';
 
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -2677,7 +2677,7 @@ import { _tagsDelimiter } from '../utils/selectize';
     persist: true,
     diacritics: true,
     create: false,
-    createOnBlur: false,
+    createOnBlur: true,
     createFilter: null,
     highlight: true,
     openOnFocus: true,

@@ -85,7 +85,6 @@ if (handleStartupEvent()) {
   console.log('OpenBazaar started on Windows...');
 }
 
-
 const serverPath = `${__dirname}${path.sep}..${path.sep}openbazaar-go${path.sep}`;
 const serverFilename = process.platform === 'darwin' || process.platform === 'linux' ?
   'openbazaard' : 'openbazaard.exe';
@@ -95,11 +94,12 @@ let localServer;
 
 if (isBundledApp) {
   global.localServer = localServer = new LocalServer({
+    getMainWindow: () => mainWindow,
     serverPath,
     serverFilename,
     errorLogPath: `${__dirname}${path.sep}..${path.sep}..${path.sep}error.log`,
     // IMPORTANT: From the main process, only bind events to the localServer instance
-    // unsing the functions in the mainProcLocalServerEvents module. The reasons for that
+    // using the functions in the mainProcLocalServerEvents module. The reasons for that
     // will be explained in the module.
   });
 
@@ -143,7 +143,7 @@ crashReporter.start({
   productName: 'OpenBazaar 2',
   companyName: 'OpenBazaar',
   submitURL: 'http://104.131.17.128:1127/post',
-  autoSubmit: true,
+  uploadToServer: true,
   extra: {
     bundled: isBundledApp,
   },
@@ -177,9 +177,24 @@ function createWindow() {
 
   let helpSubmenu = [
     {
+      label: 'Website',
+      click() {
+        shell.openExternal('https://phore.io');
+      },
+    },
+    // until the documentation page is updated, don't show it
+    /*
+    {
       label: 'Documentation',
       click() {
         shell.openExternal('https://docs.openbazaar.org');
+      },
+    },
+    */
+    {
+      label: 'Support',
+      click() {
+        shell.openExternal('https://phore.io');
       },
     },
   ];
@@ -375,7 +390,7 @@ function createWindow() {
   Menu.setApplicationMenu(menu);
 
   ipcMain.on('contextmenu-click', () => {
-    menu.popup();
+    menu.popup({});
   });
 
   // put logic here to set tray icon based on OS
@@ -462,7 +477,7 @@ function createWindow() {
     minWidth: 1170,
     minHeight: 700,
     center: true,
-    title: 'OpenBazaar',
+    title: 'PhoreMarketplace',
     frame: false,
     icon: `${__dirname}/imgs/icon.png`,
   });
@@ -550,8 +565,6 @@ function createWindow() {
     ipcMain.on('checkForUpdate', () => {
       checkForUpdates();
     });
-
-    // autoUpdater.setFeedURL(feedURL);
   }
 
   mainWindow.webContents.on('dom-ready', () => {
@@ -629,7 +642,7 @@ ipcMain.on('active-server-set', (e, server) => {
         `Basic ${new Buffer(`${un}:${pw}`).toString('base64')}`;
     }
 
-    if (global.authCookie && server.default) {
+    if (global.authCookie && server.builtIn) {
       details.requestHeaders.Cookie = `OpenBazaar_Auth_Cookie=${global.authCookie}`;
     }
 

@@ -1,5 +1,5 @@
 import { remote, ipcRenderer, clipboard } from 'electron';
-import '../../utils/velocity';
+import '../../utils/lib/velocity';
 import loadTemplate from '../../utils/loadTemplate';
 import BaseModal from './BaseModal';
 
@@ -72,7 +72,7 @@ export default class extends BaseModal {
 
     if (splitLog.length > this.maxDebugLines) {
       this._debugLog = '< Previous content has been truncated >\n\n' +
-        `${log.slice(log.length - this.maxDebugLines).join('\n')}`;
+        `${splitLog.slice(splitLog.length - this.maxDebugLines).join('\n')}`;
     } else {
       this._debugLog = log;
     }

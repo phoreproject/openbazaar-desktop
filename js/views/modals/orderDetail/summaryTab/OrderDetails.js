@@ -5,7 +5,7 @@ import moment from 'moment';
 import { getCountryByDataName } from '../../../../data/countries';
 import { convertAndFormatCurrency } from '../../../../utils/currency';
 import { clipboard } from 'electron';
-import '../../../../utils/velocity';
+import '../../../../utils/lib/velocity';
 import loadTemplate from '../../../../utils/loadTemplate';
 import ModFragment from '../ModFragment';
 import { checkValidParticipantObject } from '../OrderDetail.js';
@@ -41,6 +41,8 @@ export default class extends BaseVw {
   events() {
     return {
       'click .js-copyAddress': 'onClickCopyAddress',
+      'click .js-copyCryptoAddress': 'onClickCopyCryptoAddress',
+      'click .js-copyCryptoQuantity': 'onClickCopyCryptoQuantity',
     };
   }
 
@@ -51,6 +53,30 @@ export default class extends BaseVw {
       .velocity('fadeIn', {
         complete: () => {
           this.$copiedToClipboard
+            .velocity('fadeOut', { delay: 1000 });
+        },
+      });
+  }
+
+  onClickCopyCryptoAddress(e) {
+    clipboard.writeText($(e.target).data('address') || '');
+    this.getCachedEl('.js-cryptoAddressCopiedToClipboard')
+      .velocity('stop')
+      .velocity('fadeIn', {
+        complete: () => {
+          this.getCachedEl('.js-cryptoAddressCopiedToClipboard')
+            .velocity('fadeOut', { delay: 1000 });
+        },
+      });
+  }
+
+  onClickCopyCryptoQuantity(e) {
+    clipboard.writeText($(e.target).data('quantity').toString());
+    this.getCachedEl('.js-cryptoQuantityCopiedToClipboard')
+      .velocity('stop')
+      .velocity('fadeIn', {
+        complete: () => {
+          this.getCachedEl('.js-cryptoQuantityCopiedToClipboard')
             .velocity('fadeOut', { delay: 1000 });
         },
       });
@@ -120,6 +146,8 @@ export default class extends BaseVw {
         moment,
         isModerated: this.isModerated(),
         sku: this.sku,
+        locale: app && app.localSettings && app.localSettings.standardizedTranslatedLang()
+          || 'en-US',
       }));
 
       this._$copiedToClipboard = null;

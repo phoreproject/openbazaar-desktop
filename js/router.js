@@ -1,19 +1,23 @@
 import $ from 'jquery';
 import { ipcRenderer } from 'electron';
 import { Router } from 'backbone';
+import app from './app';
 import { getGuid, isMultihash } from './utils';
 import { getPageContainer } from './utils/selectors';
 import { isPromise } from './utils/object';
+import { startAjaxEvent, endAjaxEvent, recordEvent } from './utils/metrics';
+import { isBlocked, isUnblocking, events as blockEvents } from './utils/block';
 import './lib/whenAll.jquery';
-import app from './app';
+import Profile from './models/profile/Profile';
+import Listing from './models/listing/Listing';
 import { getOpenModals } from './views/modals/BaseModal';
 import UserPage from './views/userPage/UserPage';
 import Search from './views/search/Search';
 import Transactions from './views/transactions/Transactions';
 import ConnectedPeersPage from './views/ConnectedPeersPage';
 import TemplateOnly from './views/TemplateOnly';
-import Profile from './models/profile/Profile';
-import Listing from './models/listing/Listing';
+import BlockedWarning from './views/modals/BlockedWarning';
+import UserLoadingModal from './views/userPage/Loading';
 
 export default class ObRouter extends Router {
   constructor(options = {}) {
@@ -50,6 +54,9 @@ export default class ObRouter extends Router {
     $(window).on('hashchange', () => {
       this.setAddressBarText();
       app.pageNav.updateTabs();
+      if (window.Countly) {
+        window.Countly.q.push(['track_pageview', location.hash]);
+      }
     });
 
     ipcRenderer.on('external-route', (e, route) => {
@@ -63,7 +70,7 @@ export default class ObRouter extends Router {
     return 1000;
   }
 
-  // FYI - There is a scenrio where the prevHash will be inaccurate. More details in
+  // FYI - There is a scenario where the prevHash will be inaccurate. More details in
   // the confirmPromises when() fail handler in execute().
   setPrevHash(prevHash = this._curHash) {
     this._prevHash = prevHash;
@@ -312,7 +319,8 @@ export default class ObRouter extends Router {
 
   userViaHandle(handle, ...args) {
     getGuid(handle).done((guid) => {
-      this.user(guid, ...args);
+      // hack to pass in the handle to this.user - forgive me code gods
+      this.user(guid, ...[args[0], { handle }, ...args.slice(1)]);
     }).fail(() => {
       this.userNotFound(handle);
     });
@@ -323,6 +331,7 @@ export default class ObRouter extends Router {
       'store',
       'following',
       'followers',
+      'reputation',
     ];
   }
 
@@ -349,11 +358,68 @@ export default class ObRouter extends Router {
   }
 
   user(guid, state, ...args) {
+    let functionArgs = [...args];
+
+    // Hack to pass the handle into this function, which should really only
+    // happen when called from userViaHandle(). If a handle is being passed in,
+    // it will be passed in as { handle: 'charlie' } as the first element of the
+    // ...args argument.
+    let handle;
+
+    if (args.length && args[0] && args[0].hasOwnProperty('handle')) {
+      functionArgs = functionArgs.slice(1);
+      handle = args[0].handle;
+    }
+
     const pageState = state || 'store';
-    const deepRouteParts = args.filter(arg => arg !== null);
+    const deepRouteParts = functionArgs.filter(arg => arg !== null);
 
     if (!this.isValidUserRoute(guid, pageState, ...deepRouteParts)) {
       this.pageNotFound();
+      return;
+    }
+
+    const standardizedHash = hash =>
+      (hash.endsWith('/') ? hash.slice(0, hash.length - 1) : hash);
+
+    if (isBlocked(guid) && !isUnblocking(guid)) {
+      app.loadingModal.close();
+      const blockedWarningModal = new BlockedWarning({ peerId: guid })
+        .render()
+        .open();
+
+      const onBlockWarningCanceled = () => {
+        const prevHash = standardizedHash(this.prevHash);
+        const locationHash = standardizedHash(location.hash);
+
+        if (prevHash === locationHash) {
+          // means there is no previous page - will go to our own node page
+          this.navigate(`${app.profile.id}`, {
+            replace: true,
+            trigger: true,
+          });
+        } else {
+          this.navigate(`${this.prevHash.slice(1)}`, {
+            replace: true,
+            trigger: true,
+          });
+        }
+      };
+
+      const onUnblock = data => {
+        if (data.peerIds.includes(guid)) {
+          app.loadingModal.open();
+          this.user(guid, state, ...args);
+        }
+      };
+
+      const cleanUpBlockedModal = () => {
+        blockEvents.off(null, onUnblock);
+      };
+
+      blockedWarningModal.on('canceled', onBlockWarningCanceled);
+      blockEvents.on('unblocking unblocked', onUnblock);
+      blockedWarningModal.on('close', cleanUpBlockedModal);
       return;
     }
 
@@ -361,6 +427,10 @@ export default class ObRouter extends Router {
     let profileFetch;
     let listing;
     let listingFetch;
+    let userPageFetchError = '';
+    let slug;
+
+    startAjaxEvent('UserPageLoad');
 
     if (guid === app.profile.id) {
       // don't fetch our own profile, since we have it already
@@ -373,26 +443,62 @@ export default class ObRouter extends Router {
 
     if (state === 'store') {
       if (deepRouteParts[0]) {
+        slug = deepRouteParts[0];
         listing = new Listing({
-          slug: deepRouteParts[0],
+          slug,
         }, { guid });
 
         listingFetch = listing.fetch();
       }
     }
 
+    app.loadingModal.close();
+
+    if (this.userLoadingModal) {
+      this.userLoadingModal.remove();
+    }
+
+    this.userLoadingModal = new UserLoadingModal({
+      initialState: {
+        contentText: app.polyglot.t('userPage.loading.loadingText', {
+          name: `<b>${handle || `${guid.slice(0, 8)}…`}</b>`,
+        }),
+        isProcessing: true,
+      },
+    })
+      .on('clickCancel', () => {
+        const prevHash = standardizedHash(this.prevHash);
+        const locationHash = standardizedHash(location.hash);
+
+        if (prevHash === locationHash) {
+          // there is no previous page, let's navigate to our home page
+          this.navigate(`${app.profile.id}`, {
+            trigger: true,
+          });
+        } else {
+          // go back to previous page
+          window.history.back();
+        }
+      })
+      .on('clickRetry', () => this.user(guid, state, ...args));
+
+    this.userLoadingModal.render()
+      .open();
+
     const onWillRoute = () => {
       // The app has been routed to a new route, let's
       // clean up by aborting all fetches
       if (profileFetch.abort) profileFetch.abort();
       if (listingFetch) listingFetch.abort();
+      this.userLoadingModal.remove();
     };
 
     this.once('will-route', onWillRoute);
 
     $.whenAll(profileFetch, listingFetch).done(() => {
-      const handle = profile.get('handle');
+      handle = profile.get('handle');
       this.cacheGuidHandle(guid, handle);
+      this.userLoadingModal.remove();
 
       // Setting the address bar which will ensure the most up to date handle (or none) is
       // shown in the address bar.
@@ -424,19 +530,50 @@ export default class ObRouter extends Router {
       );
     }).fail((...failArgs) => {
       const jqXhr = failArgs[0];
+      const reason = jqXhr && jqXhr.responseJSON && jqXhr.responseJSON.reason ||
+        jqXhr && jqXhr.responseText || '';
 
       if (jqXhr === profileFetch && profileFetch.statusText === 'abort') return;
       if (jqXhr === listingFetch && listingFetch.statusText === 'abort') return;
 
-      // todo: If really not found (404), route to
-      // not found page, otherwise display error.
       if (profileFetch.state() === 'rejected') {
-        this.userNotFound(guid);
+        userPageFetchError = 'User Not Found';
       } else if (listingFetch.state() === 'rejected') {
-        this.listingNotFound(deepRouteParts[0], `${guid}/${pageState}`);
+        userPageFetchError = 'Listing Not Found';
       }
+
+      userPageFetchError = userPageFetchError ?
+        `${userPageFetchError} - ${reason || 'unknown'}` :
+        reason || 'unknown';
+
+      let contentText = app.polyglot.t('userPage.loading.failTextStore', {
+        store: `<b>${handle || `${guid.slice(0, 8)}…`}</b>`,
+      });
+
+      if (profileFetch.state() === 'resolved' && listingFetch.state() === 'rejected') {
+        const linkText = app.polyglot.t('userPage.loading.failTextListingLink');
+        const listingSlug = slug.length > 25 ?
+          `${slug.slice(0, 25)}…` : slug;
+        contentText = app.polyglot.t('userPage.loading.failTextListingWithLink', {
+          listing: `<b>${listingSlug}</b>`,
+          link: `<a href="#${guid}/store">${linkText}</a>`,
+        });
+      }
+
+      this.userLoadingModal.setState({
+        contentText,
+        isProcessing: false,
+      });
     })
-      .always(() => (this.off(null, onWillRoute)));
+      .always(() => {
+        this.off(null, onWillRoute);
+        endAjaxEvent('UserPageLoad', {
+          ownPage: guid === app.profile.id,
+          tab: pageState,
+          listing: !!listingFetch,
+          errors: userPageFetchError || 'none',
+        });
+      });
   }
 
   transactions(tab) {
@@ -449,9 +586,15 @@ export default class ObRouter extends Router {
       this.navigate('transactions/sales');
     }
 
+    const initialTab = tab || 'sales';
+
     this.loadPage(
-      new Transactions({ initialTab: tab || 'sales' }).render()
+      new Transactions({ initialTab }).render()
     );
+
+    recordEvent('Transactions_PageLoad', {
+      tab: initialTab,
+    });
   }
 
   connectedPeers() {
@@ -493,39 +636,6 @@ export default class ObRouter extends Router {
         template: 'error-pages/pageNotFound.html',
       }).render()
     );
-  }
-
-  listingNotFound(listing, link) {
-    this.loadPage(
-      new TemplateOnly({ template: 'error-pages/listingNotFound.html' }).render({ listing, link })
-    );
-  }
-
-  listingError(failedXhr, listing, storeUrl) {
-    if (!failedXhr) {
-      throw new Error('Please provide the failed Xhr request');
-    }
-
-    if (failedXhr.status === 404) {
-      this.listingNotFound(listing, storeUrl);
-    } else {
-      let failErr = '';
-
-      if (failedXhr.responseText) {
-        const reason = failedXhr.responseJSON && failedXhr.responseJSON.reason ||
-          failedXhr.responseText;
-        failErr += `\n\n${reason}`;
-      }
-
-      this.loadPage(
-        new TemplateOnly({ template: 'error-pages/listingError.html' })
-          .render({
-            listing,
-            storeUrl,
-            failErr,
-          })
-      );
-    }
   }
 
   genericError(context = {}) {
