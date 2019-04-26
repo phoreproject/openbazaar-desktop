@@ -32,7 +32,7 @@ export default class extends baseVw {
       const currentPage = urlParts[1];
 
       if (supportedPages.includes(currentPage)) {
-        const obDotCom = 'http://openbazaar.com';
+        const obDotCom = 'http://phore.io';
         const peerID = urlParts[0];
 
         if (currentPage === 'store') {

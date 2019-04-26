@@ -95,7 +95,7 @@ export function addMetrics() {
     scriptEl.id = 'metricsScrtipt';
     scriptEl.type = 'text/javascript';
     scriptEl.async = true;
-    scriptEl.src = 'https://countly.openbazaar.org/sdk/web/countly.min.js';
+    scriptEl.src = 'https://countly.phore.io/sdk/web/countly.min.js';
     scriptEl.onload = () => window.Countly.init();
     (document.getElementsByTagName('head')[0]).appendChild(scriptEl);
   }
