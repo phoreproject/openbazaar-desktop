@@ -480,6 +480,9 @@ function createWindow() {
     title: 'PhoreMarketplace',
     frame: false,
     icon: `${__dirname}/imgs/icon.png`,
+    webPreferences: {
+      nodeIntegration: true,
+    },
   });
 
   // and load the index.html of the app.

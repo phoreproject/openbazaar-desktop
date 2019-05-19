@@ -10,7 +10,7 @@
 ##
 
 
-ELECTRONVER=1.8.7
+ELECTRONVER=5.0.1
 NODEJSVER=6
 
 OS="${1}"
@@ -33,7 +33,7 @@ rm -rf temp/*
 echo 'Preparing to build installers...'
 
 echo 'Installing npm packages...'
-npm i -g npm@5.2
+npm i -g npm@6.4.1
 npm install electron-packager -g --silent
 npm install npm-run-all -g --silent
 npm install grunt-cli -g --silent
