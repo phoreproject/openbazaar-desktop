@@ -67,20 +67,20 @@ const baseCurrencies = [ // limit trading pairs to BTC and PHR
 
 // Certain currencies are not in our fiat list, but they're also not crypto currencies.
 // They mainly conisist of obscure fiat currencies or precious metals.
-const excludes = [
-  'BYN',
-  'CLF',
-  'CNH',
-  'CUC',
-  'GGP',
-  'JEP',
-  'IMP',
-  'XAG',
-  'XAU',
-  'XDR',
-  'XPD',
-  'XPT',
-];
+// const excludes = [
+//   'BYN',
+//   'CLF',
+//   'CNH',
+//   'CUC',
+//   'GGP',
+//   'JEP',
+//   'IMP',
+//   'XAG',
+//   'XAU',
+//   'XDR',
+//   'XPD',
+//   'XPT',
+// ];
 
 let fiatCurrencyCodes;
 let currencies;

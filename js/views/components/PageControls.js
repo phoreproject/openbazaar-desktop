@@ -29,7 +29,7 @@ export default class extends baseVw {
   }
 
   onPageClick(ev) {
-    this.trigger('onPageClick', $(ev.currentTarget).data('page'));
+    this.trigger('onPageClick', this.$(ev.currentTarget).data('page'));
   }
 
   getState() {
