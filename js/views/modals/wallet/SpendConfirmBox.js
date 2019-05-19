@@ -1,7 +1,12 @@
 import $ from 'jquery';
-import { estimateFee } from '../../../utils/fees';
 import app from '../../../app';
 import loadTemplate from '../../../utils/loadTemplate';
+import { estimateFee } from '../../../utils/fees';
+import {
+  startPrefixedAjaxEvent,
+  endPrefixedAjaxEvent,
+  recordPrefixedEvent,
+} from '../../../utils/metrics';
 import baseVw from '../../baseVw';
 
 export default class extends baseVw {
@@ -20,12 +25,13 @@ export default class extends baseVw {
     };
 
     this.lastFetchFeeEstimateArgs = {};
+    this.metricsOrigin = options.metricsOrigin;
     this.boundDocumentClick = this.onDocumentClick.bind(this);
     $(document).on('click', this.boundDocumentClick);
   }
 
   className() {
-    return 'spendConfirmBox';
+    return 'spendConfirmBox centeredBelow';
   }
 
   events() {
@@ -39,7 +45,7 @@ export default class extends baseVw {
 
   onDocumentClick(e) {
     if (this.getState().show &&
-      !($.contains(this.$el, e.target) ||
+      !($.contains(this.el, e.target) ||
         e.target === this.el)) {
       this.setState({ show: false });
     }
@@ -48,11 +54,13 @@ export default class extends baseVw {
   onClickSend(e) {
     this.trigger('clickSend');
     e.stopPropagation();
+    recordPrefixedEvent('ConfirmBoxSend', this.metricsOrigin);
   }
 
   onClickCancel(e) {
     this.setState({ show: false });
     e.stopPropagation();
+    recordPrefixedEvent('ConfirmBoxCancel', this.metricsOrigin);
   }
 
   onClickRetry(e) {
@@ -61,6 +69,7 @@ export default class extends baseVw {
       this.fetchFeeEstimate(amount, this.lastFetchFeeEstimateArgs.feeLevel || null);
     }
     e.stopPropagation();
+    recordPrefixedEvent('ConfirmBoxRetry', this.metricsOrigin);
   }
 
   fetchFeeEstimate(amount, feeLevel = app.localSettings.get('defaultTransactionFee')) {
@@ -79,6 +88,8 @@ export default class extends baseVw {
       fetchFailed: false,
     });
 
+    startPrefixedAjaxEvent('ConfirmBoxEstimateFee', this.metricsOrigin);
+
     estimateFee(feeLevel, amount)
       .done(fee => {
         let state = {
@@ -95,20 +106,30 @@ export default class extends baseVw {
             fetchError: 'ERROR_INSUFFICIENT_FUNDS',
             ...state,
           };
+          endPrefixedAjaxEvent('ConfirmBoxEstimateFee', this.metricsOrigin, {
+            errors: 'ERROR_INSUFFICIENT_FUNDS',
+          });
+        } else {
+          endPrefixedAjaxEvent('ConfirmBoxEstimateFee', this.metricsOrigin);
         }
 
         this.setState(state);
       }).fail(xhr => {
+        const fetchError = xhr && xhr.responseJSON && xhr.responseJSON.reason || '';
         this.setState({
           fetchingFee: false,
           fetchFailed: true,
-          fetchError: xhr && xhr.responseJSON && xhr.responseJSON.reason || '',
+          fetchError,
+        });
+
+        endPrefixedAjaxEvent('ConfirmBoxEstimateFee', this.metricsOrigin, {
+          errors: fetchError || 'unknown error',
         });
       });
   }
 
   remove() {
-    $(document).off(null, this.boundDocumentClick);
+    $(document).off('click', this.boundDocumentClick);
     super.remove();
   }
 

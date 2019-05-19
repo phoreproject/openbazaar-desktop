@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import app from '../../app';
 import { capitalize } from '../../utils/string';
+import { recordEvent } from '../../utils/metrics';
 import loadTemplate from '../../utils/loadTemplate';
 import Notifications from '../../collections/Notifications';
 import BaseVw from '../baseVw';
@@ -35,10 +36,12 @@ export default class extends BaseVw {
   }
 
   onClickTab(e) {
+    const tab = e.target.getAttribute('data-tab');
+    recordEvent('Notifications_Tab', { tab });
     // Timeout needed so event can bubble to a page nav handler before the view is re-rendered
     // and the target element is ripped out of the dom.
     setTimeout(() => {
-      this.setState({ tab: e.target.getAttribute('data-tab') });
+      this.setState({ tab });
     });
   }
 
@@ -71,7 +74,7 @@ export default class extends BaseVw {
   /**
    * Will set the tab to 'All' and set the scroll position to the top - useful
    * when hiding the menu so that it resets to a standard initial position. It will
-   * leave the collections in tact, so the user won't need to fetch notifications
+   * leave the collections intact, so the user won't need to fetch notifications
    * already fetched.
    */
   reset() {
@@ -93,7 +96,8 @@ export default class extends BaseVw {
     const notifList = this.createChild(NotificationsList, {
       collection: new Notifications(),
       filter: 'order,declined,cancel,refund,fulfillment,orderComplete,disputeOpen,' +
-        'disputeUpdate,disputeClose,disputeAccepted',
+        'disputeUpdate,disputeClose,disputeAccepted,vendorDisputeTimeout,buyerDisputeTimeout' +
+        'buyerDisputeExpiry,moderatorDisputeExpiry',
     });
 
     this.listenTo(notifList, 'notifNavigate',

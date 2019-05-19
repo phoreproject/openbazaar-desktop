@@ -64,4 +64,4 @@ rm SHA256SUMS
 mv SHA256SUMS.asc "${currentdir}/SHA256SUMS.${version}.asc"
 
 echo "Signature file created."
-echo "Place file at https://openbazaar.org/releases/SHA256SUMS.${version}.asc"
+echo "Place file at https://phore.io/releases/SHA256SUMS.${version}.asc"

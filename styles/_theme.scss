@@ -31,6 +31,10 @@ button,
   }
 }
 
+.clrPOverlay {
+  background-color: $overlayP;
+}
+
 .clrS {
   background-color: $secondary;
 
@@ -126,6 +130,14 @@ input[type=range][class~="clrS"] {
   @include textColor($emphasis2);
 }
 
+.clrTPriceAboveMarket {
+  @include textColor($error);
+}
+
+.clrTPriceBelowMarket {
+  @include textColor($emphasis1);
+}
+
 .clrBr {
   @include borderColor($border, $border3);
 }
@@ -181,6 +193,14 @@ input[type=range][class~="clrS"] {
   }
 }
 
+.clrBrAlert2 {
+  border-color: $alert2;
+}
+
+.clrBrInvis {
+  @include borderColor(transparent, transparent);
+}
+
 .clrBAtt1 {
   background-color: $emphasis1;
 }
@@ -199,6 +219,15 @@ input[type=range][class~="clrS"] {
       }
     }
   }
+}
+
+.clrBAlert2 {
+  background: $alert2Background;
+}
+
+.clrBAlert2Grad {
+  background: $alert2Gradient;
+  background-color: $alert2Background;
 }
 
 ::-webkit-scrollbar-track {
@@ -312,6 +341,16 @@ input[type=range][class~="clrS"] {
   }
 }
 
+@mixin selectizeControlShadow($baseClass, $number) {
+  &.#{$baseClass}#{$number} {
+      box-shadow: none;
+
+      .selectize-input {
+        @extend .#{$baseClass}#{$number};
+      }
+  }
+}
+
 #appFrame {
   .selectize-control {
     .items {
@@ -319,7 +358,11 @@ input[type=range][class~="clrS"] {
         border-color: $border;
         background-color: $primary;
       }
-    } 
+    }
+
+    @include selectizeControlShadow(clrSh, 1);
+    @include selectizeControlShadow(clrSh, 2);
+    @include selectizeControlShadow(clrSh, 3);
   }
 
   .selectize-dropdown-content {
@@ -345,6 +388,12 @@ input[type=range][class~="clrS"] {
   &:after {
     background-color: $colorbase;
     border-color: $border;
+  }
+}
+
+.arrowBoxTipWrap {
+  .arrowBox {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.4);
   }
 }
 
@@ -468,6 +517,37 @@ input[type=range][class~="clrS"] {
 }
 
 
+.cryptoTradingPair {
+  .fromCur, .toCur {
+    @include textColor($text, $text2, $text);
+  }
+
+  .pairingSeparator {
+    @include textColor($text2, $text3, $text);
+  }
+}
+
+.listingsGridCryptoListView {
+  .verifiedMod {
+    @include textColor($text, $text2, $text);
+  }
+}
+
+.searchWrapper {
+  .addressBarIndicators {
+  }
+}
+
+.flexBtnWrapper .btnFlx {
+  border-color: $border;
+
+  &:hover, &:focus {
+    @include borderColor($border, $border3);
+    z-index: 1;
+  }
+}
+
+
 
 
 
@@ -561,7 +641,6 @@ html {
 //   margin: 0 calc((100% - 1200px) / 2) 0 auto!important;
 // }
   .userPage .header {
-    
     height:360px;
   }
 }
@@ -593,7 +672,6 @@ html {
 
 .js-miniProfileContainer span {
   color:rgba(255,255,255,0.5);
- 
 }
 
 .discoverCallout {
@@ -766,7 +844,7 @@ text-decoration:none;
   background:#c5c5c5;
 }
 
-.js-notifContainer &::-webkit-scrollbar-track {
+.js-notifContainer ::-webkit-scrollbar-track {
   background:transparent!important;
 }
 
@@ -835,14 +913,12 @@ text-decoration:none;
 .js-navBack {
   background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9.46' height='17.76' viewBox='0 0 9.46 17.76'><polygon fill='%23FFF' points='10.17 0.91 9.26 0 0 9.23 9.17 18.37 9.26 18.46 10.17 17.55 1.82 9.23 10.17 0.9'/></svg>") center center no-repeat;
 }
-
 section:not(#pageNavContainer) .js-navBack{
   background-position: left 10px center;
   background-size: 5px;
   padding-left: 3.5rem;
 }
-	
-.js-navFwd { 
+.js-navFwd {
   background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9.46' height='17.76' viewBox='0 0 9.46 17.76'><polygon fill='%23FFF'  points='0 0.91 0.91 0 10.17 9.23 1 18.37 0.91 18.46 0 17.55 8.35 9.23 0 0.91'/></svg>") center center no-repeat;
 }
 
@@ -886,7 +962,7 @@ section:not(#pageNavContainer) .js-navBack{
   padding-left:18px;
 }
 .js-followUnfollowBtn:before {
- 
+
   padding-right: 8px;
   font-size: 14px;
 }
@@ -1091,7 +1167,7 @@ border-radius: 0 0 0.5rem 0.5rem;
 
 .tabbedModal .tabColumn .tab {
   font-size:1.7rem;
-  
+
 }
 
 
@@ -1147,7 +1223,6 @@ hr.clrBr {
   letter-spacing: 1px;
   font-size: 1.2rem;
   border: 2px solid #ccc;
-  padding-top:2px;
   &.processing{
     border:none!important;
     font-size:0!important;
@@ -1162,6 +1237,7 @@ hr.clrBr {
 .clrSh3 {
   box-shadow: none;
 }
+
 
 h2.h4.clrT, h3 {
   text-transform: none;
@@ -1246,7 +1322,7 @@ input.js-addressBar:focus {
 }
 
 .wallet.receiveModeOn .btnReceiveMoney {
-  display:inline-flex; 
+  display:inline-flex;
 }
 
 
@@ -1300,7 +1376,7 @@ input.js-addressBar:focus {
   .spinner path, .spinner rect {
     fill: white;
   }
-  
+
   input[type="checkbox"]:checked + label:before {
     color:#00d188;
   }
@@ -1313,12 +1389,12 @@ input.js-addressBar:focus {
     border-width: 2px;
     border: none;
   }
-  
+
   input[type="text"], input[type="number"], input[type="password"], input[type="email"], input[type="url"], textarea, .select2-container--focus .select2-selection__rendered, .select2Tags + .select2-container .select2-container--default .select2-selection--multiple .select2-selection__rendered, .trumbowyg-editor {
     color: #c7c7c7
   }
-  
-  
+
+
   hr.clrBr {
     background: rgba(255,255,255, 0.08);
   }
@@ -1327,7 +1403,7 @@ input.js-addressBar:focus {
   .tab.active {
     color: #00d188;
   }
-  
+
   .tab.active::after {
     color: #00d188;
   }
@@ -1352,7 +1428,7 @@ input.js-addressBar:focus {
   border-bottom:1px solid rgba(59, 67, 74, 0.35)!important;
 }
 
-  
+
 .btn, .btnRadio, .btnTxt, .btnTxtOnly, .btnAsLink, .iconBtn, .iconBtnSm, .iconBtnTn, .btnHg, .listItem, .clrT.btn, .clrT.btnRadio, .clrT.btnTxt, .clrT.btnTxtOnly, .clrT.btnAsLink, .clrT.iconBtn, .clrT.iconBtnSm, .clrT.iconBtnTn, .clrT.btnHg, .clrT.listItem {
   color:white;
 }
@@ -1386,7 +1462,7 @@ input.js-addressBar:focus {
 }
 
 .wallet.receiveModeOn .btnReceiveMoney {
-  display:inline-flex; 
+  display:inline-flex;
 }
 
 
@@ -1725,7 +1801,7 @@ h2.listing-title {
 .chatOpen #chatCloseBtn {
   right:auto;
   opacity:1;
-  
+
 }
 
 #chatCloseBtn.ion-ios-close-empty:before{
@@ -1911,7 +1987,7 @@ background:none;
     text-align: left;
     font-size: 44px;
     -webkit-font-smoothing: antialiased;
-    
+
 }
 
 .userPage .pageContent .pageControls {
@@ -2063,4 +2139,80 @@ a.listing-title-catalog {
 
 .product-types > div {
   margin-bottom:0.5rem;
+}
+
+
+.search #pageTabBar {
+  display:none;
+}
+
+#appFrame #contentFrame #pageContainer {
+  padding-top: 0;
+}
+
+.search .searchBar .searchInput {
+
+   
+}
+
+.search .searchBar .searchBtn.js-searchBtn {
+    height:50px;
+    border-radius: 4rem;
+    position: absolute;
+    right: 6px;
+    // opacity:0;
+}
+
+.search .searchBar .searchInput.withLogo {
+  border-radius:4rem;
+  border:1px solid #ccc;
+  text-indent: 10px;
+    font-size: 18px;
+    background:whitesmoke;
+    height:60px;
+}
+
+
+.searchBar::before {
+  right:14px;
+  left:auto;
+}
+
+.sendMoney h2 {
+  display:none;
+}
+
+.searchWrapper:before { 
+  content:none;
+
+}
+
+.pageNav .navBar .addressBar {
+  text-indent:0;
+}
+
+div.headline {
+  margin-bottom:5px;
+}
+
+.btnGetStarted {
+  margin-top:20px;
+}
+
+.js-pageCnt:not(:first-child):not(:last-child) {
+  padding-right:12px;
+  padding-left:11px;
+}
+
+.js-pageCnt:hover {
+  background:#00d188;
+  color:white;
+  border-color:transparent;
+  border: 2px solid transparent!important;
+
+}
+
+.js-filterWrapper .tx5b {
+  font-size: 2rem;
+  font-weight: normal!important;
 }

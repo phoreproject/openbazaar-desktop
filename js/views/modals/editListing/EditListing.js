@@ -1,16 +1,19 @@
 import $ from 'jquery';
-import '../../../utils/velocity';
+import '../../../utils/lib/velocity';
 import '../../../lib/select2';
-import { tagsDelimiter } from '../../../utils/selectize';
+import { tagsDelimiter } from '../../../utils/lib/selectize';
 import Sortable from 'sortablejs';
 import _ from 'underscore';
 import path from 'path';
-import '../../../utils/velocityUiPack.js';
+import '../../../utils/lib/velocityUiPack.js';
 import Backbone from 'backbone';
-import { isScrolledIntoView } from '../../../utils/dom';
-import { installRichEditor } from '../../../utils/trumbowyg';
+import app from '../../../app';
+import { isScrolledIntoView, openExternal } from '../../../utils/dom';
+import { installRichEditor } from '../../../utils/lib/trumbowyg';
+import { startAjaxEvent, endAjaxEvent } from '../../../utils/metrics';
 import { getCurrenciesSortedByCode } from '../../../data/currencies';
-import { formatPrice } from '../../../utils/currency';
+import { formatPrice, getCurrencyValidity } from '../../../utils/currency';
+import { setDeepValue } from '../../../utils/object';
 import SimpleMessage, { openSimpleMessage } from '../SimpleMessage';
 import Dialog from '../Dialog';
 import loadTemplate from '../../../utils/loadTemplate';
@@ -19,7 +22,6 @@ import Service from '../../../models/listing/Service';
 import Image from '../../../models/listing/Image';
 import Coupon from '../../../models/listing/Coupon';
 import VariantOption from '../../../models/listing/VariantOption';
-import app from '../../../app';
 import BaseModal from '../BaseModal';
 import ShippingOption from './ShippingOption';
 import Coupons from './Coupons';
@@ -27,6 +29,8 @@ import Variants from './Variants';
 import VariantInventory from './VariantInventory';
 import InventoryManagement from './InventoryManagement';
 import SkuField from './SkuField';
+import UnsupportedCurrency from './UnsupportedCurrency';
+import CryptoCurrencyType from './CryptoCurrencyType';
 
 export default class extends BaseModal {
   constructor(options = {}) {
@@ -36,7 +40,7 @@ export default class extends BaseModal {
 
     if (options.onClickViewListing !== undefined &&
       typeof options.onClickViewListing !== 'function') {
-      throw new Error('If providing an onClickViewListing options, it must be ' +
+      throw new Error('If providing an onClickViewListing option, it must be ' +
         'provided as a function.');
     }
 
@@ -48,7 +52,7 @@ export default class extends BaseModal {
     super(opts);
     this.options = opts;
 
-    // So the passed in modal does not get any un-saved data,
+    // So the passed in model does not get any un-saved data,
     // we'll clone and update it on sync
     this._origModel = this.model;
     this.model = this._origModel.clone();
@@ -58,7 +62,6 @@ export default class extends BaseModal {
         if (this.createMode && !this.model.isNew()) {
           this.createMode = false;
           this.$('.js-listingHeading').text(app.polyglot.t('editListing.editListingLabel'));
-          this.getCachedEl('.js-viewListing').removeClass('hide');
         }
 
         const updatedData = this.model.toJSON();
@@ -84,7 +87,7 @@ export default class extends BaseModal {
       // A change event won't fire on a parent model if only nested attributes change.
       // The nested models would need to have change events manually bound to them
       // which is cumbersome with a model like this with so many levels of nesting.
-      // If you are interested in any change on the model (as opposed to a sepcific
+      // If you are interested in any change on the model (as opposed to a specific
       // attribute), the simplest thing to do is use the 'saved' event from the
       // event emitter in models/listing/index.js.
     });
@@ -167,6 +170,7 @@ export default class extends BaseModal {
       'click .js-return': 'onClickReturn',
       'click .js-save': 'onSaveClick',
       'change #editContractType': 'onChangeContractType',
+      'change #editListingCryptoContractType': 'onChangeCryptoContractType',
       'change .js-price': 'onChangePrice',
       'change #inputPhotoUpload': 'onChangePhotoUploadInput',
       'click .js-addPhoto': 'onClickAddPhoto',
@@ -180,12 +184,28 @@ export default class extends BaseModal {
       'keyup .js-variantNameInput': 'onKeyUpVariantName',
       'click .js-scrollToVariantInventory': 'onClickScrollToVariantInventory',
       'click .js-viewListing': 'onClickViewListing',
+      'click .js-viewListingOnWeb': 'onClickViewListingOnWeb',
       ...super.events(),
     };
   }
 
   get MAX_PHOTOS() {
     return this.model.get('item').max.images;
+  }
+
+  get createMode() {
+    return this._createMode;
+  }
+
+  set createMode(bool) {
+    if (typeof bool !== 'boolean') {
+      throw new Error('Please provide bool as a boolean.');
+    }
+
+    if (bool !== this._createMode) {
+      this._createMode = bool;
+      this.$el.toggleClass('editMode', !this._createMode);
+    }
   }
 
   onClickReturn() {
@@ -199,7 +219,18 @@ export default class extends BaseModal {
       const slug = this.model.get('slug');
       if (slug) {
         app.router.navigate(`${app.profile.id}/store/${slug}`, { trigger: true });
+      } else {
+        throw new Error('There is no slug for this listing in order to navigate!');
       }
+    }
+  }
+
+  onClickViewListingOnWeb() {
+    const slug = this.model.get('slug');
+    if (slug) {
+      openExternal(`http://phore.io/store/${app.profile.id}/${slug}`);
+    } else {
+      throw new Error('There is no slug for this listing in order to navigate!');
     }
   }
 
@@ -236,7 +267,7 @@ export default class extends BaseModal {
 
     if (!isNaN(numericVal) && trimmedVal) {
       $(e.target).val(
-        formatPrice(numericVal, this.$currencySelect.val() === 'PHR')
+        formatPrice(numericVal, this.$currencySelect.val())
       );
     } else {
       $(e.target).val(trimmedVal);
@@ -245,16 +276,39 @@ export default class extends BaseModal {
     this.variantInventory.render();
   }
 
-  onChangeContractType(e) {
-    if (e.target.value !== 'PHYSICAL_GOOD') {
-      this.$conditionWrap
-        .add(this.$sectionShipping)
-        .addClass('disabled');
-    } else {
-      this.$conditionWrap
-        .add(this.$sectionShipping)
-        .removeClass('disabled');
+  setContractTypeClass(contractType) {
+    const removeClasses = this.model.get('metadata')
+      .contractTypes
+      .reduce(
+        (classes, type) => (`${classes} TYPE_${type}`), ''
+      );
+
+    this.$el.removeClass(removeClasses)
+      .addClass(`TYPE_${contractType}`);
+  }
+
+  onChangeContractType(e, data = {}) {
+    this.setContractTypeClass(e.target.value);
+
+    if (!data.fromCryptoTypeChange) {
+      if (e.target.value === 'CRYPTOCURRENCY') {
+        this.getCachedEl('#editListingCryptoContractType')
+          .val('CRYPTOCURRENCY');
+        this.getCachedEl('#editListingCryptoContractType')
+          .trigger('change')
+          .focus();
+      }
     }
+  }
+
+  onChangeCryptoContractType(e) {
+    if (e.target.value === 'CRYPTOCURRENCY') return;
+
+    this.getCachedEl('#editContractType')
+      .val(e.target.value);
+    this.getCachedEl('#editContractType')
+      .trigger('change', { fromCryptoTypeChange: true })
+      .focus();
   }
 
   getOrientation(file, callback) {
@@ -557,11 +611,11 @@ export default class extends BaseModal {
         title: app.polyglot.t('editListing.confirmCloseDialog.title'),
         message: app.polyglot.t(`editListing.confirmCloseDialog.${messageKey}`),
         buttons: [{
-          text: app.polyglot.t('editListing.confirmCloseDialog.btnYes'),
-          fragment: 'yes',
-        }, {
           text: app.polyglot.t('editListing.confirmCloseDialog.btnNo'),
           fragment: 'no',
+        }, {
+          text: app.polyglot.t('editListing.confirmCloseDialog.btnYes'),
+          fragment: 'yes',
         }],
       })
         .on('click-yes', () => {
@@ -692,6 +746,15 @@ export default class extends BaseModal {
       _.omit(sku, 'mappingId', 'choices')
     ));
 
+    const segmentation = {
+      type: serverData.metadata.contractType,
+      currency: serverData.metadata.pricingCurrency,
+      moderated: serverData.moderators && !!serverData.moderators.length,
+      isNew: this.model.isNew(),
+    };
+
+    startAjaxEvent('Listing_Save');
+
     const save = this.model.save({}, {
       attrs: serverData,
     });
@@ -723,18 +786,25 @@ export default class extends BaseModal {
 
           setTimeout(() => savingStatusMsg.remove(), 3000);
 
+          const message = args[0] && args[0].responseJSON && args[0].responseJSON.reason || '';
+
           new SimpleMessage({
             title: app.polyglot.t('editListing.errors.saveErrorTitle'),
-            message: args[0] && args[0].responseJSON && args[0].responseJSON.reason || '',
+            message,
           })
           .render()
           .open();
+          endAjaxEvent('Listing_Save', {
+            ...segmentation,
+            errors: message || 'unknown',
+          });
         }).done(() => {
           savingStatusMsg.update(`Listing ${this.model.toJSON().item.title}` +
             ' saved. <a class="js-viewListing">view</a>');
           this.attrsAtLastSave = this.model.toJSON();
 
           setTimeout(() => savingStatusMsg.remove(), 6000);
+          endAjaxEvent('Listing_Save', segmentation);
         });
     } else {
       // client side validation failed
@@ -743,8 +813,21 @@ export default class extends BaseModal {
 
     // render so errrors are shown / cleared
     this.render(!!save);
-    const $firstErr = this.$('.errorList:first');
-    if ($firstErr.length) $firstErr[0].scrollIntoViewIfNeeded();
+
+    if (!save) {
+      const $firstErr = this.$('.errorList:visible').eq(0);
+      if ($firstErr.length) {
+        $firstErr[0].scrollIntoViewIfNeeded();
+      } else {
+        // There's a model error that's not represented in the UI - likely
+        // developer error.
+        const msg = Object.keys(this.model.validationError)
+          .reduce((str, errKey) =>
+            `${str}${errKey}: ${this.model.validationError[errKey].join(', ')}<br>`, '');
+        openSimpleMessage(app.polyglot.t('editListing.errors.saveErrorTitle'),
+          msg);
+      }
+    }
   }
 
   onChangeManagementType(e) {
@@ -767,8 +850,10 @@ export default class extends BaseModal {
    * and collections which are managed by nested views.
    */
   setModelData() {
-    const formData = this.getFormData(this.$formFields);
+    let formData = this.getFormData(this.$formFields);
     const item = this.model.get('item');
+    const metadata = this.model.get('metadata');
+    const isCrypto = this.getCachedEl('#editContractType').val() === 'CRYPTOCURRENCY';
 
     // set model / collection data for various child views
     this.shippingOptionViews.forEach((shipOptVw) => shipOptVw.setModelData());
@@ -776,27 +861,54 @@ export default class extends BaseModal {
     this.variantInventory.setCollectionData();
     this.couponsView.setCollectionData();
 
-    if (item.get('options').length) {
-      // If we have options, we shouldn't be providing a top-level quantity or
-      // productID.
-      item.unset('quantity');
-      item.unset('productID');
+    if (!isCrypto) {
+      if (item.get('options').length) {
+        // If we have options, we shouldn't be providing a top-level quantity or
+        // productID.
+        item.unset('quantity');
+        item.unset('productID');
 
-      // If we have options and are not tracking inventory, we'll set the infiniteInventory
-      // flag for any skus.
-      if (this.trackInventoryBy === 'DO_NOT_TRACK') {
-        item.get('skus')
-          .forEach(sku => {
-            sku.set({
-              infiniteInventory: true,
-              quantity: -1,
+        // If we have options and are not tracking inventory, we'll set the infiniteInventory
+        // flag for any skus.
+        if (this.trackInventoryBy === 'DO_NOT_TRACK') {
+          item.get('skus')
+            .forEach(sku => {
+              sku.set({
+                infiniteInventory: true,
+                quantity: -1,
+              });
             });
-          });
+        }
+      } else if (this.trackInventoryBy === 'DO_NOT_TRACK') {
+        // If we're not tracking inventory and don't have any variants, we should provide
+        // a top-level quantity as -1, so it's considered infinite.
+        formData.item.quantity = -1;
       }
-    } else if (this.trackInventoryBy === 'DO_NOT_TRACK') {
-      // If we're not tracking inventory and don't have any variants, we should provide a top-level
-      // quantity as -1, so it's considered infinite.
-      formData.item.quantity = -1;
+
+      formData.metadata = {
+        ...formData.metadata,
+        format: 'FIXED_PRICE',
+      };
+    } else {
+      item.unset('condition');
+      item.unset('productId');
+      item.unset('price');
+      metadata.unset('pricingCurrency');
+
+      formData = {
+        ...formData,
+        coupons: [],
+        item: {
+          ...formData.item,
+          options: [],
+          skus: [],
+        },
+        metadata: {
+          ...formData.metadata,
+          format: 'MARKET_PRICE',
+        },
+        shippingOptions: [],
+      };
     }
 
     this.model.set({
@@ -811,7 +923,7 @@ export default class extends BaseModal {
     });
 
     // If the type is not 'PHYSICAL_GOOD', we'll clear out any shipping options.
-    if (this.model.get('metadata').get('contractType') !== 'PHYSICAL_GOOD') {
+    if (metadata.get('contractType') !== 'PHYSICAL_GOOD') {
       this.model.get('shippingOptions').reset();
     } else {
       // If any shipping options have a type of 'LOCAL_PICKUP', we'll
@@ -824,12 +936,43 @@ export default class extends BaseModal {
     }
   }
 
+  open() {
+    super.open();
+
+    if (!this.openedBefore) {
+      this.openedBefore = true;
+      let cur;
+
+      try {
+        cur = this._origModel.unparsedResponse.listing.metadata.pricingCurrency;
+      } catch (e) {
+        return this;
+      }
+
+      if (!this.model.isCrypto && getCurrencyValidity(cur) === 'UNRECOGNIZED_CURRENCY') {
+        const unsupportedCurrencyDialog = new UnsupportedCurrency({
+          unsupportedCurrency: cur,
+        }).render().open();
+
+        this.listenTo(unsupportedCurrencyDialog, 'close', () => {
+          const response = JSON.parse(JSON.stringify(this._origModel.unparsedResponse));
+          const newCur = unsupportedCurrencyDialog.getCurrency();
+          setDeepValue(response, 'listing.metadata.pricingCurrency', newCur);
+          this.model.set(this.model.parse(response));
+          this.$currencySelect.val(newCur);
+          this.render();
+        });
+      }
+    }
+    return this;
+  }
+
   get trackInventoryBy() {
     let trackBy;
 
     // If the inventoryManagement has been rendered, we'll let it's drop-down
     // determine whether we are tracking inventory. Otherwise, we'll get the info
-    // form the model.
+    // from the model.
     if (this.inventoryManagement) {
       trackBy = this.inventoryManagement.getState().trackBy;
     } else {
@@ -857,17 +1000,39 @@ export default class extends BaseModal {
   }
 
   get $formFields() {
+    const isCrypto = this.getCachedEl('#editContractType').val() === 'CRYPTOCURRENCY';
+    const cryptoExcludes = isCrypto ? ', .js-inventoryManagementSection' : '';
     const excludes = '.js-sectionShipping, .js-couponsSection, .js-variantsSection, ' +
-      '.js-variantInventorySection';
+      `.js-variantInventorySection${cryptoExcludes}`;
 
-    return this._$formFields ||
-      (this._$formFields = this.$(
-        `.js-formSectionsContainer > section:not(${excludes}) select[name],` +
-        `.js-formSectionsContainer > section:not(${excludes}) input[name],` +
-        `.js-formSectionsContainer > section:not(${excludes}) div[contenteditable][name],` +
-        `.js-formSectionsContainer > section:not(${excludes}) ` +
-          'textarea[name]:not([class*="trumbowyg"])'
-      ));
+    let $fields = this.$(
+      `.js-formSectionsContainer > section:not(${excludes}) select[name],` +
+      `.js-formSectionsContainer > section:not(${excludes}) input[name],` +
+      `.js-formSectionsContainer > section:not(${excludes}) div[contenteditable][name],` +
+      `.js-formSectionsContainer > section:not(${excludes}) ` +
+        'textarea[name]:not([class*="trumbowyg"])'
+    );
+
+    // Filter out hidden fields that are not applicable based on whether this is
+    // a crypto currency listing.
+    $fields = $fields.filter((index, el) => {
+      const $excludeContainers = isCrypto ?
+        this.getCachedEl('.js-standardTypeWrap')
+          .add(this.getCachedEl('.js-skuMatureContentRow')) :
+        this.getCachedEl('.js-cryptoTypeWrap');
+
+      let keep = true;
+
+      $excludeContainers.each((i, container) => {
+        if ($.contains(container, el)) {
+          keep = false;
+        }
+      });
+
+      return keep;
+    });
+
+    return $fields;
   }
 
   get $currencySelect() {
@@ -878,11 +1043,6 @@ export default class extends BaseModal {
   get $priceInput() {
     return this._$priceInput ||
       (this._$priceInput = this.$('#editListingPrice'));
-  }
-
-  get $conditionWrap() {
-    return this._$conditionWrap ||
-      (this._$conditionWrap = this.$('.js-conditionWrap'));
   }
 
   get $saveButton() {
@@ -992,13 +1152,13 @@ export default class extends BaseModal {
   remove() {
     this.inProgressPhotoUploads.forEach(upload => upload.abort());
     $(window).off('resize', this.throttledResizeWin);
-
     super.remove();
   }
 
   render(restoreScrollPos = true) {
     let prevScrollPos = 0;
     const item = this.model.get('item');
+    const metadata = this.model.get('metadata');
 
     if (restoreScrollPos) {
       prevScrollPos = this.el.scrollTop;
@@ -1007,282 +1167,288 @@ export default class extends BaseModal {
     if (this.throttledOnScroll) this.$el.off('scroll', this.throttledOnScroll);
     this.currencies = this.currencies || getCurrenciesSortedByCode();
 
-    loadTemplate('modals/editListing/editListing.html', t => {
-      this.$el.html(t({
-        createMode: this.createMode,
-        selectedNavTabIndex: this.selectedNavTabIndex,
-        returnText: this.options.returnText,
-        currency: this.currency,
-        currencies: this.currencies,
-        contractTypes: this.model.get('metadata')
-          .contractTypes
-          .map((contractType) => ({ code: contractType,
-            name: app.polyglot.t(`formats.${contractType}`) })),
-        conditionTypes: this.model.get('item')
-          .conditionTypes
-          .map((conditionType) => ({ code: conditionType,
-            name: app.polyglot.t(`conditionTypes.${conditionType}`) })),
-        errors: this.model.validationError || {},
-        photoUploadInprogress: !!this.inProgressPhotoUploads.length,
-        uploadPhotoT: this.uploadPhotoT,
-        expandedReturnPolicy: this.expandedReturnPolicy || !!this.model.get('refundPolicy'),
-        expandedTermsAndConditions: this.expandedTermsAndConditions ||
-          !!this.model.get('termsAndConditions'),
-        formatPrice,
-        maxCatsWarning: this.maxCatsWarning,
-        maxTagsWarning: this.maxTagsWarning,
-        max: {
-          title: item.max.titleLength,
-          cats: item.max.cats,
-          tags: item.max.tags,
-          photos: this.MAX_PHOTOS,
-        },
-        shouldShowVariantInventorySection: this.shouldShowVariantInventorySection,
-        ...this.model.toJSON(),
-      }));
+    loadTemplate('modals/editListing/viewListingLinks.html', viewListingsT => {
+      loadTemplate('modals/editListing/editListing.html', t => {
+        this.$el.html(t({
+          createMode: this.createMode,
+          selectedNavTabIndex: this.selectedNavTabIndex,
+          returnText: this.options.returnText,
+          listingCurrency: this.currency,
+          currencies: this.currencies,
+          contractTypes: metadata.contractTypesVerbose,
+          conditionTypes: this.model.get('item')
+            .conditionTypes
+            .map((conditionType) => ({ code: conditionType,
+              name: app.polyglot.t(`conditionTypes.${conditionType}`) })),
+          errors: this.model.validationError || {},
+          photoUploadInprogress: !!this.inProgressPhotoUploads.length,
+          uploadPhotoT: this.uploadPhotoT,
+          expandedReturnPolicy: this.expandedReturnPolicy || !!this.model.get('refundPolicy'),
+          expandedTermsAndConditions: this.expandedTermsAndConditions ||
+            !!this.model.get('termsAndConditions'),
+          formatPrice,
+          maxCatsWarning: this.maxCatsWarning,
+          maxTagsWarning: this.maxTagsWarning,
+          max: {
+            title: item.max.titleLength,
+            cats: item.max.cats,
+            tags: item.max.tags,
+            photos: this.MAX_PHOTOS,
+          },
+          shouldShowVariantInventorySection: this.shouldShowVariantInventorySection,
+          viewListingsT,
+          ...this.model.toJSON(),
+        }));
 
-      super.render();
+        this.setContractTypeClass(metadata.get('contractType'));
+        super.render();
 
-      this.$editListingTags = this.$('#editListingTags');
-      this.$editListingCategories = this.$('#editListingCategories');
-      this.$shippingOptionsWrap = this.$('.js-shippingOptionsWrap');
-      this.$couponsSection = this.$('.js-couponsSection');
-      this.$variantsSection = this.$('.js-variantsSection');
+        this._$scrollLinks = null;
+        this._$scrollToSections = null;
+        this._$currencySelect = null;
+        this._$priceInput = null;
+        this._$buttonSave = null;
+        this._$inputPhotoUpload = null;
+        this._$photoUploadingLabel = null;
+        this._$editListingReturnPolicy = null;
+        this._$editListingTermsAndConditions = null;
+        this._$sectionShipping = null;
+        this._$maxCatsWarning = null;
+        this._$maxTagsWarning = null;
+        this._$addShipOptSectionHeading = null;
+        this._$variantInventorySection = null;
+        this._$itemPrice = null;
+        this.$photoUploadItems = this.$('.js-photoUploadItems');
+        this.$modalContent = this.$('.modalContent');
+        this.$tabControls = this.$('.tabControls');
+        this.$titleInput = this.$('#editListingTitle');
+        this.$editListingTags = this.$('#editListingTags');
+        this.$editListingCategories = this.$('#editListingCategories');
+        this.$shippingOptionsWrap = this.$('.js-shippingOptionsWrap');
+        this.$couponsSection = this.$('.js-couponsSection');
+        this.$variantsSection = this.$('.js-variantsSection');
 
-      this.$('#editContractType, #editListingVisibility, #editListingCondition').select2({
-        // disables the search box
-        minimumResultsForSearch: Infinity,
-      });
-
-      this.$('#editListingCurrency').select2()
-        .on('change', () => this.variantInventory.render());
-
-      this.$editListingTags.selectize({
-        persist: false,
-        maxItems: item.max.tags,
-        create: input => {
-          // we'll make the tag all lowercase and
-          // replace spaces with dashes.
-          const term = input.toLowerCase()
-            .replace(/\s/g, '-')
-            .replace('#', '')
-            // replace consecutive dashes with one
-            .replace(/-{2,}/g, '-');
-          return {
-            value: term,
-            text: term,
-          };
-        },
-        onChange: value => {
-          const tags = value.length ? value.split(',') : [];
-          if (tags.length >= item.max.tags) {
-            this.showMaxTagsWarning();
-          } else {
-            this.hideMaxTagsWarning();
-          }
-        },
-      });
-
-      this.$editListingCategories.selectize({
-        persist: false,
-        maxItems: item.max.cats,
-        create: input => ({
-          value: input,
-          text: input,
-        }),
-        onChange: value => {
-          const cats = value.length ? value.split(',') : [];
-          if (cats.length >= item.max.cats) {
-            this.showMaxCatsWarning();
-          } else {
-            this.hideMaxCatsWarning();
-          }
-        },
-      });
-
-      // render shipping options
-      this.shippingOptionViews.forEach((shipOptVw) => shipOptVw.remove());
-      this.shippingOptionViews = [];
-      const shipOptsFrag = document.createDocumentFragment();
-
-      this.model.get('shippingOptions').forEach((shipOpt, shipOptIndex) => {
-        const shipOptVw = this.createShippingOptionView({
-          model: shipOpt,
-          listPosition: shipOptIndex + 1,
+        this.$('#editContractType, #editListingVisibility, #editListingCondition').select2({
+          // disables the search box
+          minimumResultsForSearch: Infinity,
         });
 
-        this.shippingOptionViews.push(shipOptVw);
-        shipOptVw.render().$el.appendTo(shipOptsFrag);
-      });
+        this.$('#editListingCurrency').select2()
+          .on('change', () => this.variantInventory.render());
 
-      this.$shippingOptionsWrap.append(shipOptsFrag);
+        this.$editListingTags.selectize({
+          persist: false,
+          maxItems: item.max.tags,
+          create: input => {
+            // we'll make the tag all lowercase and
+            // replace spaces with dashes.
+            const term = input.toLowerCase()
+              .replace(/\s/g, '-')
+              .replace('#', '')
+              // replace consecutive dashes with one
+              .replace(/-{2,}/g, '-');
+            return {
+              value: term,
+              text: term,
+            };
+          },
+          onChange: value => {
+            const tags = value.length ? value.split(',') : [];
+            if (tags.length >= item.max.tags) {
+              this.showMaxTagsWarning();
+            } else {
+              this.hideMaxTagsWarning();
+            }
+          },
+        });
 
-      // render sku field
-      if (this.skuField) this.skuField.remove();
+        this.$editListingCategories.selectize({
+          persist: false,
+          maxItems: item.max.cats,
+          create: input => ({
+            value: input,
+            text: input,
+          }),
+          onChange: value => {
+            const cats = value.length ? value.split(',') : [];
+            if (cats.length >= item.max.cats) {
+              this.showMaxCatsWarning();
+            } else {
+              this.hideMaxCatsWarning();
+            }
+          },
+        });
 
-      this.skuField = this.createChild(SkuField, {
-        model: item,
-        initialState: {
-          variantsPresent: !!item.get('options').length,
-        },
-      });
+        // render shipping options
+        this.shippingOptionViews.forEach((shipOptVw) => shipOptVw.remove());
+        this.shippingOptionViews = [];
+        const shipOptsFrag = document.createDocumentFragment();
 
-      this.$('.js-skuFieldContainer').html(this.skuField.render().el);
+        this.model.get('shippingOptions').forEach((shipOpt, shipOptIndex) => {
+          const shipOptVw = this.createShippingOptionView({
+            model: shipOpt,
+            listPosition: shipOptIndex + 1,
+          });
 
-      // render variants
-      if (this.variantsView) this.variantsView.remove();
+          this.shippingOptionViews.push(shipOptVw);
+          shipOptVw.render().$el.appendTo(shipOptsFrag);
+        });
 
-      const variantErrors = {};
+        this.$shippingOptionsWrap.append(shipOptsFrag);
 
-      Object.keys(item.validationError || {})
-        .forEach(errKey => {
-          if (errKey.startsWith('options[')) {
-            variantErrors[errKey] =
-              item.validationError[errKey];
+        // render sku field
+        if (this.skuField) this.skuField.remove();
+
+        this.skuField = this.createChild(SkuField, {
+          model: item,
+          initialState: {
+            variantsPresent: !!item.get('options').length,
+          },
+        });
+
+        this.$('.js-skuFieldContainer').html(this.skuField.render().el);
+
+        // render variants
+        if (this.variantsView) this.variantsView.remove();
+
+        const variantErrors = {};
+
+        Object.keys(item.validationError || {})
+          .forEach(errKey => {
+            if (errKey.startsWith('options[')) {
+              variantErrors[errKey] =
+                item.validationError[errKey];
+            }
+          });
+
+        this.variantsView = this.createChild(Variants, {
+          collection: this.variantOptionsCl,
+          maxVariantCount: item.max.optionCount,
+          errors: variantErrors,
+        });
+
+        this.variantsView.listenTo(this.variantsView, 'variantChoiceChange',
+          this.onVariantChoiceChange.bind(this));
+
+        this.$variantsSection.find('.js-variantsContainer').append(
+          this.variantsView.render().el
+        );
+
+        // render inventory management section
+        if (this.inventoryManagement) this.inventoryManagement.remove();
+        const inventoryManagementErrors = {};
+
+        if (this.model.validationError &&
+          this.model.validationError['item.quantity']) {
+          inventoryManagementErrors.quantity = this.model.validationError['item.quantity'];
+        }
+
+        this.inventoryManagement = this.createChild(InventoryManagement, {
+          initialState: {
+            trackBy: this.trackInventoryBy,
+            quantity: item.get('quantity'),
+            errors: inventoryManagementErrors,
+          },
+        });
+
+        this.$('.js-inventoryManagementSection').html(this.inventoryManagement.render().el);
+        this.listenTo(this.inventoryManagement, 'changeManagementType',
+          this.onChangeManagementType);
+
+        // render variant inventory
+        if (this.variantInventory) this.variantInventory.remove();
+
+        this.variantInventory = this.createChild(VariantInventory, {
+          collection: item.get('skus'),
+          optionsCl: item.get('options'),
+          getPrice: () => this.getFormData(this.$itemPrice).item.price,
+          getCurrency: () => this.currency,
+        });
+
+        this.$('.js-variantInventoryTableContainer')
+          .html(this.variantInventory.render().el);
+
+        // render coupons
+        if (this.couponsView) this.couponsView.remove();
+
+        const couponErrors = {};
+
+        Object.keys(this.model.validationError || {})
+          .forEach(errKey => {
+            if (errKey.startsWith('coupons[')) {
+              couponErrors[errKey] =
+                this.model.validationError[errKey];
+            }
+          });
+
+        this.couponsView = this.createChild(Coupons, {
+          collection: this.coupons,
+          maxCouponCount: this.model.max.couponCount,
+          couponErrors,
+        });
+
+        this.$couponsSection.find('.js-couponsContainer').append(
+          this.couponsView.render().el
+        );
+
+        installRichEditor(this.$('#editListingDescription'), {
+          topLevelClass: 'clrBr',
+        });
+
+        if (this.sortablePhotos) this.sortablePhotos.destroy();
+        this.sortablePhotos = Sortable.create(this.$photoUploadItems[0], {
+          filter: '.js-addPhotoWrap',
+          onUpdate: (e) => {
+            const imageModels = this.model
+              .get('item')
+              .get('images')
+              .models;
+
+            const movingModel = imageModels[e.oldIndex - 1];
+            imageModels.splice(e.oldIndex - 1, 1);
+            imageModels.splice(e.newIndex - 1, 0, movingModel);
+          },
+          onMove: (e) => ($(e.related).hasClass('js-addPhotoWrap') ? false : undefined),
+        });
+
+        if (this.cryptoCurrencyType) this.cryptoCurrencyType.remove();
+        this.cryptoCurrencyType = this.createChild(CryptoCurrencyType, {
+          model: this.model,
+        });
+        this.getCachedEl('.js-cryptoTypeWrap')
+          .html(this.cryptoCurrencyType.render().el);
+
+        setTimeout(() => {
+          if (!this.rendered) {
+            this.rendered = true;
+            this.$titleInput.focus();
           }
         });
 
-      this.variantsView = this.createChild(Variants, {
-        collection: this.variantOptionsCl,
-        maxVariantCount: item.max.optionCount,
-        errors: variantErrors,
-      });
-
-      this.variantsView.listenTo(this.variantsView, 'variantChoiceChange',
-        this.onVariantChoiceChange.bind(this));
-
-      this.$variantsSection.find('.js-variantsContainer').append(
-        this.variantsView.render().el
-      );
-
-      // render inventory management section
-      if (this.inventoryManagement) this.inventoryManagement.remove();
-      const inventoryManagementErrors = {};
-
-      if (this.model.validationError &&
-        this.model.validationError['item.quantity']) {
-        inventoryManagementErrors.quantity = this.model.validationError['item.quantity'];
-      }
-
-      this.inventoryManagement = this.createChild(InventoryManagement, {
-        initialState: {
-          trackBy: this.trackInventoryBy,
-          quantity: item.get('quantity'),
-          errors: inventoryManagementErrors,
-        },
-      });
-
-      this.$('.js-inventoryManagementSection').html(this.inventoryManagement.render().el);
-      this.listenTo(this.inventoryManagement, 'changeManagementType', this.onChangeManagementType);
-
-      // render variant inventory
-      if (this.variantInventory) this.variantInventory.remove();
-
-      this.variantInventory = this.createChild(VariantInventory, {
-        collection: item.get('skus'),
-        optionsCl: item.get('options'),
-        getPrice: () => this.getFormData(this.$itemPrice).item.price,
-        getCurrency: () => this.currency,
-      });
-
-      this.$('.js-variantInventoryTableContainer')
-        .html(this.variantInventory.render().el);
-
-      // render coupons
-      if (this.couponsView) this.couponsView.remove();
-
-      const couponErrors = {};
-
-      Object.keys(this.model.validationError || {})
-        .forEach(errKey => {
-          if (errKey.startsWith('coupons[')) {
-            couponErrors[errKey] =
-              this.model.validationError[errKey];
+        setTimeout(() => {
+          // restore the scroll position
+          if (restoreScrollPos) {
+            this.el.scrollTop = prevScrollPos;
           }
+
+          this.throttledOnScroll = _.bind(_.throttle(this.onScroll, 100), this);
+          setTimeout(() => this.$el.on('scroll', this.throttledOnScroll), 100);
         });
 
-      this.couponsView = this.createChild(Coupons, {
-        collection: this.coupons,
-        maxCouponCount: this.model.max.couponCount,
-        couponErrors,
-      });
-
-      this.$couponsSection.find('.js-couponsContainer').append(
-        this.couponsView.render().el
-      );
-
-      this._$scrollLinks = null;
-      this._$scrollToSections = null;
-      this._$formFields = null;
-      this._$currencySelect = null;
-      this._$priceInput = null;
-      this._$conditionWrap = null;
-      this._$buttonSave = null;
-      this._$inputPhotoUpload = null;
-      this._$photoUploadingLabel = null;
-      this._$editListingReturnPolicy = null;
-      this._$editListingTermsAndConditions = null;
-      this._$sectionShipping = null;
-      this._$maxCatsWarning = null;
-      this._$maxTagsWarning = null;
-      this._$addShipOptSectionHeading = null;
-      this._$variantInventorySection = null;
-      this._$itemPrice = null;
-      this.$photoUploadItems = this.$('.js-photoUploadItems');
-      this.$modalContent = this.$('.modalContent');
-      this.$tabControls = this.$('.tabControls');
-      this.$titleInput = this.$('#editListingTitle');
-
-      installRichEditor(this.$('#editListingDescription'), {
-        topLevelClass: 'clrBr',
-      });
-
-      if (this.sortablePhotos) this.sortablePhotos.destroy();
-      this.sortablePhotos = Sortable.create(this.$photoUploadItems[0], {
-        filter: '.js-addPhotoWrap',
-        onUpdate: (e) => {
-          const imageModels = this.model
-            .get('item')
-            .get('images')
-            .models;
-
-          const movingModel = imageModels[e.oldIndex - 1];
-          imageModels.splice(e.oldIndex - 1, 1);
-          imageModels.splice(e.newIndex - 1, 0, movingModel);
-        },
-        onMove: (e) => ($(e.related).hasClass('js-addPhotoWrap') ? false : undefined),
-      });
-
-      setTimeout(() => {
-        if (!this.rendered) {
-          this.rendered = true;
-          this.$titleInput.focus();
+        // This block should be after any dom manipulation in render.
+        if (this.createMode) {
+          if (!this.attrsAtCreate) {
+            this.setModelData();
+            this.attrsAtCreate = this.model.toJSON();
+          }
+        } else {
+          if (!this.attrsAtLastSave) {
+            this.setModelData();
+            this.attrsAtLastSave = this.model.toJSON();
+          }
         }
       });
-
-      setTimeout(() => {
-        // restore the scroll position
-        if (restoreScrollPos) {
-          this.el.scrollTop = prevScrollPos;
-        }
-
-        this.throttledOnScroll = _.bind(_.throttle(this.onScroll, 100), this);
-        setTimeout(() => this.$el.on('scroll', this.throttledOnScroll), 100);
-      });
-
-      if (this.createMode) {
-        if (!this.attrsAtCreate) {
-          this.setModelData();
-          this.attrsAtCreate = this.model.toJSON();
-        }
-      } else {
-        if (!this.attrsAtLastSave) {
-          this.setModelData();
-          this.attrsAtLastSave = this.model.toJSON();
-        }
-      }
     });
-
     return this;
   }
 }

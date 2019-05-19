@@ -1,5 +1,5 @@
 import { remote } from 'electron';
-import LocalStorageSync from '../utils/backboneLocalStorage';
+import LocalStorageSync from '../utils/lib/backboneLocalStorage';
 import { Model } from 'backbone';
 import is from 'is_js';
 import { feeLevels } from '../utils/fees';
@@ -50,7 +50,8 @@ export default class extends Model {
       language,
       listingsGridViewType: 'grid',
       bitcoinUnit: 'PHR',
-      searchProvider: 'https://search.phore.io/search/listings',
+      verifiedModsProvider: 'https://search.phore.io/verified_moderators',
+      verifiedModsProviderTor: '',
       dontShowTorExternalLinkWarning: false,
     };
   }
@@ -95,8 +96,9 @@ export default class extends Model {
       addError(`bitcoinUnit needs to be one of ${this.bitcoinUnits}.`);
     }
 
-    if (is.not.url(attrs.searchProvider)) {
-      addError('searchProvider', app.polyglot.t('localSettingsModelErrors.searchProvider'));
+    if (is.not.url(attrs.verifiedModsProvider)) {
+      addError('verifiedModsProvider',
+        app.polyglot.t('localSettingsModelErrors.verifiedModsProvider'));
     }
 
     if (typeof attrs.dontShowTorExternalLinkWarning !== 'boolean') {

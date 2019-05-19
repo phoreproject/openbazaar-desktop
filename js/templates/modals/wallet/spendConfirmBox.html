@@ -26,20 +26,15 @@
         <a class="js-sendConfirmRetry"><%= ob.polyT('wallet.spendConfirmBox.btnRetry') %></a>
       <% } %>
     <% } else if (typeof ob.fee === 'number') {
-      let feeText = ob.formatCurrency(ob.fee, 'PHR',
-        { useBtcSymbol: false });
-
-      if (ob.displayCurrency !== 'PHR') {
-        feeText = ob.polyT('fiatBtcPairing', {
-          fiatAmount: ob.convertAndFormatCurrency(ob.fee, 'PHR',
-            ob.displayCurrency),
-          btcAmount: feeText,
-        });
-      }
+      let feeText = ob.currencyMod.pairedCurrency(
+        ob.fee,
+        ob.currencyMod.getServerCurrency().code,
+        ob.displayCurrency
+      );
     %>
       <p class="clrT2">
         <%= ob.polyT('wallet.spendConfirmBox.body', {
-          fiatBtcPairing: feeText,
+          currencyPairing: feeText,
         }) %>
       </p>
     <% } %>
@@ -50,7 +45,7 @@
       <% if (ob.fetchingFee) {
         // invisible button for spacing purposes
       %>
-      <a class="btn clrBAttGrad clrBrDec1 clrTOnEmph invisible"><%= ob.btnSendText %></a> 
+      <a class="btn clrBAttGrad clrBrDec1 clrTOnEmph invisible"><%= ob.btnSendText %></a>
       <% } else if (!ob.fetchFailed) { %>
       <a class="js-sendConfirmCancel"><%= ob.polyT('wallet.spendConfirmBox.btnCancel') %></a>
       <a class="btn clrBAttGrad clrBrDec1 clrTOnEmph js-btnConfirmSend"><%= ob.btnSendText %></a>
@@ -59,4 +54,4 @@
       <% } %>
     </div>
   </div>
-<% } %>  
+<% } %>

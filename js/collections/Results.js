@@ -1,4 +1,3 @@
-import { integerToDecimal } from '../utils/currency';
 import { Collection } from 'backbone';
 import ListingShort from '../models/listing/ListingShort';
 import Profile from '../models/profile/Profile';
@@ -15,7 +14,10 @@ export default class extends Collection {
       return new Profile(attrs, options);
     }
     delete attrs.type;
-    return new ListingShort(attrs, options);
+    return new ListingShort(attrs, {
+      ...options,
+      parse: true,
+    });
   }
 
   parse(response) {
@@ -37,9 +39,7 @@ export default class extends Collection {
           delete vendor.id;
         }
         updatedResult.vendor = vendor;
-        const priceObj = updatedResult.price || {};
-        updatedResult.price.amount =
-            integerToDecimal(priceObj.amount, priceObj.currencyCode === 'PHR');
+        updatedResult.moderators = relationships.moderators || [];
         parsedResponse.push(updatedResult);
       } else if (result.type === 'profile') {
         // only add if the results have a valid peerID

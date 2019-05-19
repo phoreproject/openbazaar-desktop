@@ -357,8 +357,24 @@ svg {
     display: inline-block;
   }
 
+  .block {
+    display: block;
+  }
+  
   .pointer {
     cursor: pointer;
+  }
+
+  .lineHeight1 {
+    line-height: 1;
+  }
+
+  .noWrap {
+    white-space: nowrap;
+  }
+
+  .hideIfEmpty:empty {
+    display: none;
   }
 
   // external brand colors. They should not be overwritten by theme colors.
@@ -377,6 +393,10 @@ svg {
   .tumblrColor {
     color: #35465c;
   }
+
+  .githubColor, .redditColor {
+    color: #000;
+  }  
 }
 
 // Sometimes, I just like floats.

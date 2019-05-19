@@ -1,8 +1,6 @@
 import $ from 'jquery';
-import moment from 'moment';
 import is from 'is_js';
 import { getEmojiByName } from '../../data/emojis';
-import { isMultihash } from '../../utils';
 import sanitizeHtml from 'sanitize-html';
 import twemoji from 'twemoji';
 import app from '../../app';
@@ -44,26 +42,24 @@ export function processMessage(message) {
     if (node.nodeType === 3) {
       // It's a text node. Loop through each word and if it's a guid or handle we keep track of it
       // so later we'll wrap it in an anchor element.
-      node.textContent.replace(/\r\n/g, ' ')
+      const words = node.textContent.replace(/\r\n/g, ' ')
         .replace('\n', ' ')
-        .match(/\S+\s*/g)
-        .forEach(word => {
-          const w = word.trim();
-          if (wordsToAnchorify.includes(w)) return;
+        .match(/\S+\s*/g);
 
-          // Certain words are valid multihashes (e.g. that)
-          // const isGuid = isMultihash(w) && w.length > 15;
-          const isGuid = isMultihash(w) && w.length > 15;
+      if (!words) return;
 
-          if ((w.startsWith('@') && w.length > 1) ||
-            (w.startsWith('pm://') && w.length > 5) ||
-            (w.startsWith('http://') && w.length >= 11) ||
-            (w.startsWith('https://') && w.length >= 12) ||
-            (w.startsWith('www.') && w.length >= 8) ||
-            isGuid) {
-            wordsToAnchorify.push(w);
-          }
-        });
+      words.forEach(word => {
+        const w = word.trim();
+        if (wordsToAnchorify.includes(w)) return;
+
+        if ((w.startsWith('@') && w.length > 1) ||
+          (w.startsWith('pm://') && w.length > 5) ||
+          (w.startsWith('http://') && w.length >= 11) ||
+          (w.startsWith('https://') && w.length >= 12) ||
+          (w.startsWith('www.') && w.length >= 8)) {
+          wordsToAnchorify.push(w);
+        }
+      });
     } else {
       node.childNodes.forEach(child => findWords(child));
     }
@@ -217,7 +213,7 @@ export default class ChatMessage extends BaseModel {
     options.attrs = options.attrs || model.toJSON(options);
 
     if (method === 'create') {
-      const timestamp = moment(Date.now()).format();
+      const timestamp = new Date().toISOString();
       options.attrs.timestamp = timestamp;
       this.set('timestamp', timestamp);
     }

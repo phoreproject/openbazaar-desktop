@@ -1,7 +1,9 @@
+import $ from 'jquery';
 import _ from 'underscore';
 import moment from 'moment';
 import { clipboard } from 'electron';
-import '../../../../utils/velocity';
+import '../../../../utils/lib/velocity';
+import app from '../../../../app';
 import loadTemplate from '../../../../utils/loadTemplate';
 import BaseVw from '../../../baseVw';
 
@@ -17,6 +19,9 @@ export default class extends BaseVw {
       contractType: 'PHYSICAL_GOOD',
       isLocalPickup: false,
       showPassword: false,
+      noteFromLabel:
+        app.polyglot.t('orderDetail.summaryTab.fulfilled.noteFromVendorLabel'),
+      coinType: '',
       ...options.initialState || {},
     };
 
@@ -29,25 +34,21 @@ export default class extends BaseVw {
 
   events() {
     return {
-      'click .js-copyTrackingNumber': 'onClickCopyTrackingNumber',
+      'click .js-copyText': 'onClickCopyText',
     };
   }
 
-  onClickCopyTrackingNumber() {
-    clipboard.writeText(this.dataObject.physicalDelivery[0].trackingNumber);
-    this.$trackingCopiedToClipboard
+  onClickCopyText(e) {
+    const $target = $(e.target);
+    clipboard.writeText($target.attr('data-content').replace(/\[!\$quote\$!\]/g, '"'));
+    this.getCachedEl($target.attr('data-status-indicator'))
       .velocity('stop')
       .velocity('fadeIn', {
         complete: () => {
-          this.$trackingCopiedToClipboard
+          this.getCachedEl($target.attr('data-status-indicator'))
             .velocity('fadeOut', { delay: 1000 });
         },
       });
-  }
-
-  get $trackingCopiedToClipboard() {
-    return this._$copiedToClipboard ||
-      (this._$copiedToClipboard = this.$('.js-trackingCopiedToClipboard'));
   }
 
   getState() {
@@ -71,15 +72,31 @@ export default class extends BaseVw {
     return this;
   }
 
+  revealEscapeChars(input) {
+    const output = input.replace(/[<>&\n"]/g, x => ({
+      '<': '&amp;lt;',
+      '>': '&amp;gt;',
+      '&': '&amp;&',
+      '"': '&amp;quot;',
+      '\n': '<br />',
+    }[x]
+    ));
+
+    return output;
+  }
+
   render() {
+    const cd = this.dataObject.cryptocurrencyDelivery;
+    const transactionID = cd && cd[0] && cd[0].transactionID || '';
+
     loadTemplate('modals/orderDetail/summaryTab/fulfilled.html', (t) => {
       this.$el.html(t({
         ...this._state,
         ...this.dataObject || {},
+        transactionID: transactionID.replace(/["]/g, '[!$quote$!]'),
+        encodedTxId: this.revealEscapeChars(transactionID),
         moment,
       }));
-
-      this._$copiedToClipboard = null;
     });
 
     return this;

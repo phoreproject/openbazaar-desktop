@@ -5,9 +5,7 @@ import $ from 'jquery';
 import _ from 'underscore';
 import app from '../app';
 import multihashes from 'multihashes';
-import bitcoreLib from 'bitcore-lib';
 import twemoji from 'twemoji';
-import bech32 from 'bech32';
 
 export function getGuid(handle, resolver) {
   const deferred = $.Deferred();
@@ -57,11 +55,18 @@ export function splitIntoRows(items, itemsPerRow) {
 }
 
 // http://stackoverflow.com/a/2686098/632806
-// todo: unit test
-export function abbrNum(_number, _decPlaces = 1) {
+export function abbrNum(_number, _maxDecPlaces = 1) {
   // 2 decimal places => 100, 3 => 1000, etc
-  const decPlaces = Math.pow(10, _decPlaces);
-  let number = _number;
+  const decPlaces = Math.pow(10, _maxDecPlaces);
+  const isNegative = _number < 0;
+  let number = Math.abs(_number);
+  let processed = false;
+  let lang = app && app.localSettings && app.localSettings.standardizedTranslatedLang();
+
+  if (!lang) {
+    console.warn('Unable to get the languages from the local settings. Using en-US.');
+    lang = 'en-US';
+  }
 
   // Enumerate number abbreviations
   const abbrev = ['thousand', 'million', 'billion', 'trillion'];
@@ -83,19 +88,17 @@ export function abbrNum(_number, _decPlaces = 1) {
         i++;
       }
 
-      let lang = app && app.localSettings && app.localSettings.standardizedTranslatedLang();
-
-      if (!lang) {
-        console.warn('Unable to get the languages from the local settings. Using en-US.');
-        lang = 'en-US';
-      }
-
-      number = new Intl.NumberFormat(lang).format(number);
+      number = new Intl.NumberFormat(lang).format(isNegative ? number * -1 : number);
       number = app.polyglot.t(`abbreviatedNumbers.${abbrev[i]}`, { number });
 
       // We are done... stop
+      processed = true;
       break;
     }
+  }
+
+  if (!processed) {
+    number = new Intl.NumberFormat(lang).format(isNegative ? number * -1 : number);
   }
 
   return number;
@@ -121,24 +124,6 @@ export function isMultihash(_string) {
     return true;
   } catch (exc) {
     return false;
-  }
-}
-
-export function isValidBitcoinAddress(address) {
-  if (typeof address !== 'string') {
-    throw new Error('Please provide a string.');
-  }
-
-  try {
-    bitcoreLib.encoding.Base58Check.decode(address);
-    return true;
-  } catch (exc) {
-    try {
-      bech32.decode(address);
-      return true;
-    } catch (exc2) {
-      return false;
-    }
   }
 }
 
@@ -216,18 +201,4 @@ export function deparam(queryStr = '') {
   }
 
   return parsed;
-}
-
-export function getBlockChainBaseUrl(isTestnet = false) {
-  return isTestnet ?
-    'https://testnet.blockexplorer.com/' :
-    'https://chainz.cryptoid.info/phr/';
-}
-
-export function getBlockChainTxUrl(txid, isTestnet) {
-  return `${getBlockChainBaseUrl(isTestnet)}tx.dws?${txid}.htm`;
-}
-
-export function getBlockChainAddressUrl(address, isTestnet) {
-  return `${getBlockChainBaseUrl(isTestnet)}address.dws?${address}.htm`;
 }

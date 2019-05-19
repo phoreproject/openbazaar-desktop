@@ -2,7 +2,7 @@
   <div class="col4 gutterVMd2">
     <div class="userCard js-userCard">
     </div>
-    <% if(ob.moderator && ob.modInfo) { %>
+    <% if(ob.moderator && ob.moderatorInfo) { %>
     <div class="contentBox padMd2 clrBr clrP clrSh2 js-moderatorInfo">
       <div class="flexVBot gutterH rowLg snipKids">
         <div class="tx4 flexExpand"><strong><%= ob.polyT('userPage.moderator') %></strong></div>
@@ -13,8 +13,8 @@
         </div>
       </div>
       <div class="tx2 clrT2 txCtr rowMd">
-        <% var amount = ob.convertAndFormatCurrency(ob.modInfo.fee.fixedFee.amount, ob.modInfo.fee.fixedFee.currencyCode, ob.displayCurrency) %>
-        <%= ob.polyT(`userPage.${ob.modInfo.fee.feeType}`, { amount: amount, percentage: ob.modInfo.fee.percentage }) %>
+        <% var amount = ob.currencyMod.convertAndFormatCurrency(ob.moderatorInfo.fee.fixedFee.amount, ob.moderatorInfo.fee.fixedFee.currencyCode, ob.displayCurrency) %>
+        <%= ob.polyT(`userPage.${ob.moderatorInfo.fee.feeType}`, { amount: amount, percentage: ob.moderatorInfo.fee.percentage }) %>
       </div>
       <div class="flexHCent">
         <%= ob.processingButton({
@@ -34,7 +34,7 @@
       </div>
       <div class="listItem">
         <div class="flex">
-          <span class="flexExpand">Peer ID</span>
+          <span class="flexExpand"><%= ob.polyT('userPage.peerID') %></span>
           <span class="clrT hide js-guidCopied"><%= ob.polyT('copiedToClipboard') %></span>
         </div>
         <div class="clrT2">
@@ -69,7 +69,7 @@
   </div>
   <div class="col8">
     <div class="box">
-      <div class="contentBox padMd clrBr clrP clrSh2">
+      <div class="aboutBox contentBox padMd clrBr clrP clrSh2">
         <div class="informationHeader row">
           <strong><%= ob.polyT('userPage.about') %></strong>
         </div>

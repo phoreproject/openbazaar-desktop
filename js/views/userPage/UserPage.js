@@ -6,7 +6,9 @@ import { followsYou } from '../../utils/follow';
 import { abbrNum } from '../../utils';
 import { capitalize } from '../../utils/string';
 import { isHiRez } from '../../utils/responsive';
+import { recordEvent } from '../../utils/metrics';
 import { launchEditListingModal, launchSettingsModal } from '../../utils/modalManager';
+import { isBlocked, events as blockEvents } from '../../utils/block';
 import { getCurrentConnection } from '../../utils/serverConnect';
 import Listing from '../../models/listing/Listing';
 import Listings from '../../collections/Listings';
@@ -41,6 +43,7 @@ export default class extends baseVw {
       }
     } else {
       this._followingCount = app.ownFollowing.length;
+      this._followerCount = app.followers.length;
     }
 
     this.listenTo(this.model.get('headerHashes'), 'change', () => this.updateHeader());
@@ -61,6 +64,12 @@ export default class extends baseVw {
       }
 
       if (this.followingCount === 0 && !this.ownPage) this.followingCount = 1;
+    });
+
+    this.listenTo(blockEvents, 'blocked unblocked', data => {
+      if (data.peerIds.includes(this.model.id)) {
+        this.setBlockedClass();
+      }
     });
   }
 
@@ -108,6 +117,7 @@ export default class extends baseVw {
   }
 
   clickCreateListing() {
+    recordEvent('Listing_NewFromUserPage');
     const listingModel = new Listing({}, { guid: app.profile.id });
 
     launchEditListingModal({
@@ -122,6 +132,10 @@ export default class extends baseVw {
     }
   }
 
+  clickRating() {
+    this.setState('reputation');
+  }
+
   get followingCount() {
     return this._followingCount;
   }
@@ -133,7 +147,7 @@ export default class extends baseVw {
 
     if (count !== this._followingCount) {
       this._followingCount = count;
-      this.getCachedEl('.js-followingCount').text(count);
+      this.getCachedEl('.js-followingCount').text(abbrNum(count));
     }
   }
 
@@ -148,8 +162,12 @@ export default class extends baseVw {
 
     if (count !== this._followerCount) {
       this._followerCount = count;
-      this.getCachedEl('.js-followerCount').text(count);
+      this.getCachedEl('.js-followerCount').text(abbrNum(count));
     }
+  }
+
+  setBlockedClass() {
+    this.$el.toggleClass('isBlocked', isBlocked(this.model.id));
   }
 
   updateHeader() {
@@ -158,7 +176,7 @@ export default class extends baseVw {
 
     if (headerHash) {
       this.$('.js-header').attr('style',
-        `background-image: url(${app.getServerUrl(`ob/images/${headerHash}`)}), 
+        `background-image: url(${app.getServerUrl(`ob/images/${headerHash}`)}),
       url('../imgs/defaultHeader.png')`);
     }
   }
@@ -214,7 +232,7 @@ export default class extends baseVw {
 
     return this.createChild(this.tabViews.Store, {
       ...opts,
-      initialFetch: this.listings.fetch(),
+      initialFetch: Store.fetchListings(this.listings),
       collection: this.listings,
       model: this.model,
     });
@@ -304,8 +322,8 @@ export default class extends baseVw {
         ...this.model.toJSON(),
         ownPage: this.ownPage,
         showStoreWelcomeCallout: this.showStoreWelcomeCallout,
-        followingCount: this.followingCount,
-        followerCount: this.followerCount,
+        followingCount: abbrNum(this.followingCount),
+        followerCount: abbrNum(this.followerCount),
       }));
 
       this.$tabContent = this.$('.js-tabContent');
@@ -318,10 +336,12 @@ export default class extends baseVw {
       this.miniProfile = this.createChild(MiniProfile, {
         model: this.model,
         fetchFollowsYou: false,
+        onClickRating: () => this.setState('reputation'),
         initialState: {
           followsYou: this.followsYou,
         },
       });
+      this.listenTo(this.miniProfile, 'clickRating', this.clickRating);
       this.$('.js-miniProfileContainer').html(this.miniProfile.render().el);
 
       if (!this.ownPage) {
@@ -337,6 +357,8 @@ export default class extends baseVw {
         addTabToHistory: false,
         listing: this.options.listing,
       });
+
+      this.setBlockedClass();
     });
 
     return this;

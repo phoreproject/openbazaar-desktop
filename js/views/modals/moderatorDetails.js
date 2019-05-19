@@ -4,6 +4,7 @@ import Profile from '../../models/profile/Profile';
 import SocialBtns from '../components/SocialBtns';
 import BaseModal from './BaseModal';
 import { getLangByCode } from '../../data/languages';
+import VerifiedMod, { getModeratorOptions } from '../components/VerifiedMod';
 
 export default class extends BaseModal {
   constructor(options = {}) {
@@ -18,6 +19,16 @@ export default class extends BaseModal {
     if (!this.model || !(this.model instanceof Profile)) {
       throw new Error('Please provide a Profile model.');
     }
+
+    this.verifiedModModel = app.verifiedMods.get(this.model.get('peerID'));
+
+    this.listenTo(app.verifiedMods, 'update', () => {
+      const newVerifiedModModel = app.verifiedMods.get(this.model.get('peerID'));
+      if (newVerifiedModModel !== this.verifiedModModel) {
+        this.verifiedModModel = newVerifiedModModel;
+        this.render();
+      }
+    });
   }
 
   className() {
@@ -52,6 +63,7 @@ export default class extends BaseModal {
         purchase: this.options.purchase,
         cardState: this.options.cardState,
         modLanguages,
+        verifiedMod: this.verifiedModModel,
         ...this.model.toJSON(),
       }));
       super.render();
@@ -60,14 +72,24 @@ export default class extends BaseModal {
       this.$unFollowBtn = this.$('.js-unFollow');
 
       if (this.socialBtns) this.socialBtns.remove();
-      this.socialBtns = this.createChild(SocialBtns, {
-        targetID: this.model.id,
-        initialState: {
-          stripClasses: 'flexHCent gutterH',
-          btnClasses: 'clrP clrBr clrSh2',
-        },
-      });
-      this.$('.js-socialBtns').append(this.socialBtns.render().$el);
+      // Don't include the social buttons if this is the viewer's own moderator details
+      if (this.model.get('peerID') !== app.profile.id) {
+        this.socialBtns = this.createChild(SocialBtns, {
+          targetID: this.model.id,
+          initialState: {
+            stripClasses: 'flexHCent gutterH',
+            btnClasses: 'clrP clrBr clrSh2',
+          },
+        });
+        this.$('.js-socialBtns').append(this.socialBtns.render().$el);
+      }
+
+      if (this.verifiedMod) this.verifiedMod.remove();
+      this.verifiedMod = this.createChild(VerifiedMod, getModeratorOptions({
+        model: this.verifiedModModel,
+        shortText: false,
+      }));
+      this.getCachedEl('.js-verifiedMod').append(this.verifiedMod.render().el);
     });
 
     return this;

@@ -3,11 +3,13 @@ import $ from 'jquery';
 import app from '../../../../app';
 import { openSimpleMessage } from '../../SimpleMessage';
 import Dialog from '../../../modals/Dialog';
+import { endAjaxEvent, recordEvent, startAjaxEvent } from '../../../../utils/metrics';
 import loadTemplate from '../../../../utils/loadTemplate';
 import baseVw from '../../../baseVw';
 import WalletSeed from './WalletSeed';
 import SmtpSettings from './SmtpSettings';
 import ReloadTransactions from './ReloadTransactions';
+import MetricsStatus from './MetricsStatus';
 
 export default class extends baseVw {
   constructor(options = {}) {
@@ -53,6 +55,8 @@ export default class extends baseVw {
 
     if (this.walletSeed) this.walletSeed.setState({ isFetching: true });
 
+    recordEvent('Settings_Advanced_ShowSeed');
+
     this.walletSeedFetch = $.get(app.getServerUrl('wallet/mnemonic')).done((data) => {
       this.mnemonic = data.mnemonic;
       if (this.walletSeed) {
@@ -72,6 +76,7 @@ export default class extends baseVw {
   }
 
   showConnectionManagement() {
+    recordEvent('Settings_Advanced_ConnectionManagement');
     app.connectionManagmentModal.open();
   }
 
@@ -80,6 +85,7 @@ export default class extends baseVw {
   }
 
   clickPurge() {
+    recordEvent('Settings_PurgeCache');
     this.purgeCache();
   }
 
@@ -108,6 +114,7 @@ export default class extends baseVw {
   }
 
   clickBlockData() {
+    recordEvent('Settings_Advanced_ShowBlockData');
     this.showBlockData();
   }
 
@@ -147,7 +154,6 @@ export default class extends baseVw {
       });
   }
 
-
   save() {
     this.localSettings.set(this.getFormData(this.$localFields));
     this.localSettings.set({}, { validate: true });
@@ -170,6 +176,8 @@ export default class extends baseVw {
         duration: 9999999999999999,
       });
 
+      startAjaxEvent('Settings_Advanced_Save');
+
       // let's save and monitor both save processes
       const localSave = this.localSettings.save();
       const serverSave = this.settings.save(serverFormData, {
@@ -184,6 +192,7 @@ export default class extends baseVw {
             msg: app.polyglot.t('settings.advancedTab.statusSaveComplete'),
             type: 'confirmed',
           });
+          endAjaxEvent('Settings_Advanced_Save');
         })
         .fail((...args) => {
           // One has failed, the other may have also failed or may
@@ -197,6 +206,9 @@ export default class extends baseVw {
           statusMessage.update({
             msg: app.polyglot.t('settings.advancedTab.statusSaveFailed'),
             type: 'warning',
+          });
+          endAjaxEvent('Settings_Advanced_Save', {
+            errors: errMsg,
           });
         })
         .always(() => {
@@ -285,6 +297,10 @@ export default class extends baseVw {
       if (this.reloadTransactions) this.reloadTransactions.delegateEvents();
       this.getCachedEl('.js-reloadTransactionsContainer')
         .append(this.reloadTransactions.render().el);
+
+      if (this.metricsStatus) this.metricsStatus.remove();
+      this.metricsStatus = this.createChild(MetricsStatus);
+      this.getCachedEl('.js-metricsStatusWrapper').append(this.metricsStatus.render().el);
     });
 
     return this;

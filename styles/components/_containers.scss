@@ -39,11 +39,6 @@
     .spinner {
       display: block;
     }
-
-    .hideOnProcessing {
-      // use to hide child elements that should not be visible while processing
-      display: none;
-    }
   }
 }
 
@@ -63,7 +58,7 @@
   // - override with your own positioning values (top, right, etc...)
   display: block;
   position: absolute;
-  width: 245px;
+  width: $confirmBoxWidth;
   z-index: 1;
   padding: $pad;
   border-style: solid;
@@ -169,6 +164,12 @@
   height: $thumbLg;
 }
 
+.thumbHg {
+  @extend .thumb;
+  width: $thumbHg;
+  height: $thumbHg;
+}
+
 .border {
   //use on wrapping containers that should have a border. The element should also have a clrBr class.
   border-width: 1px;
@@ -199,6 +200,26 @@
 
     &:last-child {
       border-bottom: none;
+    }
+  }
+
+  &:empty {
+    display: none;
+  }
+}
+
+// similar to borderStacked, but will give borders on all side instead of just the bottom.
+.borderStackedAll {
+  & > * {
+    // use on parent element to separate stacked child containers. The element should also have the clrBr class.
+    @extend .border;
+    border-bottom: none;
+
+    &:last-child {
+      border-bottom: {
+        width: 1px;
+        style: solid;
+      }
     }
   }
 
@@ -274,11 +295,25 @@
     content: '';
     position: absolute;
     background-color: inherit;
+    box-sizing: border-box;
     width: 25px;
     height: 25px;
-    border-style: solid;
-    border-width: 1px;
     border-color: inherit;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-right-width: 1px;
+    border-right-style: solid;
+  }
+
+  &::after {
+    /* this fills the gap between the parent and the tooltip so it doesn't close if the mouse
+       moves down from the parent element. */
+    content: '';
+    position: absolute;
+    background-color: transparent;
+    left: 0;
+    right: 0;
+    height: 25px;
   }
 }
 
@@ -291,6 +326,10 @@
     transform: translate(-50%, -50%) rotate(-135deg);
     -webkit-clip-path: polygon(0 100%, 100% 0, 100% 100%);
   }
+
+  &::after {
+    top: -25px;
+  }
 }
 
 .arrowBoxBottom {
@@ -302,13 +341,72 @@
     transform: translate(calc(-25% - 6px), 50%) rotate(-135deg);
     -webkit-clip-path: polygon(0 0, 0 100%, 100% 0);
   }
+
+  &::after {
+    left: 0;
+  }
 }
 
 .arrowBoxCenteredTop {
-  // this will have an arror centered on the x and y of the parent
+  // this will have an arrow centered on the x and y of the parent
   @extend .arrowBoxTop;
-  left: 20px; // width of the rotated square/hypotenuse of the arrow
+  left: 50%;
   transform: translateX(-50%);
+
+  &::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.arrowBoxRightTop {
+  // this will have an arror on the top right side of box
+  @extend .arrowBoxTop;
+  right: -20px;
+
+  &::before {
+    left: auto;
+    right: 5px;
+  }
+}
+
+.arrowBoxTipWrap {
+  position: relative;
+  cursor: pointer;
+
+  .arrowBoxCenteredTop,
+  .arrowBoxRightTop {
+    display: none;
+    border-width: 1px;
+    border-style: solid;
+    padding: $pad;
+    position: absolute;
+    text-align: left;
+    width: 250px;
+    z-index: 1;
+    text-align: center;
+    font-weight: normal;
+  }
+
+  &:hover {
+    .arrowBoxCenteredTop,
+    .arrowBoxRightTop {
+      display: block;
+    }
+  }
+
+  .arrowBoxCenteredTop,
+  .arrowBoxRightTop {
+    margin-top: 15px;
+  }
+
+  .unconstrainedWidth {
+    // use if your tip is likely to be short in text
+    .arrowBoxCenteredTop,
+    .arrowBoxRightTop {
+      min-width: 0;
+    }
+  }
 }
 
 .toolTip:not(.processing) {
@@ -330,14 +428,14 @@
     box-sizing: border-box;
     padding: $pad;
     top: 100%;
-    margin-top: 10px;
+    margin-top: 13px;
   }
 
   &:after {
     content: '';
     width: 20px;
     height: 20px;
-    bottom: -33px;
+    bottom: -36px;
     transform: translate(-50%, -50%) rotate(-135deg);
     -webkit-clip-path: polygon(0 100%, 100% 0, 100% 100%);
   }
@@ -361,17 +459,26 @@
     pointer-events: auto;
   }
 
+  // tip is above triggering element with pointer triangle on the bottom
   &.toolTipTop {
     &::before {
-      top: -19px;
+      top: -26px;
       transform: translate(-50%, -100%);
     }
 
     &::after {
-      top: 1px;
+      top: -3px;
       left: 50%;
       transform: translate(-50%, -100%) rotate(-135deg);
       -webkit-clip-path: polygon(0 0, 0 100%, 100% 0);
+    }
+  }
+
+  &.toolTipChatOpen {
+    body.chatOpen & {
+      &::before {
+        transform: translate(-77%, 0%);
+      }
     }
   }
 }

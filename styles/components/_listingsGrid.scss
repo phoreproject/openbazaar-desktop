@@ -1,6 +1,14 @@
 /* The listingsGrid is used anywhere were a grid of listings is shown. Currently this includes
    the store and search results views. Make sure to check both when making changes to this file.
  */
+
+$crytoListViewTradeFromWidth: 57px;
+$crytoListViewTradeToWidth: 104px;
+$crytoListViewTradeArrowWidth: 48px;
+$crytoListViewVendorWidth: 185px;
+$crytoListViewPriceWidth: 125px;
+$crytoListViewInventoryMaxWidth: 138px;
+
 .listingsGrid {
   flex-wrap: wrap;
   justify-content: space-between;
@@ -23,27 +31,30 @@
 
   .userCard {
     // user cards can be shown in test results, style them to look like listing cards
-    // TODO: design a better look for these when they're actually used
     width: 225px;
     height: 283px;
+    margin-bottom: $padMd;
+    font-size: $tx5b;
 
     .shortHeader {
       width: 223px;
       height: 225px;
       margin-bottom: 0;
 
-      .userIcon {
+      .userIconWrap {
         top: 201px;
         right: 8px;
         left: auto;
-        border: none;
       }
+
+
 
       .userControls {
         bottom: auto;
-        right: auto;
+        right: $pad;
         left: $pad;
         top: $pad;
+        width: auto;
       }
     }
 
@@ -59,6 +70,10 @@
           font-size: $tx5b;
           -webkit-line-clamp: 1;
         }
+
+        .userName {
+          width: calc(100% - 42px);
+        }
       }
       .contentBottom {
         display: none;
@@ -66,14 +81,16 @@
     }
   }
 
-  &.listingsGridListView {
+  &.listingsGridListView, &.listingsGridCryptoListView {
     margin: 0;
+    align-content: flex-start;
 
     .listingCard {
       margin: 0;
       border-radius: 0;
-      padding: 6px;
+      padding: 6px 10px;
       box-sizing: border-box;
+      font-size: $tx5;
 
       &:first-child {
         // we want the first listView row to have a border radius
@@ -85,9 +102,10 @@
         // we want the last listView row to have a border radius
         border-bottom-left-radius: $corner;
         border-bottom-right-radius: $corner;
+        margin-bottom: $padMd;
       }
 
-      &:not(:last-child) {
+      &:not(:last-child):not(:focus) {
         border-bottom-color: transparent;
 
         &:hover {
@@ -97,9 +115,85 @@
     }
   }
 
+  &.listingsGridCryptoListView {
+    .tradeFromCol {
+      width: $crytoListViewTradeFromWidth;
+      margin-right: 0;
+    }
+
+    .tradeToCol {
+      width: $crytoListViewTradeToWidth;
+    }
+
+    .tradeArrowCol {
+      width: $crytoListViewTradeArrowWidth;
+      margin-right: 0;
+    }
+
+    .vendorCol {
+      width: $crytoListViewVendorWidth;
+    }
+
+    .priceCol {
+      width: $crytoListViewPriceWidth;
+    }
+
+    .inventoryCol {
+      max-width: $crytoListViewInventoryMaxWidth;
+    }
+  }
+
   &:empty {
     &::after {
       content: attr(data-no-results-text);
     }
+  }
+}
+
+.cryptoListViewHeader {
+  padding: 15px 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-bottom-width: 0;
+  margin-bottom: 0;
+  font-size: $tx6;
+  text-transform: uppercase;
+  word-break: break-word;
+  hyphens: auto;
+
+  .tradeFromCol {
+    width: $crytoListViewTradeFromWidth;
+    margin-right: 0;
+  }
+
+  .tradeToCol {
+    width: $crytoListViewTradeToWidth;
+  }
+
+  .tradeArrowCol {
+    width: $crytoListViewTradeArrowWidth;
+    margin-right: 0;
+  }
+
+  .vendorCol {
+    width: $crytoListViewVendorWidth;
+  }
+
+  .priceCol {
+    width: $crytoListViewPriceWidth;
+    text-align: right;
+
+    .subText {
+      text-transform: none;
+    }
+  }
+
+  .inventoryCol {
+    text-align: right;
+    max-width: $crytoListViewInventoryMaxWidth;
+  }
+
+  .toolTip {
+    text-transform: none;
   }
 }

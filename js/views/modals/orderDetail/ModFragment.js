@@ -1,6 +1,8 @@
 import _ from 'underscore';
 import loadTemplate from '../../../utils/loadTemplate';
 import BaseVw from '../../baseVw';
+import VerifiedMod, { getModeratorOptions } from '../../components/VerifiedMod';
+import app from '../../../app';
 
 export default class extends BaseVw {
   constructor(options = {}) {
@@ -12,6 +14,16 @@ export default class extends BaseVw {
       showAvatar: false,
       ...options.initialState || {},
     };
+
+    this.verifiedModModel = app.verifiedMods.get(this._state.peerID);
+
+    this.listenTo(app.verifiedMods, 'update', () => {
+      const newVerifiedModModel = app.verifiedMods.get(this._state.peerID);
+      if (newVerifiedModModel !== this.verifiedModModel) {
+        this.verifiedModModel = newVerifiedModModel;
+        this.render();
+      }
+    });
   }
 
   getState() {
@@ -36,10 +48,29 @@ export default class extends BaseVw {
   }
 
   render() {
+    super.render();
+
     loadTemplate('modals/orderDetail/modFragment.html', t => {
       this.$el.html(t({
         ...this._state,
       }));
+
+      const verifiedMod = app.verifiedMods.get(this._state.peerID);
+      const createOptions = getModeratorOptions({
+        model: verifiedMod,
+      });
+
+      if (!verifiedMod) {
+        createOptions.initialState.tipBody =
+          app.polyglot.t('verifiedMod.modUnverified.tipBodyOrderDetail', {
+            not: `<b>${app.polyglot.t('verifiedMod.modUnverified.not')}</b>`,
+            name: `<b>${app.verifiedMods.data.name}</b>`,
+          });
+      }
+
+      if (this.verifiedMod) this.verifiedMod.remove();
+      this.verifiedMod = this.createChild(VerifiedMod, createOptions);
+      this.getCachedEl('.js-verifiedMod').append(this.verifiedMod.render().el);
     });
 
     return this;

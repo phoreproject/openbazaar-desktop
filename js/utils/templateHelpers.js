@@ -1,16 +1,59 @@
 import $ from 'jquery';
 import app from '../app';
-import { formatCurrency, convertAndFormatCurrency, convertCurrency, formatPrice } from './currency';
+import {
+  formatCurrency,
+  convertAndFormatCurrency,
+  convertCurrency,
+  formatPrice,
+  getCurrencyValidity,
+  getExchangeRate,
+  renderFormattedCurrency,
+  renderPairedCurrency,
+} from './currency';
+import {
+  getServerCurrency,
+  getBlockChainTxUrl,
+  getBlockChainAddressUrl,
+  getCurrencyByCode as getCryptoCurByCode,
+} from '../data/cryptoCurrencies';
+import {
+  renderCryptoIcon,
+  renderCryptoTradingPair,
+  renderCryptoPrice,
+} from '../utils/crypto';
 import {
   isHiRez, isLargeWidth, isSmallHeight, getAvatarBgImage, getListingBgImage,
 } from './responsive';
 import { upToFixed } from './number';
 import twemoji from 'twemoji';
-import {
-  splitIntoRows, getBlockChainBaseUrl, getBlockChainTxUrl, getBlockChainAddressUrl,
-} from './';
-import { tagsDelimiter } from '../utils/selectize';
+import { splitIntoRows, abbrNum } from './';
+import { tagsDelimiter } from '../utils/lib/selectize';
 import is from 'is_js';
+
+/**
+ * This higher-order function will augment the given function so that rather than
+ * bombing on an exception, it will log the error to the console and return a fallback
+ * return value (defaults to an empty string). This is useful for templates where you'd
+ * rather the whole template doesn't bomb on bad data (for example because some 3rd party
+ * data is missing) and instead some fallback text is displayed.
+ */
+function gracefulException(func, fallbackReturnVal = '') {
+  if (typeof func !== 'function') {
+    throw new Error('Please provided a function.');
+  }
+
+  return ((...args) => {
+    let retVal = fallbackReturnVal;
+
+    try {
+      retVal = func(...args);
+    } catch (e) {
+      console.error(e);
+    }
+
+    return retVal;
+  });
+}
 
 export function polyT(...args) {
   return app.polyglot.t(...args);
@@ -37,25 +80,47 @@ export function parseEmojis(text, className = '', attrs = {}) {
 
 /**
  * If the average is a number, show the last 2 digits and trim any trailing zeroes.
- * Don't show the count if the count is invalid, x (0) would be inaccurate and confusing.
- * If the average is invalid or 0, don't show anything.
  * @param {number} average - the average rating
  * @param {number} count - the number of ratings
+ * @param {boolean) skipCount - a count wasn't sent, don't show it or test it for validity
  */
-export function formatRating(average, count) {
+export function formatRating(average, count, skipCount) {
   const avIsNum = typeof average === 'number';
-  const ratingAverage = avIsNum ? average.toFixed(1) : '';
-  const ratingCount = typeof count === 'number' ? ` (${count})` : '';
-  return avIsNum && average > 0 ? `${parseEmojis('⭐')} ${ratingAverage}${ratingCount}` : '';
+  const countIsNum = typeof count === 'number';
+  const ratingAverage = avIsNum ? average.toFixed(1) : '?';
+  let ratingCount = countIsNum ? ` (${abbrNum(count)})` : ' (?)';
+  if (skipCount) ratingCount = '';
+  const error = !avIsNum || (!countIsNum && !skipCount) ?
+    ' <i class="ion-alert-circled clrTErr"></i>' : '';
+  return `${parseEmojis('⭐')}&nbsp;${ratingAverage}${ratingCount}${error}`;
 }
 
 export const getServerUrl = app.getServerUrl.bind(app);
 
-export {
+const currencyExport = {
   formatPrice,
   formatCurrency,
   convertAndFormatCurrency,
   convertCurrency,
+  getCurrencyValidity,
+  getServerCurrency,
+  getCryptoCurByCode,
+  getExchangeRate,
+  formattedCurrency: gracefulException(renderFormattedCurrency),
+  pairedCurrency: gracefulException(renderPairedCurrency),
+  getBlockChainTxUrl,
+  getBlockChainAddressUrl,
+};
+
+const crypto = {
+  cryptoIcon: gracefulException(renderCryptoIcon),
+  tradingPair: gracefulException(renderCryptoTradingPair),
+  cryptoPrice: gracefulException(renderCryptoPrice),
+};
+
+export {
+  currencyExport as currencyMod,
+  crypto,
   isHiRez,
   isLargeWidth,
   isSmallHeight,
@@ -63,9 +128,6 @@ export {
   getListingBgImage,
   upToFixed,
   splitIntoRows,
-  getBlockChainBaseUrl,
-  getBlockChainTxUrl,
-  getBlockChainAddressUrl,
   is,
   tagsDelimiter,
 };

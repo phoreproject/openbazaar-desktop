@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import app from '../../app';
+import { guid } from '../../utils/';
 import { getSocket } from '../../utils/serverConnect';
 import { decimalToInteger, integerToDecimal } from '../../utils/currency';
 import BaseModel from '../BaseModel';
@@ -7,6 +8,7 @@ import Image from './Image';
 import Moderator from './Moderator';
 import Colors from './Colors';
 import Contact from './Contact';
+import Stats from './Stats';
 
 export default class Profile extends BaseModel {
   defaults() {
@@ -23,7 +25,7 @@ export default class Profile extends BaseModel {
       vendor: true,
       colors: new Colors(),
       contactInfo: new Contact(),
-      stats: new BaseModel(),
+      stats: new Stats(),
     };
   }
 
@@ -130,9 +132,9 @@ export default class Profile extends BaseModel {
     if (response.moderatorInfo && response.moderatorInfo.fee &&
       response.moderatorInfo.fee.fixedFee) {
       const amount = response.moderatorInfo.fee.fixedFee.amount;
-      const isBtc = response.moderatorInfo.fee.fixedFee.currencyCode === 'PHR';
+      const cur = response.moderatorInfo.fee.fixedFee.currencyCode;
 
-      response.moderatorInfo.fee.fixedFee.amount = integerToDecimal(amount, isBtc);
+      response.moderatorInfo.fee.fixedFee.amount = integerToDecimal(amount, cur);
     }
 
     if (response.handle && response.handle.startsWith('@')) {
@@ -164,13 +166,7 @@ export default class Profile extends BaseModel {
     if (method !== 'read') {
       delete options.attrs.lastModified;
 
-      if (options.attrs.stats) {
-        delete options.attrs.stats.followerCount;
-        delete options.attrs.stats.followingCount;
-        delete options.attrs.stats.listingCount;
-        delete options.attrs.stats.ratingCount;
-        delete options.attrs.stats.averageRating;
-      }
+      if (options.attrs.stats) delete options.attrs.stats;
 
       const images = [options.attrs.avatarHashes, options.attrs.headerHashes];
       images.forEach(imageHashes => {
@@ -194,8 +190,8 @@ export default class Profile extends BaseModel {
           options.attrs.moderatorInfo.fee.fixedFee &&
           options.attrs.moderatorInfo.fee.fixedFee.amount) {
           const amount = options.attrs.moderatorInfo.fee.fixedFee.amount;
-          const isBTC = options.attrs.moderatorInfo.fee.fixedFee.currencyCode === 'PHR';
-          options.attrs.moderatorInfo.fee.fixedFee.amount = decimalToInteger(amount, isBTC);
+          const cur = options.attrs.moderatorInfo.fee.fixedFee.currencyCode;
+          options.attrs.moderatorInfo.fee.fixedFee.amount = decimalToInteger(amount, cur);
         }
       }
     }
@@ -224,7 +220,7 @@ function expireCachedProfile(peerId) {
   if (cached) {
     cached.deferred.reject({
       errCode: 'TIMED_OUT',
-      error: 'The profile fetch timeed out.',
+      error: 'The profile fetch timed out.',
     });
   }
 
@@ -257,6 +253,7 @@ export function getCachedProfiles(peerIds = []) {
 
   const promises = [];
   const profilesToFetch = [];
+  const profilesReceived = [];
   let socket;
 
   if (!profileCacheExpiredInterval) {
@@ -312,27 +309,20 @@ export function getCachedProfiles(peerIds = []) {
   });
 
   if (profilesToFetch.length) {
-    $.post({
-      url: app.getServerUrl('ob/fetchprofiles?async=true&usecache=true'),
-      data: JSON.stringify(profilesToFetch),
-      dataType: 'json',
-      contentType: 'application/json',
-    }).done(() => {
-      socket = getSocket();
+    const fetchId = guid();
+    socket = getSocket();
 
-      if (!socket) {
-        promises.forEach(promise => {
-          promise.reject({
-            errCode: 'NO_SERVER_CONNECTION',
-            error: 'There is no server connection.',
-          });
+    if (!socket) {
+      promises.forEach(promise => {
+        promise.reject({
+          errCode: 'NO_SERVER_CONNECTION',
+          error: 'There is no server connection.',
         });
-
-        return;
-      }
-
+      });
+    } else {
       const onSocketMessage = e => {
         if (!(e.jsonData.peerId && (e.jsonData.profile || e.jsonData.error))) return;
+        if (e.jsonData.id !== fetchId) return;
 
         if (profileCache.get(e.jsonData.peerId)) {
           if (e.jsonData.error) {
@@ -347,12 +337,26 @@ export function getCachedProfiles(peerIds = []) {
               .deferred
               .resolve(new Profile(e.jsonData.profile, { parse: true }));
           }
+
+          if (profilesReceived.indexOf(e.jsonData.peerId) === -1) {
+            profilesReceived.push(e.jsonData.peerId);
+          }
+
+          if (profilesReceived.length === profilesToFetch.length) {
+            socket.off('message', onSocketMessage);
+          }
         }
       };
 
       socket.on('message', onSocketMessage);
-    })
-      .fail(jqXhr => {
+
+      $.post({
+        url: app.getServerUrl(`ob/fetchprofiles?async=true&usecache=true&asyncID=${fetchId}`),
+        data: JSON.stringify(profilesToFetch),
+        dataType: 'json',
+        contentType: 'application/json',
+      }).fail(jqXhr => {
+        socket.off('message', onSocketMessage);
         promises.forEach(promise => {
           promise.reject({
             errCode: 'SERVER_ERROR',
@@ -360,6 +364,7 @@ export function getCachedProfiles(peerIds = []) {
           });
         });
       });
+    }
   }
 
   return promises;

@@ -10,7 +10,7 @@
 ##
 
 
-ELECTRONVER=1.7.15
+ELECTRONVER=1.8.7
 NODEJSVER=6
 
 OS="${1}"
@@ -194,7 +194,7 @@ case "$TRAVIS_OS_NAME" in
 
     if [ -z "$CLIENT_VERSION" ]; then
       echo 'Running Electron Packager...'
-      electron-packager . phoremarketplace --asar --out=dist --protocol-name=PhoreMarketplace --win32metadata.ProductName="Phore Marketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace for Phore' --win32metadata.OriginalFilename=OpenBazaar2.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+      electron-packager . phoremarketplace --asar --out=dist --protocol-name=PhoreMarketplace --win32metadata.ProductName="Phore Marketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace for Phore' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
       echo 'Copying server binary into application folder...'
       cp -rf temp/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/

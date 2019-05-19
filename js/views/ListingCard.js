@@ -1,15 +1,23 @@
 import $ from 'jquery';
 import app from '../app';
 import loadTemplate from '../utils/loadTemplate';
-import { openSimpleMessage } from '../views/modals/SimpleMessage';
+import { abbrNum } from '../utils';
 import { launchEditListingModal } from '../utils/modalManager';
+import { isBlocked, isUnblocking, events as blockEvents } from '../utils/block';
+import { isHiRez } from '../utils/responsive';
+import { startAjaxEvent, endAjaxEvent, recordEvent } from '../utils/metrics';
 import Listing from '../models/listing/Listing';
 import ListingShort from '../models/listing/ListingShort';
 import { events as listingEvents } from '../models/listing/';
 import baseVw from './baseVw';
+import { openSimpleMessage } from '../views/modals/SimpleMessage';
 import ListingDetail from './modals/listingDetail/Listing';
-import ReportBtn from './components/ReportBtn';
 import Report from './modals/Report';
+import BlockedWarning from './modals/BlockedWarning';
+import ReportBtn from './components/ReportBtn';
+import BlockBtn from './components/BlockBtn';
+import VerifiedMod, { getListingOptions } from './components/VerifiedMod';
+import UserLoadingModal from '../views/userPage/Loading';
 
 export default class extends baseVw {
   constructor(options = {}) {
@@ -79,7 +87,65 @@ export default class extends baseVw {
     this.reportsUrl = opts.reportsUrl;
     this.deleteConfirmOn = false;
     this.boundDocClick = this.onDocumentClick.bind(this);
+    // This should be initialized as null, so we could determine whether the user
+    // never set this (null), or explicitly clicked to show / hide nsfw (true / false)
+    this._userClickedShowNsfw = null;
     $(document).on('click', this.boundDocClick);
+
+    this.listenTo(blockEvents, 'blocked unblocked', data => {
+      if (data.peerIds.includes(this.ownerGuid)) {
+        this.setBlockedClass();
+      }
+    });
+
+    this.listenTo(app.settings, 'change:showNsfw', () => {
+      this._userClickedShowNsfw = null;
+      this.setHideNsfwClass();
+    });
+
+    this.verifiedMods = app.verifiedMods.matched(this.model.get('moderators'));
+
+    this.listenTo(app.verifiedMods, 'update', () => {
+      const newVerifiedMods = app.verifiedMods.matched(this.model.get('moderators'));
+      if ((this.verifiedMods.length && !newVerifiedMods.length) ||
+        (!this.verifiedMods.length && newVerifiedMods.length)) {
+        this.verifiedMods = newVerifiedMods;
+        this.render();
+      }
+    });
+
+    // load necessary images in a cancelable way
+    const thumbnail = this.model.get('thumbnail');
+    const listingImageSrc = this.viewType === 'grid' ?
+      app.getServerUrl(
+        `ob/images/${isHiRez() ? thumbnail.medium : thumbnail.small}`
+      ) :
+      app.getServerUrl(
+        `ob/images/${isHiRez() ? thumbnail.small : thumbnail.tiny}`
+      );
+
+    this.listingImage = new Image();
+    this.listingImage.addEventListener('load', () => {
+      this.listingImage.loaded = true;
+      this.$('.js-listingImage')
+        .css('backgroundImage', `url(${listingImageSrc})`);
+    });
+    this.listingImage.src = listingImageSrc;
+
+    const vendor = this.model.get('vendor');
+    if (vendor && vendor.avatarHashes) {
+      const avatarImageSrc = app.getServerUrl(
+        `ob/images/${isHiRez() ? vendor.avatarHashes.small : vendor.avatarHashes.tiny}`
+      );
+
+      this.avatarImage = new Image();
+      this.avatarImage.addEventListener('load', () => {
+        this.avatarImage.loaded = true;
+        this.$('.js-vendorIcon')
+          .css('backgroundImage', `url(${avatarImageSrc})`);
+      });
+      this.avatarImage.src = avatarImageSrc;
+    }
   }
 
   className() {
@@ -96,10 +162,12 @@ export default class extends baseVw {
       'click .js-edit': 'onClickEdit',
       'click .js-delete': 'onClickDelete',
       'click .js-clone': 'onClickClone',
-      'click .js-userIcon': 'onClickUserIcon',
+      'click .js-userLink': 'onClickUserLink',
       'click .js-deleteConfirmed': 'onClickConfirmedDelete',
       'click .js-deleteConfirmCancel': 'onClickConfirmCancel',
       'click .js-deleteConfirmedBox': 'onClickDeleteConfirmBox',
+      'click .js-showNsfw': 'onClickShowNsfw',
+      'click .js-hideNsfw': 'onClickHideNsfw',
       click: 'onClick',
     };
   }
@@ -110,6 +178,7 @@ export default class extends baseVw {
   }
 
   onClickEdit(e) {
+    recordEvent('Lisitng_EditFromCard');
     app.loadingModal.open();
 
     this.fetchFullListing()
@@ -129,12 +198,14 @@ export default class extends baseVw {
   }
 
   onClickDelete(e) {
+    recordEvent('Lisitng_DeleteFromCard');
     this.getCachedEl('.js-deleteConfirmedBox').removeClass('hide');
     this.deleteConfirmOn = true;
     e.stopPropagation();
   }
 
   onClickClone(e) {
+    recordEvent('Lisitng_CloneFromCard');
     app.loadingModal.open();
 
     this.fetchFullListing()
@@ -153,12 +224,14 @@ export default class extends baseVw {
   }
 
   onClickConfirmedDelete(e) {
+    recordEvent('Lisitng_DeleteFromCardConfirm');
     e.stopPropagation();
     if (this.destroyRequest && this.destroyRequest.state === 'pending') return;
     this.destroyRequest = this.model.destroy({ wait: true });
   }
 
   onClickConfirmCancel() {
+    recordEvent('Lisitng_DeleteFromCardCancel');
     this.getCachedEl('.js-deleteConfirmedBox').addClass('hide');
     this.deleteConfirmOn = false;
   }
@@ -167,7 +240,7 @@ export default class extends baseVw {
     e.stopPropagation();
   }
 
-  onClickUserIcon(e) {
+  onClickUserLink(e) {
     e.stopPropagation();
   }
 
@@ -180,10 +253,61 @@ export default class extends baseVw {
       app.router.navigateUser(`${this.options.listingBaseUrl}${this.model.get('slug')}`,
         this.ownerGuid);
 
-      app.loadingModal.open();
+      startAjaxEvent('Listing_LoadFromCard');
 
-      this.fetchFullListing()
-        .done(jqXhr => {
+      const listingFetch = this.fetchFullListing({ showErrorOnFetchFail: false });
+      const loadListing = () => {
+        let storeName = `${this.ownerGuid.slice(0, 8)}…`;
+        let avatarHashes;
+        let title = this.model.get('title');
+        title = title.length > 25 ?
+          `${title.slice(0, 25)}…` : title;
+
+        if (this.options.profile) {
+          storeName = this.options.profile.get('name');
+          avatarHashes = this.options.profile.get('avatarHashes')
+            .toJSON();
+        } else if (this.options.vendor) {
+          storeName = this.options.vendor.name;
+          avatarHashes = this.options.vendor.avatarHashes;
+        }
+
+        if (storeName.length > 40) {
+          storeName = `${storeName.slice(0, 40)}…`;
+        }
+
+        if (this.userLoadingModal) this.userLoadingModal.remove();
+        this.userLoadingModal = new UserLoadingModal({
+          initialState: {
+            userName: avatarHashes ? storeName : undefined,
+            userAvatarHashes: avatarHashes,
+            contentText: app.polyglot.t('userPage.loading.loadingText', {
+              name: `<b>${title}</b>`,
+            }),
+            isProcessing: true,
+          },
+        });
+
+        this.listenTo(this.userLoadingModal, 'clickCancel',
+          () => {
+            listingFetch.abort();
+            this.userLoadingModal.remove();
+            app.router.navigate(routeOnOpen);
+          });
+
+        this.listenTo(this.userLoadingModal, 'clickRetry',
+          () => {
+            app.router.navigate(routeOnOpen);
+            this.onClick(e);
+          });
+
+        this.userLoadingModal.render()
+          .open();
+
+        listingFetch.done(jqXhr => {
+          endAjaxEvent('Listing_LoadFromCard', {
+            ownListing: !!this.ownListing,
+          });
           if (jqXhr.statusText === 'abort' || this.isRemoved()) return;
 
           const listingDetail = new ListingDetail({
@@ -193,6 +317,7 @@ export default class extends baseVw {
             closeButtonClass: 'cornerTR iconBtn clrP clrBr clrSh3 toolTipNoWrap',
             modelContentClass: 'modalContent',
             openedFromStore: !!this.options.onStore,
+            checkNsfw: !this._userClickedShowNsfw,
           }).render()
             .open();
 
@@ -201,16 +326,74 @@ export default class extends baseVw {
           this.listenTo(listingDetail, 'close', onListingDetailClose);
           this.listenTo(listingDetail, 'modal-will-remove',
             () => this.stopListening(null, null, onListingDetailClose));
-        })
-        .always(() => {
-          if (this.isRemoved()) return;
+          this.trigger('listingDetailOpened');
+          this.userLoadingModal.remove();
           app.loadingModal.close();
         })
         .fail(xhr => {
+          endAjaxEvent('Listing_LoadFromCard', {
+            ownListing: !!this.ownListing,
+            errors: xhr.responseJSON && xhr.responseJSON.reason ||
+              xhr.statusText || 'unknown error',
+          });
           if (xhr.statusText === 'abort') return;
-          app.router.listingError(xhr, this.model.get('slug'), `#${this.ownerGuid}/store`);
+          this.userLoadingModal.setState({
+            contentText: app.polyglot.t('userPage.loading.failTextListing', {
+              listing: `<b>${title}</b>`,
+            }),
+            isProcessing: false,
+          });
         });
+      };
+
+      if (isBlocked(this.ownerGuid) && !isUnblocking(this.ownerGuid)) {
+        const blockedWarningModal = new BlockedWarning({ peerId: this.ownerGuid })
+          .render()
+          .open();
+
+        this.listenTo(blockedWarningModal, 'canceled', () => {
+          app.router.navigate(routeOnOpen);
+        });
+
+        const onUnblock = () => loadListing();
+
+        this.listenTo(blockEvents, 'unblocking unblocked', onUnblock);
+
+        this.listenTo(blockedWarningModal, 'close', () => {
+          this.stopListening(null, null, onUnblock);
+        });
+      } else {
+        loadListing();
+      }
     }
+  }
+
+  onClickShowNsfw(e) {
+    e.stopPropagation();
+    this._userClickedShowNsfw = true;
+    this.setHideNsfwClass();
+  }
+
+  onClickHideNsfw(e) {
+    e.stopPropagation();
+    this._userClickedShowNsfw = false;
+    this.setHideNsfwClass();
+  }
+
+  setBlockedClass() {
+    this.$el.toggleClass('blocked', isBlocked(this.ownerGuid));
+  }
+
+  setHideNsfwClass() {
+    this.$el.toggleClass('hideNsfw',
+      // explicitly checking for false, since null means something different
+      this._userClickedShowNsfw === false ||
+      (
+        this.model.get('nsfw') &&
+        !this._userClickedShowNsfw &&
+        !app.settings.get('showNsfw')
+      )
+    );
   }
 
   fetchFullListing(options = {}) {
@@ -225,7 +408,8 @@ export default class extends baseVw {
 
     this.fullListingFetch = this.fullListing.fetch()
       .fail(xhr => {
-        if (!opts.showErrorOnFetchFail) return;
+        if (!opts.showErrorOnFetchFail || xhr.statusText === 'abort' ||
+          this.isRemoved()) return;
         let failReason = xhr.responseJSON && xhr.responseJSON.reason || '';
 
         if (xhr.status === 404) {
@@ -282,7 +466,7 @@ export default class extends baseVw {
   }
 
   set viewType(type) {
-    if (['list', 'grid'].indexOf(type) === -1) {
+    if (['list', 'grid', 'cryptoList'].indexOf(type) === -1) {
       throw new Error('The provided view type is not one of the available types.');
     }
 
@@ -301,9 +485,12 @@ export default class extends baseVw {
   }
 
   remove() {
+    this.listingImage.src = '';
+    if (this.avatarImage) this.avatarImage.src = '';
     if (this.fullListingFetch) this.fullListingFetch.abort();
     if (this.destroyRequest) this.destroyRequest.abort();
-    $(document).off(null, this.boundDocClick);
+    $(document).off('click', this.boundDocClick);
+    if (this.userLoadingModal) this.userLoadingModal.remove();
     super.remove();
   }
 
@@ -317,18 +504,52 @@ export default class extends baseVw {
         shipsFreeToMe: this.model.shipsFreeToMe,
         viewType: this.viewType,
         displayCurrency: app.settings.get('localCurrency'),
+        isBlocked,
+        isUnblocking,
+        listingImageSrc: this.listingImage.loaded &&
+          this.listingImage.src || '',
+        vendorAvatarImageSrc: this.avatarImage && this.avatarImage.loaded &&
+          this.avatarImage.src || '',
+        abbrNum,
       }));
     });
 
     this._$btnEdit = null;
     this._$btnDelete = null;
 
+    this.setBlockedClass();
+    this.setHideNsfwClass();
+    this.$el.toggleClass('isNsfw', this.model.get('nsfw'));
+
     if (this.reportBtn) this.reportBtn.remove();
     if (this.reportsUrl) {
       this.reportBtn = this.createChild(ReportBtn);
       this.listenTo(this.reportBtn, 'startReport', this.startReport);
-      this.$('.js-reportBtnWrapper').append(this.reportBtn.render().el);
+      this.getCachedEl('.js-reportBtnWrapper').append(this.reportBtn.render().el);
     }
+
+    if (!this.ownListing) {
+      this.getCachedEl('.js-blockBtnWrapper').html(
+        new BlockBtn({
+          targetId: this.ownerGuid,
+          initialState: { useIcon: true },
+        })
+          .render()
+          .el
+      );
+    }
+
+    const moderators = this.model.get('moderators') || [];
+    const verifiedIDs = app.verifiedMods.matched(moderators);
+    const verifiedID = verifiedIDs[0];
+
+    if (this.verifiedMod) this.verifiedMod.remove();
+    this.verifiedMod = this.createChild(VerifiedMod, getListingOptions({
+      model: verifiedID &&
+        app.verifiedMods.get(verifiedID),
+    }));
+    this.getCachedEl('.js-verifiedMod').append(this.verifiedMod.render().el);
+
 
     return this;
   }

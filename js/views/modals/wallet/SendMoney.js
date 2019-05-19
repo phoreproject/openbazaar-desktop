@@ -1,9 +1,11 @@
 import app from '../../../app';
 import '../../../lib/select2';
 import { getCurrenciesSortedByCode } from '../../../data/currencies';
+import { getServerCurrency } from '../../../data/cryptoCurrencies';
+import { endAjaxEvent, recordEvent, startAjaxEvent } from '../../../utils/metrics';
+import { convertCurrency, getExchangeRate } from '../../../utils/currency';
 import { openSimpleMessage } from '../../modals/SimpleMessage';
 import Spend, { spend } from '../../../models/wallet/Spend';
-import { convertCurrency } from '../../../utils/currency';
 import loadTemplate from '../../../utils/loadTemplate';
 import SendConfirmBox from './SpendConfirmBox';
 import FeeChange from '../../components/FeeChange';
@@ -34,16 +36,29 @@ export default class extends baseVw {
     // POSTing payment to the server
     this.saveInProgress = true;
 
+    startAjaxEvent('Wallet_SendConfirm');
+
     spend({
       ...this.model.toJSON(),
       feeLevel: app.localSettings.get('defaultTransactionFee'),
     }).fail(jqXhr => {
-      openSimpleMessage(app.polyglot.t('wallet.sendMoney.sendPaymentFailDialogTitle'),
-        jqXhr.responseJSON && jqXhr.responseJSON.reason || '');
+      let reason = jqXhr.responseJSON && jqXhr.responseJSON.reason || '';
+
+      if (reason === 'ERROR_INVALID_ADDRESS') {
+        reason = app.polyglot.t('wallet.sendMoney.errorInvalidAddress');
+      }
+
+      openSimpleMessage(app.polyglot.t('wallet.sendMoney.sendPaymentFailDialogTitle'), reason);
+      endAjaxEvent('Wallet_SendConfirm', {
+        errors: reason,
+      });
     }).always(() => {
       this.saveInProgress = false;
     })
-      .done(() => this.clearForm());
+      .done(() => {
+        endAjaxEvent('Wallet_SendConfirm');
+        this.clearForm();
+      });
   }
 
   onClickSend(e) {
@@ -55,6 +70,7 @@ export default class extends baseVw {
     this.render();
 
     if (!this.model.validationError) {
+      recordEvent('Wallet_Send');
       this.sendConfirmBox.setState({ show: true });
       this.fetchFeeEstimate();
     }
@@ -116,7 +132,8 @@ export default class extends baseVw {
   }
 
   fetchFeeEstimate() {
-    const amount = convertCurrency(this.model.get('amount'), this.model.get('currency'), 'PHR');
+    const amount = convertCurrency(this.model.get('amount'), this.model.get('currency'),
+      getServerCurrency().code);
     this.sendConfirmBox.fetchFeeEstimate(amount);
   }
 
@@ -139,11 +156,15 @@ export default class extends baseVw {
 
   render() {
     super.render();
+
+    const defaultCur = typeof getExchangeRate(app.settings.get('localCurrency')) === 'number' ?
+      app.settings.get('localCurrency') : getServerCurrency().code;
+
     loadTemplate('modals/wallet/sendMoney.html', (t) => {
       this.$el.html(t({
         ...this.model.toJSON(),
         errors: this.model.validationError || {},
-        currency: this.model.get('currency') || app.settings.get('localCurrency'),
+        currencyCode: this.model.get('currency') || defaultCur,
         currencies: this.currencies ||
           getCurrenciesSortedByCode(),
         saveInProgress: this.saveInProgress,
@@ -159,6 +180,7 @@ export default class extends baseVw {
       if (this.sendConfirmBox) this.sendConfirmBox.remove();
 
       this.sendConfirmBox = this.createChild(SendConfirmBox, {
+        metricsOrigin: 'Wallet',
         initialState: { ...sendConfirmBoxState || {} },
       });
       this.listenTo(this.sendConfirmBox, 'clickSend', this.onClickConfirmSend);

@@ -5,8 +5,11 @@ import loadTemplate from '../utils/loadTemplate';
 import app from '../app';
 import { followedByYou, followUnfollow } from '../utils/follow';
 import Profile, { getCachedProfiles } from '../models/profile/Profile';
+import { isBlocked, events as blockEvents } from '../utils/block';
 import { launchModeratorDetailsModal } from '../utils/modalManager';
 import { openSimpleMessage } from './modals/SimpleMessage';
+import VerifiedMod, { getModeratorOptions } from './components/VerifiedMod';
+import BlockedBtn from './components/BlockBtn';
 
 export default class extends BaseVw {
   constructor(options = {}) {
@@ -51,6 +54,12 @@ export default class extends BaseVw {
         this.followedByYou = followedByYou(this.guid);
         this.$followBtn.toggleClass('active', this.followedByYou);
         this.$followBtn.attr('data-tip', this.getFollowTip());
+      }
+    });
+
+    this.listenTo(blockEvents, 'blocked unblocked', data => {
+      if (data.peerIds.includes(this.guid)) {
+        this.setBlockedClass();
       }
     });
   }
@@ -110,6 +119,7 @@ export default class extends BaseVw {
       'click .js-follow': 'followClick',
       'click .js-mod': 'modClick',
       'click .js-imageHeader': 'nameClick',
+      'click .js-rating': 'ratingClick',
     };
   }
 
@@ -148,8 +158,13 @@ export default class extends BaseVw {
     this.navToUser();
   }
 
-  navToUser() {
-    app.router.navigate(`${this.guid}`, {
+  ratingClick() {
+    this.navToUser('reputation');
+  }
+
+  navToUser(tab) {
+    const route = `${this.guid}${tab ? `/${tab}` : ''}`;
+    app.router.navigate(route, {
       trigger: true,
     });
   }
@@ -184,6 +199,10 @@ export default class extends BaseVw {
     }
   }
 
+  setBlockedClass() {
+    this.$el.toggleClass('isBlocked', isBlocked(this.guid));
+  }
+
   get $followBtn() {
     return this._$followBtn ||
         (this._$followBtn = this.$('.js-follow'));
@@ -195,6 +214,7 @@ export default class extends BaseVw {
   }
 
   render() {
+    super.render();
     loadTemplate('userCard.html', (t) => {
       this.$el.html(t({
         loading: this.loading,
@@ -209,12 +229,45 @@ export default class extends BaseVw {
         ...(this.model && this.model.toJSON() || {}),
       }));
 
+      super.render();
+
       this._$followBtn = null;
       this._$modBtn = null;
+
+      if (this.guid !== app.profile.id) {
+        this.getCachedEl('.js-blockBtnContainer')
+          .html(
+            new BlockedBtn({
+              targetId: this.guid,
+              initialState: {
+                useIcon: true,
+              },
+            }).render().el
+          );
+      }
+
+      this.setBlockedClass();
 
       if (!this.fetched) this.loadUser();
       /* the view should be rendered when it is created and before it has data, so it can occupy
        space in the DOM while the data is being fetched. */
+
+      if (this.verifiedMod) this.verifiedMod.remove();
+
+      const verifiedMod = app.verifiedMods.get(this.guid);
+      const createOptions = getModeratorOptions({
+        model: verifiedMod,
+      });
+      if (verifiedMod && this.model && this.model.isModerator) {
+        this.verifiedMod = this.createChild(VerifiedMod, {
+          ...createOptions,
+          initialState: {
+            ...createOptions.initialState,
+            text: '',
+          },
+        });
+        this.getCachedEl('.js-verifiedMod').append(this.verifiedMod.render().el);
+      }
     });
 
     return this;

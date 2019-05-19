@@ -4,38 +4,15 @@
     top: 75px;
   }
 
-  #purchaseQuantity {
-    text-align: center;
-  }
-
   #confirmPay {
     padding: 0;
     top: calc(100% + #{$padSm});
-    left: -$bar;
   }
 
   .showIfPay,
   .showIfPending,
   .showIfComplete {
     display: none;
-  }
-
-  &[data-phase='pay'] {
-    .showIfPay {
-      display: block;
-    }
-  }
-
-  &[data-phase='pending'] {
-    .showIfPending {
-      display: block;
-    }
-  }
-
-  &[data-phase='complete'] {
-    .showIfComplete {
-      display: block;
-    }
   }
 
   .pending {
@@ -48,12 +25,12 @@
       }
     }
 
-    .confirmBox {
-      top: calc(100% + #{$pad});
-    }
-
     .copyNotification {
       top: -0.6em
+    }
+
+    .clickable {
+      cursor: pointer;
     }
   }
 
@@ -96,6 +73,31 @@
       .subShipping {
         padding-left: $pad;
       }
+
+      .constrainedWidth {
+        max-width: 50%;
+        flex-grow: 1;
+        flex-shrink: 0;
+
+        & > .flexHRight {
+          text-align: left;
+        }
+      }
+
+      .cryptoTradingPair {
+        .fromCur, .toCur {
+          display: none;
+        }
+
+        .pairingSeparator {
+          margin: 0 5px 0 0;
+        }
+      }
+
+      .cryptoQuantity {
+        position: relative;
+        top: -3px;
+      }
     }
   }
 
@@ -108,5 +110,35 @@
     top: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .moderatorsList .moderatorsWrapper.fauxModeratorsWrapper {
+    min-height: 0;
+  }
+
+  .cryptoTitleWrap {
+    #cryptoAmountCurrency + .select2-container {
+      .select2-selection__rendered {
+        font-size: $tx6;
+      }
+
+      .select2-selection__arrow {
+        top: 3px;
+      }
+    }
+  }
+
+  .mainSection {
+    &.phasePay, &.phaseProcessing {
+      .cryptoTitleWrap {
+        .cryptoTradingPairWrap {
+          width: 250px;
+        }
+      }
+    }
+
+    .cryptoPaymentAddress {
+      margin-top: 13px;
+    }
   }
 }

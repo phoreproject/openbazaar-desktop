@@ -1,6 +1,6 @@
-import _ from 'underscore';
 import app from '../app';
 import { followsYou } from '../utils/follow';
+import { isBlocked, events as blockEvents } from '../utils/block';
 import baseVw from './baseVw';
 import loadTemplate from '../utils/loadTemplate';
 
@@ -8,11 +8,13 @@ export default class extends baseVw {
   constructor(options = {}) {
     const opts = {
       fetchFollowsYou: true,
+      onClickRating:
+        () => app.router.navigate(`ob://${options.model.id}/reputation`, { trigger: true }),
       ...options,
     };
 
     super(opts);
-
+    this.options = opts;
     if (!this.model) {
       throw new Error('Please provide a profile model.');
     }
@@ -46,27 +48,30 @@ export default class extends baseVw {
         }
       });
     }
+
+    this.listenTo(blockEvents, 'blocked unblocked', data => {
+      if (data.peerIds.includes(this.model.id)) {
+        this.setBlockedClass();
+      }
+    });
   }
 
-  getState() {
-    return this._state;
+  className() {
+    return 'miniprofile';
   }
 
-  setState(state, replace = false) {
-    let newState;
+  events() {
+    return {
+      'click .js-rating': 'onClickRating',
+    };
+  }
 
-    if (replace) {
-      this._state = {};
-    } else {
-      newState = _.extend({}, this._state, state);
-    }
+  onClickRating() {
+    this.options.onClickRating();
+  }
 
-    if (!_.isEqual(this._state, newState)) {
-      this._state = newState;
-      this.render();
-    }
-
-    return this;
+  setBlockedClass() {
+    this.$el.toggleClass('isBlocked', isBlocked(this.model.id));
   }
 
   render() {
@@ -75,6 +80,8 @@ export default class extends baseVw {
         ...this._state,
         ...this.model.toJSON(),
       }));
+
+      this.setBlockedClass();
     });
 
     return this;

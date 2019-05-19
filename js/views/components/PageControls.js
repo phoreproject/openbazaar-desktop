@@ -24,17 +24,12 @@ export default class extends baseVw {
 
   events() {
     return {
-      'click .js-pageNext': 'onClickNext',
-      'click .js-pagePrev': 'onClickPrev',
+      'click .js-pageCnt': 'onPageClick',
     };
   }
 
-  onClickNext() {
-    this.trigger('clickNext');
-  }
-
-  onClickPrev() {
-    this.trigger('clickPrev');
+  onPageClick(ev) {
+    this.trigger('onPageClick', this.$(ev.currentTarget).data('page'));
   }
 
   getState() {

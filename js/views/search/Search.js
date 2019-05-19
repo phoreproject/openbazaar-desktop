@@ -13,8 +13,11 @@ import Providers from './SearchProviders';
 import ProviderMd from '../../models/search/SearchProvider';
 import Suggestions from './Suggestions';
 import defaultSearchProviders from '../../data/defaultSearchProviders';
+import '../../lib/select2';
 import { selectEmojis } from '../../utils';
 import { getCurrentConnection } from '../../utils/serverConnect';
+import { getServerCurrency } from '../../data/cryptoCurrencies';
+import { recordEvent } from '../../utils/metrics';
 
 export default class extends baseVw {
   constructor(options = {}) {
@@ -31,19 +34,20 @@ export default class extends baseVw {
 
     this.defaultSuggestions = this.options.defaultSuggestions ||
       [
-        'books',
-        'clothing',
-        'electronics',
-        'food',
-        'games',
-        'health',
-        'movies',
-        'music',
-        'sports',
-        'toys',
+        'Books',
+        'Art',
+        'Clothing',
+        'Bitcoin',
+        'Crypto',
+        'Handmade',
+        'Health',
+        'Toys',
+        'Electronics',
+        'Games',
+        'Music',
       ];
 
-    // in the future the may be more possible types
+    // in the future there may be more possible types
     this.urlType = this.usingTor ? 'torlistings' : 'listings';
 
     this.sProvider = app.searchProviders[`default${this.torString}Provider`];
@@ -53,7 +57,10 @@ export default class extends baseVw {
     if (is.not.url(this.providerUrl)) {
       // use the first default temporarily to construct the tempUrl below
       this.sProvider = app.searchProviders.get(defaultSearchProviders[0].id);
+      recordEvent('Discover_InvalidDefaultProvider', { url: this.providerUrl });
     }
+
+    if (options.query) recordEvent('Discover_SearchFromAddressBar');
 
     const tempUrl = new URL(`${this.providerUrl}?${options.query || ''}`);
     let queryParams = tempUrl.searchParams;
@@ -83,19 +90,33 @@ export default class extends baseVw {
 
     const params = {};
 
-    for (const param of queryParams.entries()) {
-      params[param[0]] = param[1];
+    for (const key of queryParams.keys()) {
+      // checkbox params are represented by the same key multiple times. Convert them into a
+      // single key with an array of values
+      const val = queryParams.getAll(key);
+      params[key] = val.length === 1 ? val[0] : val;
     }
 
     // use the parameters from the query unless they were overridden in the options
     this.serverPage = options.serverPage || params.p || 0;
-    this.pageSize = options.pageSize || params.ps || 24;
+    this.pageSize = options.pageSize || params.ps || 66;
     this.term = options.term || params.q || '';
     this.sortBySelected = options.sortBySelected || params.sortBy || '';
+
     // all parameters not specified above are assumed to be filters
-    this.filters = _.omit(params, ['q', 'p', 'ps', 'sortBy', 'providerQ', 'network']);
-    // if the nsfw filter is not set, use the value from settings
-    this.filters.nsfw = this.filters.nsfw || String(app.settings.get('showNsfw'));
+    const filterParams = _.omit(params, ['q', 'p', 'ps', 'sortBy', 'providerQ', 'network']);
+
+    // set an initial set of filters for the first query
+    // if not passed in, set the user's values for nsfw and the currency
+    this.defaultParams = {
+      nsfw: String(app.settings.get('showNsfw')),
+      acceptedCurrencies: getServerCurrency().code,
+    };
+
+    this.filterParams = {
+      ...this.defaultParams,
+      ...filterParams,
+    };
 
     this.processTerm(this.term);
   }
@@ -143,18 +164,22 @@ export default class extends baseVw {
 
   /**
    * This will create a url with the term and other query parameters
-   * @param {string} term
+   * @param {string} term - the term to search for
+   * @param {boolean} reset - reset the filters
    */
-  processTerm(term) {
+  processTerm(term, reset) {
     this.term = term || '';
     // if term is false, search for *
     const query = `q=${encodeURIComponent(term || '*')}`;
     const page = `&p=${this.serverPage}&ps=${this.pageSize}`;
     const sortBy = this.sortBySelected ? `&sortBy=${encodeURIComponent(this.sortBySelected)}` : '';
     const network = `&network=${!!app.serverConfig.testnet ? 'testnet' : 'mainnet'}`;
-    let filters = $.param(this.filters);
-    filters = filters ? `&${filters}` : '';
-    const newURL = `${this.providerUrl}?${query}${network}${sortBy}${page}${filters}`;
+    const formData = this.getFormData(this.$filters);
+    // keep any parameters that aren't present in the form on the page
+    let filters = { ...this.defaultParams };
+    if (!reset) filters = { ...filters, ...this.filterParams, ...formData };
+    filters = filters ? `&${$.param(filters)}` : '';
+    const newURL = new URL(`${this.providerUrl}?${query}${network}${sortBy}${page}${filters}`);
     this.callSearchProvider(newURL);
   }
 
@@ -172,11 +197,12 @@ export default class extends baseVw {
     }
     this.sProvider = md;
     this.queryProvider = false;
+    this.serverPage = 0;
     if (this.mustSelectDefault) {
       this.mustSelectDefault = false;
       this.makeDefaultProvider();
     }
-    this.processTerm(this.term);
+    this.processTerm(this.term, true);
   }
 
   deleteProvider(md = this.sProvider) {
@@ -188,8 +214,15 @@ export default class extends baseVw {
     }
   }
 
+  resetSearch() {
+    this.serverPage = 0;
+    this.filterParams = '';
+    this.processTerm('', true);
+  }
+
   clickDeleteProvider() {
     this.deleteProvider();
+    recordEvent('Discover_DeleteProvider');
   }
 
   makeDefaultProvider() {
@@ -203,6 +236,7 @@ export default class extends baseVw {
 
   clickMakeDefaultProvider() {
     this.makeDefaultProvider();
+    recordEvent('Discover_MakeDefaultProvider');
   }
 
   addQueryProvider() {
@@ -347,11 +381,29 @@ export default class extends baseVw {
       this.activateProvider(app.searchProviders.at(0));
       errorDialog.close();
     });
+
+    recordEvent('Discover_SearchError', {
+      error: msg || 'unknown error',
+      provider: this.sProvider.get('name'),
+      searchURL: this.sProvider.get('listings'),
+    });
   }
 
   createResults(data, searchUrl) {
     this.resultsCol = new ResultsCol();
     this.resultsCol.add(this.resultsCol.parse(data));
+
+    let viewType = 'grid';
+
+    if (data && data.options && data.options.type &&
+      data.options.type.options &&
+      data.options.type.options.length) {
+      if (data.options.type.options.find(
+        op => op.value === 'cryptocurrency' && op.checked
+      )) {
+        viewType = 'cryptoList';
+      }
+    }
 
     const resultsView = this.createChild(Results, {
       searchUrl,
@@ -361,23 +413,27 @@ export default class extends baseVw {
       serverPage: this.serverPage,
       pageSize: this.pageSize,
       initCol: this.resultsCol,
+      viewType,
     });
 
     this.$resultsWrapper.html(resultsView.render().el);
 
     this.listenTo(resultsView, 'searchError', (xhr) => this.showSearchError(xhr));
     this.listenTo(resultsView, 'loadingPage', () => this.scrollToTop());
+    this.listenTo(resultsView, 'resetSearch', () => this.resetSearch());
   }
 
   clickSearchBtn() {
     this.serverPage = 0;
     this.processTerm(this.$searchInput.val());
+    recordEvent('Discover_ClickSearch');
   }
 
   onKeyupSearchInput(e) {
     if (e.which === 13) {
       this.serverPage = 0;
       this.processTerm(this.$searchInput.val());
+      recordEvent('Discover_EnterKeySearch');
     }
   }
 
@@ -385,21 +441,18 @@ export default class extends baseVw {
     this.sortBySelected = $(e.target).val();
     this.serverPage = 0;
     this.processTerm(this.term);
+    recordEvent('Discover_ChangeSortBy');
   }
 
-  changeFilter(e) {
-    const targ = $(e.target);
-    if (targ[0].type === 'checkbox') {
-      this.filters[targ.prop('name')] = String(targ[0].checked);
-    } else {
-      this.filters[targ.prop('name')] = targ.val();
-    }
+  changeFilter() {
     this.serverPage = 0;
     this.processTerm(this.term);
+    recordEvent('Discover_ChangeFilter');
   }
 
   onClickSuggestion(opts) {
     this.processTerm(opts.suggestion);
+    recordEvent('Discover_ClickSuggestion');
   }
 
   scrollToTop() {
@@ -440,7 +493,7 @@ export default class extends baseVw {
       this.$el.html(t({
         term: this.term === '*' ? '' : this.term,
         sortBySelected: this.sortBySelected,
-        filterVals: this.filters,
+        filterParams: this.filterParams,
         errTitle,
         errMsg,
         providerLocked: this.sProvider.get('locked'),

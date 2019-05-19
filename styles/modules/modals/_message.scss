@@ -11,6 +11,10 @@
     font-size: 1.4rem;
   }
 
+  .buttonWrap {
+    text-align: center;
+  }
+
   &.dialog {
     // specific to dialog styling
 
@@ -19,11 +23,12 @@
         max-height: 425px;
         overflow: auto;
         margin-right: -15px;
+        padding-right: 15px;
       }
     }
 
-    .buttonWrap {
-      text-align: center;
+    h1 {
+      font-size: 2.0rem;
     }
   }
 

@@ -2,6 +2,7 @@ import { remote } from 'electron';
 import { isMultihash } from '../utils';
 import { events as serverConnectEvents, getCurrentConnection } from '../utils/serverConnect';
 import { setUnreadNotifCount, launchNativeNotification } from '../utils/notification';
+import { recordEvent } from '../utils/metrics';
 import Backbone from 'backbone';
 import BaseVw from './baseVw';
 import loadTemplate from '../utils/loadTemplate';
@@ -14,6 +15,7 @@ import {
 import Listing from '../models/listing/Listing';
 import { getAvatarBgImage } from '../utils/responsive';
 import PageNavServersMenu from './PageNavServersMenu';
+import AddressBarIndicators from './AddressBarIndicators';
 import { getNotifDisplayData } from '../collections/Notifications';
 import Notifications from './notifications/Notificiations';
 import { getOpenModals } from '../views/modals/BaseModal';
@@ -34,6 +36,7 @@ export default class extends BaseVw {
         'focusin .js-addressBar': 'onFocusInAddressBar',
         'click .js-navListBtn': 'navListBtnClick',
         'click .js-navSettings': 'navSettingsClick',
+        'click .js-navHelp': 'navHelpClick',
         'click .js-navAboutModal': 'navAboutClick',
         'click .js-navWalletBtn': 'navWalletClick',
         'click .js-navCreateListing': 'navCreateListingClick',
@@ -440,14 +443,22 @@ export default class extends BaseVw {
       this.addressBarText = text;
       this.$addressBar.val(text);
     }
+
+    if (this.addressBarIndicators) this.addressBarIndicators.updateVisibility(text);
   }
 
   navSettingsClick() {
+    recordEvent('Settings_OpenFromPageNav');
     launchSettingsModal();
   }
 
+  navHelpClick() {
+    launchAboutModal({ initialTab: 'Help' });
+    this.closeNavMenu();
+  }
+
   navAboutClick() {
-    launchAboutModal();
+    launchAboutModal({ initialTab: 'Story' });
     this.closeNavMenu();
   }
 
@@ -464,6 +475,7 @@ export default class extends BaseVw {
   }
 
   navCreateListingClick() {
+    recordEvent('Listing_NewFromPageNav');
     const listingModel = new Listing({}, { guid: app.profile.id });
 
     launchEditListingModal({
@@ -512,6 +524,17 @@ export default class extends BaseVw {
       collection: app.serverConfigs,
     });
     this.$('.js-connManagementContainer').append(this.pageNavServersMenu.render().el);
+
+    let initialAddressBarState = {};
+    if (this.addressBarIndicators) {
+      initialAddressBarState = this.addressBarIndicators.getState();
+      this.addressBarIndicators.remove();
+    }
+
+    this.addressBarIndicators = this.createChild(AddressBarIndicators, {
+      initialState: initialAddressBarState,
+    });
+    this.$('.js-addressBarIndicatorsContainer').html(this.addressBarIndicators.render().el);
 
     this.$addressBar = this.$('.js-addressBar');
     this.$navList = this.$('.js-navList');

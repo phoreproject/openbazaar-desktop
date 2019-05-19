@@ -14,10 +14,10 @@
           </a>
         </div>
       </div>
-        <a  href="#<%= ob.peerID ? `${ob.peerID}` : ''%>">
+        <!-- <a  href="#<%= ob.peerID ? `${ob.peerID}` : ''%>"> -->
              <!-- <div class="brandLogo navBtn" style="background-image: url('../imgs/phrIcon128.png');"></div> -->
-             <div class="brandLogo navBtn"></div>
-        </a>
+             <!-- <div class="brandLogo navBtn"></div> -->
+        <!-- </a> -->
       <div>
 
         <div class="flexVCent iconPad">
@@ -27,7 +27,7 @@
           <a class="iconBtn js-navFwd toolTipNoWrap" data-tip="<%= ob.polyT('pageNav.toolTip.forward') %>">
             <i class="ion-chevron-right"></i>
           </a>
-          <a class="iconBtn js-navReload toolTipNoWrap" data-tip="<%= ob.polyT('pageNav.toolTip.refresh') %>">
+          <a class="iconBtn js-navReload toolTipNoWrap" data-tip="<%= ob.polyT('pageNav.toolTip.refresh') %>"  id="Nav_Refresh">
             <i class="ion-refresh"></i>
           </a>
         </div>
@@ -38,7 +38,7 @@
           <div class="searchWrapper">
             <input type="text" class="js-addressBar flexExpand addressBar clrSh2 clrBr4"
                    placeholder="<%= ob.polyT('addressBarPlaceholder') %>" value="<%= ob.addressBarText %>" />
-            <div class="torIndicator toolTipNoWrap txCtr" data-tip="<%= ob.polyT('pageNav.torOnTooltip') %>"></div>
+            <div class="js-addressBarIndicatorsContainer"></div>
           </div>
           <% if (ob.testnet) { %>
             <div id="testnetFlag" class="btn barBtn normalBtn clrP clrBr" >
@@ -50,7 +50,7 @@
       <div class="rowDivV clrBrBk"></div>
       <div>
         <div class="flexVCent box margLSm posR">
-          <a href="#search" class="toolTipNoWrap js-discover navBtn" style="background-image: url('../imgs/obVectorIconSmall.svg')" data-tip="<%= ob.polyT('pageNav.toolTip.discover') %>">
+          <a href="#search" class="toolTipNoWrap js-discover navBtn" style="background-image: url('../imgs/obVectorIconSmall.svg')" data-tip="<%= ob.polyT('pageNav.toolTip.discover') %>" id="Nav_Discover">
             <!-- <div class="discoverBtn navBtn" style="background-image: url('../imgs/obVectorIconSmall.svg')"></div> -->
           </a>
           <% if (ob.showDiscoverCallout) { %>
@@ -59,10 +59,10 @@
               <p><%= ob.polyT('pageNav.discoverCalloutBody') %></p>
             </div>
           <% } %>
-          <a class="navBtn toolTipNoWrap js-navWalletBtn" data-tip="<%= ob.polyT('pageNav.toolTip.wallet') %>">
+          <a class="navBtn toolTipNoWrap js-navWalletBtn" data-tip="<%= ob.polyT('pageNav.toolTip.wallet') %>" id="Nav_Wallet">
             <div class="iconBtn navWalletBtn "><%= ob.walletIconTmpl() %></div>
           </a>
-          <a class="navBtn toolTipNoWrap js-navNotifBtn" data-tip="<%= ob.polyT('pageNav.toolTip.notifications') %>">
+          <a class="navBtn toolTipNoWrap js-navNotifBtn" data-tip="<%= ob.polyT('pageNav.toolTip.notifications') %>" id="Nav_Notifications">
             <i class="iconBtn ion-android-notifications"></i>
             <div class="discTn notifUnreadBadge js-notifUnreadBadge clrE1 clrTOnEmph clrBr2 clrSh2 hide"></div>
           </a>
@@ -71,7 +71,9 @@
           <nav class="navListWrapper foldDown js-navList">
             <div class="navList clrBr listBox clrP clrSh1">
               <div class="listGroup clrP clrBr">
-                <div class="listItem"><span class="txB tx4 noOverflow"><%= ob.name %></span></div>
+                <a class="listItem js-navListItem" href="#<%= ob.peerID %>/home">
+				          <span class="txB tx4 noOverflow"><%= ob.name %></span>
+			        	</a>
               </div>
               <div class="listGroup clrP clrBr">
                 <a class="listItem connectedServerListItem js-connectedServerListItem">
@@ -91,11 +93,11 @@
                 </a>
               </div>
               <div class="listGroup clrP clrBr">
-                <a href="#transactions/purchases" class="listItem js-navListItem">
-                  <span><%= ob.polyT('pageNav.purchases') %></span><span class="clrT2 TODO">Cltrl + ?</span>
-                </a>
                 <a href="#transactions/sales" class="listItem js-navListItem">
                   <span><%= ob.polyT('pageNav.sales') %></span><span class="clrT2 TODO">Cltrl + ?</span>
+                </a>
+                <a href="#transactions/purchases" class="listItem js-navListItem">
+                  <span><%= ob.polyT('pageNav.purchases') %></span><span class="clrT2 TODO">Cltrl + ?</span>
                 </a>
                 <a href="#transactions/cases" class="listItem js-navListItem">
                   <span><%= ob.polyT('pageNav.cases') %></span><span class="clrT2 TODO">Cltrl + ?</span>
@@ -104,6 +106,9 @@
               <div class="listGroup clrP clrBr">
                 <a class="listItem js-navSettings js-navListItem">
                   <span><%= ob.polyT('pageNav.settings') %></span><span class="clrT2 TODO">Cltrl + ?</span>
+                </a>
+                <a class="listItem js-navHelp js-navListItem">
+                  <span><%= ob.polyT('pageNav.help') %></span><span class="clrT2 TODO">Cltrl + ?</span>
                 </a>
               </div>
             </div>

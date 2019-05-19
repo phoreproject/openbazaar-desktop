@@ -31,8 +31,13 @@ $emphasisGradient: linear-gradient(180deg, $emphasis2, $emphasis1);
 $selection: #5897fb;
 $error: red;
 $alert: #fecf33;
+$alert2: #e9831e; // used for verified moderators and other medium level signals to the user
+$alert2Background: #fffaf6;
+$alert2Gradient: linear-gradient(to top, #fffaf6, #fff4e9);
 
 $overlay: rgba(23, 22, 22, 0.96);
+//$overlay: adjust-color($secondary, $alpha: -0.04);
+$overlayP: hsla(0,0%,100%,0.8); // the primary color with some opacity
 
 // typography
 $baseFontSize: 10px;
@@ -70,10 +75,12 @@ $modalContentInnerMedium: 750px;
 $buttonHeight: 35px;
 $inputHeight: 40px;
 $chatConvoHeight: 360px;
+$confirmBoxWidth: 245px;
 
 $thumb: 42px;
+$thumbHg: 60px;
 $thumbLg: 50px;
-$thumbSm: 38px;
+$thumbSm: 36px;
 $thumbTn: 24px;
 
 // controls
