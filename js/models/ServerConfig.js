@@ -30,6 +30,7 @@ export default class extends BaseModel {
       backupWalletWarned: false,
       torPw: '',
       lastBlockchainResync: '',
+      walletCurrency: 'PHR',
     };
   }
 

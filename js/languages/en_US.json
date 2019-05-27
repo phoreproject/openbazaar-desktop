@@ -48,7 +48,7 @@
     "btnProceed": "Yes, proceed"
   },
   "walletSetup": {
-    "heading": "OpenBazaar Wallet Setup",
+    "heading": "Phore Marketplace Wallet Setup",
     "currencyLabel": "Currency",
     "currencyHelper": "Choose a currency for your Wallet",
     "currencyHelper2": "Accept and send payments in the selected currency above. Please choose wisely, it’s currently not possible to change your currency once a selection is made.",
@@ -223,7 +223,7 @@
     "torOnTooltip": "Tor active",
     "discoverCalloutTitle": "Discover",
     "discoverCalloutBody": "Browse and shop hundreds of stores on Phore Marketplace",
-    "myPage": "My Page",
+    "myPage": "My Store",
     "customizePage": "Customize Page",
     "createListing": "Create Listing",
     "purchases": "Purchases",
@@ -368,7 +368,7 @@
       "failTextListing": "There was an issue retrieving %{listing}. Please try again.",
       "failTextListingLink": "store",
       "failTextListingWithLink": "There was an issue retrieving %{listing}. Please try again or browse other listings in the %{link}.",
-      "socialHeading": "OpenBazaar News & Discussions:",
+      "socialHeading": "Phore Marketplace News & Discussions:",
       "btnCancel": "Cancel",
       "btnTryAgain": "Try Again"
     }
@@ -472,7 +472,7 @@
       "sectionHeader": "Phore Marketplace MIT License",
       "licensePreface": "Phore Marketplace is open source software under the MIT license. This license is permissive and designed to allow people to fully reuse the code for other open source projects or for proprietary software. The full license text is below.",
       "header": "The MIT License (MIT)",
-      "copyright": "Copyright &copy; 2016 OpenBazaar Developers &copy; 2017-2018 Phore Developers",
+      "copyright": "Copyright &copy; 2016 OpenBazaar Developers &copy; 2017-2019 Phore Developers",
       "paragraphs": {
         "permission": "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:",
         "inclusion": "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.",
@@ -503,8 +503,8 @@
     "helpTab": {
       "linkText": "Help",
       "sectionHeader": "Help",
-      "supportLink": "Support page on OpenBazaar.org",
-      "text": "Need help with the OpenBazaar software? Please visit the %{supportLink}. There are many support guides and FAQs that should help you resolve your issue."
+      "supportLink": "Support page on Phore.io",
+      "text": "Need help with the Phore Marketplace software? Please visit the %{supportLink}. There are many support guides and FAQs that should help you resolve your issue."
     }
   },
   "settings": {
@@ -1420,7 +1420,7 @@
       "altcoinNote": "<b>Altcoins</b> will be available when ShapeShift updates to Segregated Witness.",
       "altcoinLink": "You can still fund your OB wallet with altcoins.",
       "walletNote": "<b>External wallets</b> that don't support Segregated Witness may not be able to pay for transactions.",
-      "walletLink": "You can send funds to your OB wallet instead.",
+      "walletLink": "You can send funds to your Phore wallet instead.",
       "feeNote": "<b>Remember to cover any fees</b> when you send funds to your Phore Marketplace wallet."
     },
     "completeSection": {
@@ -1844,9 +1844,9 @@
   "metrics": {
     "title": "Optional Anonymous Metrics",
     "newVersion": "Please review the update to the analytics data agreement below and click “Activate.”",
-    "msg1": "Please help improve OpenBazaar by agreeing to share analytics data about your experience with the development team.",
-    "msg2": "By clicking “Activate,” you agree to share the data listed below with OB1 Company and its processors for the purposes described, and consent to the transfer of this data to servers located in the United States. You may stop the sharing of this data at any time by opening your settings, and clicking the Change Sharing Settings button in the Advanced section. If you are located in the European Economic Area, you may have certain rights with respect to this data, including the right of access, rectification, erasure, restriction of processing, objection to processing, and portability. You may contact us about these, or simply request us to stop using and delete the data we’ve collected, at any time by contacting data@ob1.io.",
-    "listTitle": "The following data will be collected by OB1 Company as you use OpenBazaar:",
+    "msg1": "Please help improve Phore Marketplace by agreeing to share analytics data about your experience with the development team.",
+    "msg2": "By clicking “Activate,” you agree to share the data listed below with Phore Blockchain Company and its processors for the purposes described, and consent to the transfer of this data to servers located in the United States. You may stop the sharing of this data at any time by opening your settings, and clicking the Change Sharing Settings button in the Advanced section. If you are located in the European Economic Area, you may have certain rights with respect to this data, including the right of access, rectification, erasure, restriction of processing, objection to processing, and portability. You may contact us about these, or simply request us to stop using and delete the data we’ve collected, at any time by contacting admin@phore.io.",
+    "listTitle": "The following data will be collected by Phore Blockchain Company as you use Phore Marketplace:",
     "list": {
       "device": "Your IP address and device information, for the purposes listed below.",
       "pages": "Which pages you load, such as the search page or store page. This lets us know which parts of the app are being used the most, and how users navigate through the app.",
@@ -1858,10 +1858,10 @@
       "app": "Details about your app, which include its version and whether it is installed from a downloadable package from source. This lets us understand the context of the other data collected, so it can be applied correctly.",
       "orders": "Basic information on actions you take with orders, such as its state when disputed, or if the order was moderated. This helps us identify problems in the order process.",
       "listings": "Basic information about on actions taken when creating and editing listings. This includes the type of listing, but no other information about it. This gives us data on potential problems with creating and editing listings.",
-      "path": "The path to your installation of OpenBazaar. This will share the name of any folders in the path to the installation folder, which may include your root and/or user folder. This is a side effect of the data collection process, and is not used by the OB1 team."
+      "path": "The path to your installation of Phore Marketplace. This will share the name of any folders in the path to the installation folder, which may include your root and/or user folder. This is a side effect of the data collection process, and is not used by the Phore team."
     },
     "disclaimer1": "No information that can be used to identify your orders or any of your transactions is shared with us. This data is always stored on your own computer, and cannot be accessed by anyone else.",
-    "disclaimer2": "As stated above, your sharing of this data is completely optional. You are not required to share this data in order to use OpenBazaar.",
+    "disclaimer2": "As stated above, your sharing of this data is completely optional. You are not required to share this data in order to use Phore Marketplace.",
     "acceptBtn": "Accept",
     "declineBtn": "Decline",
     "activateBtn": "Activate",

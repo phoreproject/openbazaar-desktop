@@ -48,7 +48,7 @@
     "btnProceed": "Так, продовжити"
   },
   "walletSetup": {
-    "heading": "OpenBazaar Налаштування Гаманця",
+    "heading": "Phore Marketplace Налаштування Гаманця",
     "currencyLabel": "Валюта",
     "currencyHelper": "Виберіть бажану валюту вашого гаманця",
     "currencyHelper2": "У вибраній вище валюті будуть прийматися та надсилатися платежі. Будь-ласка робіть вибір уважно, змінити свій вибір потім буде не можливо. ",
@@ -111,7 +111,7 @@
   "formattedCurrency": {
     "unrecognizedCurrencyTip": "Unable to provide price information because it's priced in an unrecognized currency (%{cur})."
   },
-  "addressBarPlaceholder": "Вкажіть @нікнейм, OpenBazaar ID або пошуковий термін",
+  "addressBarPlaceholder": "Вкажіть @нікнейм, Phore Marketplace ID або пошуковий термін",
   "testnet": "Тестовий режим",
   "testnetTooltip": "Тестовий режим використовує монети тестової мережі, призначені лише для тестування.",
   "tabMenuHeading": "МЕНЮ",
@@ -222,8 +222,8 @@
     "notConnectedMenuItem": "Не з'єднано",
     "torOnTooltip": "Tor активний",
     "discoverCalloutTitle": "Перегляд",
-    "discoverCalloutBody": "Відвідуй та досліджуй тисячі магазинів на OpenBazaar",
-    "myPage": "Моя сторінка",
+    "discoverCalloutBody": "Відвідуй та досліджуй тисячі магазинів на Phore Marketplace",
+    "myPage": "Мій магазин",
     "customizePage": "Налаштувати сторінку",
     "createListing": "Створити список",
     "purchases": "Покупки",
@@ -310,7 +310,7 @@
     "modAddError": "Сталася помилка під час додавання цього модератора\n%{errMsg}",
     "modRemoveError": "Сталася помилка під час видалення цього модератора\n%{errMsg}",
     "storeWelcomeCalloutTitle": "Ласкаво просимо до Вашого магазину!",
-    "storeWelcomeCalloutBody": "Ваш магазин OpenBazaar в мережі. Почніть створювати список чи налаштовувати свою сторінку.",
+    "storeWelcomeCalloutBody": "Ваш магазин Phore Marketplace в мережі. Почніть створювати список чи налаштовувати свою сторінку.",
     "storeWelcomeCalloutBtnClose": "Закрити",
     "store": {
       "retryStoreFetch": "Знову пробувати",
@@ -368,7 +368,7 @@
       "failTextListing": "There was an issue retrieving %{listing}. Please try again.",
       "failTextListingLink": "store",
       "failTextListingWithLink": "There was an issue retrieving %{listing}. Please try again or browse other listings in the %{link}.",
-      "socialHeading": "OpenBazaar News & Discussions:",
+      "socialHeading": "Phore Marketplace News & Discussions:",
       "btnCancel": "Скасувати",
       "btnTryAgain": "Try Again"
     }
@@ -444,10 +444,10 @@
     "noCoinSupport": "Цей модератор не використовує %{coin}."
   },
   "about": {
-    "linkText": "Про OpenBazaar",
-    "brand": "OpenBazaar",
+    "linkText": "Про Phore Marketplace",
+    "brand": "Phore Marketplace",
     "blurbs": {
-      "tradeFree": "OpenBazaar реалізований завдяки міжнародній спільноті розробників та волонтерів, які надають свій внесок у справу вільної торгівлі."
+      "tradeFree": "Phore Marketplace реалізований завдяки міжнародній спільноті розробників та волонтерів, які надають свій внесок у справу вільної торгівлі."
     },
     "version": "версія %{version}",
     "bothVersions": "клієнт %{cVer}, сервер %{sVer}",
@@ -472,7 +472,7 @@
       "sectionHeader": "Ліцензія OpenBazaar MIT ",
       "licensePreface": "OpenBazaar - це вільне програмне забезпечення, яке поширюється за ліцензією MIT.  Ліцензія є дозвільною та призначена для того, щоб люди могли повною мірою використовувати код для інших проектів з відкритим кодом або для власного програмного забезпечення на його основі. Повний текст ліцензії наведено нижче.",
       "header": "Ліцензія MIT (The MIT License)",
-      "copyright": "Copyright &copy; 2016 OpenBazaar Developers",
+      "copyright": "Copyright &copy; 2016 OpenBazaar Developers &copy; 2017-2019 Phore Developers",
       "paragraphs": {
         "permission": "Дозволяється безоплатно надавати будь-якій особі копію цього програмного забезпечення та пов'язаних із нею документів (\"Програмне забезпечення\"), щоб без обмежень користуватися Програмним Забезпеченням, включаючи, але не обмежуючись, права користування, копіювання, модифікацію, об'єднання, публікувати, розповсюджувати, субліцензувати та / або продавати копії програмного забезпечення та дозволяти особам, яким надається програмне забезпечення, таким чином, з урахуванням таких умов:",
         "inclusion": "Вищезазначене повідомлення про авторські права, та це повідомлення про дозвіл, повинні бути включені до всіх копій або значних частин програмного забезпечення.",
@@ -481,7 +481,7 @@
     },
     "contributorsTab": {
       "linkText": "Підтримали",
-      "sectionHeader": "Контрибутори OpenBazaar",
+      "sectionHeader": "Контрибутори OpenBazaar & Phore",
       "listPreface": "Це частковий список людей, які зробили свій внесок у проект, через код або іншу допомогу."
     },
     "storyTab": {
@@ -503,8 +503,8 @@
     "helpTab": {
       "linkText": "Допомога",
       "sectionHeader": "Допомога",
-      "supportLink": "Служба підтримки OpenBazaar.org",
-      "text": "Потрібно допомогти розібратися з OpenBazaar ? Будь ласка відвідайте %{supportLink}. Там ви знайдете інструкції та багато іншого корисного матеріалу який допоможе вирішити ваші проблеми."
+      "supportLink": "Служба підтримки Phore.io",
+      "text": "Потрібно допомогти розібратися з Phore Marketplace ? Будь ласка відвідайте %{supportLink}. Там ви знайдете інструкції та багато іншого корисного матеріалу який допоможе вирішити ваші проблеми."
     }
   },
   "settings": {
@@ -639,7 +639,7 @@
         "purge": "Видалити спільні файли",
         "purgeHelper": "Видалити кешовані файли, якими ви обмінюєтесь з іншими",
         "purgeBtn": "Видалити файли",
-        "purgeToolTip": "OpenBazaar ділиться кешованим контентом який ви переглянули з іншими користувачами. Якщо ви не хочете ділитися з іншими переглянутим ця кнопка видалить кешований контент. Це не вплине на файли які належать вам.",
+        "purgeToolTip": "Phore Marketplace ділиться кешованим контентом який ви переглянули з іншими користувачами. Якщо ви не хочете ділитися з іншими переглянутим ця кнопка видалить кешований контент. Це не вплине на файли які належать вам.",
         "purgeError": "Ой, трапилася помилка, ваші файли могли не видалитися.",
         "purgeComplete": "Кеш файли видалені.",
         "blockData": "Дані блоку",
@@ -712,7 +712,7 @@
       "languages": "Мови",
       "languagesHelper": "Введіть всі мови, які ви підтримуєте (тобто: ви можете чітко та зрозуміло спілкуватися).",
       "acceptGuidelines": "Я прочитав рекомендації %{acceptGuidelinesLink}",
-      "acceptGuidelinesLink": "OpenBazaar Покроковий гід по вирішенню дискусій",
+      "acceptGuidelinesLink": "Phore Marketplace Покроковий гід по вирішенню дискусій",
       "understandRequirements": "Я розумію, що повинен запропонувати свої послуги для вирішення суперечок будь-кому, хто їх просить, якщо вони не порушують умови, описані вище.",
       "status": {
         "saving": "Зберегти зміни в налаштуваннях",
@@ -1342,7 +1342,7 @@
     },
     "tosScreen": {
       "heading": "Умови використання",
-      "tos": "OpenBazaar - це мережа для торгівлі товарами та послугами безпосередньо між людьми - використовуючи криптографічні валюти - без будь-якої центральної організації, що контролює платформу. Це означає, що ви несете відповідальність за власну діяльність у мережі.\n\nКористувачі OpenBazaar за замовчуванням не анонімні. Більшість повідомлень між сторонами зашифровані, але IP-адреси є загальнодоступними і можуть бути пов'язані з діяльністю в мережі. Зловмисні сторони можуть використовувати цю інформацію проти вас; Захист вашої конфіденційності - це ваша відповідальність.\n\nКористувачі OpenBazaar повинні дотримуватися законів у своїй власній юридичній юрисдикції, а також їх совісті. Розробники OpenBazaar не вважають та не несуть відповідальності за будь-яке використання платформи для незаконної діяльності.\n\nСпільнота розробників OpenBazaar наполегливо працювала над створенням вільної платформи для торгівлі у світі. Але, як і будь-яке програмне забезпечення, помилки будуть виявлені та виправлені. Розробники не несуть відповідальності за будь-які грошові втрати, пов'язані з проблемами програмного забезпечення.\n\nВикористовуючи OpenBazaar, ви несете відповідальність за власні дії в мережі OpenBazaar."
+      "tos": "Phore Marketplace - це мережа для торгівлі товарами та послугами безпосередньо між людьми - використовуючи криптографічні валюти - без будь-якої центральної організації, що контролює платформу. Це означає, що ви несете відповідальність за власну діяльність у мережі.\n\nКористувачі Phore Marketplace за замовчуванням не анонімні. Більшість повідомлень між сторонами зашифровані, але IP-адреси є загальнодоступними і можуть бути пов'язані з діяльністю в мережі. Зловмисні сторони можуть використовувати цю інформацію проти вас; Захист вашої конфіденційності - це ваша відповідальність.\n\nКористувачі Phore Marketplace повинні дотримуватися законів у своїй власній юридичній юрисдикції, а також їх совісті. Розробники Phore Marketplace не вважають та не несуть відповідальності за будь-яке використання платформи для незаконної діяльності.\n\nСпільнота розробників Phore Marketplace наполегливо працювала над створенням вільної платформи для торгівлі у світі. Але, як і будь-яке програмне забезпечення, помилки будуть виявлені та виправлені. Розробники не несуть відповідальності за будь-які грошові втрати, пов'язані з проблемами програмного забезпечення.\n\nВикористовуючи Phore Marketplace, ви несете відповідальність за власні дії в мережі Phore Marketplace."
     }
   },
   "pageControls": {
@@ -1411,7 +1411,7 @@
       "payFromWallet": "Сплатити з гаманця",
       "payWithAlt": "Сплатити за допомогою іншої валюти",
       "note1": "Якщо вам потрібна допомога для початку роботи з Bitcoin, прочитайте %{link}.",
-      "note1Link": "Потребуєте Bitcoin? на OpenBazaar.org",
+      "note1Link": "Потребуєте Phore? на Phore.io",
       "note2": "Ваш платіж надійно зберігатиметься в депозиті. Якщо виникнуть які-небудь проблеми, ви зможете відкрити дискусію.",
       "note3": "*Плата за користування модератором застосовується лише у випадку відкриття дискусії.",
       "note4": "Після того, як ви заплатили, може знадобитися оновлення інтерфейсу для відображення змін.",
@@ -1420,7 +1420,7 @@
       "altcoinLink": "Ви також можете поповнити гаманець OB використовуючи альткоїни.",
       "walletNote": "<b>Зовнішні гаманеці</b> які не підтримують Segregated Witness, можуть бути не в змозі платити за транзакції.",
       "walletLink": "Замість цього, Ви можете надіслати кошти на свій OB-гаманець.",
-      "feeNote": "<b>Памятайте враховувати комісії</b> в ході надсилання коштів на Ваш OpenBazaar гаманець."
+      "feeNote": "<b>Памятайте враховувати комісії</b> в ході надсилання коштів на Ваш Phore Marketplace гаманець."
     },
     "completeSection": {
       "paymentSent": "Платіж надіслно!",
@@ -1435,8 +1435,8 @@
       "send": "Відправити",
       "share": {
         "title": "Поділитися з друзями",
-        "body": "Я тільки що зробив покупку на OpenBazaar, на вільному ринку без комісій або обмежень. Дізнайтеся більше на сайті %{link}.",
-        "shareMsg": "Я тільки що зробив покупку на @OpenBazaar, на вільному ринку без комісій або обмежень.",
+        "body": "Я тільки що зробив покупку на Phore Marketplace, на вільному ринку без комісій або обмежень. Дізнайтеся більше на сайті %{link}.",
+        "shareMsg": "Я тільки що зробив покупку на @PhoreMarketplace, на вільному ринку без комісій або обмежень.",
         "postToTwitter": "Поширити в Twitter",
         "postToFacebook": "Поширити в Facebook",
         "postToPinterest": "Поширити в Pinterest",
@@ -1843,9 +1843,9 @@
   "metrics": {
     "title": "Optional Anonymous Metrics",
     "newVersion": "Please review the update to the analytics data agreement below and click “Activate.”",
-    "msg1": "Please help improve OpenBazaar by agreeing to share analytics data about your experience with the development team.",
-    "msg2": "By clicking “Activate,” you agree to share the data listed below with OB1 Company and its processors for the purposes described, and consent to the transfer of this data to servers located in the United States. You may stop the sharing of this data at any time by opening your settings, and clicking the Change Sharing Settings button in the Advanced section. If you are located in the European Economic Area, you may have certain rights with respect to this data, including the right of access, rectification, erasure, restriction of processing, objection to processing, and portability. You may contact us about these, or simply request us to stop using and delete the data we’ve collected, at any time by contacting data@ob1.io.",
-    "listTitle": "The following data will be collected by OB1 Company as you use OpenBazaar:",
+    "msg1": "Please help improve Phore Marketplace by agreeing to share analytics data about your experience with the development team.",
+    "msg2": "By clicking “Activate,” you agree to share the data listed below with Phore Blockchain Company and its processors for the purposes described, and consent to the transfer of this data to servers located in the United States. You may stop the sharing of this data at any time by opening your settings, and clicking the Change Sharing Settings button in the Advanced section. If you are located in the European Economic Area, you may have certain rights with respect to this data, including the right of access, rectification, erasure, restriction of processing, objection to processing, and portability. You may contact us about these, or simply request us to stop using and delete the data we’ve collected, at any time by contacting admin@phore.io.",
+    "listTitle": "The following data will be collected by Phore Blockchain Company as you use Phore Marketplace:",
     "list": {
       "device": "Your IP address and device information, for the purposes listed below.",
       "pages": "Which pages you load, such as the search page or store page. This lets us know which parts of the app are being used the most, and how users navigate through the app.",
@@ -1857,10 +1857,10 @@
       "app": "Details about your app, which include its version and whether it is installed from a downloadable package from source. This lets us understand the context of the other data collected, so it can be applied correctly.",
       "orders": "Basic information on actions you take with orders, such as its state when disputed, or if the order was moderated. This helps us identify problems in the order process.",
       "listings": "Basic information about on actions taken when creating and editing listings. This includes the type of listing, but no other information about it. This gives us data on potential problems with creating and editing listings.",
-      "path": "The path to your installation of OpenBazaar. This will share the name of any folders in the path to the installation folder, which may include your root and/or user folder. This is a side effect of the data collection process, and is not used by the OB1 team."
+      "path": "The path to your installation of Phore Marketplace. This will share the name of any folders in the path to the installation folder, which may include your root and/or user folder. This is a side effect of the data collection process, and is not used by the Phore team."
     },
     "disclaimer1": "No information that can be used to identify your orders or any of your transactions is shared with us. This data is always stored on your own computer, and cannot be accessed by anyone else.",
-    "disclaimer2": "As stated above, your sharing of this data is completely optional. You are not required to share this data in order to use OpenBazaar.",
+    "disclaimer2": "As stated above, your sharing of this data is completely optional. You are not required to share this data in order to use Phore Marketplace.",
     "acceptBtn": "Прийняти",
     "declineBtn": "Decline",
     "activateBtn": "Activate",
