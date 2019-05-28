@@ -2,7 +2,7 @@
   if (typeof ob.amount === 'number') {
     let formattedAmount = new Intl.NumberFormat(ob.localCur, {
       minimumFractionDigits: 0,
-      maximumFractionDigits: 4,
+      maximumFractionDigits: 8,
     }).format(ob.amount);
     
     formattedAmount = ob.coinType ?
