@@ -1,8 +1,12 @@
-import fs from 'fs';
+/**
+ * This differs from the Config model. This is a representation of a connection to the
+ * server and is stored in local storage. Whereas, Config contains the configuartion provided
+ * from the server via the ob/config api.
+ */
+
 import { remote } from 'electron';
 import LocalStorageSync from '../utils/lib/backboneLocalStorage';
 import is from 'is_js';
-import { getCurrencyByCode as getCryptoCurByCode } from '../data/cryptoCurrencies';
 import app from '../app';
 import BaseModel from './BaseModel';
 
@@ -29,6 +33,7 @@ export default class extends BaseModel {
       dismissedStoreWelcome: false,
       backupWalletWarned: false,
       torPw: '',
+<<<<<<< HEAD
       lastBlockchainResync: '',
       walletCurrency: 'PHR',
     };
@@ -49,14 +54,10 @@ export default class extends BaseModel {
     const fullAttrs = {
       ...this.toJSON(),
       ...attrs,
+=======
+      lastBlockchainResync: {},
+>>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
     };
-
-    if (fullAttrs.builtIn && typeof attrs.walletCurrency === 'string') {
-      attrs.name = app.polyglot.t('connectionManagement.builtInServerName',
-        { cur: attrs.walletCurrency });
-    }
-
-    return super.set(attrs, opts);
   }
 
   validate(attrs) {
@@ -68,16 +69,6 @@ export default class extends BaseModel {
 
     if (!is.existy(attrs.name) || is.empty(attrs.name)) {
       addError('name', app.polyglot.t('serverConfigModelErrors.provideValue'));
-    } else {
-      // Slight hack since backbone doesn't document Model.collection and
-      // it will only refer to the first collection that a Model belongs.
-      // http://stackoverflow.com/a/15962917/632806
-      if (this.collection) {
-        const models = this.collection.where({ name: attrs.name });
-        if (models && models.length && (models.length > 1 || models[0].id !== attrs.id)) {
-          addError('name', 'There is already a configuration with that name.');
-        }
-      }
     }
 
     if (!is.existy(attrs.serverIp) || is.empty(attrs.serverIp)) {
@@ -142,33 +133,6 @@ export default class extends BaseModel {
         // on the command line, the local bundled server will always be started
         // with the default port.
         addError('port', `On a built-in server, the port can only be ${this.defaults().port}.`);
-      }
-
-      if (typeof attrs.walletCurrency === 'undefined') {
-        addError('walletCurrency', app.polyglot.t('serverConfigModelErrors.provideWalletCurrency'));
-      } else if (!getCryptoCurByCode(attrs.walletCurrency)) {
-        addError('walletCurrency',
-          `${attrs.walletCurrency} is not a currently supported crypto currency.`);
-      }
-
-      if (attrs.walletCurrency === 'ZEC' && !attrs.zcashBinaryPath) {
-        addError('zcashBinaryPath',
-          app.polyglot.t('serverConfigModelErrors.provideZcashBinaryPath'));
-      }
-
-      if (attrs.zcashBinaryPath) {
-        let fsStat;
-
-        try {
-          fsStat = fs.statSync(attrs.zcashBinaryPath);
-        } catch (e) {
-          // pass
-        }
-
-        if (!fsStat || !fsStat.isFile()) {
-          addError('zcashBinaryPath',
-            app.polyglot.t('serverConfigModelErrors.invalidZcashBinaryPath'));
-        }
       }
     }
 

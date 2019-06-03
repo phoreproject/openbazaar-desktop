@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import _ from 'underscore';
 import moment from 'moment';
 import app from '../../../../app';
 import { abbrNum } from '../../../../utils';
@@ -8,12 +7,31 @@ import BaseVw from '../../../baseVw';
 
 export default class extends BaseVw {
   constructor(options = {}) {
-    super(options);
+    super({
+      ...options,
+      initialState: {
+        paymentNumber: 1,
+        amountShort: 0,
+        balanceRemaining: 0,
+        payee: '',
+        userCurrency: app.settings.get('localCurrency') || 'BTC',
+        showAcceptRejectButtons: false,
+        showCancelButton: false,
+        acceptInProgress: false,
+        rejectInProgress: false,
+        cancelInProgress: false,
+        rejectConfirmOn: false,
+        blockChainTxUrl: '',
+        paymentCoin: undefined,
+        ...options.initialState || {},
+      },
+    });
 
     if (!this.model) {
       throw new Error('Please provide a model.');
     }
 
+<<<<<<< HEAD
     this._state = {
       paymentNumber: 1,
       amountShort: 0,
@@ -29,6 +47,8 @@ export default class extends BaseVw {
       ...options.initialState || {},
     };
 
+=======
+>>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
     this.boundOnDocClick = this.onDocumentClick.bind(this);
     $(document).on('click', this.boundOnDocClick);
   }
@@ -80,25 +100,18 @@ export default class extends BaseVw {
     this.setState({ rejectConfirmOn: false });
   }
 
-  getState() {
-    return this._state;
-  }
+  setState(state = {}, options = {}) {
+    const mergedState = {
+      ...this.getState(),
+      ...state,
+    };
 
-  setState(state, replace = false, renderOnChange = true) {
-    let newState;
-
-    if (replace) {
-      this._state = {};
-    } else {
-      newState = _.extend({}, this._state, state);
+    if (!mergedState.paymentCoin ||
+      typeof mergedState.paymentCoin !== 'string') {
+      throw new Error('Please provide the paymentCoin as a string.');
     }
 
-    if (renderOnChange && !_.isEqual(this._state, newState)) {
-      this._state = newState;
-      this.render();
-    }
-
-    return this;
+    return super.setState(state, options);
   }
 
   remove() {
@@ -113,7 +126,6 @@ export default class extends BaseVw {
         ...this.model.toJSON(),
         abbrNum,
         moment,
-        isTestnet: app.serverConfig.testnet,
       }));
     });
 

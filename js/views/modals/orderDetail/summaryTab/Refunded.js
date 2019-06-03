@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import moment from 'moment';
 import app from '../../../../app';
 import { abbrNum } from '../../../../utils';
@@ -7,11 +6,21 @@ import BaseVw from '../../../baseVw';
 
 export default class extends BaseVw {
   constructor(options = {}) {
-    super(options);
+    super({
+      ...options,
+      initialState: {
+        buyerName: '',
+        userCurrency: app.settings.get('localCurrency') || 'BTC',
+        isCrypto: false,
+        blockChainTxUrl: '',
+        ...options.initialState,
+      },
+    });
 
     if (!this.model) {
       throw new Error('Please provide a model.');
     }
+<<<<<<< HEAD
 
     this._state = {
       buyerName: '',
@@ -19,31 +28,12 @@ export default class extends BaseVw {
       isCrypto: false,
       ...options.initialState || {},
     };
+=======
+>>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
   }
 
   className() {
     return 'refunded rowLg';
-  }
-
-  getState() {
-    return this._state;
-  }
-
-  setState(state, replace = false, renderOnChange = true) {
-    let newState;
-
-    if (replace) {
-      this._state = {};
-    } else {
-      newState = _.extend({}, this._state, state);
-    }
-
-    if (renderOnChange && !_.isEqual(this._state, newState)) {
-      this._state = newState;
-      this.render();
-    }
-
-    return this;
   }
 
   render() {
@@ -53,7 +43,6 @@ export default class extends BaseVw {
         ...this.model.toJSON(),
         abbrNum,
         moment,
-        isTestnet: app.serverConfig.testnet,
       }));
     });
 

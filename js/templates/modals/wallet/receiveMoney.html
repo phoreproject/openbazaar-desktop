@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <a class="js-cancelReceiveBtn btn clrT clrBr cancelReceiveBtn"><%= ob.polyT('wallet.receiveMoney.btnCancel') %></a>
 <!-- <h2 class="h3 txCtr txUnl row"><%= ob.polyT('wallet.receiveMoney.title') %></h2> -->
 <div class="codeAddressWrap">
@@ -32,4 +33,19 @@
       </div>
     </div>
   </div>
+=======
+<h2 class="h4 txUnl rowMd"><%= ob.polyT('wallet.receiveMoney.title') %></h2>
+<div class="rowMd receiveQrCodeWrap <% if (ob.fetching) print('invisible') %>">
+  <a class="js-receiveQrCode"><img src="<%= ob.qrDataUri %>"></a>
+</div>
+<div class="rowMd <% if (ob.fetching) print('invisible') %>">
+  <a class="js-receiveAddress clrT clrBr tx5 addressText clamp"><%= ob.address %></a>
+  <span class="posR copyTextWrap">
+    <a class="tx5b txU copyAddress js-copyAddress">Copy</a>
+    <span class="hide tx5b copiedText js-copiedText">Copied</span>
+  </span>
+>>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
+</div>
+<div class="spinnerWrap <% if (!ob.fetching) print('hide') %>">
+  <%= ob.spinner() %>
 </div>

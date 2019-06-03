@@ -2,9 +2,6 @@
   This view is used by both the Purchase and Order detail flows. When making changes, please ensure
   they play nice with both areas.
 -->
-<%
-  const serverCur = ob.currencyMod.getServerCurrency();
-%>
 <div class="flexRow gutterHLg pad rowMd">
   <div class="flexNoShrink">
     <a class="QR js-purchaseQRCode"><img class="js-qrCodeImg" src="<%= ob.qrDataUri %>"></a>
@@ -30,22 +27,15 @@
         <div class="flexRow gutterH rowLg">
           <div class="col12">
             <%= ob.processingButton({
-              className: 'btn btnThin width100 clrP clrBr clrSh2 js-payFromWallet',
-              textClassName: 'flexCent',
-              btnText: `<i class="icon">${ob.walletIconTmpl()}</i>${ob.polyT('purchase.pendingSection.payFromWallet')}`,
+            className: 'btn btnThin width100 clrP clrBr clrSh2 js-payFromWallet',
+            textClassName: 'flexCent',
+            btnText: `<i class="icon">${ob.walletIconTmpl()}</i>${ob.polyT('purchase.pendingSection.payFromWallet')}`,
             }) %>
             <div class="js-confirmWalletContainer"></div>
           </div>
-          <% if (serverCur.canShapeShiftIntoPurchase) { %>
-            <div class="col6">
-              <button class="btn btnThin width100 clrP clrBr clrSh2 js-payFromAlt">
-                <i class="shapeShiftIcon icon" style="background-image: url('../imgs/shapeShiftIcon.png');"></i>
-                <%= ob.polyT('purchase.pendingSection.payWithAlt') %>
-              </button>
-            </div>
-          <% } %>
         </div>
         <div class="txBase clrT2">
+<<<<<<< HEAD
           <% if (serverCur.code === 'PHR') { %>
           <p>
             <%= ob.polyT('purchase.pendingSection.altcoinNote') %> <button class="btnAsLink js-fundWallet"><%= ob.polyT('purchase.pendingSection.altcoinLink') %></button>
@@ -53,6 +43,12 @@
           <p>
             <%= ob.polyT('purchase.pendingSection.walletNote') %> <button class="btnAsLink js-fundWallet"><%= ob.polyT('purchase.pendingSection.walletLink') %></button>
           </p>
+=======
+          <% if (['BTC', 'TBTC'].includes(ob.paymentCoin)) { %>
+            <p>
+              <%= ob.polyT('purchase.pendingSection.walletNote') %> <button class="btnAsLink js-fundWallet"><%= ob.polyT('purchase.pendingSection.walletLink') %></button>
+            </p>
+>>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
           <% } %>
           <p>
             <%= ob.polyT('purchase.pendingSection.feeNote') %>
@@ -63,8 +59,13 @@
   </div>
 </div>
 <div class="tx6 clrT2">
+<<<<<<< HEAD
   <% if (serverCur.code === 'PHR') { %>
     <% const link = `<a class="clrTEm" href="https://phore.io/buy-phore/">${ob.polyT('purchase.pendingSection.note1Link')}</a>`; %>
+=======
+  <% if (['BTC', 'TBTC'].includes(ob.paymentCoin)) { %>
+    <% const link = `<a class="clrTEm" href="https://www.openbazaar.org/bitcoin">${ob.polyT('purchase.pendingSection.note1Link')}</a>`; %>
+>>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
     <p><%= ob.polyT('purchase.pendingSection.note1', { link }) %></p>
   <% } %>
   <% if (ob.isModerated) { %>
@@ -76,4 +77,3 @@
   <% } %>
   <p><%= ob.polyT('purchase.pendingSection.note4') %></p>
 </div>
-

@@ -58,11 +58,15 @@ describe('the currency utility module', () => {
         const deferred = $.Deferred();
 
         deferred.resolve({
+<<<<<<< HEAD
           // The api is actually returning a non 1 for the phore value, which seems
           // like a bug, but it will allow us to test that if we call our conversion
           // functions to convert from or to PHR, it will ignore that PHR exchange rate
           // and use an implied 1.
           PHR: 1.02,
+=======
+          BTC: 1,
+>>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
           PLN: 3148.48,
           USD: 750.6,
         });
