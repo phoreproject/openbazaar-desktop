@@ -11,7 +11,7 @@
 
 
 ELECTRONVER=1.8.7
-NODEJSVER=6
+NODEJSVER=5.1.1
 
 OS="${1}"
 if [ -z "${2}" ]; then
@@ -25,11 +25,11 @@ echo "Building with openbazaar-go/$SERVERTAG"
 PACKAGE_VERSION=$(node -p 'require("./package").version')
 echo "Phore Marketplace Version: $PACKAGE_VERSION"
 
-# Create temp/build dirs
+# Create temp build dirs
 mkdir dist/
 rm -rf dist/*
-mkdir temp/
-rm -rf temp/*
+mkdir PHORE_MARKETPLACE_TEMP/
+rm -rf PHORE_MARKETPLACE_TEMP/*
 
 echo 'Preparing to build installers...'
 
@@ -75,7 +75,7 @@ case "$TRAVIS_OS_NAME" in
 
     # Retrieve Latest Server Binaries
     sudo apt-get install jq
-    cd temp/
+    cd PHORE_MARKETPLACE_TEMP/
     curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/phoreproject/releases/$SERVERTAG > release.txt
     cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
@@ -83,11 +83,11 @@ case "$TRAVIS_OS_NAME" in
     APPNAME="phoremarketplace"
 
     echo "Packaging Electron application"
-    electron-packager . ${APPNAME} --platform=linux --arch=ia32 --electronVersion=${ELECTRONVER} --ignore="temp" --overwrite --prune --out=dist
+    electron-packager . ${APPNAME} --platform=linux --arch=ia32 --electronVersion=${ELECTRONVER} --ignore="PHORE_MARKETPLACE_TEMP" --overwrite --prune --out=dist
 
     echo 'Move go server to electron app'
     mkdir dist/${APPNAME}-linux-ia32/resources/openbazaar-go/
-    cp -rf temp/openbazaar-go-linux-386 dist/${APPNAME}-linux-ia32/resources/openbazaar-go
+    cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-linux-386 dist/${APPNAME}-linux-ia32/resources/openbazaar-go
     mv dist/${APPNAME}-linux-ia32/resources/openbazaar-go/openbazaar-go-linux-386 dist/${APPNAME}-linux-ia32/resources/openbazaar-go/openbazaard
     rm -rf dist/${APPNAME}-linux-ia32/resources/app/.travis
     chmod +x dist/${APPNAME}-linux-ia32/resources/openbazaar-go/openbazaard
@@ -101,12 +101,12 @@ case "$TRAVIS_OS_NAME" in
     echo 'Building Linux 64-bit Installer....'
 
     echo "Packaging Electron application"
-    electron-packager . ${APPNAME} --platform=linux --arch=x64 --electronVersion=${ELECTRONVER} --overwrite --ignore="temp" --prune --out=dist
+    electron-packager . ${APPNAME} --platform=linux --arch=x64 --electronVersion=${ELECTRONVER} --overwrite --ignore="PHORE_MARKETPLACE_TEMP" --prune --out=dist
 
     echo 'Move go server to electron app'
     mkdir dist/${APPNAME}-linux-x64/resources/openbazaar-go/
-    cp -rf temp/openbazaar-go-linux-amd64 dist/${APPNAME}-linux-x64/resources/openbazaar-go
-    rm -rf temp/*
+    cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-linux-amd64 dist/${APPNAME}-linux-x64/resources/openbazaar-go
+    rm -rf PHORE_MARKETPLACE_TEMP/*
     mv dist/${APPNAME}-linux-x64/resources/openbazaar-go/openbazaar-go-linux-amd64 dist/${APPNAME}-linux-x64/resources/openbazaar-go/openbazaard
     rm -rf dist/${APPNAME}-linux-x64/resources/app/.travis
     chmod +x dist/${APPNAME}-linux-x64/resources/openbazaar-go/openbazaard
@@ -120,7 +120,7 @@ case "$TRAVIS_OS_NAME" in
     APPNAME="phoremarketplaceClient"
 
     echo "Packaging Electron application"
-    electron-packager . ${APPNAME} --platform=linux --arch=ia32 --ignore="temp" --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist
+    electron-packager . ${APPNAME} --platform=linux --arch=ia32 --ignore="PHORE_MARKETPLACE_TEMP" --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist
 
     echo 'Create debian archive'
     electron-installer-debian --config .travis/config_ia32.client.json
@@ -131,7 +131,7 @@ case "$TRAVIS_OS_NAME" in
     echo 'Building Linux 64-bit Installer....'
 
     echo "Packaging Electron application"
-    electron-packager . ${APPNAME} --platform=linux --arch=x64 --ignore="temp" --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist
+    electron-packager . ${APPNAME} --platform=linux --arch=x64 --ignore="PHORE_MARKETPLACE_TEMP" --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist
 
     echo 'Create debian archive'
     electron-installer-debian --config .travis/config_amd64.client.json
@@ -156,7 +156,7 @@ case "$TRAVIS_OS_NAME" in
     brew install mono
 
     # Retrieve Latest Server Binaries
-    cd temp/
+    cd PHORE_MARKETPLACE_TEMP/
     curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/phoreproject/releases/$SERVERTAG > release.txt
     cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
@@ -166,15 +166,15 @@ case "$TRAVIS_OS_NAME" in
     mkdir dist/win32
 
     echo 'Running Electron Packager...'
-    electron-packager . PhoreMarketplace --asar --out=dist --ignore="temp" --protocol-name=PhoreMarketplace --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+    electron-packager . PhoreMarketplace --asar --out=dist --ignore="PHORE_MARKETPLACE_TEMP" --protocol-name=PhoreMarketplace --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
     echo 'Copying server binary into application folder...'
-    cp -rf temp/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/
-    cp -rf temp/libwinpthread-1.win32.dll dist/phoremarketplace-win32-ia32/resources/libwinpthread-1.dll
+    cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/
+    cp -rf PHORE_MARKETPLACE_TEMP/libwinpthread-1.win32.dll dist/phoremarketplace-win32-ia32/resources/libwinpthread-1.dll
     mkdir dist/phoremarketplace-win32-ia32/resources/openbazaar-go
     mv dist/phoremarketplace-win32-ia32/resources/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/openbazaar-go/openbazaard.exe
     mv dist/phoremarketplace-win32-ia32/resources/libwinpthread-1.dll dist/phoremarketplace-win32-ia32/resources/openbazaar-go/libwinpthread-1.dll
-    rm -rf dist/temp
+    rm -rf dist/PHORE_MARKETPLACE_TEMP
 
     echo 'Building Installer...'
     grunt create-windows-installer --appname=PhoreMarketplace --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplace-win32-ia32 --outdir=dist/win32
@@ -183,7 +183,7 @@ case "$TRAVIS_OS_NAME" in
 
     #### CLIENT ONLY
     echo 'Running Electron Packager...'
-    electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="temp" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+    electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
     echo 'Building Installer...'
     grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-ia32 --outdir=dist/win32
@@ -200,11 +200,11 @@ case "$TRAVIS_OS_NAME" in
     mkdir dist/win64
 
     echo 'Running Electron Packager...'
-    electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --ignore="temp" --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+    electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
     echo 'Copying server binary into application folder...'
-    cp -rf temp/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/
-    cp -rf temp/libwinpthread-1.win64.dll dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll
+    cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/
+    cp -rf PHORE_MARKETPLACE_TEMP/libwinpthread-1.win64.dll dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll
     mkdir dist/PhoreMarketplace-win32-x64/resources/openbazaar-go
     mv dist/PhoreMarketplace-win32-x64/resources/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/openbazaar-go/openbazaard.exe
     mv dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll dist/PhoreMarketplace-win32-x64/resources/openbazaar-go/libwinpthread-1.dll
@@ -216,7 +216,7 @@ case "$TRAVIS_OS_NAME" in
 
     #### CLIENT ONLY
     echo 'Running Electron Packager...'
-    electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="temp" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+    electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
     echo 'Building Installer...'
     grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
@@ -238,14 +238,14 @@ case "$TRAVIS_OS_NAME" in
 
     # Sign openbazaar-go binary
     echo 'Signing Go binary'
-    mv temp/openbazaar-go-darwin-10.6-amd64 dist/osx/openbazaard
-    rm -rf temp/*
+    mv PHORE_MARKETPLACE_TEMP/openbazaar-go-darwin-10.6-amd64 dist/osx/openbazaard
+    rm -rf PHORE_MARKETPLACE_TEMP/*
     codesign --force --sign "$SIGNING_IDENTITY" dist/osx/openbazaard
 
     echo 'Running Electron Packager...'
-    electron-packager . PhoreMarketplace --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="temp" --protocol=ob --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
+    electron-packager . PhoreMarketplace --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --protocol=ob --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
     # Client Only
-    electron-packager . PhoreMarketplaceClient --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="temp" --protocol=ob --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
+    electron-packager . PhoreMarketplaceClient --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --protocol=ob --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
 
     echo 'Creating openbazaar-go folder in the OS X .app'
     mkdir dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go
