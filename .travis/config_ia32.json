@@ -8,13 +8,8 @@
   "arch": "i386",
   "src": "dist/phoremarketplace-linux-ia32/",
   "dest": "dist/linux32",
-<<<<<<< HEAD
   "productDescription": "Decentralized Peer to Peer Marketplace for Phore",
-  "intianOverrides": [
-=======
-  "productDescription": "Decentralized Peer to Peer Marketplace for Bitcoin",
   "lintianOverrides": [
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
     "changelog-file-missing-in-native-package",
     "executable-not-elf-or-script",
     "extra-license-file"
