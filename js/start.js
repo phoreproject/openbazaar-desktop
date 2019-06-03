@@ -273,6 +273,7 @@ function onboard() {
     .open();
 
   onboarding.on('onboarding-complete', () => {
+    // instead of search it is possible to use app.profile.id
     location.hash = 'search';
     onboardDeferred.resolve();
     onboarding.remove();
@@ -313,7 +314,6 @@ function fetchVerifiedMods() {
 
 const fetchStartupDataDeferred = $.Deferred();
 let ownFollowingFetch;
-let followersFetch;
 let exchangeRatesFetch;
 let walletBalancesFetch;
 let searchProvidersFetch;
@@ -321,8 +321,6 @@ let searchProvidersFetch;
 function fetchStartupData() {
   ownFollowingFetch = !ownFollowingFetch || ownFollowingFetch.state() === 'rejected' ?
     app.ownFollowing.fetch() : ownFollowingFetch;
-  followersFetch = !followersFetch || followersFetch.state() === 'rejected' ?
-    app.followers.fetch() : followersFetch;
   exchangeRatesFetch = !exchangeRatesFetch || exchangeRatesFetch.state() === 'rejected' ?
     fetchExchangeRates() : exchangeRatesFetch;
   walletBalancesFetch = !walletBalancesFetch || walletBalancesFetch.state() === 'rejected' ?
@@ -332,7 +330,6 @@ function fetchStartupData() {
 
   const fetches = [
     ownFollowingFetch,
-    followersFetch,
     exchangeRatesFetch,
     walletBalancesFetch,
     searchProvidersFetch,
@@ -516,16 +513,7 @@ function start() {
       peerId: app.profile.id,
     });
 
-<<<<<<< HEAD
-    app.followers = new Followers([], {
-      type: 'followers',
-      peerId: app.profile.id,
-    });
-
-    app.walletBalance = new WalletBalance();
-=======
     app.walletBalances = new WalletBalances();
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
     app.searchProviders = new SearchProvidersCol();
 
     onboardIfNeeded().done(() => {
@@ -545,6 +533,7 @@ function start() {
             // If for some reason the route to start on is empty, we'll change it to be
             // the user's profile.
             const href = location.href.replace(/(javascript:|#).*$/, '');
+            // instead of search it is possible to use app.profile.id
             location.replace(`${href}#search`);
           } else if (curConn.server &&
             curConn.server.id !== localStorage.serverIdAtLastStart) {
@@ -571,7 +560,6 @@ function start() {
             }
           } else {
             Backbone.history.start();
-            app.pageNav.updateTabs();
           }
 
           // load chat
@@ -609,7 +597,7 @@ function start() {
 
           // Make sure the client is running on a compatible version of the server.
           if (app.settings.prettyServerVer !== serverVersionRequired) {
-            const cLink = `<a href="https://phore.io/marketplace/">${app.polyglot.t('serverVersionWarning.clientLink')}</a>`;
+            const cLink = `<a href="https://github.com/phoreproject/openbazaar-desktop/releases">${app.polyglot.t('serverVersionWarning.clientLink')}</a>`;
             const sLink = `<a href="https://github.com/phoreproject/openbazaar-go/releases">${app.polyglot.t('serverVersionWarning.serverLink')}</a>`;
             const message = app.polyglot.t('serverVersionWarning.message', {
               serverVersion: app.settings.prettyServerVer,
@@ -723,30 +711,6 @@ app.connectionManagmentModal = new ConnectionManagement({
   showCloseButton: false,
 }).render();
 
-<<<<<<< HEAD
-/**
- * If the provided server requires a wallet setup, the Wallet Setup modal will be launched.
- * The function returns a promise that resolves when the process is complete.
- */
-function setupWallet(server) {
-  const deferred = $.Deferred();
-
-  if (server && server.get('builtIn') && server.get('walletCurrency') === undefined) {
-    new WalletSetup({ model: server })
-      .render()
-      .open()
-      .on('walletSetupComplete', () => deferred.resolve());
-  } else if (server && server.get('builtIn')) {
-    server.save().done(() => deferred.resolve());
-  } else {
-    deferred.resolve();
-  }
-
-  return deferred.promise();
-}
-
-=======
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
 // get the saved server configurations
 app.serverConfigs.fetch().done(() => {
   app.serverConfigs.migrate();

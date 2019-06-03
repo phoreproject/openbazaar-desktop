@@ -33,30 +33,7 @@ export default class extends BaseModel {
       dismissedStoreWelcome: false,
       backupWalletWarned: false,
       torPw: '',
-<<<<<<< HEAD
-      lastBlockchainResync: '',
-      walletCurrency: 'PHR',
-    };
-  }
-
-  set(key, val, options = {}) {
-    // Handle both `"key", value` and `{key: value}` -style arguments.
-    let attrs;
-    let opts = options;
-
-    if (typeof key === 'object') {
-      attrs = key;
-      opts = val || {};
-    } else {
-      (attrs = {})[key] = val;
-    }
-
-    const fullAttrs = {
-      ...this.toJSON(),
-      ...attrs,
-=======
       lastBlockchainResync: {},
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
     };
   }
 

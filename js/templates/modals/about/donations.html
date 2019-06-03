@@ -16,20 +16,11 @@
         <%= ob.polyT(`about.donationsTab.bannerTitle${ob.showCoin}`) %>
       </h3>
       <div class="clrT2 donationAddress posR">
-<<<<<<< HEAD
-        <% if (serverCur !== 'BTC') { %>
-          <p><%= ob.polyT('about.donationsTab.bitcoinIntroLine') %></p>
-        <% } %>
-        <p class="js-copyAddress rowSm"><%= ob.obDonationAddress %></p>
-        <div class="js-copyNotification copyNotification clrT clrBr clrP">
-          <%= ob.polyT('copiedToClipboardShort') %>
-=======
         <div class="posR">
           <p class="js-copyAddress rowSm"><%= ob.obDonationAddress %></p>
           <div class="js-copyNotification copyNotification clrT clrBr clrP">
             <%= ob.polyT('copiedToClipboardShort') %>
           </div>
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
         </div>
         <p class="clrTErr txUnl tx6"><i class="ion-alert-circled"></i> <%= ob.polyT(`about.donationsTab.${ob.showCoin}Warning`) %></p>
       </div>

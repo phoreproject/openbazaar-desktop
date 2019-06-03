@@ -10,13 +10,7 @@ import { getWallet, launchWallet } from '../../../utils/modalManager';
 import loadTemplate from '../../../utils/loadTemplate';
 import baseVw from '../../baseVw';
 
-<<<<<<< HEAD
-const obDonationAddress = 'PRZsB1sNgJXeKeC7sx5YJBfRS3Cz9RyCcF';
-const qrCodeDataURI = qr(`phore:${obDonationAddress}`, { type: 6, size: 6, level: 'Q' });
-const donationCountFloor = 500;
-=======
 
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
 let hiderTimer;
 
 export default class extends baseVw {
@@ -24,7 +18,7 @@ export default class extends baseVw {
     const opts = {
       ...options,
       initialState: {
-        showCoin: 'BTC',
+        showCoin: 'PHR',
         ...options.initialState,
       },
     };
@@ -35,21 +29,14 @@ export default class extends baseVw {
     });
     this.options = opts;
 
-    const btcAddress = '3EN8kP3yW9MGvyiRMtGqKavQ9wYg4BspzR';
-    const btcQRAddress = getCurrencyByCode('BTC').qrCodeText(btcAddress);
-    const bchAddress = 'prws8awqjg8l497x3h7qeu6jps4fdmk75vhlng8akj';
-    const bchQRAddress = getCurrencyByCode('BCH').qrCodeText(bchAddress);
+    const phrAddress = 'PRZsB1sNgJXeKeC7sx5YJBfRS3Cz9RyCcF';
+    const phrQRAddress = getCurrencyByCode('BTC').qrCodeText(phrAddress);
 
     this.dCoins = {
-      BTC: {
-        obDonationAddress: btcAddress,
-        qrCodeDataURI: qr(btcQRAddress, { type: 6, size: 6, level: 'Q' }),
-        walletSupported: isSupportedWalletCur('BTC'),
-      },
-      BCH: {
-        obDonationAddress: bchAddress,
-        qrCodeDataURI: qr(bchQRAddress, { type: 6, size: 6, level: 'Q' }),
-        walletSupported: isSupportedWalletCur('BCH'),
+      PHR: {
+        obDonationAddress: phrQRAddress,
+        qrCodeDataURI: qr(phrQRAddress, { type: 6, size: 6, level: 'Q' }),
+        walletSupported: isSupportedWalletCur('PHR'),
       },
     };
   }
@@ -58,17 +45,12 @@ export default class extends baseVw {
     return {
       'click .js-copyAddress': 'copyDonationAddress',
       'click .js-openInWallet': 'openInWalletClick',
-      'click .js-btc': 'showBTC',
-      'click .js-bch': 'showBCH',
+      'click .js-btc': 'showPHR',
     };
   }
 
-  showBTC() {
-    this.setState({ showCoin: 'BTC' });
-  }
-
-  showBCH() {
-    this.setState({ showCoin: 'BCH' });
+  showPHR() {
+    this.setState({ showCoin: 'PHR' });
   }
 
   copyDonationAddress() {

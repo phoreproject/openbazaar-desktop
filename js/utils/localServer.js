@@ -84,13 +84,7 @@ export default class LocalServer {
     }
 
     this._isRunning = true;
-<<<<<<< HEAD
-    let serverStartArgs = ['start',
-      ...commandLineArgs,
-    ];
-=======
     let serverStartArgs = ['start', '-t', ...commandLineArgs];
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
 
     // wire in our auth cookie
     if (global.authCookie) {

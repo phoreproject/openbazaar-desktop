@@ -14,7 +14,7 @@ export default class extends BaseVw {
         amountShort: 0,
         balanceRemaining: 0,
         payee: '',
-        userCurrency: app.settings.get('localCurrency') || 'BTC',
+        userCurrency: app.settings.get('localCurrency') || 'PHR',
         showAcceptRejectButtons: false,
         showCancelButton: false,
         acceptInProgress: false,
@@ -31,24 +31,6 @@ export default class extends BaseVw {
       throw new Error('Please provide a model.');
     }
 
-<<<<<<< HEAD
-    this._state = {
-      paymentNumber: 1,
-      amountShort: 0,
-      balanceRemaining: 0,
-      payee: '',
-      userCurrency: app.settings.get('localCurrency') || 'PHR',
-      showAcceptRejectButtons: false,
-      showCancelButton: false,
-      acceptInProgress: false,
-      rejectInProgress: false,
-      cancelInProgress: false,
-      rejectConfirmOn: false,
-      ...options.initialState || {},
-    };
-
-=======
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
     this.boundOnDocClick = this.onDocumentClick.bind(this);
     $(document).on('click', this.boundOnDocClick);
   }

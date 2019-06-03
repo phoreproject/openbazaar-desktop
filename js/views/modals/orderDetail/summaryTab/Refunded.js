@@ -10,7 +10,7 @@ export default class extends BaseVw {
       ...options,
       initialState: {
         buyerName: '',
-        userCurrency: app.settings.get('localCurrency') || 'BTC',
+        userCurrency: app.settings.get('localCurrency') || 'PHR',
         isCrypto: false,
         blockChainTxUrl: '',
         ...options.initialState,
@@ -20,16 +20,6 @@ export default class extends BaseVw {
     if (!this.model) {
       throw new Error('Please provide a model.');
     }
-<<<<<<< HEAD
-
-    this._state = {
-      buyerName: '',
-      userCurrency: app.settings.get('localCurrency') || 'PHR',
-      isCrypto: false,
-      ...options.initialState || {},
-    };
-=======
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
   }
 
   className() {

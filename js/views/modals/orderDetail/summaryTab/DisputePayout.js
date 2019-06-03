@@ -29,16 +29,6 @@ export default class extends BaseVw {
 
     this.orderId = options.orderId;
 
-<<<<<<< HEAD
-    this._state = {
-      userCurrency: app.settings.get('localCurrency') || 'PHR',
-      showAcceptButton: false,
-      acceptConfirmOn: false,
-      ...options.initialState || {},
-    };
-
-=======
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
     this.boundOnDocClick = this.onDocumentClick.bind(this);
     $(document).on('click', this.boundOnDocClick);
 

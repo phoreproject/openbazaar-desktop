@@ -47,27 +47,6 @@
     "btnCancel": "Cancel",
     "btnProceed": "Yes, proceed"
   },
-<<<<<<< HEAD
-  "walletSetup": {
-    "heading": "Phore Marketplace Wallet Setup",
-    "currencyLabel": "Currency",
-    "currencyHelper": "Choose a currency for your Wallet",
-    "currencyHelper2": "Accept and send payments in the selected currency above. Please choose wisely, it’s currently not possible to change your currency once a selection is made.",
-    "curInUseTip": "You already have a built-in server with this wallet currency.",
-    "zcashBinaryLabel": "Zcash Binary",
-    "fullNodeLink": "here",
-    "zcashBinaryHelper": "A Zcash full node is required. Download a Zcash full node %{fullNodeLink}. Once installed, enter the path to your zcashd binary above.",
-    "btnBrowse": "Browse",
-    "btnNext": "Next",
-    "alreadyInUse": "Already in use"
-  },
-  "unsupportedCryptoCurDialog": {
-    "title": "Unsupported Currency",
-    "body": "We are unable to proceed because the server is using a crypto currency (%{curCode}) that this client does not support. Please %{connectLink} to a different server",
-    "connectLink": "connect"
-  },
-=======
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
   "setValidCurDialog": {
     "title": "Invalid Local Currency",
     "body": "Your local currency is currently set to %{currency}, which is not supported on this client. Please select and save a different currency in %{settingsLink}.",
@@ -446,12 +425,7 @@
     "noCoinSupport": "This moderator does not accept any of the coins your wallet supports."
   },
   "about": {
-<<<<<<< HEAD
     "linkText": "About Phore Marketplace",
-    "brand": "Phore Marketplace",
-=======
-    "linkText": "About OpenBazaar",
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
     "blurbs": {
       "tradeFree": "Phore Marketplace is made possible by an international community of developers and volunteers contributing their time to help make trade free."
     },
@@ -466,15 +440,10 @@
       "sectionHeader": "Donations",
       "btnCopyAddress": "Copy Address",
       "btnOpenInWallet": "Open in Wallet",
-<<<<<<< HEAD
-      "bannerCountDonations": "%{donationCountFloor}+ Donations Received!",
-      "bitcoinIntroLine": "Phore donations can be sent to the following address:",
-=======
       "bannerTitleBTC": "Scan or send Bitcoin (BTC) to this address",
       "bannerTitleBCH":"Scan or send Bitcoin Cash (BCH) to this address",
       "BCHWarning": "Do not send Bitcoin (BTC) to this address.",
       "BTCWarning": "Do not send Bitcoin Cash (BCH) to this address.",
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
       "unableToOpenInWallet": {
         "title": "Unable to open in wallet",
         "body": "Unable to open the address in the wallet because a payment is in the process of being sent. Please wait until the send completes and try again."
@@ -1368,13 +1337,8 @@
     "introScreen": {
       "connectionLbl": "Connection:",
       "btnChange": "Change",
-<<<<<<< HEAD
-      "introLine": "A free marketplace, built for Phore. No fees. No restrictions. Earn %{cur}.",
-      "tagLine": "Buying and selling on your terms.",
-=======
       "introLine": "A free marketplace. No fees. No restrictions. Earn Cryptocurrency.",
       "tagLine": "Buy and Sell Freely",
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
       "btnGetStarted": "Get Started"
     },
     "infoScreen": {
@@ -1464,14 +1428,8 @@
       "copied": "Copied",
       "to": "To: %{address}",
       "payFromWallet": "Pay from wallet",
-<<<<<<< HEAD
-      "payWithAlt": "Pay with altcoins",
-      "note1": "If you need help getting started with Phore, please read %{link}.",
-      "note1Link": "Need Phore? on phore.io",
-=======
       "note1": "If you need help getting started with Bitcoin, please read %{link}.",
       "note1Link": "Need Bitcoin? on OpenBazaar.org",
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
       "note2": "Your payment will be held securely in escrow. If any issues arise, you’ll have the ability to open a dispute.",
       "note3": "*The moderator service fee only applies if a dispute is opened.",
       "note4": "Once you have paid, it may take a bit for the interface to update.",

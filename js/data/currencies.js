@@ -663,12 +663,8 @@ export function getCurrencyByCode(code, options = {}) {
   }
 
   const currency = getIndexedCurrencies()[code];
-<<<<<<< HEAD
-  if (!currency && opts.includeCrypto) {
-=======
 
   if (!currency && opts.includeWalletCurs) {
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
     return getCryptoCurByCode(code);
   }
 

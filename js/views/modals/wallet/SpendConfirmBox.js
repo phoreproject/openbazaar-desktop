@@ -19,12 +19,8 @@ export default class extends baseVw {
       fetchFailed: false,
       fetchError: '',
       fee: false,
-<<<<<<< HEAD
-      displayCurrency: app.settings.get('localCurrency') || 'PHR',
-=======
       coinType: '',
       displayCurrency: app.settings.get('localCurrency') || 'USD',
->>>>>>> 37d84b452a7ae184d0893b4042a6769f4525b66b
       btnSendText: app.polyglot.t('wallet.spendConfirmBox.btnConfirmSend'),
       ...options.initialState || {},
     };
