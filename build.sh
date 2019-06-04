@@ -153,7 +153,7 @@ case "$TRAVIS_OS_NAME" in
     brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
     brew install freetype graphicsmagick
     brew link xz
-    brew install mono
+    brew install mono osslsigncode
 
     # Retrieve Latest Server Binaries
     cd PHORE_MARKETPLACE_TEMP/
@@ -190,8 +190,8 @@ case "$TRAVIS_OS_NAME" in
     mv dist/win32/PhoreMarketplaceClientSetup.exe dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
 
     echo 'Sign the installer'
-    signcode -t http://timestamp.digicert.com -a sha1 -spc .travis/ob1.cert.spc -pvk .travis/ob1.pvk -n "PhoreMarketplace $PACKAGE_VERSION" dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe
-    signcode -t http://timestamp.digicert.com -a sha1 -spc .travis/ob1.cert.spc -pvk .travis/ob1.pvk -n "OpenBazaarClient $PACKAGE_VERSION" dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
+    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/ob1.keyfile -pass "$OB1_SECRET" -certs .travis/ob1.cert.spc -in dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe -out dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe
+    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/ob1.keyfile -pass "$OB1_SECRET" -certs .travis/ob1.cert.spc -in dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe -out dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
 
     rm dist/win32/RELEASES
 
@@ -223,8 +223,8 @@ case "$TRAVIS_OS_NAME" in
     mv dist/win64/PhoreMarketplaceSetup.exe dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
 
     echo 'Sign the installer'
-    signcode -t http://timestamp.digicert.com -a sha1 -spc .travis/ob1.cert.spc -pvk .travis/ob1.pvk -n "PhoreMarketplace $PACKAGE_VERSION" dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
-    signcode -t http://timestamp.digicert.com -a sha1 -spc .travis/ob1.cert.spc -pvk .travis/ob1.pvk -n "PhoreMarketplaceClient $PACKAGE_VERSION" dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
+    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/ob1.keyfile -pass "$OB1_SECRET" -certs .travis/ob1.cert.spc -in dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
+    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/ob1.keyfile -pass "$OB1_SECRET" -certs .travis/ob1.cert.spc -in dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
 
     mv dist/RELEASES dist/win32/RELEASES
 
