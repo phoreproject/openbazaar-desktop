@@ -6,6 +6,7 @@ import { getGuid, isMultihash } from './utils';
 import { getPageContainer } from './utils/selectors';
 import { isPromise } from './utils/object';
 import { startAjaxEvent, endAjaxEvent, recordEvent } from './utils/metrics';
+import { getCurrentConnection } from './utils/serverConnect';
 import { isBlocked, isUnblocking, events as blockEvents } from './utils/block';
 import './lib/whenAll.jquery';
 import Profile from './models/profile/Profile';
@@ -42,7 +43,7 @@ export default class ObRouter extends Router {
       ['(pm://)transactions(/)', 'transactions'],
       ['(pm://)transactions/:tab(/)', 'transactions'],
       ['(pm://)connected-peers(/)', 'connectedPeers'],
-      ['(pm://)search(/:tab)(?query)', 'search'],
+      ['(pm://)search(/:tab)(?:query)', 'search'],
       ['(pm://)*path', 'pageNotFound'],
     ];
 
@@ -570,9 +571,12 @@ export default class ObRouter extends Router {
     })
       .always(() => {
         this.off(null, onWillRoute);
+        const dismissedCallout = getCurrentConnection() &&
+          getCurrentConnection().server.get('dismissedDiscoverCallout');
         endAjaxEvent('UserPageLoad', {
           ownPage: guid === app.profile.id,
           tab: pageState,
+          dismissedCallout,
           listing: !!listingFetch,
           errors: userPageFetchError || 'none',
         });

@@ -107,12 +107,16 @@ export default class extends baseVw {
       recordEvent('Discover_SearchFromAddressBar');
       recordEvent('Discover_Search', { type: 'addressBar' });
 
-      let queryParams = (new URL(`${this.currentBaseUrl}?${options.query}`)).searchParams;
+      const queryParams = (new URL(`${this.currentBaseUrl}?${options.query}`)).searchParams;
 
       // If the query had a providerQ parameter, use that as the provider URL instead.
       if (queryParams.get('providerQ')) {
         const subURL = new URL(queryParams.get('providerQ'));
-        queryParams = subURL.searchParams;
+        queryParams.delete('providerQ');
+        // The first parameter after the ? will be part of the providerQ, transfer it over.
+        for (const param of subURL.searchParams.entries()) {
+          queryParams.append(param[0], param[1]);
+        }
         const base = `${subURL.origin}${subURL.pathname}`;
         /*
          If the query provider model doesn't already exist, create a new provider model for it.
@@ -389,7 +393,8 @@ export default class extends baseVw {
   }
 
   /**
-   * This will add the categories one by one in a loop.
+   * This will add the categories one by one in a loop. If the category views already exist, they
+   * will be reused to prevent new calls to the search endpoint.
    */
   buildCategories() {
     if (!Array.isArray(this._categorySearches)) {
@@ -402,8 +407,9 @@ export default class extends baseVw {
       this._setHistory = true;
       this._search = { ...this._defaultSearch, provider: app.searchProviders.at(0) };
       scrollPageIntoView();
+      const data = { name: defaultSearchProviders[0].name, logo: defaultSearchProviders[0].logo };
       // The state may not be changed here, so always fire a render.
-      this.setState({ tab: 'home' }, { renderOnChange: false });
+      this.setState({ tab: 'home', data }, { renderOnChange: false });
       this.render();
       return;
     }
@@ -516,6 +522,7 @@ export default class extends baseVw {
     const catsFrag = document.createDocumentFragment();
 
     this.categoryViews.forEach(catVw => {
+      catVw.delegateEvents();
       catVw.render().$el.appendTo(catsFrag);
     });
 
