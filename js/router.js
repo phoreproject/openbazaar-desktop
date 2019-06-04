@@ -37,6 +37,8 @@ export default class ObRouter extends Router {
       [/^@([^\/]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'userViaHandle'],
       [/^(?:pm:\/\/)(Qm[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
       [/^(Qm[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
+      [/^(?:pm:\/\/)(12D3Koo[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
+      [/^(12D3Koo[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
       ['(pm://)transactions(/)', 'transactions'],
       ['(pm://)transactions/:tab(/)', 'transactions'],
       ['(pm://)connected-peers(/)', 'connectedPeers'],
@@ -53,7 +55,6 @@ export default class ObRouter extends Router {
 
     $(window).on('hashchange', () => {
       this.setAddressBarText();
-      app.pageNav.updateTabs();
       if (window.Countly) {
         window.Countly.q.push(['track_pageview', location.hash]);
       }
