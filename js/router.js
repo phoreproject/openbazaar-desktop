@@ -42,7 +42,7 @@ export default class ObRouter extends Router {
       ['(pm://)transactions(/)', 'transactions'],
       ['(pm://)transactions/:tab(/)', 'transactions'],
       ['(pm://)connected-peers(/)', 'connectedPeers'],
-      ['(pm://)search(?query)', 'search'],
+      ['(pm://)search(/:tab)(?query)', 'search'],
       ['(pm://)*path', 'pageNotFound'],
     ];
 
@@ -621,9 +621,9 @@ export default class ObRouter extends Router {
     this.once('will-route', () => (peerFetch.abort()));
   }
 
-  search(query) {
+  search(tab = 'listings', query) {
     this.loadPage(
-      new Search({ query })
+      new Search({ query, initialState: { tab } })
     );
   }
 
