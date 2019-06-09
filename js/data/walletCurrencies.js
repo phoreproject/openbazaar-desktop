@@ -8,6 +8,42 @@ import bech32 from 'bech32';
 
 const currencies = [
   {
+    code: 'PHR',
+    testnetCode: 'TPHR',
+    baseUnit: 100000000,
+    averageModeratedTransactionSize: 184,
+    // Not allowing fee bump on BTC right now given the fees.
+    // feeBumpTransactionSize: 154,
+    qrCodeText: address => `phore:${address}`,
+    icon: 'imgs/cryptoIcons/PHR.png',
+    url: 'https://phore.io/',
+    getBlockChainAddressUrl: (address, _) => (
+        `https://chainz.cryptoid.info/phr/address.dws?${address}.htm`
+    ),
+    getBlockChainTxUrl: (txid, _) => (
+        `https://chainz.cryptoid.info/phr/tx.dws?${txid}.htm`
+    ),
+    isValidAddress: address => {
+      if (typeof address !== 'string') {
+        throw new Error('Please provide a string.');
+      }
+
+      try {
+        bitcoreLib.encoding.Base58Check.decode(address);
+        return true;
+      } catch (exc) {
+        try {
+          bech32.decode(address);
+          return true;
+        } catch (exc2) {
+          return false;
+        }
+      }
+    },
+    supportsEscrowTimeout: false,
+    blockTime: 1000 * 60,
+  },
+  {
     code: 'BTC',
     testnetCode: 'TBTC',
     symbol: '₿',
