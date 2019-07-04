@@ -21,8 +21,8 @@ export default class extends baseVw {
 
   events() {
     return {
-      'click .js-btnSend': 'onClickSend',
-      'click .js-btnReceive': 'onClickReceive',
+      'click .js-btnSendNav': 'onClickSend',
+      'click .js-btnReceiveNav': 'onClickReceive',
     };
   }
 
