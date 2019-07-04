@@ -14,58 +14,54 @@ import {
 // The base list could be updated from release to release. If there are additional crypto
 // currencies being returned by the exchange rate api, they will be merged into a combined
 // list the UI will use.
-const baseCurrencies = [ // limit trading pairs to BTC and PHR
-  'BTC',
-  'PHR',
-];
 
-// const baseCurrencies = [
-//   'BTC',
-//   'ADA',
-//   'ARK',
-//   'BCH',
-//   'BCN',
-//   'BTCD',
-//   'BTG',
-//   'BTS',
-//   'DASH',
-//   'DCR',
-//   'DGB',
-//   'DOGE',
-//   'ETC',
-//   'ETH',
-//   'FCT',
-//   'HSR',
-//   'KMD',
-//   'LSK',
-//   'LTC',
-//   'MIOTA',
-//   'MONA',
-//   'NANO',
-//   'NEBL',
-//   'NEO',
-//   'NXS',
-//   'NXT',
-//   'PHR',
-//   'PIVX',
-//   'QTUM',
-//   'RDD',
-//   'SC',
-//   'STEEM',
-//   'STRAT',
-//   'SYS',
-//   'VEN',
-//   'WAVES',
-//   'XDN',
-//   'XEM',
-//   'XLM',
-//   'XMR',
-//   'XRP',
-//   'XVC',
-//   'XVG',
-//   'ZCL',
-//   'ZEC',
-// ];
+const baseCurrencies = [
+  'BTC',
+  'ADA',
+  'ARK',
+  'BCH',
+  'BCN',
+  'BTCD',
+  'BTG',
+  'BTS',
+  'DASH',
+  'DCR',
+  'DGB',
+  'DOGE',
+  'ETC',
+  'ETH',
+  'FCT',
+  'HSR',
+  'KMD',
+  'LSK',
+  'LTC',
+  'MIOTA',
+  'MONA',
+  'NANO',
+  'NEBL',
+  'NEO',
+  'NXS',
+  'NXT',
+  'PHR',
+  'PIVX',
+  'QTUM',
+  'RDD',
+  'SC',
+  'STEEM',
+  'STRAT',
+  'SYS',
+  'VEN',
+  'WAVES',
+  'XDN',
+  'XEM',
+  'XLM',
+  'XMR',
+  'XRP',
+  'XVC',
+  'XVG',
+  'ZCL',
+  'ZEC',
+];
 
 
 // Certain currencies are not in our fiat list, but they're also not crypto currencies.
@@ -119,18 +115,16 @@ export function getCurrencies() {
   }
 
   const curs = new Set();
-  baseCurrencies.forEach(cur => curs.add(cur));
   const _exchangeRateCurs = Object.keys(getExchangeRates());
   exchangeRateCurs = _exchangeRateCurs.sort();
-  // TODO limit available currencies to PHR and BTC
-  // _exchangeRateCurs
-  //   .forEach(cur => {
-  //     // If it's not a fiat currency code (base on our hard-code list),
-  //     // or on our exclude list, we'll assume it's a crypto currency.
-  //     if (!fiatCurrencyCodes.includes(cur) && !excludes.includes(cur)) {
-  //       curs.add(cur);
-  //     }
-  //   });
+  _exchangeRateCurs
+    .forEach(cur => {
+      // If it's not a fiat currency code (base on our hard-code list),
+      // or on our exclude list, we'll assume it's a crypto currency.
+      if (!fiatCurrencyCodes.includes(cur) && !excludes.includes(cur)) {
+        curs.add(cur);
+      }
+    });
 
   // We'll merge in any previous currencies we had, so the UI lists don't potentially have
   // currencies that are there at one point and then gone later. If the exchange rate for
