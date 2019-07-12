@@ -986,7 +986,7 @@
     },
     "cryptoTeaser": {
       "coinCount": "%{count}+ coins",
-      "bodyLine": "Trade %{coinCount} on OpenBazaar for free",
+      "bodyLine": "Trade %{coinCount} on Phore Marketplace for free",
       "btnCreateListing": "Opprett oppføring",
       "linkViewCryptoListings": "View crypto listings"
     }
