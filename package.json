@@ -1,8 +1,8 @@
 {
   "name": "openbazaar-desktop",
   "productName": "Phore Marketplace Desktop Client",
-  "version": "2.0.1",
-  "serverVersionRequired": "2.0.1",
+  "version": "2.0.2",
+  "serverVersionRequired": "2.0.2",
   "description": "Decentralized p2p marketplace for Phore",
   "main": "bootstrapper.js",
   "scripts": {
