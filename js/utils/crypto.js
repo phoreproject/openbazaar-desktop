@@ -28,9 +28,6 @@ export function renderCryptoIcon(options = {}) {
   const iconUrl = opts.code ?
     `url(${baseIconPath}${opts.code}-icon.png),` :
     '';
-  const defaultIcon = opts.defaultIcon ?
-    `url(${opts.defaultIcon})` :
-    '';
   const style = `style="background-image: ${iconUrl}"`;
   return `<i class="cryptoIcon ${opts.className}" ${attrs} ${style}></i>`;
 }

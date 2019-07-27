@@ -17,10 +17,10 @@ const currencies = [
     qrCodeText: address => `phore:${address}`,
     icon: 'imgs/cryptoIcons/PHR.png',
     url: 'https://phore.io/',
-    getBlockChainAddressUrl: (address, _) => (
+    getBlockChainAddressUrl: (address, _) => ( // eslint-disable-line
         `https://chainz.cryptoid.info/phr/address.dws?${address}.htm`
     ),
-    getBlockChainTxUrl: (txid, _) => (
+    getBlockChainTxUrl: (txid, _) => ( // eslint-disable-line
         `https://chainz.cryptoid.info/phr/tx.dws?${txid}.htm`
     ),
     isValidAddress: address => {

@@ -161,44 +161,6 @@ describe('the Metadata model', () => {
       .equal(true);
   });
 
-  it('ensures the acceptedCurrencies consist of only supported wallet currencies.', () => {
-    const metadata = new Metadata();
-    metadata.set({
-      contractType: 'PHYSICAL_GOOD',
-      acceptedCurrencies: ['BTC', 'BCH'],
-    }, { validate: true });
-    const valErr1 = metadata.validationError;
-
-    const metadata2 = new Metadata();
-    metadata2.set({
-      contractType: 'PHYSICAL_GOOD',
-      acceptedCurrencies: ['ZEC', 'BTC'],
-    }, { validate: true });
-    const valErr2 = metadata2.validationError;
-
-    const metadata3 = new Metadata();
-    metadata3.set({
-      contractType: 'CRYPTOCURRENCY',
-      acceptedCurrencies: ['BCH'],
-    }, { validate: true });
-    const valErr3 = metadata3.validationError;
-
-    const metadata4 = new Metadata();
-    metadata4.set({
-      contractType: 'CRYPTOCURRENCY',
-      acceptedCurrencies: ['ZEC'],
-    }, { validate: true });
-    const valErr4 = metadata4.validationError;
-
-    expect(
-      valErr1 && valErr1.acceptedCurrencies && !!valErr1.acceptedCurrencies.length &&
-      !(valErr2 && valErr2.acceptedCurrencies && !!valErr2.acceptedCurrencies.length) &&
-      valErr3 && valErr3.acceptedCurrencies && !!valErr3.acceptedCurrencies.length &&
-      !(valErr4 && valErr4.acceptedCurrencies && !!valErr4.acceptedCurrencies.length) || false
-    ).to
-      .equal(true);
-  });
-
   after(function () {
     supportedWalletCurStub.restore();
   });
