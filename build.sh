@@ -193,9 +193,9 @@ case "$TRAVIS_OS_NAME" in
     grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-ia32 --outdir=dist/win32
     mv dist/win32/PhoreMarketplaceClientSetup.exe dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
 
-    echo 'Sign the installer'
-    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe -out dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe
-    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe -out dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
+    echo 'Do not sign the installer'
+#    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe -out dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe
+#    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe -out dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
 
     rm dist/win32/RELEASES
 
@@ -226,9 +226,9 @@ case "$TRAVIS_OS_NAME" in
     grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
     mv dist/win64/PhoreMarketplaceClientSetup.exe dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
 
-    echo 'Sign the installer'
-    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
-    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
+    echo 'Do not sign the installer'
+#    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
+#    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
 
     mv dist/RELEASES dist/win32/RELEASES
 
