@@ -14,10 +14,15 @@ ELECTRONVER=1.8.7
 NODEJSVER=5.1.1
 
 OS="${1}"
-if [ -z "${2}" ]; then
-SERVERTAG='latest'
+if [[ -z "${2}" ]]; then
+  SERVERTAG='latest'
+
+  FORCE_SERVER=$(node -p 'require("./package").forceServerVersion')
+  if [ ${FORCE_SERVER} = true ]; then
+    SERVERTAG=tags/v$(node -p 'require("./package").serverVersionRequired')
+  fi
 else
-SERVERTAG=tags/${2}
+  SERVERTAG=tags/${2}
 fi
 echo "Building with openbazaar-go/$SERVERTAG"
 
@@ -76,7 +81,7 @@ case "$TRAVIS_OS_NAME" in
     # Retrieve Latest Server Binaries
     sudo apt-get install jq
     cd PHORE_MARKETPLACE_TEMP/
-    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/phoreproject/releases/$SERVERTAG > release.txt
+    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/openbazaar-go/releases/$SERVERTAG > release.txt
     cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
 
@@ -157,7 +162,7 @@ case "$TRAVIS_OS_NAME" in
 
     # Retrieve Latest Server Binaries
     cd PHORE_MARKETPLACE_TEMP/
-    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/phoreproject/releases/$SERVERTAG > release.txt
+    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/openbazaar-go/releases/$SERVERTAG > release.txt
     cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
 
