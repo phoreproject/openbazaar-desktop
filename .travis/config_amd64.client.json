@@ -6,7 +6,7 @@
   "bin": "phoremarketplaceclient",
   "maintainer": "Phore <admin@phore.io>",
   "arch": "amd64",
-  "src": "dist/phoremarketplaceclient-linux-x64/",
+  "src": "dist/phoremarketplaceClient-linux-x64/",
   "dest": "dist/linux64",
   "productDescription": "Decentralized Peer to Peer Marketplace for Phore",
   "lintianOverrides": [
