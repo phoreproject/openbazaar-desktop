@@ -328,16 +328,21 @@
     // see styleSheet.html for example usage.
     // use for buttons in the new 'flex' style with more padding and use css flex.
     @extend .btn;
-    padding: 25px;
+    min-height: 48px;
+    height: auto;
     border-radius: 0px;
-    border: none;
     border-width: 1px;
     border-style: solid;
     flex-grow: 1;
+    flex-basis: 0; // calculate the width independent of the content
     margin: 0 -1px -1px -1px;
 
     & + .btnFlx {
       margin-left: 0;
+    }
+
+    &:hover, &:focus {
+      z-index: 1; // make sure the themed border between buttons is stacked to be visible
     }
   }
 
@@ -347,6 +352,32 @@
 
   .contentBox & .btnFlx:last-child {
     border-bottom-right-radius: 2px;
+  }
+
+  &.flexBtnTop {
+    // use for flexButtons on the vertical top side of the container
+    .btnFlx {
+      border-radius: 0;
+      border-top: none;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 400;
+
+      & > * {
+        // Set text to the same height as icons to prevent wobble on hover.
+        // If the text or icons are a different size, override this.
+        line-height: 16px;
+      }
+
+      &.underlineOnly.active,
+      &:hover,
+      &:focus {
+        border-bottom-width: 2px;
+      }
+      &.underlineOnly.active {
+        font-weight: 700;
+      }
+    }
   }
 }
 

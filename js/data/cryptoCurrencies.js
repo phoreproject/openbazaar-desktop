@@ -77,62 +77,62 @@ const currencies = [
     supportsEscrowTimeout: true,
     blockTime: 1000 * 60 * 10,
   },
-  {
-    code: 'BCH',
-    testnetCode: 'TBCH',
-    baseUnit: 100000000,
-    averageModeratedTransactionSize: 184,
-    feeBumpTransactionSize: 154,
-    qrCodeText: address => {
-      let prefixedAddress = address;
-
-      const prefix = app.serverConfig.testnet ? 'bchtest' : 'bitcoincash';
-      prefixedAddress = address.startsWith(prefix) ?
-        prefixedAddress : `${prefix}:${address}`;
-
-      return prefixedAddress;
-    },
-    icon: 'imgs/cryptoIcons/BCH.png',
-    url: 'https://bitcoincash.org/',
-    getBlockChainAddressUrl: (address, isTestnet) => (
-      isTestnet ?
-        `https://www.blocktrail.com/tBCC/address/${address}` :
-        `https://blockdozer.com/address/${address}`
-    ),
-    getBlockChainTxUrl: (txid, isTestnet) => (
-      isTestnet ?
-        `https://www.blocktrail.com/tBCC/tx/${txid}` :
-        `https://blockdozer.com/tx/${txid}`
-    ),
-    canShapeShiftIntoWallet: true,
-    canShapeShiftIntoPurchase: false,
-    supportsEscrowTimeout: true,
-    blockTime: 1000 * 60 * 10,
-  },
-  {
-    code: 'ZEC',
-    testnetCode: 'TZEC',
-    baseUnit: 100000000,
-    averageModeratedTransactionSize: 184,
-    feeBumpTransactionSize: 154,
-    qrCodeText: address => `zcash:${address}`,
-    icon: 'imgs/cryptoIcons/ZEC.png',
-    url: 'https://z.cash',
-    getBlockChainAddressUrl: (address, isTestnet) => (
-      isTestnet ?
-        `https://explorer.testnet.z.cash/address/${address}` :
-        `https://explorer.zcha.in/accounts/${address}`
-    ),
-    getBlockChainTxUrl: (txid, isTestnet) => (
-      isTestnet ?
-        `https://explorer.testnet.z.cash/tx/${txid}` :
-        `https://explorer.zcha.in/transactions/${txid}`
-    ),
-    canShapeShiftIntoWallet: true,
-    canShapeShiftIntoPurchase: false,
-    supportsEscrowTimeout: false,
-    blockTime: 1000 * 60 * 2.5,
-  },
+  // {
+  //   code: 'BCH',
+  //   testnetCode: 'TBCH',
+  //   baseUnit: 100000000,
+  //   averageModeratedTransactionSize: 184,
+  //   feeBumpTransactionSize: 154,
+  //   qrCodeText: address => {
+  //     let prefixedAddress = address;
+  //
+  //     const prefix = app.serverConfig.testnet ? 'bchtest' : 'bitcoincash';
+  //     prefixedAddress = address.startsWith(prefix) ?
+  //       prefixedAddress : `${prefix}:${address}`;
+  //
+  //     return prefixedAddress;
+  //   },
+  //   icon: 'imgs/cryptoIcons/BCH.png',
+  //   url: 'https://bitcoincash.org/',
+  //   getBlockChainAddressUrl: (address, isTestnet) => (
+  //     isTestnet ?
+  //       `https://www.blocktrail.com/tBCC/address/${address}` :
+  //       `https://blockdozer.com/address/${address}`
+  //   ),
+  //   getBlockChainTxUrl: (txid, isTestnet) => (
+  //     isTestnet ?
+  //       `https://www.blocktrail.com/tBCC/tx/${txid}` :
+  //       `https://blockdozer.com/tx/${txid}`
+  //   ),
+  //   canShapeShiftIntoWallet: true,
+  //   canShapeShiftIntoPurchase: false,
+  //   supportsEscrowTimeout: true,
+  //   blockTime: 1000 * 60 * 10,
+  // },
+  // {
+  //   code: 'ZEC',
+  //   testnetCode: 'TZEC',
+  //   baseUnit: 100000000,
+  //   averageModeratedTransactionSize: 184,
+  //   feeBumpTransactionSize: 154,
+  //   qrCodeText: address => `zcash:${address}`,
+  //   icon: 'imgs/cryptoIcons/ZEC.png',
+  //   url: 'https://z.cash',
+  //   getBlockChainAddressUrl: (address, isTestnet) => (
+  //     isTestnet ?
+  //       `https://explorer.testnet.z.cash/address/${address}` :
+  //       `https://explorer.zcha.in/accounts/${address}`
+  //   ),
+  //   getBlockChainTxUrl: (txid, isTestnet) => (
+  //     isTestnet ?
+  //       `https://explorer.testnet.z.cash/tx/${txid}` :
+  //       `https://explorer.zcha.in/transactions/${txid}`
+  //   ),
+  //   canShapeShiftIntoWallet: true,
+  //   canShapeShiftIntoPurchase: false,
+  //   supportsEscrowTimeout: false,
+  //   blockTime: 1000 * 60 * 2.5,
+  // },
 ];
 
 export default currencies;

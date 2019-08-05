@@ -1,13 +1,12 @@
 language: node_js
 sudo: true
-matrix:
-  include:
-    - os: linux
-    - os: linux
-      env: CLIENT_VERSION=1
-    - os: osx
-    - os: osx
-      env: CLIENT_VERSION=1
+os:
+  - linux
+  - osx
+cache:
+  directories:
+    - node_modules
+    - "/usr/local/Cellar"
 node_js:
 - '8'
 addons:
@@ -15,6 +14,9 @@ addons:
     packages:
       - fakeroot
 before_script:
+- if [[ -n "$TRAVIS_TAG" ]]; then cp ./.travis/phore.pvk ./.travis/phore.keyfile; fi
+- if [[ -n "$TRAVIS_TAG" ]]; then openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in .travis/cert.p12.enc -d -a -out ./.travis/cert.p12; fi
+- if [[ -n "$TRAVIS_TAG" ]]; then openssl aes-256-cbc -k "$PHORE_SECRET" -in .travis/phore.cert.spc.enc -d -a -out ./.travis/phore.cert.spc; fi
 - if [[ -n "$TRAVIS_TAG" ]]; then if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then "./.travis/add-key.sh"; fi ; fi
 script:
 - npm run lint

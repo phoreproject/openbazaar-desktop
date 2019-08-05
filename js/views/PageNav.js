@@ -10,7 +10,7 @@ import app from '../app';
 import $ from 'jquery';
 import {
   launchEditListingModal, launchAboutModal,
-  launchWallet, launchSettingsModal, getWallet,
+  launchWallet, launchSettingsModal,
 } from '../utils/modalManager';
 import Listing from '../models/listing/Listing';
 import { getAvatarBgImage } from '../utils/responsive';
@@ -172,10 +172,12 @@ export default class extends BaseVw {
   }
 
   navBackClick() {
+    recordEvent('NavClick', { target: 'back' });
     window.history.back();
   }
 
   navFwdClick() {
+    recordEvent('NavClick', { target: 'forward' });
     window.history.forward();
   }
 
@@ -241,6 +243,7 @@ export default class extends BaseVw {
   }
 
   navCloseClick() {
+    recordEvent('NavClick', { target: 'close' });
     if (remote.process.platform !== 'darwin') {
       remote.getCurrentWindow().close();
     } else {
@@ -249,10 +252,12 @@ export default class extends BaseVw {
   }
 
   navMinClick() {
+    recordEvent('NavClick', { target: 'minimize' });
     remote.getCurrentWindow().minimize();
   }
 
   navMaxClick() {
+    recordEvent('NavClick', { target: 'maximize' });
     remote.getCurrentWindow().setFullScreen(!remote.getCurrentWindow().isFullScreen());
   }
 
@@ -321,6 +326,7 @@ export default class extends BaseVw {
 
     if (!isOpen) {
       this.$connManagementContainer.removeClass('open');
+      recordEvent('NavClick', { target: 'navMenuOpen' });
     }
   }
 
@@ -353,6 +359,7 @@ export default class extends BaseVw {
       this.$navOverlay.removeClass('open');
     } else {
       this.$navOverlay.addClass('open');
+      recordEvent('NavClick', { target: 'notificationsOpen' });
 
       // open notifications menu
       if (!this.notifications) {
@@ -424,15 +431,19 @@ export default class extends BaseVw {
           .split('/')[0];
 
       if (isMultihash(firstTerm)) {
+        recordEvent('AddressBar_Input', { entry: 'multihash' });
         app.router.navigate(text.split(' ')[0], { trigger: true });
       } else if (firstTerm.charAt(0) === '@' && firstTerm.length > 1) {
         // a handle
+        recordEvent('AddressBar_Input', { entry: 'handle' });
         app.router.navigate(text.split(' ')[0], { trigger: true });
       } else if (text.startsWith('pm://')) {
         // trying to show a specific page
+        recordEvent('AddressBar_Input', { entry: 'ob://' });
         app.router.navigate(text.split(' ')[0], { trigger: true });
       } else {
         // searching term
+        recordEvent('AddressBar_Input', { entry: 'searchTerm' });
         app.router.navigate(`search?q=${encodeURIComponent(text)}`, { trigger: true });
       }
     }
@@ -448,34 +459,33 @@ export default class extends BaseVw {
   }
 
   navSettingsClick() {
-    recordEvent('Settings_OpenFromPageNav');
+    // This is recorded as two events that belong to different metrics we're comparing.
+    recordEvent('NavMenu_Click', { target: 'settings' });
+    recordEvent('Settings_Open', { origin: 'navMenu' });
     launchSettingsModal();
   }
 
   navHelpClick() {
+    recordEvent('NavMenu_Click', { target: 'help' });
     launchAboutModal({ initialTab: 'Help' });
     this.closeNavMenu();
   }
 
   navAboutClick() {
+    recordEvent('NavMenu_Click', { target: 'about' });
     launchAboutModal({ initialTab: 'Story' });
     this.closeNavMenu();
   }
 
   navWalletClick() {
-    const wallet = getWallet();
-    if ((!wallet || !wallet.isOpen())) {
-      launchWallet();
-    } else {
-      if (!$('.js-notifContainer').hasClass('open') && !$('.js-navList').hasClass('open')) {
-        wallet.close();
-        $('.js-navWalletBtn').removeClass('active');
-      }
-    }
+    recordEvent('NavClick', { target: 'walletOpen' });
+    launchWallet();
   }
 
   navCreateListingClick() {
-    recordEvent('Listing_NewFromPageNav');
+    // This is recorded as two events that belong to different metrics we're comparing.
+    recordEvent('NavMenu_Click', { target: 'newListing' });
+    recordEvent('Listing_New', { origin: 'navMenu' });
     const listingModel = new Listing({}, { guid: app.profile.id });
 
     launchEditListingModal({
