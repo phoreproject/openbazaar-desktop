@@ -280,7 +280,7 @@ case "$TRAVIS_OS_NAME" in
     zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
     cp -r PhoreMarketplaceClient.app ../osx/
     cp PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip ../osx/
-    cp PhoreMarketplaceClient-$PACKAGE_VERSION.dmg ../osx/
+    cp PhoreMarketplaceC-$PACKAGE_VERSION.dmg ../osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
 
     ;;
 esac
