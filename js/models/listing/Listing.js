@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import is from 'is_js';
 import app from '../../app';
-import { getServerCurrency } from '../../data/cryptoCurrencies';
+import { getCurrencyByCode as getCryptoCurrencyByCode } from '../../data/walletCurrencies';
 import { getIndexedCountries } from '../../data/countries';
 import { events as listingEvents, shipsFreeToMe } from './';
 import { decimalToInteger, integerToDecimal } from '../../utils/currency';
@@ -22,6 +22,44 @@ export default class extends BaseModel {
     // url is handled by sync, but backbone bombs if I don't have
     // something explicitly set
     return 'use-sync';
+  }
+
+  static getIpnsUrl(guid, slug) {
+    if (typeof guid !== 'string' || !guid) {
+      throw new Error('Please provide a guid as a non-empty ' +
+        'string.');
+    }
+
+    if (typeof slug !== 'string' || !slug) {
+      throw new Error('Please provide a slug as a non-empty ' +
+        'string.');
+    }
+
+    return app.getServerUrl(`ob/listing/${guid}/${slug}`);
+  }
+
+  getIpnsUrl() {
+    const slug = this.get('slug');
+
+    if (!slug) {
+      throw new Error('In order to fetch a listing via IPNS, a slug must be '
+        + 'set as a model attribute.');
+    }
+
+    return this.constructor.getIpnsUrl(this.guid, slug);
+  }
+
+  static getIpfsUrl(hash) {
+    if (typeof hash !== 'string' || !hash) {
+      throw new Error('Please provide a hash as a non-empty ' +
+        'string.');
+    }
+
+    return app.getServerUrl(`ob/listing/ipfs/${hash}`);
+  }
+
+  getIpfsUrl(hash) {
+    return this.constructor.getIpfsUrl(hash);
   }
 
   defaults() {
@@ -150,7 +188,7 @@ export default class extends BaseModel {
 
     if (contractType === 'CRYPTOCURRENCY') {
       if (!metadata || !metadata.coinType || typeof metadata.coinType !== 'string') {
-        addError('metadata.coinType', 'The coin type must be provided as a string.');
+        addError('metadata.coinType', app.polyglot.t('metadataModelErrors.provideCoinType'));
       }
 
       if (metadata && typeof metadata.pricingCurrency !== 'undefined') {
@@ -213,6 +251,21 @@ export default class extends BaseModel {
     return undefined;
   }
 
+  fetch(options = {}) {
+    if (
+      options.hash !== undefined &&
+      (
+        typeof options.hash !== 'string' ||
+        !options.hash
+      )
+    ) {
+      throw new Error('If providing the options.hash, it must be a ' +
+        'non-empty string.');
+    }
+
+    return super.fetch(options);
+  }
+
   sync(method, model, options) {
     let returnSync = 'will-set-later';
 
@@ -227,13 +280,12 @@ export default class extends BaseModel {
         throw new Error('In order to fetch a listing, a slug must be set as a model attribute.');
       }
 
-      if (this.isOwnListing) {
-        options.url = options.url ||
-          app.getServerUrl(`ob/listing/${slug}`);
-      } else {
-        options.url = options.url ||
-          app.getServerUrl(`ob/listing/${this.guid}/${slug}`);
-      }
+      options.url = options.url ||
+        (
+          typeof options.hash === 'string' && options.hash ?
+            this.getIpfsUrl(options.hash) :
+            this.getIpnsUrl(slug)
+        );
     } else {
       if (method !== 'delete') {
         options.url = options.url || app.getServerUrl('ob/listing/');
@@ -290,6 +342,7 @@ export default class extends BaseModel {
 
           if (options.attrs.metadata.contractType === 'CRYPTOCURRENCY') {
             dummySku.quantity = options.attrs.item.cryptoQuantity;
+            delete options.attrs.item.cryptoQuantity;
           } else if (typeof options.attrs.item.quantity === 'number') {
             dummySku.quantity = options.attrs.item.quantity;
           }
@@ -339,11 +392,15 @@ export default class extends BaseModel {
         // coin type.
         if (options.attrs.metadata.contractType === 'CRYPTOCURRENCY') {
           const coinType = options.attrs.metadata.coinType;
-
-          // TODO: This will need to change when we implement multi-currency
-          // support. The listing itself will likely contain the coin or coins
-          // it accepts.
-          const fromCur = getServerCurrency().code;
+          let fromCur = options.attrs.metadata.acceptedCurrencies &&
+            options.attrs.metadata.acceptedCurrencies[0];
+          if (fromCur) {
+            const curObj = getCryptoCurrencyByCode(fromCur);
+            // if it's a recognized currency, ensure the mainnet code is used
+            fromCur = curObj ? curObj.code : fromCur;
+          } else {
+            fromCur = 'UNKNOWN';
+          }
           options.attrs.item.title = `${fromCur}-${coinType}`;
         } else {
           // Don't send over crypto currency specific fields if it's not a

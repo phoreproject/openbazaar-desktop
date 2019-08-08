@@ -189,10 +189,13 @@ label {
   }
 }
 
-.required::after {
-  content: '*';
-  position: absolute;
-  font-size: 130%;
+.required {
+  display: inline-flex;
+
+  &::after {
+    content: '*';
+    font-size: 130%;
+  }
 }
 
 // By default, using width values appropriate for currency codes.
@@ -257,22 +260,11 @@ input[type="checkbox"] {
     content: "\f373";
   }
 
-  &.fauxChecked {
-    // checkbox cannot be clicked, and shows a fake checked mark.
-    pointer-events: none;
+  &.centerLabel + label {
+    align-items: center;
 
-    & + label {
-      pointer-events: none;
-
-      &:before {
-        content: "\f373";
-      }
-    }
-  }
-
-  &.centerLabel {
-    & + label {
-      align-items: center;
+    &:before {
+      top: 0;
     }
   }
 }

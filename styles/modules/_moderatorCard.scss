@@ -14,11 +14,14 @@
       .detailsRow {
         align-items: center;
       }
+
+      .note {
+        font-size: 1.1rem;
+      }
     }
 
     .selectBtn {
-
-      width: 76px;
+      width: 100%;
 
       .showIfSelected {
         display: none;

@@ -43,7 +43,6 @@ export default class extends baseVw {
       }
     } else {
       this._followingCount = app.ownFollowing.length;
-      this._followerCount = app.followers.length;
     }
 
     this.listenTo(this.model.get('headerHashes'), 'change', () => this.updateHeader());
@@ -104,8 +103,9 @@ export default class extends baseVw {
   }
 
   clickTab(e) {
-    const targ = $(e.target).closest('.js-tab');
-    this.setState(targ.attr('data-tab'));
+    const tab = $(e.target).closest('.js-tab').attr('data-tab');
+    recordEvent('UserPage_Tab', { tab });
+    this.setTabState(tab);
   }
 
   clickMore() {
@@ -113,11 +113,12 @@ export default class extends baseVw {
   }
 
   clickCustomize() {
+    recordEvent('Settings_Open', { origin: 'userPage' });
     launchSettingsModal({ initialTab: 'Page' });
   }
 
   clickCreateListing() {
-    recordEvent('Listing_NewFromUserPage');
+    recordEvent('Listing_New', { origin: 'userPage' });
     const listingModel = new Listing({}, { guid: app.profile.id });
 
     launchEditListingModal({
@@ -126,6 +127,7 @@ export default class extends baseVw {
   }
 
   clickCloseStoreWelcomeCallout() {
+    recordEvent('UserPage_CloseStoreWelcome');
     if (this.curConn && this.curConn.server) {
       this.curConn.server.save({ dismissedStoreWelcome: true });
       this.getCachedEl('.js-storeWelcomeCallout').remove();
@@ -133,7 +135,8 @@ export default class extends baseVw {
   }
 
   clickRating() {
-    this.setState('reputation');
+    recordEvent('UserPage_ClickReputation');
+    this.setTabState('reputation');
   }
 
   get followingCount() {
@@ -238,7 +241,7 @@ export default class extends baseVw {
     });
   }
 
-  setState(state, options = {}) {
+  setTabState(state, options = {}) {
     if (!state) {
       throw new Error('Please provide a state.');
     }
@@ -336,7 +339,7 @@ export default class extends baseVw {
       this.miniProfile = this.createChild(MiniProfile, {
         model: this.model,
         fetchFollowsYou: false,
-        onClickRating: () => this.setState('reputation'),
+        onClickRating: () => this.setTabState('reputation'),
         initialState: {
           followsYou: this.followsYou,
         },
@@ -353,7 +356,7 @@ export default class extends baseVw {
       }
 
       this.tabViewCache = {}; // clear for re-renders
-      this.setState(this.state, {
+      this.setTabState(this.state, {
         addTabToHistory: false,
         listing: this.options.listing,
       });

@@ -1,15 +1,15 @@
 {
-  "productName": "OpenBazaar",
-  "name": "openbazaar2",
-  "description": "Decentralized Peer to Peer Marketplace for Bitcoin",
-  "version": "2.0.12",
-  "bin": "openbazaar2",
-  "maintainer": "OpenBazaar <project@openbazaar.org>",
+  "productName": "PhoreMarketplace",
+  "name": "phoremarketplace",
+  "description": "Decentralized Peer to Peer Marketplace for Phore",
+  "version": "1.3.8",
+  "bin": "phoremarketplace",
+  "maintainer": "Phore <admin@phore.io>",
   "arch": "x86_64",
-  "src": "dist/openbazaar2-linux-x64/",
+  "src": "dist/phoremarketplace-linux-x64/",
   "dest": "dist/linux64",
-  "productDescription": "Decentralized Peer to Peer Marketplace for Bitcoin",
-  "intianOverrides": [
+  "productDescription": "Decentralized Peer to Peer Marketplace for Phore",
+  "lintianOverrides": [
     "changelog-file-missing-in-native-package",
     "executable-not-elf-or-script",
     "extra-license-file"
@@ -18,5 +18,9 @@
   "categories": [
     "Utility"
   ],
-  "priority": "optional"
+  "priority": "optional",
+  "depends": [
+    "libxss1",
+    "libgconf-2-4"
+  ]
 }

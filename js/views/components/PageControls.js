@@ -1,21 +1,17 @@
-import _ from 'underscore';
 import baseVw from '../baseVw';
 import loadTemplate from '../../utils/loadTemplate';
 
 export default class extends baseVw {
   constructor(options = {}) {
     const opts = {
+      ...options,
       initialState: {
         start: 1,
+        ...options.initialState,
       },
-      ...options,
     };
 
     super(opts);
-
-    this._state = {
-      ...opts.initialState || {},
-    };
   }
 
   className() {
@@ -29,35 +25,14 @@ export default class extends baseVw {
   }
 
   onPageClick(ev) {
-    this.trigger('onPageClick', this.$(ev.currentTarget).data('page'));
-  }
-
-  getState() {
-    return this._state;
-  }
-
-  setState(state, replace = false) {
-    let newState;
-
-    if (replace) {
-      this._state = {};
-    } else {
-      newState = _.extend({}, this._state, state);
-    }
-
-    if (!_.isEqual(this._state, newState)) {
-      this._state = newState;
-      this.render();
-    }
-
-    return this;
+    this.trigger('onPageClick', this.$el(ev.currentTarget).data('page'));
   }
 
   render() {
     loadTemplate('components/pageControls.html', (t) => {
       this.$el.html(t({
         type: this.type,
-        ...this._state,
+        ...this.getState(),
       }));
     });
 

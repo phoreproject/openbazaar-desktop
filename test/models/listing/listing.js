@@ -101,7 +101,7 @@ describe('the Listing model', () => {
     const parsed = listing.parse({
       listing: {
         metadata: {
-          pricingCurrency: 'PHR',
+          pricingCurrency: 'BTC',
         },
         item: {
           price: 271453590,

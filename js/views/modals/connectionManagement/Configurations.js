@@ -59,7 +59,7 @@ export default class extends baseVw {
       this.statusBarMessage.setState({
         status: 'connecting',
         msg: app.polyglot.t('connectionManagement.statusBar.waitForServerStopMsg', {
-          serverName: e.stoppingServer.get('name'),
+          serverName: e.stoppingServer && e.stoppingServer.get('name') || '',
         }),
       });
     });
@@ -126,7 +126,7 @@ export default class extends baseVw {
   }
 
   handleFailedConnection(eventName, e) {
-    let links = `<a href="https://github.com/phoreproject/openbazaar-desktop/blob/master/docs/connectionIssues.md">${app.polyglot.t('connectionManagement.statusBar.needHelpLink')}</a>`;
+    let links = `<a href="https://github.com/OpenBazaar/openbazaar-desktop/blob/master/docs/connectionIssues.md">${app.polyglot.t('connectionManagement.statusBar.needHelpLink')}</a>`;
     let msg = '';
 
     if (localServer) {

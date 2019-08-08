@@ -1,8 +1,10 @@
+import $ from 'jquery';
 import app from '../app';
 import { shell } from 'electron';
 import Backbone from 'backbone';
+import { getPageContainer } from './selectors';
 import TorExternalLinkWarning from '../views/modals/TorExternalLinkWarning';
-import $ from 'jquery';
+
 
 // todo: check args and write unit test
 // http://stackoverflow.com/a/21627295/632806
@@ -107,7 +109,7 @@ export function handleLinks(el) {
     const openExternally = $a.data('openExternal') !== undefined;
     let href = $a.attr('href');
 
-    // Anchor without href is likely being handled programatically.
+    // Anchor without href is likely being handled programmatically.
     if (!href) return;
 
     const link = document.createElement('a');
@@ -117,7 +119,7 @@ export function handleLinks(el) {
       if (link.protocol === 'ob:' && !openExternally) {
         Backbone.history.navigate(href.slice(5), true);
       } else {
-        openExternal(link.protocol === 'file:' ? `http://${link.href}` : link.href);
+        openExternal(link.protocol === 'file:' ? `http://${href}` : link.href);
       }
     } else {
       if (!href.startsWith('#')) {
@@ -129,4 +131,12 @@ export function handleLinks(el) {
 
     e.preventDefault();
   });
+}
+
+/**
+ * This will scroll the pageContainer to the top of the contentFrame. Use this when calling
+ * scrollIntoView on a page view's root element doesn't scroll the pageContainer to zero.
+ */
+export function scrollPageIntoView() {
+  getPageContainer()[0].scrollIntoView();
 }
