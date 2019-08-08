@@ -122,7 +122,7 @@ case "$TRAVIS_OS_NAME" in
     echo 'Create RPM archive'
     electron-installer-redhat --config .travis/config_x86_64.json
 
-    APPNAME="phoremarketplaceClient"
+    APPNAME="phoremarketplaceclient"
 
     echo "Packaging Electron application"
     electron-packager . ${APPNAME} --platform=linux --arch=ia32 --ignore="PHORE_MARKETPLACE_TEMP" --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist

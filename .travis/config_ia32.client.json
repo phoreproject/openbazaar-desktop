@@ -6,7 +6,7 @@
   "bin": "phoremarketplaceclient",
   "maintainer": "Phore <admin@phore.io>",
   "arch": "i386",
-  "src": "dist/phoremarketplaceClient-linux-ia32/",
+  "src": "dist/phoremarketplaceclient-linux-ia32/",
   "dest": "dist/linux32",
   "productDescription": "Decentralized Peer to Peer Marketplace for Phore",
   "lintianOverrides": [
