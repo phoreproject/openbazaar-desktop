@@ -135,10 +135,18 @@ export default class extends baseVw {
     }
   }
 
-  clickNumberedPage(pageNumber) {
-    this.serverPage = pageNumber;
+  clickPagePrev() {
+    recordEvent('Discover_PrevPage', { fromPage: this._search.p });
+    this._search.p--;
+    this._setHistory = true;
     this.loadPage();
-    recordEvent('Discover_ChangePage');
+  }
+
+  clickPageNext() {
+    recordEvent('Discover_NextPage', { fromPage: this._search.p });
+    this._search.p++;
+    this._setHistory = true;
+    this.loadPage();
   }
 
   removeCardViews() {
@@ -176,7 +184,8 @@ export default class extends baseVw {
             morePages: currentPage < Math.ceil(pageCol.total / this._search.ps),
           },
         });
-        this.listenTo(this.pageControls, 'onPageClick', this.clickNumberedPage);
+        this.listenTo(this.pageControls, 'clickNext', this.clickPageNext);
+        this.listenTo(this.pageControls, 'clickPrev', this.clickPagePrev);
         this.$('.js-pageControlsContainer').html(this.pageControls.render().el);
       }
     });

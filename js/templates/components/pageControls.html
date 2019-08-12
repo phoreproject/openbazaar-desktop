@@ -7,8 +7,8 @@
     countsAvailable = true;
   }
 
-  let disabledPrev = true;
-  let disabledNext = true;
+  var disabledPrev = true;
+  var disabledNext = true;
 
   if (countsAvailable) {
     if (ob.start > 1) {
@@ -19,9 +19,6 @@
       disabledNext = false;
     }
   }
-
-  const printForward = 4;
-  const printBackward = 4;
 %>
 
 <div class="floR">
@@ -29,48 +26,21 @@
     <% if (countsAvailable) { %>
     <div>
       <%=
-        ob.polyT('pageControls.displaying', {
-          displayingCounts: ob.polyT('pageControls.displayingCounts', {
-            start: ob.localizeNumber(ob.start),
-            end: ob.localizeNumber(ob.end),
-            total: ob.localizeNumber(ob.total),
-          }),
-        })
+      ob.polyT('pageControls.displaying', {
+      displayingCounts: ob.polyT('pageControls.displayingCounts', {
+      start: ob.localizeNumber(ob.start),
+      end: ob.localizeNumber(ob.end),
+      total: ob.localizeNumber(ob.total),
+      }),
+      })
       %>
     </div>
     <% } %>
     <div class="btnStrip">
-      <button class="btn clrP clrBr pageFirst js-pageCnt <% if (disabledPrev) print('disabled') %>" data-page="0">
-        <i class="ion-arrow-left-b"></i>
+      <button class="btn clrP clrBr pagePrev js-pagePrev <% if (disabledPrev) print('disabled') %>">
         <i class="ion-arrow-left-b"></i>
       </button>
-
-      <%
-      // print pages before current one
-      const firstPage = Math.max(ob.serverPage - printBackward, 0);
-      for(let i=firstPage; i < ob.serverPage; i++) {
-        print('<button class="btn clrP clrBr pageLast js-pageCnt" data-page="' + i + '">');
-        print('<i>' + (i+1) + '</i>\n');
-        print('</button>\n');
-      }
-      %>
-
-      <button class="btn clrP clrBr pageFirst js-pageCnt disabled" data-page="<% print(ob.serverPage) %>">
-        <i>  <% print(ob.serverPage + 1) %> </i>
-      </button>
-
-      <%
-      // print pages after current one
-      const lastPage = Math.min(ob.serverPage + printForward, ob.lastPage);
-      for(let i=ob.serverPage + 1; i <= lastPage; i++) {
-        print('<button class="btn clrP clrBr pageLast js-pageCnt" data-page="' + i + '">');
-        print('<i>' + (i+1) + '</i>\n');
-        print('</button>\n');
-      }
-      %>
-
-      <button class="btn clrP clrBr pageLast js-pageCnt <% if (disabledNext) print('disabled') %>" data-page="<% print(ob.lastPage) %>">
-        <i class="ion-arrow-right-b"></i>
+      <button class="btn clrP clrBr pageNext js-pageNext <% if (disabledNext) print('disabled') %>">
         <i class="ion-arrow-right-b"></i>
       </button>
     </div>
