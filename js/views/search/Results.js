@@ -182,6 +182,7 @@ export default class extends baseVw {
           initialState: {
             currentPage,
             morePages: currentPage < Math.ceil(pageCol.total / this._search.ps),
+            lastPage: Math.ceil(pageCol.total / this._search.ps),
           },
         });
         this.listenTo(this.pageControls, 'clickNext', this.clickPageNext);
