@@ -8,7 +8,7 @@ const printBackward = 4;
 <div class="floR">
   <div class="pageControls flexVCent gutterH tx5">
     <div class="btnStrip">
-      <button class="btn clrP clrBr pageFirst js-pageCnt <% if (disabledPrev) print('disabled') %>" data-page="0">
+      <button class="btn clrP clrBr pageFirst js-pagePrev <% if (disabledPrev) print('disabled') %>">
         <span class="txUnb">< <%= ob.polyT('pageControlsTextStyle.previous') %></span>
       </button>
       <% if (typeof ob.currentPage === 'number'){%>
@@ -38,7 +38,7 @@ const printBackward = 4;
         %>
 
       <% } %>
-      <button class="btn clrP clrBr pageLast js-pageCnt <% if (disabledNext) print('disabled') %>" data-page="<% print(ob.lastPage) %>">
+      <button class="btn clrP clrBr pageLast js-pageNext <% if (disabledNext) print('disabled') %>">
         <span class="txUnb"><%= ob.polyT('pageControlsTextStyle.next') %> ></span>
       </button>
     </div>

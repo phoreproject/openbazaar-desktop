@@ -87,11 +87,14 @@ export default class extends baseVw {
 
       if (cardVw) {
         this.cardViews.push(cardVw);
-        cardVw.render().$el.appendTo(resultsFrag);
+        cardVw.render()
+          .$el
+          .appendTo(resultsFrag);
       }
     });
 
-    this.getCachedEl('.js-resultsGrid').html(resultsFrag);
+    this.getCachedEl('.js-resultsGrid')
+      .html(resultsFrag);
   }
 
   loadPage(options) {
@@ -149,6 +152,13 @@ export default class extends baseVw {
     this.loadPage();
   }
 
+  clickNumberedPage(pageNumber) {
+    recordEvent('Discover_PageNumber', { fromPage: this._search.p, toPage: pageNumber });
+    this._search.p = pageNumber;
+    this._setHistory = true;
+    this.loadPage();
+  }
+
   removeCardViews() {
     this.cardViews.forEach(vw => vw.remove());
     this.cardViews = [];
@@ -185,9 +195,11 @@ export default class extends baseVw {
             lastPage: Math.ceil(pageCol.total / this._search.ps),
           },
         });
+        this.listenTo(this.pageControls, 'onPageClick', this.clickNumberedPage);
         this.listenTo(this.pageControls, 'clickNext', this.clickPageNext);
         this.listenTo(this.pageControls, 'clickPrev', this.clickPagePrev);
-        this.$('.js-pageControlsContainer').html(this.pageControls.render().el);
+        this.$('.js-pageControlsContainer')
+          .html(this.pageControls.render().el);
       }
     });
 

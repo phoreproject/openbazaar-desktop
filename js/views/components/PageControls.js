@@ -22,7 +22,12 @@ export default class extends baseVw {
     return {
       'click .js-pageNext': 'onClickNext',
       'click .js-pagePrev': 'onClickPrev',
+      'click .js-pageCnt': 'onPageClick',
     };
+  }
+
+  onPageClick(ev) {
+    this.trigger('onPageClick', this.$(ev.currentTarget).data('page'));
   }
 
   onClickNext() {
