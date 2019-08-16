@@ -13,6 +13,8 @@ export default class extends baseVw {
 
     super(opts);
 
+    console.log(opts.model);
+
     if (!opts.model) {
       throw new Error('Please provide a model.');
     }
@@ -41,7 +43,8 @@ export default class extends baseVw {
     });
 
     this.boundOnDocClick = this.onDocumentClick.bind(this);
-    $(document).on('click', this.boundOnDocClick);
+    $(document)
+      .on('click', this.boundOnDocClick);
   }
 
   className() {
@@ -58,12 +61,14 @@ export default class extends baseVw {
       'change #serverConfigServerIp': 'onChangeServerIp',
       'change [name=useTor]': 'onChangeUseTor',
       'change [name=serverType]': 'onChangeServerType',
+      'change [name=encryptDB]': 'onChangeEncryptDatabase',
       'click .js-inUseText': 'onClickInUseText',
     };
   }
 
   onDocumentClick() {
-    this.getCachedEl('.js-saveConfirmBox').addClass('hide');
+    this.getCachedEl('.js-saveConfirmBox')
+      .addClass('hide');
   }
 
   onClickSaveConfirmBox(e) {
@@ -73,7 +78,8 @@ export default class extends baseVw {
   }
 
   onClickSaveConfirmCancel() {
-    this.getCachedEl('.js-saveConfirmBox').addClass('hide');
+    this.getCachedEl('.js-saveConfirmBox')
+      .addClass('hide');
   }
 
   onCancelClick() {
@@ -90,7 +96,8 @@ export default class extends baseVw {
     }
 
     if (!this.model.isLocalServer() && !this.model.get('SSL')) {
-      this.getCachedEl('.js-saveConfirmBox').removeClass('hide');
+      this.getCachedEl('.js-saveConfirmBox')
+        .removeClass('hide');
     } else {
       this.save();
     }
@@ -135,6 +142,12 @@ export default class extends baseVw {
       .toggleClass('hide', e.target.value === 'BUILT_IN');
   }
 
+
+  onChangeEncryptDatabase(e) {
+    this.getCachedEl('form')
+      .toggleClass('encryptDB', e.target.checked);
+  }
+
   onClickInUseText() {
     // prevents the click of the help icon from selecting the otherwise disabled radio
     return false;
@@ -146,7 +159,7 @@ export default class extends baseVw {
     const formFieldsDataAttr = builtIn ? 'data-field-builtin' : 'data-field-standalone';
     const formData = this.getFormData(
       this.getCachedEl(`select[${formFieldsDataAttr}], input[${formFieldsDataAttr}], ` +
-        `textarea[${formFieldsDataAttr}]`)
+        `textarea[${formFieldsDataAttr}]`),
     );
     delete formData.serverType;
     this.model.set({
@@ -169,10 +182,11 @@ export default class extends baseVw {
       save.done(() => {
         this._lastSavedAttrs = this.model.toJSON();
         this.trigger('saved', { view: this });
-      }).fail(() => {
-        // since we're saving to localStorage this really shouldn't happen
-        openSimpleMessage('Unable to save server configuration');
-      });
+      })
+        .fail(() => {
+          // since we're saving to localStorage this really shouldn't happen
+          openSimpleMessage('Unable to save server configuration');
+        });
     }
 
     this.render();
@@ -194,7 +208,8 @@ export default class extends baseVw {
   }
 
   remove() {
-    $(document).off('click', this.boundOnDocClick);
+    $(document)
+      .off('click', this.boundOnDocClick);
     super.remove();
   }
 
@@ -219,7 +234,8 @@ export default class extends baseVw {
         this.rendered = true;
         setTimeout(() => {
           if (!this.showConfigureTorMessage && !this.showTorUnavailableMessage) {
-            this.getCachedEl('.js-inputName').focus();
+            this.getCachedEl('.js-inputName')
+              .focus();
           }
         });
       }

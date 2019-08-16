@@ -881,6 +881,8 @@
       "torProxyPlaceholder": "127.0.0.1:9150",
       "torPwLabel": "Tor Password",
       "torPwPlaceholder": "The unhashed Tor control password",
+      "encryptDBLabel": "Encrypt database",
+      "encryptDB": "Automatically encrypt database",
       "warning": "Warning:",
       "torServerWarning": "%{warning} In order to be anonymous, it is critical that you also start the server in Tor mode.",
       "lblServerType": "Type",

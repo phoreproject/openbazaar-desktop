@@ -137,6 +137,19 @@
     </div>
   </form>
 
+  <form class="padMdKids padStack <% if (ob.encryptDB) print('encryptDB') %>">
+    <div class="flexRow encryptDatabase">
+      <div class="col3">
+        <label><%= ob.polyT('connectionManagement.configurationForm.encryptDBLabel') %></label>
+      </div>
+      <div class="col9">
+        <% if (ob.errors.encryptDB) print(ob.formErrorTmpl({ errors: ob.errors.encryptDB })) %>
+        <input type="checkbox" id="serverConfigEncryptDB" name="encryptDB" <% if (ob.encryptDB) print('checked') %> data-field-standalone data-field-builtin />
+        <label for="serverConfigEncryptDB"><%= ob.polyT('connectionManagement.configurationForm.encryptDB') %></label>
+      </div>
+    </div>
+  </form>
+
   <hr class="clrBr" />
   <div class="flexHRight flexVCent gutterHLg">
     <a class="js-cancel"><%= ob.polyT('connectionManagement.configurationForm.btnCancel') %></a>
