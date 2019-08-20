@@ -14,14 +14,20 @@ ELECTRONVER=1.8.8
 NODEJSVER=6
 
 OS="${1}"
+if [ -z "${2}" ]; then
+  SERVERTAG='latest'
+
+  FORCE_SERVER=$(node -p 'require("./package").forceServerVersion')
+  if [ ${FORCE_SERVER} = true ]; then
+    SERVERTAG=tags/v$(node -p 'require("./package").serverVersionRequired')
+  fi
+else
+  SERVERTAG=tags/${2}
+fi
+echo "Building with openbazaar-go/$SERVERTAG"
 
 # Get Version
-PACKAGE_VERSION=$(cat package.json \
-  | grep version \
-  | head -1 \
-  | awk -F: '{ print $2 }' \
-  | sed 's/[",]//g' \
-  | tr -d '[[:space:]]')
+PACKAGE_VERSION=$(node -p 'require("./package").version')
 echo "Phore Marketplace Version: $PACKAGE_VERSION"
 
 # Create temp/build dirs
