@@ -221,6 +221,7 @@ export default class extends BaseModal {
       'click .js-scrollToVariantInventory': 'onClickScrollToVariantInventory',
       'click .js-viewListing': 'onClickViewListing',
       'click .js-viewListingOnWeb': 'onClickViewListingOnWeb',
+      'click input[name="item.fixRates"]': 'onChangeIsFixedPriceListing',
       ...super.events(),
     };
   }
@@ -264,9 +265,23 @@ export default class extends BaseModal {
   onClickViewListingOnWeb() {
     const slug = this.model.get('slug');
     if (slug) {
-      openExternal(`http://openbazaar.com/store/${app.profile.id}/${slug}`);
+      openExternal(`http://phore.io/store/${app.profile.id}/${slug}`);
     } else {
       throw new Error('There is no slug for this listing in order to navigate!');
+    }
+  }
+
+  onChangeIsFixedPriceListing(event) {
+    const value = $(event.target).val() === 'true';
+
+    this.model.get('metadata').set('format', value ? 'FIXED_PRICE' : 'MARKET_PRICE');
+
+    if (value) {
+      this.$editListingCryptoPrice.removeClass('hide');
+      this.$editListingCryptoPriceModifier.addClass('hide');
+    } else {
+      this.$editListingCryptoPriceModifier.removeClass('hide');
+      this.$editListingCryptoPrice.addClass('hide');
     }
   }
 
@@ -934,8 +949,15 @@ export default class extends BaseModal {
     } else {
       item.unset('condition');
       item.unset('productId');
-      item.unset('price');
       metadata.unset('pricingCurrency');
+
+      const format = metadata.get('format');
+      if (format === 'MARKET_PRICE') {
+        item.unset('price');
+      } else {
+        item.set('price', metadata.get('priceModifier'));
+        console.log(item.get('price'));
+      }
 
       formData = {
         ...formData,
@@ -949,7 +971,7 @@ export default class extends BaseModal {
           ...formData.metadata,
           acceptedCurrencies: typeof formData.metadata.acceptedCurrencies === 'string' ?
             [formData.metadata.acceptedCurrencies] : [],
-          format: 'MARKET_PRICE',
+          format,
         },
         shippingOptions: [],
       };
@@ -1148,6 +1170,16 @@ export default class extends BaseModal {
       (this._$itemPrice = this.$('[name="item.price"]'));
   }
 
+  get $editListingCryptoPrice() {
+    return this._$editListingCryptoPrice ||
+      (this._$editListingCryptoPrice = this.$('.js-editListingCryptoPrice'));
+  }
+
+  get $editListingCryptoPriceModifier() {
+    return this._$editListingCryptoPriceModifier ||
+      (this._$editListingCryptoPriceModifier = this.$('.js-editListingCryptoPriceModifier'));
+  }
+
   showMaxTagsWarning() {
     this.$maxTagsWarning.empty()
       .append(this.maxTagsWarning);
@@ -1262,6 +1294,10 @@ export default class extends BaseModal {
         this._$addShipOptSectionHeading = null;
         this._$variantInventorySection = null;
         this._$itemPrice = null;
+        // TODO views from cryptoCurrencyType.html
+        this._$editListingCryptoPrice = null;
+        this._$editListingCryptoPriceModifier = null;
+        // TODO end
         this.$photoUploadItems = this.$('.js-photoUploadItems');
         this.$modalContent = this.$('.modalContent');
         this.$tabControls = this.$('.tabControls');

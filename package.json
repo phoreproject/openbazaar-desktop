@@ -1,6 +1,6 @@
 {
   "name": "openbazaar-desktop",
-  "productName": "OpenBazaar Desktop Client",
+  "productName": "Phore Marketplace Desktop Client",
   "version": "2.3.4",
   "serverVersionRequired": "2.1.1-dev",
   "forceServerVersion": true,

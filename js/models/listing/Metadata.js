@@ -10,7 +10,7 @@ export default class extends BaseModel {
   defaults() {
     return {
       contractType: 'PHYSICAL_GOOD',
-      format: 'FIXED_PRICE', // this is not in the design at this time
+      format: 'FIXED_PRICE',
       // by default, setting to "never" expire (due to a unix bug, the max is before 2038)
       expiry: (new Date(2037, 11, 31, 0, 0, 0, 0)).toISOString(),
       coinDivisibility: defaultQuantityBaseUnit,
@@ -65,8 +65,8 @@ export default class extends BaseModel {
       (attrs = {})[key] = val;
     }
 
-    if (attrs.contractType === 'CRYPTOCURRENCY' &&
-      typeof attrs.priceModifier === 'number') {
+    if (attrs.contractType === 'CRYPTOCURRENCY' && typeof attrs.priceModifier === 'number'
+      && attrs.format === 'MARKET_PRICE') {
       // round to two decimal places
       attrs.priceModifier = parseFloat(upToFixed(attrs.priceModifier, 2));
     }
@@ -127,8 +127,9 @@ export default class extends BaseModel {
         addError('priceModifier', app.polyglot.t('metadataModelErrors.providePriceModifier'));
       } else if (typeof attrs.priceModifier !== 'number') {
         addError('priceModifier', app.polyglot.t('metadataModelErrors.numericPriceModifier'));
-      } else if (attrs.priceModifier < this.constraints.minPriceModifier ||
-        attrs.priceModifier > this.constraints.maxPriceModifier) {
+      } else if (attrs.format === 'MARKET_PRICE' &&
+        (attrs.priceModifier < this.constraints.minPriceModifier ||
+          attrs.priceModifier > this.constraints.maxPriceModifier)) {
         addError('priceModifier', app.polyglot.t('metadataModelErrors.priceModifierRange', {
           min: this.constraints.minPriceModifier,
           max: this.constraints.maxPriceModifier,

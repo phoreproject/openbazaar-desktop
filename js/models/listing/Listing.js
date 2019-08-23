@@ -116,12 +116,19 @@ export default class extends BaseModel {
     const metadata = this.get('metadata');
 
     if (this.isCrypto) {
-      const modifier = metadata.get('priceModifier') || 0;
-
+      if (metadata.get('format') === 'MARKET_PRICE') {
+        const modifier = metadata.get('priceModifier') || 0;
+        return {
+          amount: 1 + (modifier / 100),
+          currencyCode: metadata.get('coinType'),
+          modifier,
+        };
+      }
+      const amount = this.get('item').get('price');
       return {
-        amount: 1 + (modifier / 100),
+        amount,
         currencyCode: metadata.get('coinType'),
-        modifier,
+        modifier: amount,
       };
     }
 
@@ -154,12 +161,14 @@ export default class extends BaseModel {
       errObj[fieldName].push(error);
     };
     const metadata = {
-      ...this.get('metadata').toJSON(),
+      ...this.get('metadata')
+        .toJSON(),
       ...attrs.metadata,
     };
     const contractType = metadata.contractType;
     const item = {
-      ...this.get('item').toJSON(),
+      ...this.get('item')
+        .toJSON(),
       ...attrs.item,
     };
 
@@ -196,7 +205,7 @@ export default class extends BaseModel {
           'cryptocurrency listings.');
       }
 
-      if (item && typeof item.price !== 'undefined') {
+      if (item && metadata.format === 'MARKET_PRICE' && typeof item.price !== 'undefined') {
         addError('item.price', 'The price should not be set on cryptocurrency ' +
           'listings.');
       }
