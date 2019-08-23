@@ -6,6 +6,7 @@ import loadTemplate from '../../../utils/loadTemplate';
 import BaseView from '../../baseVw';
 import CryptoTradingPair from '../../components/CryptoTradingPair';
 import CryptoCurrencyTradeField from './CryptoCurrencyTradeField';
+import $ from 'jquery';
 
 export default class extends BaseView {
   constructor(options = {}) {
@@ -115,6 +116,7 @@ export default class extends BaseView {
     return {
       'change #editListingCoinType': 'onChangeCoinType',
       'change #editListingCryptoReceive': 'onChangeReceiveCur',
+      'click input[name="item.fixRates"]': 'onChangeIsFixedPriceListing',
     };
   }
 
@@ -130,6 +132,20 @@ export default class extends BaseView {
     this.cryptoTradingPair.setState({
       fromCur: e.target.value,
     });
+  }
+
+  onChangeIsFixedPriceListing(event) {
+    const value = $(event.target).val() === 'true';
+
+    this.model.get('metadata').set('format', value ? 'FIXED_PRICE' : 'MARKET_PRICE');
+
+    if (value) {
+      this.$editListingCryptoPrice.removeClass('hide');
+      this.$editListingCryptoPriceModifier.addClass('hide');
+    } else {
+      this.$editListingCryptoPriceModifier.removeClass('hide');
+      this.$editListingCryptoPrice.addClass('hide');
+    }
   }
 
   get defaultFromCur() {
@@ -163,6 +179,16 @@ export default class extends BaseView {
     };
   }
 
+  get $editListingCryptoPrice() {
+    return this._$editListingCryptoPrice ||
+      (this._$editListingCryptoPrice = this.$('.js-editListingCryptoPrice'));
+  }
+
+  get $editListingCryptoPriceModifier() {
+    return this._$editListingCryptoPriceModifier ||
+      (this._$editListingCryptoPriceModifier = this.$('.js-editListingCryptoPriceModifier'));
+  }
+
   renderCryptoTradingPair() {
 
   }
@@ -181,6 +207,9 @@ export default class extends BaseView {
           ...this.model.toJSON(),
           receiveCur: this.options.getReceiveCur(),
         }));
+
+        this._$editListingCryptoPrice = null;
+        this._$editListingCryptoPriceModifier = null;
 
         this.getCachedEl('#editListingCryptoContractType').select2({
           minimumResultsForSearch: Infinity,
