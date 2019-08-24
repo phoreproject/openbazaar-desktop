@@ -305,7 +305,7 @@ export default class extends BaseModel {
         if (options.attrs.item.price) {
           const price = options.attrs.item.price;
           options.attrs.item.price = decimalToInteger(price,
-            options.attrs.metadata.pricingCurrency);
+            options.attrs.metadata.pricingCurrency || options.attrs.metadata.coinType);
         }
 
         options.attrs.shippingOptions.forEach(shipOpt => {

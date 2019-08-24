@@ -7,7 +7,7 @@ import BaseView from '../../baseVw';
 import CryptoTradingPair from '../../components/CryptoTradingPair';
 import CryptoCurrencyTradeField from './CryptoCurrencyTradeField';
 import $ from 'jquery';
-import { getExchangeRate, convertCurrency } from '../../../utils/currency';
+import { convertAndFormatCurrency } from '../../../utils/currency';
 import { polyT } from '../../../utils/templateHelpers';
 
 export default class extends BaseView {
@@ -218,17 +218,17 @@ export default class extends BaseView {
   }
 
   updateDefaultCryptoFixPrice() {
-    const formattedFromCurAmount = new Intl.NumberFormat(this.fromCur, {
+    const formattedFromCurAmount = Number(convertAndFormatCurrency(1, this.toCur, this.fromCur, {
       minimumFractionDigits: 0,
       maximumFractionDigits: 8,
-    }).format(convertCurrency(1, this.fromCur, this.toCur));
+    }).replace(/[^0-9\.-]+/g, ''));
 
     this.$editListingCryptoPriceInput.attr('placeholder', formattedFromCurAmount);
     if (this.$editListingCryptoPriceInput.get('value') === undefined) {
       this.$editListingCryptoPriceInput.attr('value', formattedFromCurAmount);
     }
     this.$editListingCryptoPriceHelper.html(polyT('editListing.fixRatePriceHelper',
-      { fromCur: this.fromCur, rate: formattedFromCurAmount, toCur: this.toCur }));
+      { fromCur: this.toCur, rate: formattedFromCurAmount, toCur: this.fromCur }));
   }
 
   render() {
