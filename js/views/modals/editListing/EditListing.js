@@ -941,7 +941,6 @@ export default class extends BaseModal {
         item.unset('price');
       } else {
         item.set('price', metadata.get('priceModifier'));
-        console.log(item.get('price'));
       }
 
       formData = {

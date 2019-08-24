@@ -7,6 +7,8 @@ import BaseView from '../../baseVw';
 import CryptoTradingPair from '../../components/CryptoTradingPair';
 import CryptoCurrencyTradeField from './CryptoCurrencyTradeField';
 import $ from 'jquery';
+import { getExchangeRate, convertCurrency } from '../../../utils/currency';
+import { polyT } from '../../../utils/templateHelpers';
 
 export default class extends BaseView {
   constructor(options = {}) {
@@ -73,8 +75,8 @@ export default class extends BaseView {
         // TODO
         // TODO - don't assume BTC, hard-code to the exchange rate reference coin
         fromCur: this.options.getReceiveCur() ||
-          (this.receiveCurs[0] && this.receiveCurs[0].code) || 'BTC',
-        toCur: 'BTC',
+          (this.receiveCurs[0] && this.receiveCurs[0].code) || 'PHR',
+        toCur: 'PHR',
       },
     });
 
@@ -83,6 +85,7 @@ export default class extends BaseView {
         .get('coinType') || curs[0].code;
 
       this.coinTypes = curs;
+      this.toCur = selected;
 
       this.tradeField.setState({
         curs,
@@ -106,6 +109,10 @@ export default class extends BaseView {
       this.getCachedEl('.js-marketValueWrap')
         .html(this.tmplMarketValue({ getDataFromUi: true }));
     });
+
+    this.fromCur = this.options.getReceiveCur()
+      || (this.receiveCurs[0] && this.receiveCurs[0].code) || 'PHR';
+    this.toCur = 'PHR';
   }
 
   className() {
@@ -126,25 +133,32 @@ export default class extends BaseView {
     this.cryptoTradingPair.setState({
       toCur: e.target.value,
     });
+
+    this.toCur = e.target.value;
+    this.updateDefaultCryptoFixPrice();
   }
 
   onChangeReceiveCur(e) {
     this.cryptoTradingPair.setState({
       fromCur: e.target.value,
     });
+
+    this.fromCur = e.target.value;
+    this.updateDefaultCryptoFixPrice();
   }
 
   onChangeIsFixedPriceListing(event) {
     const value = $(event.target).val() === 'true';
 
     this.model.get('metadata').set('format', value ? 'FIXED_PRICE' : 'MARKET_PRICE');
+    this.updateDefaultCryptoFixPrice();
 
     if (value) {
-      this.$editListingCryptoPrice.removeClass('hide');
-      this.$editListingCryptoPriceModifier.addClass('hide');
+      this.$editListingCryptoPriceSection.removeClass('hide');
+      this.$editListingCryptoPriceModifierSection.addClass('hide');
     } else {
-      this.$editListingCryptoPriceModifier.removeClass('hide');
-      this.$editListingCryptoPrice.addClass('hide');
+      this.$editListingCryptoPriceModifierSection.removeClass('hide');
+      this.$editListingCryptoPriceSection.addClass('hide');
     }
   }
 
@@ -179,18 +193,42 @@ export default class extends BaseView {
     };
   }
 
-  get $editListingCryptoPrice() {
-    return this._$editListingCryptoPrice ||
-      (this._$editListingCryptoPrice = this.$('.js-editListingCryptoPrice'));
+  get $editListingCryptoPriceSection() {
+    return this._$editListingCryptoPriceSection ||
+      (this._$editListingCryptoPriceSection = this.$('.js-editListingCryptoPrice'));
   }
 
-  get $editListingCryptoPriceModifier() {
-    return this._$editListingCryptoPriceModifier ||
-      (this._$editListingCryptoPriceModifier = this.$('.js-editListingCryptoPriceModifier'));
+  get $editListingCryptoPriceInput() {
+    return this._$editListingCryptoPriceInput ||
+      (this._$editListingCryptoPriceInput = this.$('#editListingCryptoPrice'));
+  }
+
+  get $editListingCryptoPriceHelper() {
+    return this._$editListingCryptoPriceHelper ||
+      (this._$editListingCryptoPriceHelper = this.$('#editListingCryptoPriceHelper'));
+  }
+
+  get $editListingCryptoPriceModifierSection() {
+    return this._$editListingCryptoPriceModifierSection ||
+      (this._$editListingCryptoPriceModifierSection = this.$('.js-editListingCryptoPriceModifier'));
   }
 
   renderCryptoTradingPair() {
 
+  }
+
+  updateDefaultCryptoFixPrice() {
+    const formattedFromCurAmount = new Intl.NumberFormat(this.fromCur, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 8,
+    }).format(convertCurrency(1, this.fromCur, this.toCur));
+
+    this.$editListingCryptoPriceInput.attr('placeholder', formattedFromCurAmount);
+    if (this.$editListingCryptoPriceInput.get('value') === undefined) {
+      this.$editListingCryptoPriceInput.attr('value', formattedFromCurAmount);
+    }
+    this.$editListingCryptoPriceHelper.html(polyT('editListing.fixRatePriceHelper',
+      { fromCur: this.fromCur, rate: formattedFromCurAmount, toCur: this.toCur }));
   }
 
   render() {
@@ -208,8 +246,10 @@ export default class extends BaseView {
           receiveCur: this.options.getReceiveCur(),
         }));
 
-        this._$editListingCryptoPrice = null;
-        this._$editListingCryptoPriceModifier = null;
+        this._$editListingCryptoPriceSection = null;
+        this._$editListingCryptoPriceInput = null;
+        this._$editListingCryptoPriceHelper = null;
+        this._$editListingCryptoPriceModifierSection = null;
 
         this.getCachedEl('#editListingCryptoContractType').select2({
           minimumResultsForSearch: Infinity,
