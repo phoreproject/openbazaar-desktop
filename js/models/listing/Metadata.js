@@ -136,10 +136,6 @@ export default class extends BaseModel {
         }));
       }
 
-      if (attrs.format === 'FIXED_PRICE' && is.not.number(attrs.price)) {
-        addError('price', app.polyglot.t('serviceModelErrors.provideNumericAmount'));
-      }
-
       if (Array.isArray(attrs.acceptedCurrencies) && attrs.acceptedCurrencies.length > 1) {
         addError('acceptedCurrencies', 'For cryptocurrency listings, only one acccepted ' +
           'currency is allowed.');

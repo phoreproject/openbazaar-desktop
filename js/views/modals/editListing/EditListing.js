@@ -936,11 +936,13 @@ export default class extends BaseModal {
       item.unset('productId');
       metadata.unset('pricingCurrency');
 
+      let priceModifier = metadata.get('priceModifier');
       const format = metadata.get('format');
       if (format === 'MARKET_PRICE') {
         item.unset('price');
       } else {
-        item.set('price', metadata.get('priceModifier'));
+        metadata.set('priceModifier', 0);
+        priceModifier = 0;
       }
 
       formData = {
@@ -956,6 +958,7 @@ export default class extends BaseModal {
           acceptedCurrencies: typeof formData.metadata.acceptedCurrencies === 'string' ?
             [formData.metadata.acceptedCurrencies] : [],
           format,
+          priceModifier,
         },
         shippingOptions: [],
       };
