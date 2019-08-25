@@ -481,7 +481,7 @@ export default class extends BaseModel {
       if (parsedResponse.item) {
         const price = parsedResponse.item.price;
         const cur = parsedResponse.metadata &&
-          parsedResponse.metadata.pricingCurrency;
+          (parsedResponse.metadata.pricingCurrency || parsedResponse.metadata.coinType);
 
         if (price) {
           parsedResponse.item.price = integerToDecimal(price, cur);
