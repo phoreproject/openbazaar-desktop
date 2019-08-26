@@ -74,7 +74,7 @@
                value="true"
                id="editListingFixRatesInputTrue"
                data-var-type="boolean"
-        <% if(ob.item.fixRates) { %>checked<% } %>>
+        <% if(ob.metadata.format === 'FIXED_PRICE') { %>checked<% } %>>
         <label for="editListingFixRatesInputTrue"><%= ob.polyT('editListing.fixRateYes') %></label>
       </div>
       <div class="btnRadio clrBr">
@@ -83,7 +83,7 @@
                value="false"
                id="editListingFixRatesInputFalse"
                data-var-type="boolean"
-        <% if(!ob.item.fixRates) { %>checked<% } %>>
+        <% if(ob.metadata.format === 'MARKET_PRICE') { %>checked<% } %>>
         <label for="editListingFixRatesInputFalse"><%= ob.polyT('editListing.fixRateNo') %></label>
       </div>
     </div>
@@ -92,7 +92,7 @@
 </div>
 <div class="flexRow gutterH">
   <div class="col6 simpleFlexCol">
-    <section class="js-editListingCryptoPriceModifier <% if(ob.item.fixRates) { %> hide <% } %> ">
+    <section class="js-editListingCryptoPriceModifier <% if(ob.metadata.format !== 'MARKET_PRICE') { %> hide <% } %> ">
       <label for="editListingCryptoPriceModifier" class="required"><%= ob.polyT('editListing.cryptoCurrencyType.priceModifier') %></label>
       <% if (ob.errors['metadata.priceModifier']) print(ob.formErrorTmpl({ errors: ob.errors['metadata.priceModifier'] })) %>
       <div class="posR marginTopAuto">
@@ -102,7 +102,7 @@
       <div class="clrT2 txSm helper"><%= ob.polyT('editListing.cryptoCurrencyType.helperPriceModifier') %></div>
     </section>
 
-    <section class="js-editListingCryptoPrice <% if(!ob.item.fixRates) { %> hide <% } %> ">
+    <section class="js-editListingCryptoPrice <% if(ob.metadata.format !== 'FIXED_PRICE') { %> hide <% } %> ">
       <label for="editListingCryptoPrice" class="required"><%= ob.polyT('editListing.price') %></label>
       <% if (ob.errors['item.price']) print(ob.formErrorTmpl({ errors: ob.errors['item.price'] })) %>
       <div class="posR marginTopAuto">

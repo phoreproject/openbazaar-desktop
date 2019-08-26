@@ -86,6 +86,7 @@ export default class extends BaseView {
 
       this.coinTypes = curs;
       this.toCur = selected;
+      this.updateDefaultCryptoFixPrice();
 
       this.tradeField.setState({
         curs,
@@ -111,8 +112,8 @@ export default class extends BaseView {
     });
 
     this.fromCur = this.options.getReceiveCur()
-      || (this.receiveCurs[0] && this.receiveCurs[0].code) || 'PHR';
-    this.toCur = 'PHR';
+      || (this.receiveCurs[0] && this.receiveCurs[0].code);
+    this.toCur = '';
   }
 
   className() {
@@ -218,6 +219,10 @@ export default class extends BaseView {
   }
 
   updateDefaultCryptoFixPrice() {
+    if (!this.toCur || !this.fromCur) {
+      return;
+    }
+
     const formattedFromCurAmount = Number(convertAndFormatCurrency(1, this.toCur, this.fromCur, {
       minimumFractionDigits: 0,
       maximumFractionDigits: 8,
