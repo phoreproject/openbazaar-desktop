@@ -125,6 +125,7 @@ export default class extends BaseView {
       'change #editListingCoinType': 'onChangeCoinType',
       'change #editListingCryptoReceive': 'onChangeReceiveCur',
       'click input[name="item.fixRates"]': 'onChangeIsFixedPriceListing',
+      'change input[name="item.price"]': 'onChangePrice',
     };
   }
 
@@ -161,6 +162,15 @@ export default class extends BaseView {
       this.$editListingCryptoPriceModifierSection.removeClass('hide');
       this.$editListingCryptoPriceSection.addClass('hide');
     }
+  }
+
+  onChangePrice(event) {
+    this.$editListingCryptoPriceHelper.html(polyT('editListing.fixRatePriceHelper',
+      {
+        fromCur: this.toCur,
+        rate: $(event.target).val(),
+        toCur: this.fromCur,
+      }));
   }
 
   get defaultFromCur() {
@@ -233,7 +243,11 @@ export default class extends BaseView {
       this.$editListingCryptoPriceInput.attr('value', formattedFromCurAmount);
     }
     this.$editListingCryptoPriceHelper.html(polyT('editListing.fixRatePriceHelper',
-      { fromCur: this.toCur, rate: formattedFromCurAmount, toCur: this.fromCur }));
+      {
+        fromCur: this.toCur,
+        rate: formattedFromCurAmount,
+        toCur: this.fromCur,
+      }));
   }
 
   render() {
