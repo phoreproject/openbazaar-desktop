@@ -15,54 +15,6 @@ import {
 // currencies being returned by the exchange rate api, they will be merged into a combined
 // list the UI will use.
 
-// const baseCurrencies = [
-//   'BTC',
-//   'ADA',
-//   'ARK',
-//   'BCH',
-//   'BCN',
-//   'BTCD',
-//   'BTG',
-//   'BTS',
-//   'DASH',
-//   'DCR',
-//   'DGB',
-//   'DOGE',
-//   'ETC',
-//   'ETH',
-//   'FCT',
-//   'HSR',
-//   'KMD',
-//   'LSK',
-//   'LTC',
-//   'MIOTA',
-//   'MONA',
-//   'NANO',
-//   'NEBL',
-//   'NEO',
-//   'NXS',
-//   'NXT',
-//   'PHR',
-//   'PIVX',
-//   'QTUM',
-//   'RDD',
-//   'SC',
-//   'STEEM',
-//   'STRAT',
-//   'SYS',
-//   'VEN',
-//   'WAVES',
-//   'XDN',
-//   'XEM',
-//   'XLM',
-//   'XMR',
-//   'XRP',
-//   'XVC',
-//   'XVG',
-//   'ZCL',
-//   'ZEC',
-// ];
-
 
 // Certain currencies are not in our fiat list, but they're also not crypto currencies.
 // They mainly conisist of obscure fiat currencies or precious metals.
@@ -92,19 +44,21 @@ export const defaultQuantityBaseUnit = 100000000;
 
 export function getCurrencies() {
   if (!exchangeRateChangeBound) {
-    getCurrencyEvents().on('exchange-rate-change',
-      () => {
-        if (
-          !currenciesNeedRefresh &&
-          !_.isEqual(
-            Object.keys(getExchangeRates()).sort(),
-            exchangeRateCurs
-          )
-        ) {
-          currenciesNeedRefresh = true;
-          currenciesSortedByNameDeferred = null;
-        }
-      });
+    getCurrencyEvents()
+      .on('exchange-rate-change',
+        () => {
+          if (
+            !currenciesNeedRefresh &&
+            !_.isEqual(
+              Object.keys(getExchangeRates())
+                .sort(),
+              exchangeRateCurs,
+            )
+          ) {
+            currenciesNeedRefresh = true;
+            currenciesSortedByNameDeferred = null;
+          }
+        });
     exchangeRateChangeBound = true;
   }
 
@@ -115,7 +69,8 @@ export function getCurrencies() {
   }
 
   const curs = new Set();
-  const _exchangeRateCurs = Object.keys(getExchangeRates());
+  // const _exchangeRateCurs = Object.keys(getExchangeRates());
+  const _exchangeRateCurs = ['PHR', 'BTC'];
   exchangeRateCurs = _exchangeRateCurs.sort();
   _exchangeRateCurs
     .forEach(cur => {
@@ -145,7 +100,8 @@ export function getCurrenciesSortedByCode() {
     return currenciesSortedByCode;
   }
 
-  currenciesSortedByCode = getCurrencies().sort();
+  currenciesSortedByCode = getCurrencies()
+    .sort();
 
   return currenciesSortedByCode;
 }
@@ -220,7 +176,7 @@ export function getCurrenciesSortedByName() {
       worker.getCurrenciesSortedByName(
         getCurrencies(),
         getPhrases(),
-        app.localSettings.standardizedTranslatedLang()
+        app.localSettings.standardizedTranslatedLang(),
       )
         .then(data => deferred.resolve(data))
         .catch(e => deferred.reject(e))

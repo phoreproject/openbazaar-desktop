@@ -122,7 +122,7 @@ case "$TRAVIS_OS_NAME" in
     echo 'Create RPM archive'
     electron-installer-redhat --config .travis/config_x86_64.json
 
-    APPNAME="phoremarketplaceClient"
+    APPNAME="phoremarketplaceclient"
 
     echo "Packaging Electron application"
     electron-packager . ${APPNAME} --platform=linux --arch=ia32 --ignore="PHORE_MARKETPLACE_TEMP" --electronVersion=${ELECTRONVER} --overwrite --prune --out=dist
@@ -149,6 +149,8 @@ case "$TRAVIS_OS_NAME" in
   "osx")
 
     brew update
+    brew remove jq
+    brew link oniguruma
     brew install jq
     curl -L https://dl.bintray.com/develar/bin/7za -o /tmp/7za
     chmod +x /tmp/7za
@@ -158,7 +160,11 @@ case "$TRAVIS_OS_NAME" in
     brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
     brew install freetype graphicsmagick
     brew link xz
+    brew remove openssl
+    brew install openssl
+    brew remove osslsigncode
     brew install mono osslsigncode
+    brew link freetype graphicsmagick mono 
 
     # Retrieve Latest Server Binaries
     cd PHORE_MARKETPLACE_TEMP/
@@ -263,7 +269,7 @@ case "$TRAVIS_OS_NAME" in
     electron-installer-dmg dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app PhoreMarketplace-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplace-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
     # Client Only
     codesign --force --deep --sign "$SIGNING_IDENTITY" dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app
-    electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceClient-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
+    electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceC-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
 
     echo 'Codesign the DMG and zip'
     codesign --force --sign "$SIGNING_IDENTITY" dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
@@ -280,7 +286,7 @@ case "$TRAVIS_OS_NAME" in
     zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
     cp -r PhoreMarketplaceClient.app ../osx/
     cp PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip ../osx/
-    cp PhoreMarketplaceClient-$PACKAGE_VERSION.dmg ../osx/
+    cp PhoreMarketplaceC-$PACKAGE_VERSION.dmg ../osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
 
     ;;
 esac

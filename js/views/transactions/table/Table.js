@@ -253,6 +253,10 @@ export default class extends baseVw {
     this.fetchTransactions(this.curPage -= 1);
   }
 
+  onClickNumberedPage(pageNumber) {
+    this.fetchTransactions(this.curPage = pageNumber);
+  }
+
   onAttach() {
     this.setFilterOnRoute();
   }
@@ -508,6 +512,7 @@ export default class extends baseVw {
         total: this.queryTotal,
       },
     });
+    this.listenTo(this.pageControls, 'onPageClick', this.onClickNumberedPage);
     this.listenTo(this.pageControls, 'clickNext', this.onClickNextPage);
     this.listenTo(this.pageControls, 'clickPrev', this.onClickPrevPage);
     this.$('.js-pageControlsContainer').html(this.pageControls.render().el);
