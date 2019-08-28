@@ -18,19 +18,26 @@
         ob.priceCurrencyCode,
         ob.displayCurrency
       )
-    %>&nbsp;<span class="priceSymbol"><%= priceSymbol %></span>
+    %><% if (ob.format === 'MARKET_PRICE') { %>
+      &nbsp;<span class="priceSymbol"><%= priceSymbol %></span>
+    <% } %>
   </span>
   <span class="marketRelativity <%= ob.marketRelativityClass %> <% if (ob.priceModifier === 0) print('clrT2') %>">
     <%
-      let marketPriceLine = ob.polyT('cryptoPriceAtMarket');
+      let priceLine = '';
+      if (ob.format === 'MARKET_PRICE') {
+        priceLine = ob.polyT('cryptoPriceAtMarket');
 
-      if (ob.priceModifier > 0) {
-        marketPriceLine = ob.polyT('cryptoPriceAboveMarket', { amount: ob.priceModifier });
-      } else if (ob.priceModifier < 0) {
-        marketPriceLine = ob.polyT('cryptoPriceBelowMarket', { amount: ob.priceModifier });
+        if (ob.priceModifier > 0) {
+          priceLine = ob.polyT('cryptoPriceAboveMarket', { amount: ob.priceModifier });
+        } else if (ob.priceModifier < 0) {
+          priceLine = ob.polyT('cryptoPriceBelowMarket', { amount: ob.priceModifier });
+        }
+      } else {
+        priceLine = ob.polyT('cryptoPriceFixMarket');
       }
 
-      print(marketPriceLine);
+      print(priceLine);
     %>
   </span>
 </<%= ob.wrappingTag %>>
