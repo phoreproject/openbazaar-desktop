@@ -936,10 +936,12 @@ export default class extends BaseModal {
       item.unset('productId');
       metadata.unset('pricingCurrency');
 
-      let priceModifier = metadata.get('priceModifier');
+      let priceModifier = formData.metadata.priceModifier;
       const format = metadata.get('format');
       if (format === 'MARKET_PRICE') {
         item.unset('price');
+        formData.item.price = undefined;
+        metadata.set('priceModifier', formData.metadata.priceModifier);
       } else {
         metadata.set('priceModifier', 0);
         priceModifier = 0;
