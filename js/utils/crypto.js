@@ -91,6 +91,11 @@ export function renderCryptoPrice(options = {}) {
     throw new Error('Please provide a price modifier as a number.');
   }
 
+  if (typeof options.format !== 'string' ||
+    (options.format !== 'FIXED_PRICE' && options.format !== 'MARKET_PRICE')) {
+    throw new Error('Please provide valid listing format as a string.');
+  }
+
   const opts = {
     wrappingClass: 'txRgt tx3 txB',
     wrappingTag: 'div',
