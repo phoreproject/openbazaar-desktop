@@ -237,7 +237,9 @@ export default class extends BaseModel {
       // Remove the validation of certain fields that should not be set for
       // cryptocurrency listings.
       delete errObj['metadata.pricingCurrency'];
-      delete errObj['item.price'];
+      if (metadata && metadata.format === 'MARKET_PRICE') {
+        delete errObj['item.price'];
+      }
       delete errObj['item.condition'];
       delete errObj['item.quantity'];
       delete errObj['item.title'];
@@ -341,6 +343,7 @@ export default class extends BaseModel {
           if (options.attrs.metadata.format === 'MARKET_PRICE') {
             delete options.attrs.price;
           }
+          delete options.attrs.price2;
         }
         // END - convert price fields
 

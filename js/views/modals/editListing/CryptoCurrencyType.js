@@ -171,19 +171,21 @@ export default class extends BaseView {
   onChangePrice(event) {
     const val = $(event.target).val();
     if (isNaN(val)) {
+      this.setPriceError(this.$editListingCryptoPriceHelper);
       return;
     }
 
-    this.updatePriceFields(val, formatPrice(1.0 / Number(val)));
+    this.updatePriceFields(val, formatPrice(1.0 / Number(val), this.fromCur));
   }
 
   onChangePrice2(event) {
     const val = $(event.target).val();
     if (isNaN(val)) {
+      this.setPriceError(this.$editListingCryptoPriceHelper2);
       return;
     }
 
-    this.updatePriceFields(formatPrice(1.0 / Number(val)), val);
+    this.updatePriceFields(formatPrice(1.0 / Number(val), this.toCur), val);
   }
 
   get defaultFromCur() {
@@ -295,6 +297,10 @@ export default class extends BaseView {
         rate: price2,
         toCur: this.fromCur,
       }));
+  }
+
+  setPriceError(priceField) {
+    priceField.html(polyT('itemModelErrors.provideNumericAmount'));
   }
 
   render() {
