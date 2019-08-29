@@ -7,7 +7,7 @@ import BaseView from '../../baseVw';
 import CryptoTradingPair from '../../components/CryptoTradingPair';
 import CryptoCurrencyTradeField from './CryptoCurrencyTradeField';
 import $ from 'jquery';
-import { convertAndFormatCurrency } from '../../../utils/currency';
+import { convertAndFormatCurrency, formatPrice } from '../../../utils/currency';
 import { polyT } from '../../../utils/templateHelpers';
 
 export default class extends BaseView {
@@ -124,8 +124,9 @@ export default class extends BaseView {
     return {
       'change #editListingCoinType': 'onChangeCoinType',
       'change #editListingCryptoReceive': 'onChangeReceiveCur',
-      'click input[name="item.fixRates"]': 'onChangeIsFixedPriceListing',
+      'change #editFormatType': 'onChangeFormatType',
       'change input[name="item.price"]': 'onChangePrice',
+      'change input[name="item.price2"]': 'onChangePrice2',
     };
   }
 
@@ -149,28 +150,40 @@ export default class extends BaseView {
     this.updateDefaultCryptoFixPrice();
   }
 
-  onChangeIsFixedPriceListing(event) {
-    const value = $(event.target).val() === 'true';
+  onChangeFormatType(event) {
+    const value = $(event.target).val();
+    const isFixed = (value === 'FIXED_PRICE');
 
-    this.model.get('metadata').set('format', value ? 'FIXED_PRICE' : 'MARKET_PRICE');
+    this.model.get('metadata').set('format', value);
     this.updateDefaultCryptoFixPrice();
 
-    if (value) {
+    if (isFixed) {
       this.$editListingCryptoPriceSection.removeClass('hide');
+      this.$editListingCryptoPriceSection2.removeClass('hide');
       this.$editListingCryptoPriceModifierSection.addClass('hide');
     } else {
       this.$editListingCryptoPriceModifierSection.removeClass('hide');
       this.$editListingCryptoPriceSection.addClass('hide');
+      this.$editListingCryptoPriceSection2.addClass('hide');
     }
   }
 
   onChangePrice(event) {
-    this.$editListingCryptoPriceHelper.html(polyT('editListing.fixRatePriceHelper',
-      {
-        fromCur: this.toCur,
-        rate: $(event.target).val(),
-        toCur: this.fromCur,
-      }));
+    const val = $(event.target).val();
+    if (isNaN(val)) {
+      return;
+    }
+
+    this.updatePriceFields(val, formatPrice(1.0 / Number(val)));
+  }
+
+  onChangePrice2(event) {
+    const val = $(event.target).val();
+    if (isNaN(val)) {
+      return;
+    }
+
+    this.updatePriceFields(formatPrice(1.0 / Number(val)), val);
   }
 
   get defaultFromCur() {
@@ -209,14 +222,29 @@ export default class extends BaseView {
       (this._$editListingCryptoPriceSection = this.$('.js-editListingCryptoPrice'));
   }
 
+  get $editListingCryptoPriceSection2() {
+    return this._$editListingCryptoPriceSection2 ||
+      (this._$editListingCryptoPriceSection2 = this.$('.js-editListingCryptoPrice2'));
+  }
+
   get $editListingCryptoPriceInput() {
     return this._$editListingCryptoPriceInput ||
       (this._$editListingCryptoPriceInput = this.$('#editListingCryptoPrice'));
   }
 
+  get $editListingCryptoPriceInput2() {
+    return this._$editListingCryptoPriceInput2 ||
+      (this._$editListingCryptoPriceInput2 = this.$('#editListingCryptoPrice2'));
+  }
+
   get $editListingCryptoPriceHelper() {
     return this._$editListingCryptoPriceHelper ||
       (this._$editListingCryptoPriceHelper = this.$('#editListingCryptoPriceHelper'));
+  }
+
+  get $editListingCryptoPriceHelper2() {
+    return this._$editListingCryptoPriceHelper2 ||
+      (this._$editListingCryptoPriceHelper2 = this.$('#editListingCryptoPriceHelper2'));
   }
 
   get $editListingCryptoPriceModifierSection() {
@@ -233,19 +261,38 @@ export default class extends BaseView {
       return;
     }
 
-    const formattedFromCurAmount = Number(convertAndFormatCurrency(1, this.toCur, this.fromCur, {
+    const formattedFromCurAmount = Number(convertAndFormatCurrency(1, this.fromCur, this.toCur, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 8,
+    }).replace(/[^0-9\.-]+/g, ''));
+
+    const formattedFromCurAmount2 = Number(convertAndFormatCurrency(1, this.toCur, this.fromCur, {
       minimumFractionDigits: 0,
       maximumFractionDigits: 8,
     }).replace(/[^0-9\.-]+/g, ''));
 
     this.$editListingCryptoPriceInput.attr('placeholder', formattedFromCurAmount);
+    this.$editListingCryptoPriceInput2.attr('placeholder', formattedFromCurAmount2);
     if (this.$editListingCryptoPriceInput.get('value') === undefined) {
-      this.$editListingCryptoPriceInput.attr('value', formattedFromCurAmount);
+      this.updatePriceFields(formattedFromCurAmount, formattedFromCurAmount2);
     }
+  }
+
+  updatePriceFields(price, price2) {
+    this.$editListingCryptoPriceInput.attr('value', price);
+    this.$editListingCryptoPriceInput2.attr('value', price2);
+
     this.$editListingCryptoPriceHelper.html(polyT('editListing.fixRatePriceHelper',
       {
+        fromCur: this.fromCur,
+        rate: price,
+        toCur: this.toCur,
+      }));
+
+    this.$editListingCryptoPriceHelper2.html(polyT('editListing.fixRatePriceHelper2',
+      {
         fromCur: this.toCur,
-        rate: formattedFromCurAmount,
+        rate: price2,
         toCur: this.fromCur,
       }));
   }
@@ -257,6 +304,7 @@ export default class extends BaseView {
       loadTemplate('modals/editListing/cryptoCurrencyType.html', t => {
         this.$el.html(t({
           contractTypes: this.model.get('metadata').contractTypesVerbose,
+          priceTypes: this.model.get('metadata').formatsVerbose,
           coinTypes: this.coinTypes,
           receiveCurs: this.receiveCurs,
           errors: this.model.validationError || {},
@@ -266,11 +314,14 @@ export default class extends BaseView {
         }));
 
         this._$editListingCryptoPriceSection = null;
+        this._$editListingCryptoPriceSection2 = null;
         this._$editListingCryptoPriceInput = null;
+        this._$editListingCryptoPriceInput2 = null;
         this._$editListingCryptoPriceHelper = null;
+        this._$editListingCryptoPriceHelper2 = null;
         this._$editListingCryptoPriceModifierSection = null;
 
-        this.getCachedEl('#editListingCryptoContractType').select2({
+        this.getCachedEl('#editListingCryptoContractType, #editFormatType').select2({
           minimumResultsForSearch: Infinity,
         });
 

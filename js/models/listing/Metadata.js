@@ -46,6 +46,16 @@ export default class extends BaseModel {
     ];
   }
 
+  get formatsVerbose() {
+    return this.formats
+      .map((formatType) => (
+        {
+          code: formatType,
+          name: app.polyglot.t(`priceTypes.${formatType}`),
+        }
+      ));
+  }
+
   get constraints() {
     return {
       minPriceModifier: -99.99,
