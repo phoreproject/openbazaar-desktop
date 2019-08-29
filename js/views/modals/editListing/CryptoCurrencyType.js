@@ -273,16 +273,16 @@ export default class extends BaseView {
       maximumFractionDigits: 8,
     }).replace(/[^0-9\.-]+/g, ''));
 
-    this.$editListingCryptoPriceInput.attr('placeholder', formattedFromCurAmount);
-    this.$editListingCryptoPriceInput2.attr('placeholder', formattedFromCurAmount2);
+    this.$editListingCryptoPriceInput.prop('placeholder', formattedFromCurAmount);
+    this.$editListingCryptoPriceInput2.prop('placeholder', formattedFromCurAmount2);
     if (this.$editListingCryptoPriceInput.get('value') === undefined) {
       this.updatePriceFields(formattedFromCurAmount, formattedFromCurAmount2);
     }
   }
 
   updatePriceFields(price, price2) {
-    this.$editListingCryptoPriceInput.attr('value', price);
-    this.$editListingCryptoPriceInput2.attr('value', price2);
+    this.$editListingCryptoPriceInput.prop('value', price);
+    this.$editListingCryptoPriceInput2.prop('value', price2);
 
     this.$editListingCryptoPriceHelper.html(polyT('editListing.fixRatePriceHelper',
       {
