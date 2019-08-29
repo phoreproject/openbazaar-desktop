@@ -997,6 +997,10 @@
     "SERVICE": "Tjenesteydelse",
     "CRYPTOCURRENCY": "Cryptocurrency"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "Ny",
     "USED_EXCELLENT": "Brugt – Fortrinlig",
@@ -1128,6 +1132,9 @@
     "nsfwYes": "Ja",
     "nsfwNo": "Nej",
     "nsfwLabel": "Mature Content (NSFW, adult, 18+, etc)",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Generelt",
       "photos": "Fotos",
@@ -1172,7 +1179,8 @@
     "title": "Titel",
     "type": "Type",
     "visibility": "Synlighed",
-    "price": "Pris",
+    "price": "Køber Pris",
+    "price2": "Pris",
     "condition": "Stand",
     "sku": "Varenr.",
     "description": "Beskrivelse",
@@ -2177,6 +2185,7 @@
   "cryptoPriceBelowMarket": "%{amount}% under market",
   "cryptoPriceAboveMarket": "%{amount}% above market",
   "cryptoPriceAtMarket": "market price",
+  "cryptoPriceFixMarket": "fix price",
   "countries": {
     "AFGHANISTAN": "Afghanistan",
     "ALAND_ISLANDS": "Ålandsøerne",

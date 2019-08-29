@@ -997,6 +997,10 @@
     "SERVICE": "Dienstleistung",
     "CRYPTOCURRENCY": "Kryptowährung"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "Neu",
     "USED_EXCELLENT": "Gebraucht – Sehr gut ",
@@ -1128,6 +1132,9 @@
     "nsfwYes": "Ja",
     "nsfwNo": "Nein",
     "nsfwLabel": "Inhalte für Erwachsene (NSFW, 18+, usw.)",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Allgemein",
       "photos": "Fotos",
@@ -1172,7 +1179,8 @@
     "title": "Titel",
     "type": "Art",
     "visibility": "Sichtbarkeit",
-    "price": "Preis",
+    "price": "Käuferpreis",
+    "price2": "Preis",
     "condition": "Zustand",
     "sku": "Artikelnummer",
     "description": "Beschreibung",
@@ -2177,6 +2185,7 @@
   "cryptoPriceBelowMarket": "%{amount}% under market",
   "cryptoPriceAboveMarket": "%{amount}% above market",
   "cryptoPriceAtMarket": "market price",
+  "cryptoPriceFixMarket": "fix price",
   "countries": {
     "AFGHANISTAN": "Afghanistan",
     "ALAND_ISLANDS": "Alandinseln",

@@ -997,6 +997,10 @@
     "SERVICE": "Serviço",
     "CRYPTOCURRENCY": "Criptomoeda"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "Novo",
     "USED_EXCELLENT": "Usado - Excelente",
@@ -1128,6 +1132,9 @@
     "nsfwYes": "Sim",
     "nsfwNo": "Não",
     "nsfwLabel": "Conteúdo Adulto/Ofensivo (NSFW, adulto, 18+, etc)",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Geral",
       "photos": "Fotos",
@@ -1172,7 +1179,8 @@
     "title": "Título",
     "type": "Tipo",
     "visibility": "Visibilidade",
-    "price": "Preço",
+    "price": "Preço Do Comprador",
+    "price2": "Preço",
     "condition": "Condição",
     "sku": "Unidade de Manutenção de Estoque (SKU)",
     "description": "Descrição",

@@ -997,6 +997,10 @@
     "SERVICE": "Servicio",
     "CRYPTOCURRENCY": "Cryptodivisa"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "Nuevo",
     "USED_EXCELLENT": "Usado - Excelente",
@@ -1128,6 +1132,9 @@
     "nsfwYes": "Sí",
     "nsfwNo": "No",
     "nsfwLabel": "Contenido Para Adultos (NSFW, adult, 18+, etc)",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "General",
       "photos": "Fotos",
@@ -1172,7 +1179,8 @@
     "title": "Título",
     "type": "Tipo",
     "visibility": "Visibilidad",
-    "price": "Precio",
+    "price": "Precio Comprador",
+    "price2": "Precio",
     "condition": "Condición",
     "sku": "SKU",
     "description": "Descripci&oacute;n",
@@ -2177,6 +2185,7 @@
   "cryptoPriceBelowMarket": "%{amount}% debajo del mercado",
   "cryptoPriceAboveMarket": "%{amount}% arriba del mercado",
   "cryptoPriceAtMarket": "precio del mercado",
+  "cryptoPriceFixMarket": "precio fijo",
   "countries": {
     "AFGHANISTAN": "Afganistán",
     "ALAND_ISLANDS": "Islas Aland",

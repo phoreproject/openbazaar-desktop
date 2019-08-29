@@ -997,6 +997,10 @@
     "SERVICE": "خدمة",
     "CRYPTOCURRENCY": "عملة رقمية"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "جدید",
     "USED_EXCELLENT": "مستعمل - ممتاز",
@@ -1128,6 +1132,9 @@
     "nsfwYes": "نعم",
     "nsfwNo": "لا",
     "nsfwLabel": "محتوى للبالغين ( إباحي, كلمات نابية, 18+, إلخ .... )",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "عام",
       "photos": "الصور",
@@ -1172,7 +1179,8 @@
     "title": "عنوان",
     "type": "نوع",
     "visibility": "رؤية",
-    "price": "السعر",
+    "price": "سعر المشتري",
+    "price2": "السعر",
     "condition": "حالة",
     "sku": "وحدة حفظ الأوراق المالية SKU",
     "description": "وصف",
@@ -2177,6 +2185,7 @@
   "cryptoPriceBelowMarket": "%{amount}% under market",
   "cryptoPriceAboveMarket": "%{amount}% above market",
   "cryptoPriceAtMarket": "سعر السوق",
+  "cryptoPriceFixMarket": "سعر ثابت",
   "countries": {
     "AFGHANISTAN": "افغانستان",
     "ALAND_ISLANDS": "جزر آلاند",

@@ -997,6 +997,10 @@
     "SERVICE": "Service",
     "CRYPTOCURRENCY": "Crypto-monnaie"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "Neuf",
     "USED_EXCELLENT": "Utilisé - Excellent",
@@ -1128,6 +1132,9 @@
     "nsfwYes": "Oui",
     "nsfwNo": "Non",
     "nsfwLabel": "Contenu interdit aux mineurs",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Général",
       "photos": "Photos",
@@ -1172,7 +1179,8 @@
     "title": "Titre",
     "type": "Type",
     "visibility": "Visibilité",
-    "price": "Prix",
+    "price": "Prix Acheteur",
+    "price2": "Prix",
     "condition": "État",
     "sku": "SKU",
     "description": "Description",
@@ -2177,6 +2185,7 @@
   "cryptoPriceBelowMarket": "%{amount}% en dessous du marché",
   "cryptoPriceAboveMarket": "%{amount}% au dessus du marché",
   "cryptoPriceAtMarket": "prix du marché",
+  "cryptoPriceFixMarket": "prix fixe",
   "countries": {
     "AFGHANISTAN": "Afghanistan",
     "ALAND_ISLANDS": "Åland",

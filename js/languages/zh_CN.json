@@ -997,6 +997,10 @@
     "SERVICE": "服务",
     "CRYPTOCURRENCY": "加密货币"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "新",
     "USED_EXCELLENT": "已使用 - 优秀",
@@ -1128,6 +1132,9 @@
     "nsfwYes": "是",
     "nsfwNo": "否",
     "nsfwLabel": "成人内容（NSFW，成人，18+等）",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "通用",
       "photos": "照片",
@@ -1173,6 +1180,7 @@
     "type": "类型",
     "visibility": "可见度",
     "price": "价格",
+    "price2": "价格",
     "condition": "新旧程度",
     "sku": "SKU",
     "description": "描述",
@@ -2177,6 +2185,7 @@
   "cryptoPriceBelowMarket": "%{amount}% 低于市场价格",
   "cryptoPriceAboveMarket": "%{amount}% 高于市场价格",
   "cryptoPriceAtMarket": "市场价格",
+  "cryptoPriceFixMarket": "固定价格",
   "countries": {
     "AFGHANISTAN": "阿富汗",
     "ALAND_ISLANDS": "奥兰群岛",

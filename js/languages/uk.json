@@ -997,6 +997,10 @@
     "SERVICE": "Послуга",
     "CRYPTOCURRENCY": "Криптовалюта"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "Додати товар",
     "USED_EXCELLENT": "Було у вжитку - ідеальний стан",
@@ -1128,6 +1132,9 @@
     "nsfwYes": "Так",
     "nsfwNo": "Ні",
     "nsfwLabel": "Вміст для дорослих (NSFW, adult, 18+, та інше)",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Загальні",
       "photos": "Зображення",
@@ -1172,7 +1179,8 @@
     "title": "Назва",
     "type": "Тип",
     "visibility": "Видимість",
-    "price": "Ціна",
+    "price": "ціна покупця",
+    "price2": "Ціна",
     "condition": "Стан",
     "sku": "Номер Товару",
     "description": "Про Вас",
@@ -2177,6 +2185,7 @@
   "cryptoPriceBelowMarket": "%{amount}% нижче ринку",
   "cryptoPriceAboveMarket": "%{amount}% вище ринку",
   "cryptoPriceAtMarket": "ринкова ціна",
+  "cryptoPriceFixMarket": "фіксована ціна",
   "countries": {
     "AFGHANISTAN": "Афганістан",
     "ALAND_ISLANDS": "Аландські острови",

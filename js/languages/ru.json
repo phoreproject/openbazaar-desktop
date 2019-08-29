@@ -997,6 +997,10 @@
     "SERVICE": "Услуга",
     "CRYPTOCURRENCY": "Криптовалюта"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "Новый",
     "USED_EXCELLENT": "Б/у - Отличное",
@@ -1128,6 +1132,9 @@
     "nsfwYes": "Да",
     "nsfwNo": "Нет",
     "nsfwLabel": "Контент для взрослых (NSFW, 18+, и т. д.)",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Общий",
       "photos": "Фотографии",
@@ -1172,7 +1179,8 @@
     "title": "Название",
     "type": "Тип",
     "visibility": "Обзор",
-    "price": "Цена",
+    "price": "Цена покупателя",
+    "price2": "Цена",
     "condition": "Состояние",
     "sku": "Артикул",
     "description": "Описание",
@@ -2177,6 +2185,7 @@
   "cryptoPriceBelowMarket": "%{amount}% under market",
   "cryptoPriceAboveMarket": "%{amount}% above market",
   "cryptoPriceAtMarket": "market price",
+  "cryptoPriceFixMarket": "fix price",
   "countries": {
     "AFGHANISTAN": "Афганистан",
     "ALAND_ISLANDS": "Аландские острова",

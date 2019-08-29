@@ -997,6 +997,10 @@
     "SERVICE": "Dienst",
     "CRYPTOCURRENCY": "Cryptocurrency"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "Nieuw",
     "USED_EXCELLENT": "Gebruikt - Zeer goede staat",
@@ -1128,6 +1132,9 @@
     "nsfwYes": "ja",
     "nsfwNo": "Nee",
     "nsfwLabel": "Inhoud voor volwassenen (NSFW, adult, 18+, etc)",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Algemeen",
       "photos": "Foto's",
@@ -1172,7 +1179,8 @@
     "title": "Titel",
     "type": "Type",
     "visibility": "Zichtbaarheid",
-    "price": "Prijs",
+    "price": "Koper Prijs",
+    "price2": "Prijs",
     "condition": "Staat",
     "sku": "SKU",
     "description": "Beschrijving",
@@ -2177,6 +2185,7 @@
   "cryptoPriceBelowMarket": "%{amount}% under market",
   "cryptoPriceAboveMarket": "%{amount}% above market",
   "cryptoPriceAtMarket": "market price",
+  "cryptoPriceFixMarket": "fix price",
   "countries": {
     "AFGHANISTAN": "Afghanistan",
     "ALAND_ISLANDS": "Åland-eilanden",
