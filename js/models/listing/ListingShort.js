@@ -51,6 +51,7 @@ export default class extends BaseModel {
       } else {
         parsedResponse.price = {
           ...parsedResponse.price,
+          amount: parsedResponse.price.amount / parsedResponse.coinDivisibility,
           currencyCode: parsedResponse.coinType,
           modifier: 0,
         };

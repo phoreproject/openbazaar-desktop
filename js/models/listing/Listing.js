@@ -128,7 +128,7 @@ export default class extends BaseModel {
       return {
         amount,
         currencyCode: metadata.get('coinType'),
-        modifier: amount,
+        modifier: 0,
       };
     }
 
