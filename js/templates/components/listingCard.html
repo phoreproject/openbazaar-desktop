@@ -122,6 +122,24 @@ if (ob.viewType === 'grid') {
     </div>
     <% } %>
   </div>
+  <% if (ob.contractType === 'CRYPTOCURRENCY') { %>
+  <div>
+    <span class="cryptoTradingPairSm">
+      <%
+        const fromCur = ob.acceptedCurrencies && ob.acceptedCurrencies[0];
+      %>
+      <%=
+        ob.currencyMod.formattedCurrency(
+        ob.price.amount,
+        ob.coinType,
+        fromCur
+        )
+      %>
+      <span class="pairingSeparator ion-android-arrow-forward"></span>
+      1 <%=ob.coinType%>
+    </span>
+  </div>
+  <% } %>
   <div class="flex">
     <div class="flexExpand tx5b ratingStrip">
       <%= ob.formatRating(ob.averageRating, ob.ratingCount) %>

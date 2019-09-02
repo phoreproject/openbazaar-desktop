@@ -1,17 +1,19 @@
 .listingCard {
   width: 225px;
-  height: 283px;
+  height: 100%;
   font-size: $tx5b;
   cursor: pointer;
   position: relative;
   bottom: 0;
   transition: all .2s ease;
+  display: flex;
 
   &:focus {
     outline: none;
   }
 
   .gridViewContent {
+    width: 100%;
     .listingImage {
       width: 223px;
       height: 225px;
