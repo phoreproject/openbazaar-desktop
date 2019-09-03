@@ -85,21 +85,22 @@
       </div>
       <div class="clrT2 txSm helper"><%= ob.polyT('editListing.cryptoCurrencyType.helperPriceModifier') %></div>
     </section>
-    <section class="js-editListingCryptoPrice2 <% if(ob.metadata.format !== 'FIXED_PRICE') { %> hide <% } %> ">
-      <label for="editListingCryptoPrice" class="required"><%= ob.polyT('editListing.price2') %></label>
-      <% if (ob.errors['item.price2']) print(ob.formErrorTmpl({ errors: ob.errors['item.price2'] })) %>
+
+    <section class="js-editListingCryptoPrice <% if(ob.metadata.format !== 'FIXED_PRICE') { %> hide <% } %> ">
+      <label for="editListingCryptoPrice" class="required"><%= ob.polyT('editListing.price') %></label>
+      <% if (ob.errors['item.price']) print(ob.formErrorTmpl({ errors: ob.errors['item.price'] })) %>
       <div class="posR marginTopAuto">
-        <input type="text" class="clrBr clrP clrSh2 js-price" name="item.price2" id="editListingCryptoPrice2" value="<%= ob.item.price2 %>" placeholder="0.00" data-var-type="number">
+        <input type="text" class="clrBr clrP clrSh2 js-price" name="item.price" id="editListingCryptoPrice2" value="<%= ob.item.price %>" placeholder="0.00" data-var-type="number">
       </div>
       <div class="clrT2 txSm helper" id="editListingCryptoPriceHelper2"></div>
     </section>
   </div>
   <div class="col6 simpleFlexCol">
-    <section class="js-editListingCryptoPrice <% if(ob.metadata.format !== 'FIXED_PRICE') { %> hide <% } %> ">
-      <label for="editListingCryptoPrice" class="required"><%= ob.polyT('editListing.price') %></label>
-      <% if (ob.errors['item.price']) print(ob.formErrorTmpl({ errors: ob.errors['item.price'] })) %>
+    <section class="js-editListingCryptoPrice2 <% if(ob.metadata.format !== 'FIXED_PRICE') { %> hide <% } %> ">
+      <label for="editListingCryptoPrice2" class="required"><%= ob.polyT('editListing.price2') %></label>
+      <% if (ob.errors['item.price2']) print(ob.formErrorTmpl({ errors: ob.errors['item.price2'] })) %>
       <div class="posR marginTopAuto">
-        <input type="text" class="clrBr clrP clrSh2 js-price" name="item.price" id="editListingCryptoPrice" value="<%= ob.item.price %>" placeholder="0.00" data-var-type="number">
+        <input type="text" class="clrBr clrP clrSh2 js-price" name="item.price2" id="editListingCryptoPrice" value="<%= ob.item.price2 %>" placeholder="0.00" data-var-type="number">
       </div>
       <div class="clrT2 txSm helper" id="editListingCryptoPriceHelper"></div>
     </section>

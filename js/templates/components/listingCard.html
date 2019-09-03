@@ -128,15 +128,27 @@ if (ob.viewType === 'grid') {
       <%
         const fromCur = ob.acceptedCurrencies && ob.acceptedCurrencies[0];
       %>
-      <%=
-        ob.currencyMod.formattedCurrency(
-        ob.price.amount,
-        ob.coinType,
-        fromCur
-        )
-      %>
-      <span class="pairingSeparator ion-android-arrow-forward"></span>
-      1 <%=ob.coinType%>
+      <% if (ob.format !== 'FIXED_PRICE') { %>
+        <%=
+          ob.currencyMod.formattedCurrency(
+          ob.price.amount,
+          ob.coinType,
+          fromCur
+          )
+        %>
+        <span class="pairingSeparator ion-android-arrow-forward"></span>
+        1 <%=ob.coinType%>
+      <% } else { %>
+        <!--DO NOT CONVERT, ONLY FORMAT-->
+        <%=
+          ob.currencyMod.formattedCurrency(
+          ob.price.amount,
+          fromCur
+          )
+        %>
+        <span class="pairingSeparator ion-android-arrow-forward"></span>
+        1 <%=ob.coinType%>
+      <% } %>
     </span>
   </div>
   <% } %>
@@ -150,6 +162,22 @@ if (ob.viewType === 'grid') {
       ob.currencyMod.formattedCurrency(
       ob.price.amount,
       ob.price.currencyCode,
+      ob.displayCurrency,
+      {
+      toolTipClass: 'toolTipTop',
+      }
+      )
+      %>
+    </div>
+    <% } else if (ob.format === 'FIXED_PRICE') { %>
+    <div>
+      <%
+      const fromCur = ob.acceptedCurrencies && ob.acceptedCurrencies[0];
+      %>
+      <%=
+      ob.currencyMod.formattedCurrency(
+      ob.price.amount,
+      fromCur,
       ob.displayCurrency,
       {
       toolTipClass: 'toolTipTop',
