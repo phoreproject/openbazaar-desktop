@@ -139,7 +139,6 @@ if (ob.viewType === 'grid') {
         <span class="pairingSeparator ion-android-arrow-forward"></span>
         1 <%=ob.coinType%>
       <% } else { %>
-        <!--DO NOT CONVERT, ONLY FORMAT-->
         <%=
           ob.currencyMod.formattedCurrency(
           ob.price.amount,
@@ -193,6 +192,7 @@ if (ob.viewType === 'grid') {
     displayCurrency: ob.displayCurrency,
     priceModifier: ob.price.modifier,
     format: ob.format,
+    acceptedCurrencies: ob.acceptedCurrencies,
     wrappingClass: '',
     marketRelativityClass: 'hide',
     })
@@ -267,6 +267,7 @@ if (ob.viewType === 'grid') {
                 displayCurrency: ob.displayCurrency,
                 priceModifier: ob.price.modifier,
                 format: ob.format,
+                acceptedCurrencies: ob.acceptedCurrencies,
                 wrappingClass: '',
               })
             %>
@@ -341,6 +342,7 @@ if (ob.viewType === 'grid') {
     displayCurrency: ob.displayCurrency,
     priceModifier: ob.price.modifier,
     format: ob.format,
+    acceptedCurrencies: ob.acceptedCurrencies,
     wrappingClass: 'txB',
     })
     %>

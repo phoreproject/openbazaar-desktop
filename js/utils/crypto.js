@@ -96,10 +96,15 @@ export function renderCryptoPrice(options = {}) {
     throw new Error('Please provide valid listing format as a string.');
   }
 
+  if (typeof options.acceptedCurrencies === 'undefined') {
+    throw new Error('Please provide valid accepted currencies list.');
+  }
+
   const opts = {
     wrappingClass: 'txRgt tx3 txB',
     wrappingTag: 'div',
     marketRelativityClass: 'tx6 txUnb clamp2',
+    viewType: '',
     ...options,
   };
 
