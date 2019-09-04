@@ -127,7 +127,8 @@ export default class extends BaseModel {
       const amount = this.get('item').get('price');
       return {
         amount,
-        currencyCode: metadata.get('coinType'),
+        // In case of fixed price, it is amount in payment currency
+        currencyCode: metadata.get('acceptedCurrencies')[0],
         modifier: 0,
       };
     }

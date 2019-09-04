@@ -78,9 +78,9 @@
                   <div class="inputSelect">
                     <% let placeholder = "0.0000";
                       if (ob.displayCurrency === ob.listing.metadata.coinType) {
-                        placeholder = "0.0000" + " " + ob.displayCurrency;
+                        placeholder += " " + ob.displayCurrency;
                       } %>
-                    <input type="text" class="clrBr clrP clrSh2" name="quantity" id="cryptoAmount" value="<%= ob.quantity %>" data-var-type="number" placeholder="<%= placeholder %>" size="8">
+                      <input type="text" class="clrBr clrP clrSh2" name="quantity" id="cryptoAmount" value="<%= ob.quantity %>" data-var-type="number" placeholder="<%= placeholder %>" size="16">
                     <% if (ob.displayCurrency !== ob.listing.metadata.coinType) { %>
                       <select id="cryptoAmountCurrency" class="clrBr clrP nestInputRight">
                         <% [ob.listing.metadata.coinType, ob.displayCurrency].forEach((cur) => {%>
