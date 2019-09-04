@@ -44,21 +44,20 @@ export const defaultQuantityBaseUnit = 100000000;
 
 export function getCurrencies() {
   if (!exchangeRateChangeBound) {
-    getCurrencyEvents()
-      .on('exchange-rate-change',
-        () => {
-          if (
-            !currenciesNeedRefresh &&
-            !_.isEqual(
-              Object.keys(getExchangeRates())
-                .sort(),
-              exchangeRateCurs,
-            )
-          ) {
-            currenciesNeedRefresh = true;
-            currenciesSortedByNameDeferred = null;
-          }
-        });
+    getCurrencyEvents().on('exchange-rate-change',
+      () => {
+        if (
+          !currenciesNeedRefresh &&
+          !_.isEqual(
+            Object.keys(getExchangeRates()).sort(),
+            exchangeRateCurs
+          )
+        ) {
+          currenciesNeedRefresh = true;
+          currenciesSortedByNameDeferred = null;
+        }
+      });
+
     exchangeRateChangeBound = true;
   }
 
@@ -176,7 +175,7 @@ export function getCurrenciesSortedByName() {
       worker.getCurrenciesSortedByName(
         getCurrencies(),
         getPhrases(),
-        app.localSettings.standardizedTranslatedLang(),
+        app.localSettings.standardizedTranslatedLang()
       )
         .then(data => deferred.resolve(data))
         .catch(e => deferred.reject(e))
