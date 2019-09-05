@@ -26,7 +26,7 @@ export function renderCryptoIcon(options = {}) {
     (attrString, key) => `${attrString} ${key}="${opts.attrs[key]}"`, ''
   );
   const iconUrl = opts.code ?
-    `url(${baseIconPath}${opts.code}-icon.png),` :
+    `url(${baseIconPath}${opts.code}-icon.png)` :
     '';
   const style = `style="background-image: ${iconUrl}"`;
   return `<i class="cryptoIcon ${opts.className}" ${attrs} ${style}></i>`;
