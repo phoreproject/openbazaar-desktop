@@ -26,6 +26,7 @@ export default class extends baseVw {
       viewType: 'grid',
       reportsUrl: '',
       searchUrl: '',
+      topTagsUrl: '',
       ...options,
     };
 

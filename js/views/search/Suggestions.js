@@ -10,7 +10,7 @@ export default class extends BaseView {
           'Books',
           'Art',
           'Clothing',
-          'Bitcoin',
+          'Phore',
           'Crypto',
           'Handmade',
           'Health',

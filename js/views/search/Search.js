@@ -66,20 +66,7 @@ export default class extends baseVw {
     }
     this._search.provider = this.currentDefaultProvider || app.searchProviders.at(0);
 
-    this._categoryTerms = [
-      'Art',
-      'Music',
-      'Toys',
-      'Crypto',
-      'Books',
-      'Health',
-      'Games',
-      'Handmade',
-      'Clothing',
-      'Electronics',
-      'Bitcoin',
-    ];
-
+    this._categoryTerms = [];
     this._categorySearch = {
       ...this._search,
       provider: app.searchProviders.at(0),
@@ -93,11 +80,7 @@ export default class extends baseVw {
         type: 'cryptocurrency',
       },
     };
-
     this._categorySearches = [this._cryptoSearch];
-    this._categoryTerms.forEach(cat => {
-      this._categorySearches.push({ ...this._categorySearch, q: cat });
-    });
 
     this.categoryViews = [];
     this.searchFetches = [];
@@ -160,7 +143,7 @@ export default class extends baseVw {
       this.setSearch({ ..._.pick(params, ...queryKeys), filters }, { force: true });
     } else {
       if (this._search.provider.id === defaultSearchProviders[0].id) {
-        this.buildCategories();
+        this.downloadLiveTags();
       } else {
         this.setSearch({}, { force: true });
       }
@@ -394,6 +377,56 @@ export default class extends baseVw {
   }
 
   /**
+   * This will download the most common tags from search provider. If provider doesn't support live
+   * tag, default tags will be used.
+   */
+  downloadLiveTags() {
+    const defaultTags = [
+      'Art',
+      'Music',
+      'Toys',
+      'Crypto',
+      'Books',
+      'Health',
+      'Games',
+      'Handmade',
+      'Clothing',
+      'Electronics',
+      'Phore',
+    ];
+
+    if (this._search.provider.get('topTags') !== undefined) {
+      const tagsCol = new ResultsCol();
+      const self = this;
+      const tags = tagsCol.fetch({
+        url: createSearchURL({
+          provider: this._search.provider,
+          searchType: 'topTags',
+        }),
+      })
+        .done(() => {
+          self._categoryTerms = tags.responseJSON.tags;
+        })
+        .fail(xhr => {
+          if (xhr.statusText !== 'abort') this.trigger('liveTagsError', xhr);
+          self._categoryTerms = defaultTags;
+        })
+        .always(() => {
+          self._categoryTerms.forEach(cat => {
+            self._categorySearches.push({ ...self._categorySearch, q: cat });
+          });
+          self.buildCategories();
+        });
+    } else {
+      this._categoryTerms = defaultTags;
+      this._categoryTerms.forEach(cat => {
+        this._categorySearches.push({ ...this._categorySearch, q: cat });
+      });
+      this.buildCategories();
+    }
+  }
+
+  /**
    * This will add the categories one by one in a loop. If the category views already exist, they
    * will be reused to prevent new calls to the search endpoint.
    */
@@ -581,7 +614,9 @@ export default class extends baseVw {
     this.$('.js-searchProviders').append(this.searchProviders.render().el);
 
     if (this.suggestions) this.suggestions.remove();
-    this.suggestions = this.createChild(Suggestions);
+    this.suggestions = this.createChild(Suggestions, {
+      initialState: { suggestions: this._categoryTerms },
+    });
     this.listenTo(this.suggestions, 'clickSuggestion', opts => this.onClickSuggestion(opts));
     this.$('.js-suggestions').append(this.suggestions.render().el);
 

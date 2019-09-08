@@ -66,10 +66,11 @@ export default class extends Collection {
 
     return this.models.find(md => {
       let match = false;
-      ['listings', 'torListings', 'vendors', 'torVendors'].forEach(type => {
-        const typeUrl = md.get(type) && baseUrl(md.get(type));
-        if (typeUrl && baseUrl(url) === typeUrl) match = true;
-      });
+      ['listings', 'torListings', 'vendors', 'torVendors', 'topTags', 'torTopTags']
+        .forEach(type => {
+          const typeUrl = md.get(type) && baseUrl(md.get(type));
+          if (typeUrl && baseUrl(url) === typeUrl) match = true;
+        });
 
       return match;
     });

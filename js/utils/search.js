@@ -3,7 +3,7 @@ import app from '../app';
 import $ from 'jquery';
 import ProviderMd from '../models/search/SearchProvider';
 
-export const searchTypes = ['listings', 'vendors'];
+export const searchTypes = ['listings', 'vendors', 'topTags'];
 
 /**
  * Create a search query URL.

@@ -61,6 +61,7 @@ export default class extends baseVw {
       listingBaseUrl: `${base}/store/`,
       reportsUrl: this._search.provider.reportsUrl || '',
       searchUrl: this._search.provider.listingsUrl,
+      topTagsUrl: this._search.provider.topTagsUrl,
       model,
       vendor,
       onStore: false,

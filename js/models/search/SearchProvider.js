@@ -14,6 +14,7 @@ export default class extends BaseModel {
       vendors: '',
       torvendors: '',
       reports: '',
+      topTags: '',
       torreports: '',
     };
   }
@@ -45,6 +46,11 @@ export default class extends BaseModel {
     return this.get(`${this.tor}reports`) || this.get('reports');
   }
 
+  get topTagsUrl() {
+    // Fall back to clear endpoint on tor if no tor endpoint exists.
+    return this.get(`${this.tor}topTags`) || this.get('topTags');
+  }
+
   validate(attrs, options) {
     const errObj = {};
     const addError = (fieldName, error) => {
@@ -52,7 +58,8 @@ export default class extends BaseModel {
       errObj[fieldName].push(error);
     };
     const urlTypes = options.urlTypes ||
-      ['listings', 'torlistings', 'vendors', 'torvendors', 'reports', 'torreports'];
+      ['listings', 'torlistings', 'vendors', 'torvendors', 'reports', 'torreports',
+        'topTags', 'tortopTags'];
 
     if (attrs.name && is.not.string(attrs.name)) {
       addError('name', app.polyglot.t('searchProviderModelErrors.invalidName'));
