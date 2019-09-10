@@ -16,6 +16,8 @@ import {
 // list the UI will use.
 
 
+const allowedCrypto = ['PHR', 'BTC', 'ETH', 'BNB', 'DOGE', 'RDD'];
+
 // Certain currencies are not in our fiat list, but they're also not crypto currencies.
 // They mainly conisist of obscure fiat currencies or precious metals.
 const excludes = [
@@ -68,14 +70,15 @@ export function getCurrencies() {
   }
 
   const curs = new Set();
-  // const _exchangeRateCurs = Object.keys(getExchangeRates());
-  const _exchangeRateCurs = ['PHR', 'BTC'];
+  const _exchangeRateCurs = Object.keys(getExchangeRates());
+
   exchangeRateCurs = _exchangeRateCurs.sort();
   _exchangeRateCurs
     .forEach(cur => {
       // If it's not a fiat currency code (base on our hard-code list),
       // or on our exclude list, we'll assume it's a crypto currency.
-      if (!fiatCurrencyCodes.includes(cur) && !excludes.includes(cur)) {
+      if (!fiatCurrencyCodes.includes(cur) && !excludes.includes(cur)
+          && allowedCrypto.includes(cur)) {
         curs.add(cur);
       }
     });
