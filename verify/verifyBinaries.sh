@@ -2,7 +2,7 @@
 
 ### This utility is for users to verify that binaries they downloaded are the signed, correct versions
 
-BASEURL="https://openbazaar.org/releases/"
+BASEURL="https://github.com/phoreproject/openbazaar-desktop/releases/"
 TMPFILE="hashes.tmp"
 TMPFOLDER="temp"
 
