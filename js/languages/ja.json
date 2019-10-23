@@ -466,7 +466,10 @@
         "resyncHelper": "トランザクションの抜けを同期により解消します",
         "reloadTransactionsWidget": {
           "resyncBtn": "トランザクションの再読み込み",
-          "resyncComplete": "トランザクションは再読み込みされます。5分から10分ほどかかります。",
+          "resyncStartedTitle": "%{cur} Resync Started",
+          "resyncStarted": "トランザクションは再読み込みされます。5分から10分ほどかかります。",
+          "resyncCompleteTitle": "%{cur} Resync Finished",
+          "resyncComplete": "Successfully resynced your wallet transactions",
           "syncUnavailable": "トランザクションの再読み込みは一時間に一回のみです。"
         },
         "purge": "シェアファイルをパージ",

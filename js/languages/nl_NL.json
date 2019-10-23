@@ -980,8 +980,10 @@
     },
     "reloadTransactionsWidget": {
       "resyncBtn": "Opnieuw syncroniseren",
-      "resyncCompleteTitle": "%{cur} Resync Started",
-      "resyncComplete": "Je transacties starten opnieuw met synchroniseren. Dit kan vijf tot tien minuten duren.",
+      "resyncStartedTitle": "%{cur} Resync Started",
+      "resyncStarted": "Je transacties starten opnieuw met synchroniseren. Dit kan vijf tot tien minuten duren.",
+      "resyncCompleteTitle": "%{cur} Resync Finished",
+      "resyncComplete": "Successfully resynced your wallet transactions",
       "syncUnavailable": "U kunt maar een keer per uur transacties herladen."
     },
     "cryptoTeaser": {

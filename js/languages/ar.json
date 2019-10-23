@@ -980,8 +980,10 @@
     },
     "reloadTransactionsWidget": {
       "resyncBtn": "أعد المزامنة",
-      "resyncCompleteTitle": "%{cur} Resync Started",
-      "resyncComplete": "ستبدأ معاملاتك في إعادة المزامنة. قد يستغرق ذلك من خمس إلى عشر دقائق أو أكثر.",
+      "resyncStartedTitle": "%{cur} Resync Started",
+      "resyncStarted": "ستبدأ معاملاتك في إعادة المزامنة. قد يستغرق ذلك من خمس إلى عشر دقائق أو أكثر.",
+      "resyncCompleteTitle": "%{cur} Resync Finished",
+      "resyncComplete": "Successfully resynced your wallet transactions",
       "syncUnavailable": "يمكنك إعادة تحميل التحويلات مرة كل ساعة."
     },
     "cryptoTeaser": {

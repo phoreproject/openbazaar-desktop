@@ -979,9 +979,11 @@
       "backupWalletWarningBody": "Parece que tiene una transacción dos. Este sería un buen momento para %{link}."
     },
     "reloadTransactionsWidget": {
-      "resyncBtn": "Re-synchronizar ",
-      "resyncCompleteTitle": "%{cur} Resync Started",
-      "resyncComplete": "Tus transacciones comenzarán a sincronizarse. Esto puede tomar  de cinco a diez minutos o más.",
+      "resyncBtn": "Re-synchronizar",
+      "resyncStartedTitle": "%{cur} Resync Started",
+      "resyncStarted": "Tus transacciones comenzarán a sincronizarse. Esto puede tomar  de cinco a diez minutos o más.",
+      "resyncCompleteTitle": "%{cur} Resync Finished",
+      "resyncComplete": "Successfully resynced your wallet transactions",
       "syncUnavailable": "Solo puede volver a cargar transacciones una vez por hora."
     },
     "cryptoTeaser": {

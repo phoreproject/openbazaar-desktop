@@ -980,8 +980,10 @@
     },
     "reloadTransactionsWidget": {
       "resyncBtn": "Синхронізувати знову",
-      "resyncCompleteTitle": "%{cur} Resync Started",
-      "resyncComplete": "Ваші транзакції синхронізуються. Це може зайняти від п’яти до десяти хвилин.",
+      "resyncStartedTitle": "%{cur} Resync Started",
+      "resyncStarted": "Ваші транзакції синхронізуються. Це може зайняти від п’яти до десяти хвилин.",
+      "resyncCompleteTitle": "%{cur} Resync Finished",
+      "resyncComplete": "Successfully resynced your wallet transactions",
       "syncUnavailable": "Перезавантажувати транзакції можна не частіше одного разу на годину."
     },
     "cryptoTeaser": {

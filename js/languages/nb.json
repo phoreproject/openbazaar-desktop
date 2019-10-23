@@ -980,8 +980,10 @@
     },
     "reloadTransactionsWidget": {
       "resyncBtn": "Synkroniser på nytt",
-      "resyncCompleteTitle": "%{cur} Resync Started",
-      "resyncComplete": "Dine transaksjoner vil bli synkronisert på nytt. Dette kan ta fem til ti minutter eller lenger.",
+      "resyncStartedTitle": "%{cur} Resync Started",
+      "resyncStarted": "Dine transaksjoner vil bli synkronisert på nytt. Dette kan ta fem til ti minutter eller lenger.",
+      "resyncCompleteTitle": "%{cur} Resync Finished",
+      "resyncComplete": "Successfully resynced your wallet transactions",
       "syncUnavailable": "Du kan kun laste transaksjoner en gang per time."
     },
     "cryptoTeaser": {

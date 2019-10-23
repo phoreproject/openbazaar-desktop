@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { getServer } from './serverConnect';
-import walletCurs from '../data/walletCurrencies';
+import walletCurs, { ensureMainnetCode } from '../data/walletCurrencies';
 import { openSimpleMessage } from '../views/modals/SimpleMessage';
 import { Events } from 'backbone';
 import app from '../app';
@@ -16,7 +16,7 @@ let server;
 
 // If you change this, be sure to change anywhere in the GUI you may have output how
 // long its unavailable.
-const resyncInactiveTime = 1000 * 60 * 60 * 1; // 1 hour
+const resyncInactiveTime = 1000 * 60 * 15; // 15 min
 
 function checkCoinType(coinType) {
   if (typeof coinType !== 'string' && !coinType) {
@@ -145,6 +145,13 @@ export default function resyncBlockchain(coinType) {
   }
 
   const _server = server;
+
+  openSimpleMessage(
+    app.polyglot.t('wallet.reloadTransactionsWidget.resyncStartedTitle', {
+      cur: ensureMainnetCode(coinType),
+    }),
+    app.polyglot.t('wallet.reloadTransactionsWidget.resyncStarted')
+  );
 
   const post = resyncPosts[coinType] =
     $.post(app.getServerUrl(`wallet/resyncblockchain/${coinType}`))

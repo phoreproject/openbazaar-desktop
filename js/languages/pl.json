@@ -979,16 +979,18 @@
       "backupWalletWarningBody": "Wygląda na to, że masz jakieś transakcje. To dobry moment, by wykonać %{link}."
     },
     "reloadTransactionsWidget": {
-      "resyncBtn": "Resync",
-      "resyncCompleteTitle": "%{cur} Resync Started",
-      "resyncComplete": "Twoje transakcje zaczną się ponownie synchronizować. To może zająć od pięciu do dziesięciu minut albo nawet dłużej.",
+      "resyncBtn": "Resynchronizacja",
+      "resyncStartedTitle": "%{cur} Resynchronizacja rozpoczęta",
+      "resyncStarted": "Twoje transakcje zaczną się ponownie synchronizować. To może zająć od pięciu do dziesięciu minut albo nawet dłużej.",
+      "resyncCompleteTitle": "%{cur} Resynchronizacja Zakończona",
+      "resyncComplete": "Zsynchronizowano wszystkie Twoje transakcje.",
       "syncUnavailable": "Możesz odświeżyć transakcje tylko raz na godzinę."
     },
     "cryptoTeaser": {
-      "coinCount": "%{count}+ coins",
-      "bodyLine": "Trade %{coinCount} on Phore Marketplace for free",
+      "coinCount": "%{count}+ walut",
+      "bodyLine": "Wymieniaj %{coinCount} na Phore Marketplace za darmo",
       "btnCreateListing": "Wystaw przedmiot",
-      "linkViewCryptoListings": "View crypto listings"
+      "linkViewCryptoListings": "Zobacz aukcje kryptowalut"
     }
   },
   "formats": {

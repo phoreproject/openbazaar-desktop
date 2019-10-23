@@ -980,8 +980,10 @@
     },
     "reloadTransactionsWidget": {
       "resyncBtn": "Erneut synchronisieren",
-      "resyncCompleteTitle": "%{cur} Resync Started",
-      "resyncComplete": "Die Transaktionen werden sich neu synchronisieren. Dies kann fünf bis zehn Minuten oder länger dauern.",
+      "resyncStartedTitle": "%{cur} Resync Started",
+      "resyncStarted": "Die Transaktionen werden sich neu synchronisieren. Dies kann fünf bis zehn Minuten oder länger dauern.",
+      "resyncCompleteTitle": "%{cur} Resync Finished",
+      "resyncComplete": "Successfully resynced your wallet transactions",
       "syncUnavailable": "Sie können Transaktionen nur einmal pro Stunde neu laden."
     },
     "cryptoTeaser": {

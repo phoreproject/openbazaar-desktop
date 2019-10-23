@@ -980,8 +980,10 @@
     },
     "reloadTransactionsWidget": {
       "resyncBtn": "重新同步",
-      "resyncCompleteTitle": "%{cur} 已开始重新同步",
-      "resyncComplete": "您的交易将开始重新同步。 这可能需要五到十分钟或更长时间。",
+      "resyncStartedTitle": "%{cur} 已开始重新同步",
+      "resyncStarted": "您的交易将开始重新同步。 这可能需要五到十分钟或更长时间。",
+      "resyncCompleteTitle": "%{cur} Resync Finished",
+      "resyncComplete": "Successfully resynced your wallet transactions",
       "syncUnavailable": "您每小时只能重新加载所有交易一次。"
     },
     "cryptoTeaser": {
