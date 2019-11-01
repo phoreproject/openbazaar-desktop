@@ -984,7 +984,7 @@
       "resyncStarted": "Your transactions will begin resyncing. This may take five to ten minutes or longer.",
       "resyncCompleteTitle": "%{cur} Resync Finished",
       "resyncComplete": "Successfully resynced your wallet transactions",
-      "syncUnavailable": "You can only reload transactions once per hour."
+      "syncUnavailable": "You can only reload transactions once every minute."
     },
     "cryptoTeaser": {
       "coinCount": "%{count}+ coins",
