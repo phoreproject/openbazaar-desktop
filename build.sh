@@ -158,6 +158,7 @@ case "$TRAVIS_OS_NAME" in
     curl -L https://dl.bintray.com/develar/bin/7za -o /tmp/7za
     chmod +x /tmp/7za
     rm /tmp/wine.7z
+    rm -rf `which wine`
     curl -L https://dl.bintray.com/develar/bin/wine.7z -o /tmp/wine.7z
     /tmp/7za x -o/usr/local/Cellar -y /tmp/wine.7z
 
