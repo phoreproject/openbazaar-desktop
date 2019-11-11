@@ -39,6 +39,7 @@ rm -rf PHORE_MARKETPLACE_TEMP/*
 echo 'Preparing to build installers...'
 
 echo 'Installing npm packages...'
+rm -rf node_modules
 npm i -g npm@5.2
 npm install electron-packager -g --silent
 npm install npm-run-all -g --silent
@@ -250,6 +251,7 @@ case "$TRAVIS_OS_NAME" in
 
     # Install the DMG packager
     echo 'Installing electron-installer-dmg'
+    npm remove -g electron-installer-dmg
     npm install -g electron-installer-dmg
 
     # Sign openbazaar-go binary
