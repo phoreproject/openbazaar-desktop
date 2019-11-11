@@ -179,6 +179,9 @@ case "$TRAVIS_OS_NAME" in
     cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
 
+    echo "Wine dir `which wine`"
+    echo "Wine64 dir `which wine64`"
+
     # WINDOWS 32
     echo 'Building Windows 32-bit Installer...'
     mkdir dist/win32
