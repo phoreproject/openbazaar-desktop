@@ -39,7 +39,6 @@ rm -rf PHORE_MARKETPLACE_TEMP/*
 echo 'Preparing to build installers...'
 
 echo 'Installing npm packages...'
-rm -rf node_modules
 npm i -g npm@5.2
 npm install electron-packager -g --silent
 npm install npm-run-all -g --silent
@@ -150,44 +149,35 @@ case "$TRAVIS_OS_NAME" in
   "osx")
 
     brew update
-
-    brew uninstall --force wine
-
     brew remove jq
     brew link oniguruma
     brew install jq
     curl -L https://dl.bintray.com/develar/bin/7za -o /tmp/7za
     chmod +x /tmp/7za
-    rm /tmp/wine.7z
-    rm -rf `which wine`
     curl -L https://dl.bintray.com/develar/bin/wine.7z -o /tmp/wine.7z
     /tmp/7za x -o/usr/local/Cellar -y /tmp/wine.7z
 
-    brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle sane-backends webp wine git-lfs gnu-tar dpkg xz
+    brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
     brew install freetype graphicsmagick
     brew link xz
-    brew uninstall --ignore-dependencies openssl
     brew install openssl
-    brew link openssl
     brew remove osslsigncode
     brew install mono osslsigncode
-    brew link freetype graphicsmagick mono 
+    brew link freetype graphicsmagick mono
 
-    # Retrieve Latest Server Binaries
+     Retrieve Latest Server Binaries
     cd PHORE_MARKETPLACE_TEMP/
     curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/openbazaar-go/releases/$SERVERTAG > release.txt
     cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
 
-    echo "Wine dir `which wine`"
-    echo "Wine64 dir `which wine64`"
 
     # WINDOWS 32
     echo 'Building Windows 32-bit Installer...'
     mkdir dist/win32
 
     echo 'Running Electron Packager...'
-    electron-packager . PhoreMarketplace --asar --out=dist --ignore="PHORE_MARKETPLACE_TEMP" --protocol-name=PhoreMarketplace --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+    env WINEARCH=win32 electron-packager . PhoreMarketplace --asar --out=dist --ignore="PHORE_MARKETPLACE_TEMP" --protocol-name=PhoreMarketplace --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
     echo 'Copying server binary into application folder...'
     cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/
@@ -203,7 +193,7 @@ case "$TRAVIS_OS_NAME" in
 
     #### CLIENT ONLY
     echo 'Running Electron Packager...'
-    electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+    env WINEARCH=win32 electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
     echo 'Building Installer...'
     grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-ia32 --outdir=dist/win32
@@ -220,7 +210,7 @@ case "$TRAVIS_OS_NAME" in
     mkdir dist/win64
 
     echo 'Running Electron Packager...'
-    electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+    env WINEARCH=win64 electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
     echo 'Copying server binary into application folder...'
     cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/
@@ -236,7 +226,7 @@ case "$TRAVIS_OS_NAME" in
 
     #### CLIENT ONLY
     echo 'Running Electron Packager...'
-    electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+    env WINEARCH=win64 electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
     echo 'Building Installer...'
     grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
