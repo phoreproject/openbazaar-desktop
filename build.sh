@@ -157,14 +157,16 @@ case "$TRAVIS_OS_NAME" in
     brew install jq
     curl -L https://dl.bintray.com/develar/bin/7za -o /tmp/7za
     chmod +x /tmp/7za
+    rm /tmp/wine.7z
     curl -L https://dl.bintray.com/develar/bin/wine.7z -o /tmp/wine.7z
     /tmp/7za x -o/usr/local/Cellar -y /tmp/wine.7z
 
-    brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
+    brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle sane-backends webp wine git-lfs gnu-tar dpkg xz
     brew install freetype graphicsmagick
     brew link xz
     brew uninstall --ignore-dependencies openssl
     brew install openssl
+    brew link openssl
     brew remove osslsigncode
     brew install mono osslsigncode
     brew link freetype graphicsmagick mono 
