@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Version 2.0.0
 ##
@@ -24,7 +24,7 @@ if [ -z "${2}" ]; then
 else
   SERVERTAG=tags/${2}
 fi
-echo "Building with openbazaar-go/$SERVERTAG"
+echo "Building with PhoreMarketplace-go/$SERVERTAG"
 
 # Get Version
 PACKAGE_VERSION=$(node -p 'require("./package").version')
@@ -53,6 +53,7 @@ npm run build
 echo 'Copying transpiled files into js folder...'
 cp -rf prod/* js/
 
+echo "We are building: ${BINARY}"
 
 case "$TRAVIS_OS_NAME" in
   "linux")
@@ -152,17 +153,11 @@ case "$TRAVIS_OS_NAME" in
     brew remove jq
     brew link oniguruma
     brew install jq
-    curl -L https://dl.bintray.com/develar/bin/7za -o /tmp/7za
-    chmod +x /tmp/7za
-    curl -L https://dl.bintray.com/develar/bin/wine.7z -o /tmp/wine.7z
-    /tmp/7za x -o/usr/local/Cellar -y /tmp/wine.7z
-
     brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
     brew install freetype graphicsmagick
     brew link xz
+    brew remove openssl
     brew install openssl
-    brew remove osslsigncode
-    brew install mono osslsigncode
     brew link freetype graphicsmagick mono
 
 #   Retrieve Latest Server Binaries
@@ -171,123 +166,239 @@ case "$TRAVIS_OS_NAME" in
     cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
 
+    if [[ $BINARY == 'win' ]]; then
 
-    # WINDOWS 32
-    echo 'Building Windows 32-bit Installer...'
-    mkdir dist/win32
+        curl -L https://dl.bintray.com/develar/bin/7za -o /tmp/7za
+        chmod +x /tmp/7za
+        curl -L https://dl.bintray.com/develar/bin/wine.7z -o /tmp/wine.7z
+        /tmp/7za x -o/usr/local/Cellar -y /tmp/wine.7z
 
-    echo 'Running Electron Packager...'
-    env WINEARCH=win32 electron-packager . PhoreMarketplace --asar --out=dist --ignore="PHORE_MARKETPLACE_TEMP" --protocol-name=PhoreMarketplace --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+        brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
 
-    echo 'Copying server binary into application folder...'
-    cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/
-    cp -rf PHORE_MARKETPLACE_TEMP/libwinpthread-1.win32.dll dist/phoremarketplace-win32-ia32/resources/libwinpthread-1.dll
-    mkdir dist/phoremarketplace-win32-ia32/resources/openbazaar-go
-    mv dist/phoremarketplace-win32-ia32/resources/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/openbazaar-go/openbazaard.exe
-    mv dist/phoremarketplace-win32-ia32/resources/libwinpthread-1.dll dist/phoremarketplace-win32-ia32/resources/openbazaar-go/libwinpthread-1.dll
+        brew remove osslsigncode
+        brew install mono osslsigncode
 
-    echo 'Building Installer...'
-    grunt create-windows-installer --appname=PhoreMarketplace --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplace-win32-ia32 --outdir=dist/win32
-    mv dist/win32/PhoreMarketplaceSetup.exe dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe
-    mv dist/win32/RELEASES dist/RELEASES
+        brew reinstall openssl@1.1
 
-    #### CLIENT ONLY
-    echo 'Running Electron Packager...'
-    env WINEARCH=win32 electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+        # WINDOWS 32
+        echo 'Building Windows 32-bit Installer...'
+        mkdir dist/win32
 
-    echo 'Building Installer...'
-    grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-ia32 --outdir=dist/win32
-    mv dist/win32/PhoreMarketplaceClientSetup.exe dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
+        echo 'Running Electron Packager...'
+        electron-packager . PhoreMarketplace --asar --out=dist --ignore="PHORE_MARKETPLACE_TEMP" --protocol-name=PhoreMarketplace --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
-    echo 'Do not sign the installer'
-#    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe -out dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe
-#    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe -out dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
+        echo 'Copying server binary into application folder...'
+        cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/
+        cp -rf PHORE_MARKETPLACE_TEMP/libwinpthread-1.win32.dll dist/phoremarketplace-win32-ia32/resources/libwinpthread-1.dll
+        mkdir dist/phoremarketplace-win32-ia32/resources/openbazaar-go
+        mv dist/phoremarketplace-win32-ia32/resources/openbazaar-go-windows-4.0-386.exe dist/phoremarketplace-win32-ia32/resources/openbazaar-go/openbazaard.exe
+        mv dist/phoremarketplace-win32-ia32/resources/libwinpthread-1.dll dist/phoremarketplace-win32-ia32/resources/openbazaar-go/libwinpthread-1.dll
 
-    rm dist/win32/RELEASES
+        echo 'Building Installer...'
+        grunt create-windows-installer --appname=PhoreMarketplace --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplace-win32-ia32 --outdir=dist/win32
+        mv dist/win32/PhoreMarketplaceSetup.exe dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe
+        mv dist/win32/RELEASES dist/RELEASES
 
-    # WINDOWS 64
-    echo 'Building Windows 64-bit Installer...'
-    mkdir dist/win64
+        #### CLIENT ONLY
+        echo 'Running Electron Packager...'
+        electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=ia32 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
-    echo 'Running Electron Packager...'
-    env WINEARCH=win64 electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+        echo 'Building Installer...'
+        grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-ia32 --outdir=dist/win32
+        mv dist/win32/PhoreMarketplaceClientSetup.exe dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
 
-    echo 'Copying server binary into application folder...'
-    cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/
-    cp -rf PHORE_MARKETPLACE_TEMP/libwinpthread-1.win64.dll dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll
-    mkdir dist/PhoreMarketplace-win32-x64/resources/openbazaar-go
-    mv dist/PhoreMarketplace-win32-x64/resources/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/openbazaar-go/openbazaard.exe
-    mv dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll dist/PhoreMarketplace-win32-x64/resources/openbazaar-go/libwinpthread-1.dll
+        echo 'Do not sign the installer'
+        #osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe -out dist/win32/PhoreMarketplace-$PACKAGE_VERSION-Setup-32.exe
+        #osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe -out dist/win32/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-32.exe
 
-    echo 'Building Installer...'
-    grunt create-windows-installer --appname=PhoreMarketplace --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplace-win32-x64 --outdir=dist/win64
-    mv dist/win64/PhoreMarketplaceSetup.exe dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
-    mv dist/win64/RELEASES dist/win64/RELEASES-x64
+        rm dist/win32/RELEASES
 
-    #### CLIENT ONLY
-    echo 'Running Electron Packager...'
-    env WINEARCH=win64 electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+        # WINDOWS 64
+        echo 'Building Windows 64-bit Installer...'
+        mkdir dist/win64
 
-    echo 'Building Installer...'
-    grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
-    mv dist/win64/PhoreMarketplaceClientSetup.exe dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
+        echo 'Running Electron Packager...'
+        env WINEARCH=win64 electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
-    echo 'Do not sign the installer'
-#    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
-#    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
+        echo 'Copying server binary into application folder...'
+        cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/
+        cp -rf PHORE_MARKETPLACE_TEMP/libwinpthread-1.win64.dll dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll
+        mkdir dist/PhoreMarketplace-win32-x64/resources/openbazaar-go
+        mv dist/PhoreMarketplace-win32-x64/resources/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/openbazaar-go/openbazaard.exe
+        mv dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll dist/PhoreMarketplace-win32-x64/resources/openbazaar-go/libwinpthread-1.dll
 
-    mv dist/RELEASES dist/win32/RELEASES
+        echo 'Building Installer...'
+        grunt create-windows-installer --appname=PhoreMarketplace --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplace-win32-x64 --outdir=dist/win64
+        mv dist/win64/PhoreMarketplaceSetup.exe dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
+        mv dist/win64/RELEASES dist/win64/RELEASES-x64
 
-    # OSX
-    echo 'Building OSX Installer'
-    mkdir dist/osx
+        #### CLIENT ONLY
+        echo 'Running Electron Packager...'
+        env WINEARCH=win64 electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
-    # Install the DMG packager
-    echo 'Installing electron-installer-dmg'
-    npm remove -g electron-installer-dmg
-    npm install -g electron-installer-dmg
+        echo 'Building Installer...'
+        grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
+        mv dist/win64/PhoreMarketplaceClientSetup.exe dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
 
-    # Sign openbazaar-go binary
-    echo 'Signing Go binary'
-    mv PHORE_MARKETPLACE_TEMP/openbazaar-go-darwin-10.6-amd64 dist/osx/openbazaard
-    rm -rf PHORE_MARKETPLACE_TEMP/*
-    codesign --force --sign "$SIGNING_IDENTITY" dist/osx/openbazaard
+        echo 'Do not sign the installer'
+    #    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
+    #    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
 
-    echo 'Running Electron Packager...'
-    electron-packager . PhoreMarketplace --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --protocol=pm --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
-    # Client Only
-    electron-packager . PhoreMarketplaceClient --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --protocol=pm --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
+        mv dist/RELEASES dist/win32/RELEASES
 
-    echo 'Creating openbazaar-go folder in the OS X .app'
-    mkdir dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go
+    else
 
-    echo 'Moving binary to correct folder'
-    mv dist/osx/openbazaard dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go/openbazaard
-    chmod +x dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go/openbazaard
+        # OSX
+        echo 'Building OSX Installer'
+        mkdir dist/osx
 
-    echo 'Codesign the .app'
-    codesign --force --deep --sign "$SIGNING_IDENTITY" dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app
-    electron-installer-dmg dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app PhoreMarketplace-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplace-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
-    # Client Only
-    codesign --force --deep --sign "$SIGNING_IDENTITY" dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app
-    electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceC-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
+        # Install the DMG packager
+        echo 'Installing electron-installer-dmg'
+        npm remove -g electron-installer-dmg
+        npm install -g electron-installer-dmg
 
-    echo 'Codesign the DMG and zip'
-    codesign --force --sign "$SIGNING_IDENTITY" dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
-    cd dist/PhoreMarketplace-darwin-x64/
-    zip -q -r PhoreMarketplace-mac-$PACKAGE_VERSION.zip PhoreMarketplace.app
-    cp -r PhoreMarketplace.app ../osx/
-    cp PhoreMarketplace-mac-$PACKAGE_VERSION.zip ../osx/
-    cp PhoreMarketplace-$PACKAGE_VERSION.dmg ../osx/
+        # Sign openbazaar-go binary
+        echo 'Signing Go binary'
+        mv PHORE_MARKETPLACE_TEMP/openbazaar-go-darwin-10.6-amd64 dist/osx/openbazaard
+        rm -rf PHORE_MARKETPLACE_TEMP/*
+        codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime dist/osx/openbazaard
 
-    # Client Only
-    cd ../../
-    codesign --force --sign "$SIGNING_IDENTITY" dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
-    cd dist/PhoreMarketplaceClient-darwin-x64/
-    zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
-    cp -r PhoreMarketplaceClient.app ../osx/
-    cp PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip ../osx/
-    cp PhoreMarketplaceC-$PACKAGE_VERSION.dmg ../osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+        # Notarize the zip files
+        UPLOAD_INFO_PLIST="uploadinfo.plist"
+        REQUEST_INFO_PLIST="request.plist"
+        touch ${UPLOAD_INFO_PLIST}
 
-    ;;
+        wait_for_notarization() {
+          while true; do \
+
+            echo "Checking Apple for notarization status..."; \
+            /usr/bin/xcrun altool --notarization-info `/usr/libexec/PlistBuddy -c "Print :notarization-upload:RequestUUID" $UPLOAD_INFO_PLIST` -u $APPLE_ID -p $APPLE_PASS --output-format xml > "$REQUEST_INFO_PLIST" ;\
+
+            if [[ `/usr/libexec/PlistBuddy -c "Print :notarization-info:Status" ${REQUEST_INFO_PLIST}` != "in progress" ]] || [[ "$requestUUID" == "" ]] ; then \
+
+               # check if it has been uploaded already and get the RequestUUID from the error message
+               echo "Checking if binary has already been uploaded..."; \
+               message=`/usr/libexec/PlistBuddy -c "Print :product-errors:0:message" $UPLOAD_INFO_PLIST`;\
+               if [[ ${message} =~ ^ERROR\ ITMS-90732* ]]; then \
+                   prefix="ERROR ITMS-90732: \"The software asset has already been uploaded. The upload ID is "; \
+                   suffix="\" at SoftwareAssets\/EnigmaSoftwareAsset"; \
+                   requestUUID=`echo "${message}" | sed -e "s/^$prefix//" -e "s/$suffix$//"`; \
+
+                   echo "Binary has already been uploaded. Checking Apple status for request ${requestUUID}..."; \
+                   /usr/bin/xcrun altool --notarization-info ${requestUUID} -u $APPLE_ID -p $APPLE_PASS --output-format xml > "$REQUEST_INFO_PLIST" ;\
+               fi ;\
+
+               if [[ `/usr/libexec/PlistBuddy -c "Print :notarization-info:Status" ${REQUEST_INFO_PLIST}` == "success" ]]; then \
+                echo "Binary has been notarized"; \
+                break; \
+               fi; \
+            fi ;\
+            echo "Waiting 30 seconds to check status again..."; \
+            sleep 30 ;\
+          done
+        }
+
+        extract_app() {
+
+            # use process redirection to capture the mount point and dev entry
+            IFS=$'\n' read -rd '\n' mount_point dev_entry < <(
+                # mount the diskimage; leave out -readonly if making changes to the filesystem
+                hdiutil attach -readonly -plist "$1" | \
+
+                # convert output plist to json
+                plutil -convert json - -o - | \
+
+                # extract mount point and dev entry
+                jq -r '
+                    .[] | .[] |
+                    select(."volume-kind" == "hfs") |
+                    ."mount-point" + "\n" + ."dev-entry"
+                '
+            )
+
+            # work with the zip file
+            cp -rf "${mount_point}/${2}.app" dist/osx
+
+            # unmount the disk image
+            hdiutil detach "$dev_entry"
+
+        }
+
+        if [[ ${BINARY} == 'osx' ]]; then
+
+            echo 'Running Electron Packager...'
+            electron-packager . PhoreMarketplace --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --protocol=pm --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
+
+            echo 'Creating openbazaar-go folder in the OS X .app'
+            mkdir dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go
+
+            echo 'Moving binary to correct folder'
+            mv dist/osx/openbazaard dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go/openbazaard
+            chmod +x dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go/openbazaard
+
+            echo 'Codesign the .app'
+            codesign --force --deep --sign "$SIGNING_IDENTITY" dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app
+            electron-installer-dmg dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app PhoreMarketplace-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplace-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
+            # Client Only
+            electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceC-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
+
+            echo 'Codesign the DMG and zip'
+            codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements openbazaar.entitlements dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
+            cd dist/PhoreMarketplace-darwin-x64/
+            zip -q -r PhoreMarketplace-mac-$PACKAGE_VERSION.zip PhoreMarketplace.app
+            cp -r PhoreMarketplace.app ../osx/
+            cp PhoreMarketplace-mac-$PACKAGE_VERSION.zip ../osx/
+            cp PhoreMarketplace-$PACKAGE_VERSION.dmg ../osx/
+
+            cd ../..
+
+            zip -q -r dist/osx/PhoreMarketplace.zip dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
+
+            # Upload to apple and notarize
+            echo "Uploading binary to Apple Notarization server..."
+            xcrun altool --notarize-app --primary-bundle-id "io.phore.desktop-${PACKAGE_VERSION}" --username "$APPLE_ID" --password "$APPLE_PASS" --file dist/osx/PhoreMarketplace.zip --output-format xml > ${UPLOAD_INFO_PLIST}
+            wait_for_notarization
+
+            echo "Stapling ticket to the DMG..."
+            xcrun stapler staple dist/osx/PhoreMarketplace-$PACKAGE_VERSION.dmg
+
+            extract_app "dist/osx/PhoreMarketplace-$PACKAGE_VERSION.dmg" "PhoreMarketplace"
+
+            zip -q -r dist/osx/PhoreMarketplace-mac-$PACKAGE_VERSION.zip dist/osx/PhoreMarketplace.app
+
+        else
+
+            # Client Only
+            electron-packager . PhoreMarketplaceClient --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --protocol=pm --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
+
+            codesign --force --deep --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements openbazaar.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app
+            electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceClient-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
+
+            # Client Only
+            codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements openbazaar.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+            cd dist/PhoreMarketplaceClient-darwin-x64/
+            zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
+            cp -r PhoreMarketplaceClient.app ../osx/
+            cp PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip ../osx/
+            cp PhoreMarketplaceC-$PACKAGE_VERSION.dmg ../osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+
+            cd ../..
+
+            zip -q -r dist/osx/PhoreMarketplaceClient.zip dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+
+            echo "Uploading client only binary to Apple Notarization server..."
+            xcrun altool --notarize-app --primary-bundle-id "io.phore.desktopclient-$PACKAGE_VERSION" --username "$APPLE_ID" --password "$APPLE_PASS" --file dist/osx/PhoreMarketplaceClient.zip --output-format xml > $UPLOAD_INFO_PLIST
+            wait_for_notarization
+
+            echo "Stapling ticket to the DMG..."
+            xcrun stapler staple dist/osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+
+            extract_app "dist/osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg" "PhoreMarketplaceClient"
+
+            zip -q -r dist/osx/PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip dist/osx/PhoreMarketplaceClient.app
+        fi
+
+    fi
+
+  ;;
 esac

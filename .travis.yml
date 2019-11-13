@@ -1,12 +1,13 @@
 language: node_js
 sudo: true
-os:
-  - linux
-  - osx
+before_cache:
+  - brew cleanup
 cache:
   directories:
-    - node_modules
-    - "/usr/local/Cellar"
+  - node_modules
+  - "/usr/local/Cellar"
+  - $HOME/Library/Caches/Homebrew
+
 node_js:
 - '8'
 addons:
@@ -18,6 +19,17 @@ before_script:
 - if [[ -n "$TRAVIS_TAG" ]]; then openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in .travis/cert.p12.enc -d -a -out ./.travis/cert.p12; fi
 - if [[ -n "$TRAVIS_TAG" ]]; then openssl aes-256-cbc -k "$PHORE_SECRET" -in .travis/phore.cert.spc.enc -d -a -out ./.travis/phore.cert.spc; fi
 - if [[ -n "$TRAVIS_TAG" ]]; then if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then "./.travis/add-key.sh"; fi ; fi
+jobs:
+  include:
+      - os: osx
+        osx_image: xcode11
+        env: BINARY=osx
+      - os: osx
+        osx_image: xcode11
+        env: BINARY=osxclient
+      - os: linux
+      - os: osx
+        env: BINARY=win
 script:
 - npm run lint
 - npm run test
@@ -27,17 +39,17 @@ deploy:
   api_key: "$GITHUB_TOKEN"
   file_glob: true
   file:
-  - dist/win32/*.exe
-  - dist/win32/*.nupkg
-  - dist/win32/RELEASES
-  - dist/win64/*.exe
-  - dist/win64/*.nupkg
-  - dist/win64/RELEASES-x64
-  - dist/osx/*.dmg
-  - dist/linux32/*.deb
-  - dist/linux64/*.deb
-  - dist/linux32/*.rpm
-  - dist/linux64/*.rpm
+    - "dist/win32/*.exe"
+    - "dist/win32/*.nupkg"
+    - "dist/win32/RELEASES"
+    - "dist/win64/*.exe"
+    - "dist/win64/*.nupkg"
+    - "dist/osx/*.dmg"
+    - "dist/osx/*.zip"
+    - "dist/linux32/*.deb"
+    - "dist/linux64/*.deb"
+    - "dist/linux32/*.rpm"
+    - "dist/linux64/*.rpm"
   skip_cleanup: true
   all_branches: true
   on:
