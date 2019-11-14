@@ -26,6 +26,13 @@ else
 fi
 echo "Building with PhoreMarketplace-go/$SERVERTAG"
 
+APPLE_NOTARIAZATION=$(node -p 'require("./package").apple_notarization')
+if [ ${APPLE_NOTARIAZATION} = true ]; then
+  echo "Mac OS version will be notarized"
+else
+  echo "Skipping Mac OS notarization"
+fi
+
 # Get Version
 PACKAGE_VERSION=$(node -p 'require("./package").version')
 echo "Phore Marketplace Version: $PACKAGE_VERSION"
@@ -218,7 +225,7 @@ case "$TRAVIS_OS_NAME" in
         mkdir dist/win64
 
         echo 'Running Electron Packager...'
-        env WINEARCH=win64 electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+        electron-packager . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
         echo 'Copying server binary into application folder...'
         cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/
@@ -234,7 +241,7 @@ case "$TRAVIS_OS_NAME" in
 
         #### CLIENT ONLY
         echo 'Running Electron Packager...'
-        env WINEARCH=win64 electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+        electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
         echo 'Building Installer...'
         grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
@@ -343,7 +350,7 @@ case "$TRAVIS_OS_NAME" in
             electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceC-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
 
             echo 'Codesign the DMG and zip'
-            codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements openbazaar.entitlements dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
+            codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
             cd dist/PhoreMarketplace-darwin-x64/
             zip -q -r PhoreMarketplace-mac-$PACKAGE_VERSION.zip PhoreMarketplace.app
             cp -r PhoreMarketplace.app ../osx/
@@ -354,28 +361,30 @@ case "$TRAVIS_OS_NAME" in
 
             zip -q -r dist/osx/PhoreMarketplace.zip dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
 
-            # Upload to apple and notarize
-            echo "Uploading binary to Apple Notarization server..."
-            xcrun altool --notarize-app --primary-bundle-id "io.phore.desktop-${PACKAGE_VERSION}" --username "$APPLE_ID" --password "$APPLE_PASS" --file dist/osx/PhoreMarketplace.zip --output-format xml > ${UPLOAD_INFO_PLIST}
-            wait_for_notarization
-
-            echo "Stapling ticket to the DMG..."
-            xcrun stapler staple dist/osx/PhoreMarketplace-$PACKAGE_VERSION.dmg
-
-            extract_app "dist/osx/PhoreMarketplace-$PACKAGE_VERSION.dmg" "PhoreMarketplace"
-
-            zip -q -r dist/osx/PhoreMarketplace-mac-$PACKAGE_VERSION.zip dist/osx/PhoreMarketplace.app
+            if [ ${APPLE_NOTARIAZATION} = true ]; then
+              # Upload to apple and notarize
+              echo "Uploading binary to Apple Notarization server..."
+              xcrun altool --notarize-app --primary-bundle-id "io.phore.desktop-${PACKAGE_VERSION}" --username "$APPLE_ID" --password "$APPLE_PASS" --file dist/osx/PhoreMarketplace.zip --output-format xml > ${UPLOAD_INFO_PLIST}
+              wait_for_notarization
+  
+              echo "Stapling ticket to the DMG..."
+              xcrun stapler staple dist/osx/PhoreMarketplace-$PACKAGE_VERSION.dmg
+  
+              extract_app "dist/osx/PhoreMarketplace-$PACKAGE_VERSION.dmg" "PhoreMarketplace"
+  
+              zip -q -r dist/osx/PhoreMarketplace-mac-$PACKAGE_VERSION.zip dist/osx/PhoreMarketplace.app
+            fi
 
         else
 
             # Client Only
             electron-packager . PhoreMarketplaceClient --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --protocol=pm --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
 
-            codesign --force --deep --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements openbazaar.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app
+            codesign --force --deep --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app
             electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceClient-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
 
             # Client Only
-            codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements openbazaar.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+            codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
             cd dist/PhoreMarketplaceClient-darwin-x64/
             zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
             cp -r PhoreMarketplaceClient.app ../osx/
@@ -386,16 +395,18 @@ case "$TRAVIS_OS_NAME" in
 
             zip -q -r dist/osx/PhoreMarketplaceClient.zip dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
 
-            echo "Uploading client only binary to Apple Notarization server..."
-            xcrun altool --notarize-app --primary-bundle-id "io.phore.desktopclient-$PACKAGE_VERSION" --username "$APPLE_ID" --password "$APPLE_PASS" --file dist/osx/PhoreMarketplaceClient.zip --output-format xml > $UPLOAD_INFO_PLIST
-            wait_for_notarization
-
-            echo "Stapling ticket to the DMG..."
-            xcrun stapler staple dist/osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
-
-            extract_app "dist/osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg" "PhoreMarketplaceClient"
-
-            zip -q -r dist/osx/PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip dist/osx/PhoreMarketplaceClient.app
+            if [ ${APPLE_NOTARIAZATION} = true ]; then
+              echo "Uploading client only binary to Apple Notarization server..."
+              xcrun altool --notarize-app --primary-bundle-id "io.phore.desktopclient-$PACKAGE_VERSION" --username "$APPLE_ID" --password "$APPLE_PASS" --file dist/osx/PhoreMarketplaceClient.zip --output-format xml > $UPLOAD_INFO_PLIST
+              wait_for_notarization
+  
+              echo "Stapling ticket to the DMG..."
+              xcrun stapler staple dist/osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+  
+              extract_app "dist/osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg" "PhoreMarketplaceClient"
+  
+              zip -q -r dist/osx/PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip dist/osx/PhoreMarketplaceClient.app
+            fi
         fi
 
     fi
