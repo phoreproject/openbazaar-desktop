@@ -261,7 +261,6 @@ case "$TRAVIS_OS_NAME" in
 
         # Install the DMG packager
         echo 'Installing electron-installer-dmg'
-        npm remove -g electron-installer-dmg
         npm install -g electron-installer-dmg
 
         # Sign openbazaar-go binary
@@ -344,10 +343,8 @@ case "$TRAVIS_OS_NAME" in
             chmod +x dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go/openbazaard
 
             echo 'Codesign the .app'
-            codesign --force --deep --sign "$SIGNING_IDENTITY" dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app
+            codesign --force --deep --sign "$SIGNING_IDENTITY" --options runtime --entitlements phore.entitlements dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app
             electron-installer-dmg dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app PhoreMarketplace-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplace-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
-            # Client Only
-            electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceC-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
 
             echo 'Codesign the DMG and zip'
             codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
@@ -389,7 +386,7 @@ case "$TRAVIS_OS_NAME" in
             zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
             cp -r PhoreMarketplaceClient.app ../osx/
             cp PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip ../osx/
-            cp PhoreMarketplaceC-$PACKAGE_VERSION.dmg ../osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+            cp PhoreMarketplaceClient-$PACKAGE_VERSION.dmg ../osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
 
             cd ../..
 
