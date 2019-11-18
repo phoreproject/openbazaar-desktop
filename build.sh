@@ -324,7 +324,7 @@ case "$TRAVIS_OS_NAME" in
             electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceC-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
 
             # Client Only
-            codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+            codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceC-$PACKAGE_VERSION.dmg
             cd dist/PhoreMarketplaceClient-darwin-x64/
             zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
             cp -r PhoreMarketplaceClient.app ../osx/

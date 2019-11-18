@@ -4,7 +4,7 @@
   "version": "2.2.1",
   "serverVersionRequired": "2.2.1-dev3",
   "forceServerVersion": true,
-  "apple_notarization":  false,
+  "apple_notarization": false,
   "description": "Decentralized p2p marketplace that uses Cryptocurrencies.",
   "main": "bootstrapper.js",
   "scripts": {
