@@ -320,7 +320,8 @@ case "$TRAVIS_OS_NAME" in
             electron-packager . PhoreMarketplaceClient --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --protocol=pm --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
 
             codesign --force --deep --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app
-            electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceClient-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
+            # Use PhoreMarketplaceC on purpose to prevent to long .dmg executable name, maximum len is 27 chars.
+            electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceC-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
 
             # Client Only
             codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
@@ -328,7 +329,7 @@ case "$TRAVIS_OS_NAME" in
             zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
             cp -r PhoreMarketplaceClient.app ../osx/
             cp PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip ../osx/
-            cp PhoreMarketplaceClient-$PACKAGE_VERSION.dmg ../osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
+            cp PhoreMarketplaceC-$PACKAGE_VERSION.dmg ../osx/PhoreMarketplaceClient-$PACKAGE_VERSION.dmg
 
             cd ../..
 
