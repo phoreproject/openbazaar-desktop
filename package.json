@@ -1,8 +1,8 @@
 {
   "name": "openbazaar-desktop",
   "productName": "Phore Marketplace Desktop Client",
-  "version": "2.2.1",
-  "serverVersionRequired": "2.2.1-dev3",
+  "version": "2.3.0",
+  "serverVersionRequired": "2.3.0-dev",
   "forceServerVersion": true,
   "apple_notarization": false,
   "description": "Decentralized p2p marketplace that uses Cryptocurrencies.",
