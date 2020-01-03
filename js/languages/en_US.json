@@ -636,6 +636,7 @@
           "btnShowSeed": "Show Seed",
           "introLine": "Your wallet generation seed is:",
           "directionLine": "Write the following words on paper and keep them somewhere safe. They must be in this exact order.",
+          "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet.",
           "warningHeading": "Warning:",
           "warning1": "Never share your seed. Anyone with this seed can steal your funds.",
           "warning2": "Never type it on a website.",
