@@ -6,6 +6,7 @@ export default class extends BaseVw {
     const opts = {
       initialState: {
         seed: '',
+        isEncrypted: '',
         isFetching: false,
         ...options.initialState || {},
       },

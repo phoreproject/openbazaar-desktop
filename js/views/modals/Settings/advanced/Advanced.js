@@ -58,8 +58,9 @@ export default class extends baseVw {
 
     this.walletSeedFetch = $.get(app.getServerUrl('wallet/mnemonic')).done((data) => {
       this.mnemonic = data.mnemonic;
+      this.isEncrypted = data.isEncrypted;
       if (this.walletSeed) {
-        this.walletSeed.setState({ seed: data.mnemonic });
+        this.walletSeed.setState({ seed: data.mnemonic, isEncrypted: data.isEncrypted });
       }
     }).always(() => {
       if (this.walletSeed) this.walletSeed.setState({ isFetching: false });
@@ -283,6 +284,7 @@ export default class extends baseVw {
       this.walletSeed = this.createChild(WalletSeed, {
         initialState: {
           seed: this.mnemonic || '',
+          isEncrypted: this.isEncrypted || false,
           isFetching: this.walletSeedFetch && this.walletSeedFetch.state() === 'pending',
         },
       });
