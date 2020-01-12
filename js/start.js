@@ -46,6 +46,7 @@ import SearchProvidersCol from './collections/search/SearchProviders';
 import defaultSearchProviders from './data/defaultSearchProviders';
 import VerifiedMods from './collections/VerifiedMods';
 import VerifiedModsError from './views/modals/VerifiedModsFetchError';
+import UnlockSeed from './views/modals/wallet/UnlockSeed';
 
 fixLinuxZoomIssue();
 handleServerShutdownRequests();
@@ -133,7 +134,24 @@ addFeedback();
 
 app.verifiedMods = new VerifiedMods();
 
+const fetchSeedStatusDeferred = $.Deferred();
 const fetchConfigDeferred = $.Deferred();
+
+function fetchSeedStatus() {
+  // TODO add retry, because backend start takes some time
+  $.get(app.getServerUrl('manage/iswalletlocked'))
+    .done((...args) => {
+      console.log('fetch seed', ...args);
+      fetchSeedStatusDeferred.resolve(...args);
+    })
+    .fail(xhr => {
+      fetchSeedStatusDeferred.resolve({ isLocked: 'true' });
+      console.error('The seed status fetch failed. {0}'
+        .format(xhr && xhr.responseJSON && xhr.responseJSON.reason || ''));
+    });
+
+  return fetchSeedStatusDeferred.promise();
+}
 
 function fetchConfig() {
   $.get(app.getServerUrl('ob/config')).done((...args) => {
@@ -633,7 +651,27 @@ function connectToServer() {
     });
 
   connectAttempt = serverConnect(app.serverConfigs.activeServer)
-    .done(() => start())
+    .done(fetchSeedStatus().done((seedStatus) => {
+      console.log('seedStatus', seedStatus);
+      if (seedStatus.isLocked === 'true') {
+        const unlockSeedDialog = new UnlockSeed({
+          title: 'Wallet seed words are encrypted',
+          message: 'Input seed password',
+          dismissOnOverlayClick: false,
+          dismissOnEscPress: false,
+          showCloseButton: false,
+        });
+        unlockSeedDialog.render();
+        app.loadingModal.open(unlockSeedDialog);
+        unlockSeedDialog.waitForWalletUnlock().done(() => {
+          app.loadingModal.close();
+          app.loadingModal.open(startupConnectMessaging);
+          start();
+        });
+      } else {
+        start();
+      }
+    }))
     .fail(() => {
       app.connectionManagmentModal.open();
       app.loadingModal.close();
