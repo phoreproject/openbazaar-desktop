@@ -631,6 +631,8 @@
         "blockDataCopy": "Copy to your Clipboard",
         "backupWalletLbl": "Backup Wallet Seed",
         "backupWalletHelper": "This seed will allow you to recover your wallet in case of computer failure.",
+        "lockOrUnlockWalletLbl": "Lock / Unlock Wallet Seed",
+        "lockOrUnlockWalletHelper": "You are able to encrypt or decrypt your seed words here.",
         "unableToFetchSeedTitle": "There was an error fetching your wallet seed",
         "walletSeed": {
           "btnShowSeed": "Show Seed",
@@ -642,6 +644,21 @@
           "warning2": "Never type it on a website.",
           "warning3": "Do not store it electronically.",
           "warning4": "Do not lose your seed, or your funds will be permanently lost if your data is erased."
+        },
+        "walletManager":{
+          "btnShowManager": "Show Manager",
+          "btnLockWallet": "Lock wallet seed",
+          "btnUnlockWallet": "Unlock wallet seed",
+          "introLine": "Here you can encrypt or decrypt your seed words.",
+          "dialogSuccessTitle": "Wallet seed word status successfully changed.",
+          "dialogSuccessMsg": "Seed words are now %{isLocked}.",
+          "dialogFailTitle" : "Manager was not able to change seed status",
+          "dialogFailMsg" : "Wallet status should be %{shouldBe} but is still %{is}",
+          "encrypted": "encrypted",
+          "decrypted": "decrypted",
+          "shortPassword": "Your password is too short",
+          "passwordLenNotify": "The password length should be at least 8 characters long",
+          "passwordsNotEqual": "Passwords are not equal"
         }
       },
       "transaction": {
