@@ -9,7 +9,7 @@ import baseVw from '../../../baseVw';
 import WalletSeed from './WalletSeed';
 import SmtpSettings from './SmtpSettings';
 import MetricsStatus from './MetricsStatus';
-import UnlockWallet from './WalletManager';
+import WalletManager from './WalletManager';
 
 export default class extends baseVw {
   constructor(options = {}) {
@@ -56,9 +56,9 @@ export default class extends baseVw {
     this.walletSeedFetch = $.get(app.getServerUrl('wallet/mnemonic'))
       .done((data) => {
         this.mnemonic = data.mnemonic;
-        this.isEncrypted = data.isEncrypted;
+        this.isEncrypted = data.isEncrypted === 'true';
         if (objectToSet) {
-          objectToSet.setState({ seed: data.mnemonic, isEncrypted: data.isEncrypted });
+          objectToSet.setState({ seed: data.mnemonic, isEncrypted: this.isEncrypted });
         }
       })
       .always(() => {
@@ -320,10 +320,10 @@ export default class extends baseVw {
         .append(this.walletSeed.render().el);
 
       if (this.walletManager) this.walletManager.remove();
-      this.walletManager = this.createChild(UnlockWallet, {
+      this.walletManager = this.createChild(WalletManager, {
         initialState: {
           seed: this.mnemonic || '',
-          isEncrypted: this.isEncrypted || false,
+          isEncrypted: this.isEncrypted || null,
           isFetching: this.walletSeedFetch && this.walletSeedFetch.state() === 'pending',
         },
       });

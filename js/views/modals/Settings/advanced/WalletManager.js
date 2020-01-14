@@ -17,8 +17,12 @@ export default class extends BaseVw {
     };
 
     super(opts);
-    this.options = opts;
     this.listenTo(this.model, 'change', () => this.render());
+  }
+
+  setState(state = {}, options = {}) {
+    super.setState(state, options);
+    this.isEncryptedChanged();
   }
 
   className() {
@@ -45,18 +49,32 @@ export default class extends BaseVw {
     this.manageSeedStatus('manage/unlockwallet', 'false');
   }
 
+  isEncryptedChanged() {
+    if (this._state.isEncrypted === true) {
+      this.$('.js-lock').addClass('disabled');
+      this.$('.js-unlock').removeClass('disabled');
+      this.$('#seedPassword2').addClass('disabled');
+      this.$('#seedPassword2').val('');
+    } else if (this._state.isEncrypted === false) {
+      this.$('.js-lock').removeClass('disabled');
+      this.$('.js-unlock').addClass('disabled');
+      this.$('#seedPassword2').removeClass('disabled');
+    }
+  }
+
   getPasswordIfCorrect() {
     const password = this.$('#seedPassword').val();
     const password2 = this.$('#seedPassword2').val();
 
-    if (password !== password2) {
-      openSimpleMessage('Passwords are not equal', '');
+    if (this._state.isEncrypted === false && password !== password2) {
+      openSimpleMessage(
+        app.polyglot.t('settings.advancedTab.server.walletManager.passwordsNotEqual'));
       return null;
     }
 
     if (password.length < 8) {
-      openSimpleMessage('Your password is too short',
-        'The password length should be at least 8 characters long');
+      openSimpleMessage(app.polyglot.t('settings.advancedTab.server.walletManager.shortPassword'),
+        app.polyglot.t('settings.advancedTab.server.walletManager.passwordLenNotify'));
       return null;
     }
 
@@ -93,6 +111,7 @@ export default class extends BaseVw {
               is: this.getStringFromStatus(data.isLocked) });
           openSimpleMessage(title, message);
         } else {
+          this.setState({ isEncrypted: data.isLocked === 'true' });
           openSimpleMessage(
             app.polyglot.t('settings.advancedTab.server.walletManager.dialogSuccessTitle'),
             app.polyglot.t('settings.advancedTab.server.walletManager.dialogSuccessMsg',
