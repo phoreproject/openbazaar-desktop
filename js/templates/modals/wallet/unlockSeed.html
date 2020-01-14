@@ -4,10 +4,10 @@
       <h1><%= ob.title %></h1>
     </div>
     <div class="flexRow">
-      <div class="col6 rowMd">
+      <div class="col6 rowMd padMd">
         <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword" value="" placeholder="<%= ob.message %>" data-field-standalone="string">
       </div>
-      <div class="col3 rowMd">
+      <div class="col3 rowMd padMd">
         <%= ob.processingButton({
         className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-unlock',
         btnText: ob.polyT('settings.advancedTab.server.walletManager.btnUnlockWallet')
