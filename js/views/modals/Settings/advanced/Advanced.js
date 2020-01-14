@@ -90,68 +90,6 @@ export default class extends baseVw {
     this.downloadSeedWords(this.walletManager);
   }
 
-  getPasswordIfCorrect() {
-    const password = this.$('#seedPassword').val();
-    const password2 = this.$('#seedPassword2').val();
-
-    if (password !== password2) {
-      openSimpleMessage('Passwords are not equal', '');
-      return null;
-    }
-
-    if (password.length < 8) {
-      openSimpleMessage('Your password is too short',
-        'The password length should be at least 8 characters long');
-      return null;
-    }
-
-    return password;
-  }
-
-  manageSeedStatus(url, isLocked) {
-    const password = this.getPasswordIfCorrect();
-    if (!password) {
-      return null;
-    }
-
-    if (this.walletManageRequest && this.walletManageRequest.state() === 'pending') {
-      return this.walletManageRequest;
-    }
-
-    this.walletManageRequest = $.post({
-      url: app.getServerUrl(url),
-      data: JSON.stringify({ password }),
-      dataType: 'json',
-      contentType: 'application/json',
-    })
-      .done((data) => {
-        console.log(data);
-        if (data.isLocked !== isLocked) {
-          const message = 'Wallet status should be {0} but is still {1}'
-            .format(isLocked, data.isLocked);
-          openSimpleMessage('Manager was not able to change seed status', message);
-        } else {
-          this.onClickShowSeed();
-        }
-      })
-      .fail(xhr => {
-        openSimpleMessage(
-          '',
-          xhr.responseJSON && xhr.responseJSON.reason || ''
-        );
-      });
-
-    return this.walletManageRequest;
-  }
-
-  onClickLockWallet() {
-    this.manageSeedStatus('manage/lockwallet', 'true');
-  }
-
-  onCLickUnlockWallet() {
-    this.manageSeedStatus('manage/unlockwallet', 'false');
-  }
-
   showConnectionManagement() {
     recordEvent('Settings_Advanced_ConnectionManagement');
     app.connectionManagmentModal.open();
@@ -390,8 +328,6 @@ export default class extends baseVw {
         },
       });
       this.listenTo(this.walletManager, 'clickShowManager', this.onClickShowManager);
-      this.listenTo(this.walletManager, 'clickLockWallet', this.onClickLockWallet);
-      this.listenTo(this.walletManager, 'clickUnlockWallet', this.onCLickUnlockWallet);
       this.getCachedEl('.js-walletManagement')
         .append(this.walletManager.render().el);
 
