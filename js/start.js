@@ -657,6 +657,7 @@ function connectToServer() {
         const unlockSeedDialog = new UnlockSeed({
           title: 'Wallet seed words are encrypted',
           message: 'Input seed password',
+          temporaryUnlock: true,
           dismissOnOverlayClick: false,
           dismissOnEscPress: false,
           showCloseButton: false,

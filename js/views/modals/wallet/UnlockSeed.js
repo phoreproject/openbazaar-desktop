@@ -7,6 +7,7 @@ import app from '../../../app';
 export default class extends BaseModal {
   constructor(options = {}) {
     const opts = {
+      temporaryUnlock: false,
       title: '',
       message: '',
       removeOnClose: true,
@@ -37,7 +38,7 @@ export default class extends BaseModal {
     const password = this.$('#seedPassword').val();
     this.walletSeedFetch = $.post({
       url: app.getServerUrl('manage/unlockwallet'),
-      data: JSON.stringify({ password }),
+      data: JSON.stringify({ password, temporary: this.options.temporaryUnlock }),
       dataType: 'json',
       contentType: 'application/json',
     }).done((data) => {
