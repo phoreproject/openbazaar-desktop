@@ -48,38 +48,39 @@ export default class extends baseVw {
     };
   }
 
-  downloadSeedWords(objectToSet) {
+  onClickShowSeed() {
+    if (this.walletSeed) this.walletSeed.setState({ isFetching: true });
+
+    recordEvent('Settings_Advanced_ShowSeed');
+
     if (this.walletSeedFetch && this.walletSeedFetch.state() === 'pending') {
       return this.walletSeedFetch;
     }
 
     this.walletSeedFetch = $.get(app.getServerUrl('wallet/mnemonic'))
       .done((data) => {
-        this.mnemonic = data.mnemonic;
         this.isEncrypted = data.isEncrypted === 'true';
-        if (objectToSet) {
-          objectToSet.setState({ seed: data.mnemonic, isEncrypted: this.isEncrypted });
+        if (this.walletSeed) {
+          this.walletSeed.setState({ seed: data.mnemonic, isEncrypted: this.isEncrypted });
+          if (this.hideMnemonicTimer) {
+            clearTimeout(this.hideMnemonicTimer);
+          }
+          this.hideMnemonicTimer = setTimeout(() => {
+            this.walletSeed.onClickHideSeed();
+          }, 2 * 60 * 1000);
         }
       })
       .always(() => {
-        if (objectToSet) objectToSet.setState({ isFetching: false });
+        if (this.walletSeed) this.walletSeed.setState({ isFetching: false });
       })
       .fail(xhr => {
         openSimpleMessage(
           app.polyglot.t('settings.advancedTab.server.unableToFetchSeedTitle'),
-          xhr.responseJSON && xhr.responseJSON.reason || ''
+          xhr.responseJSON && xhr.responseJSON.reason || '',
         );
       });
 
     return this.walletSeedFetch;
-  }
-
-  onClickShowSeed() {
-    if (this.walletSeed) this.walletSeed.setState({ isFetching: true });
-
-    recordEvent('Settings_Advanced_ShowSeed');
-
-    this.downloadSeedWords(this.walletSeed);
   }
 
   onClickShowManager() {
@@ -87,7 +88,26 @@ export default class extends baseVw {
 
     recordEvent('Settings_Advanced_ShowManager');
 
-    this.downloadSeedWords(this.walletManager);
+    if (this.walletEncryptionStatusFetch && this.walletEncryptionStatusFetch.state() === 'pending') {
+      return this.walletEncryptionStatusFetch;
+    }
+
+    this.walletEncryptionStatusFetch = $.get(app.getServerUrl('manage/iswalletlocked'))
+      .done((data) => {
+        this.isEncrypted = data.isLocked === 'true';
+        if (this.walletManager) {
+          this.walletManager.setState({ isEncrypted: this.isEncrypted, wasFetched: true });
+        }
+      })
+      .always(() => {
+        if (this.walletManager) this.walletManager.setState({ isFetching: false });
+      })
+      .fail(xhr => {
+        openSimpleMessage(
+          app.polyglot.t('settings.advancedTab.server.unableToFetchSeedStatus'),
+          xhr.responseJSON && xhr.responseJSON.reason || '',
+        );
+      });
   }
 
   showConnectionManagement() {
@@ -310,7 +330,6 @@ export default class extends baseVw {
       if (this.walletSeed) this.walletSeed.remove();
       this.walletSeed = this.createChild(WalletSeed, {
         initialState: {
-          seed: this.mnemonic || '',
           isEncrypted: this.isEncrypted || false,
           isFetching: this.walletSeedFetch && this.walletSeedFetch.state() === 'pending',
         },
@@ -322,7 +341,6 @@ export default class extends baseVw {
       if (this.walletManager) this.walletManager.remove();
       this.walletManager = this.createChild(WalletManager, {
         initialState: {
-          seed: this.mnemonic || '',
           isEncrypted: this.isEncrypted || null,
           isFetching: this.walletSeedFetch && this.walletSeedFetch.state() === 'pending',
         },

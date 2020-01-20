@@ -1,4 +1,4 @@
-<% if (!ob.seed) { %>
+<% if (!ob.wasFetched) { %>
   <%= ob.processingButton({
     className: `btn clrP clrBr clrSh2 js-showSeed ${ob.isFetching ? 'processing' : ''}`,
     btnText: ob.polyT('settings.advancedTab.server.walletManager.btnShowManager'),

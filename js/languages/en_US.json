@@ -634,8 +634,10 @@
         "lockOrUnlockWalletLbl": "Lock / Unlock Wallet Seed",
         "lockOrUnlockWalletHelper": "You are able to encrypt or decrypt your seed words here.",
         "unableToFetchSeedTitle": "There was an error fetching your wallet seed",
+        "unableToFetchSeedStatus": "There was an error fetching your seed status",
         "walletSeed": {
           "btnShowSeed": "Show Seed",
+          "btnHideSeed": "Hide Seed",
           "introLine": "Your wallet generation seed is:",
           "directionLine": "Write the following words on paper and keep them somewhere safe. They must be in this exact order.",
           "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet.",

@@ -8,9 +8,9 @@ export default class extends BaseVw {
   constructor(options = {}) {
     const opts = {
       initialState: {
-        seed: '',
         isEncrypted: '',
         isFetching: false,
+        wasFetched: false,
         ...options.initialState || {},
       },
       ...options,
