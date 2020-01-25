@@ -3,6 +3,7 @@ import BaseVw from '../../../baseVw';
 import $ from 'jquery';
 import app from '../../../../app';
 import { openSimpleMessage } from '../../SimpleMessage';
+import { getPasswordIfCorrect } from '../../../../utils/pass';
 
 export default class extends BaseVw {
   constructor(options = {}) {
@@ -62,25 +63,6 @@ export default class extends BaseVw {
     }
   }
 
-  getPasswordIfCorrect() {
-    const password = this.$('#seedPassword').val();
-    const password2 = this.$('#seedPassword2').val();
-
-    if (this._state.isEncrypted === false && password !== password2) {
-      openSimpleMessage(
-        app.polyglot.t('settings.advancedTab.server.walletManager.passwordsNotEqual'));
-      return null;
-    }
-
-    if (password.length < 8) {
-      openSimpleMessage(app.polyglot.t('settings.advancedTab.server.walletManager.shortPassword'),
-        app.polyglot.t('settings.advancedTab.server.walletManager.passwordLenNotify'));
-      return null;
-    }
-
-    return password;
-  }
-
   getStringFromStatus(isLocked) {
     return isLocked === 'true' ?
       app.polyglot.t('settings.advancedTab.server.walletManager.encrypted') :
@@ -88,7 +70,8 @@ export default class extends BaseVw {
   }
 
   manageSeedStatus(url, isLocked) {
-    const password = this.getPasswordIfCorrect();
+    const password = getPasswordIfCorrect(this.$('#seedPassword').val(),
+      this.$('#seedPassword2').val());
     if (!password) {
       return null;
     }

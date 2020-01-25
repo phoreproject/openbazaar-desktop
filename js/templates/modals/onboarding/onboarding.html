@@ -15,12 +15,17 @@
       <div class="flexExpand txB tx3">
         <div class="center"><%= ob.polyT('onboarding.infoScreen.heading') %></div>
       </div>
-      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 1, totalPages: 2 }) %></div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 1, totalPages: 3 }) %></div>
+    <% } else if (ob.screen === 'encrypt') { %>
+      <div class="flexExpand txB tx3">
+        <div class="center"><%= ob.polyT('onboarding.encryptScreen.heading') %></div>
+      </div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 2, totalPages: 3 }) %></div>
     <% } else if (ob.screen === 'tos') { %>
       <div class="flexExpand txB tx3">
         <div class="center"><%= ob.polyT('onboarding.tosScreen.heading') %></div>
       </div>
-      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 2, totalPages: 2 }) %></div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 3, totalPages: 3 }) %></div>
     <% } %>
   </div>
   <hr class="clrBr" />
@@ -100,6 +105,17 @@
           </select>
         </div>
       </form>
+    <% } else if (ob.screen === 'encrypt') { %>
+      <form class="padStack">
+        <div class="row">
+          <% if (ob.passwordError) print(ob.formErrorTmpl({ errors: ob.passwordError })) %>
+          <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword" value="" placeholder="<%= ob.polyT('onboarding.encryptScreen.seedPassword') %>" data-field-standalone="string">
+        </div>
+        <div class="row">
+          <% if (ob.passwordError) print(ob.formErrorTmpl({ errors: ob.passwordError })) %>
+          <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword2" value="" placeholder="<%= ob.polyT('onboarding.encryptScreen.repeatPassword') %>" data-field-standalone="string">
+        </div>
+      </form>
     <% } else if (ob.screen === 'tos') { %>
       <%
         // split the TOS on line breaks so that we could ouput in p elements
@@ -121,13 +137,18 @@
       <button class="btn clrP js-navBack">Back</button>
     </div>
     <div>
-      <% if (ob.screen !== 'tos') { %>
-        <button class="btn clrP js-navNext">Next</button>
-      <% } else { %>
+      <% if (ob.screen === 'tos') { %>
         <%= ob.processingButton({
           className: `btn clrP js-tosAgree ${ob.saveInProgress ? 'processing' : ''}`,
           btnText: 'I Agree'
         }) %>
+      <% } else if (ob.screen === 'encrypt') { %>
+        <%= ob.processingButton({
+          className: `btn clrP js-navNext ${ob.encryptionInProgress ? 'processing' : ''}`,
+          btnText: 'Next'
+        }) %>
+      <% } else { %>
+        <button class="btn clrP js-navNext">Next</button>
       <% } %>
     </div>
   </div>

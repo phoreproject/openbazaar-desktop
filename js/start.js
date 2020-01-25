@@ -141,7 +141,6 @@ function fetchSeedStatus() {
   // TODO add retry, because backend start takes some time
   $.get(app.getServerUrl('manage/iswalletlocked'))
     .done((...args) => {
-      console.log('fetch seed', ...args);
       fetchSeedStatusDeferred.resolve(...args);
     })
     .fail(xhr => {
@@ -287,15 +286,19 @@ function isOnboardingNeeded() {
 const onboardDeferred = $.Deferred();
 
 function onboard() {
-  const onboarding = new Onboarding()
-    .render()
-    .open();
+  fetchSeedStatus().done((seedStatus) => {
+    const onboarding = new Onboarding({ isSeedEncrypted: seedStatus.isLocked === 'true' })
+      .render()
+      .open();
 
-  onboarding.on('onboarding-complete', () => {
-    // instead of search it is possible to use app.profile.id
-    location.hash = 'search';
-    onboardDeferred.resolve();
-    onboarding.remove();
+    onboarding.on('onboarding-complete', () => {
+      // instead of search it is possible to use app.profile.id
+      location.hash = 'search';
+      onboardDeferred.resolve();
+      onboarding.remove();
+    });
+  }).fail(() => {
+    onboardDeferred.reject();
   });
 
   return onboardDeferred.promise();
