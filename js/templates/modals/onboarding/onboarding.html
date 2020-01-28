@@ -107,11 +107,21 @@
       </form>
     <% } else if (ob.screen === 'encrypt') { %>
       <form class="padStack">
-        <div class="row">
+        <p><%= ob.polyT('settings.advancedTab.server.walletSeed.introLine') %></p>
+        <p class="pad border clrBr clrP"><%= ob.seed %></p>
+        <p><%= ob.polyT('settings.advancedTab.server.walletSeed.directionLine') %></p>
+        <p class="txB row"><%= ob.polyT('settings.advancedTab.server.walletSeed.warningHeading') %></p>
+        <ul class="seedWarnings">
+          <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning1') %></li>
+          <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning2') %></li>
+          <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning3') %></li>
+          <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning4') %></li>
+        </ul>
+        <div class="row padMd">
           <% if (ob.passwordError) print(ob.formErrorTmpl({ errors: ob.passwordError })) %>
           <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword" value="" placeholder="<%= ob.polyT('onboarding.encryptScreen.seedPassword') %>" data-field-standalone="string">
         </div>
-        <div class="row">
+        <div class="row padMd">
           <% if (ob.passwordError) print(ob.formErrorTmpl({ errors: ob.passwordError })) %>
           <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword2" value="" placeholder="<%= ob.polyT('onboarding.encryptScreen.repeatPassword') %>" data-field-standalone="string">
         </div>
@@ -143,6 +153,10 @@
           btnText: 'I Agree'
         }) %>
       <% } else if (ob.screen === 'encrypt') { %>
+        <%= ob.processingButton({
+          className: `btn clrP js-navSkip`,
+          btnText: 'Skip'
+        }) %>
         <%= ob.processingButton({
           className: `btn clrP js-navNext ${ob.encryptionInProgress ? 'processing' : ''}`,
           btnText: 'Next'

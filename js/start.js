@@ -152,6 +152,21 @@ function fetchSeedStatus() {
   return fetchSeedStatusDeferred.promise();
 }
 
+function getSeedWithStatus() {
+  const getSeed = $.Deferred();
+  $.get(app.getServerUrl('wallet/mnemonic'))
+    .done((...args) => {
+      getSeed.resolve(...args);
+    })
+    .fail(xhr => {
+      getSeed.reject();
+      console.error('The seed fetch failed. {0}'
+        .format(xhr && xhr.responseJSON && xhr.responseJSON.reason || ''));
+    });
+
+  return getSeed.promise();
+}
+
 function fetchConfig() {
   $.get(app.getServerUrl('ob/config')).done((...args) => {
     fetchConfigDeferred.resolve(...args);
@@ -286,8 +301,10 @@ function isOnboardingNeeded() {
 const onboardDeferred = $.Deferred();
 
 function onboard() {
-  fetchSeedStatus().done((seedStatus) => {
-    const onboarding = new Onboarding({ isSeedEncrypted: seedStatus.isLocked === 'true' })
+  getSeedWithStatus().done((seed) => {
+    const onboarding = new Onboarding({ isSeedEncrypted: seed.isEncrypted === 'true',
+      seed: seed.mnemonic,
+    })
       .render()
       .open();
 

@@ -20,6 +20,7 @@ export default class extends BaseModal {
         saveInProgress: false,
         encryptionInProgress: false,
         isSeedEncrypted: false,
+        seed: '',
         ...options.initialState,
       },
       ...options,
@@ -44,6 +45,7 @@ export default class extends BaseModal {
       'click .js-getStarted': 'onClickGetStarted',
       'click .js-navBack': 'onClickNavBack',
       'click .js-navNext': 'onClickNavNext',
+      'click .js-navSkip': 'onClickNavSkip',
       'click .js-avatarLeft': 'onAvatarLeftClick',
       'click .js-avatarRight': 'onAvatarRightClick',
       'click .js-changeAvatar': 'onClickChangeAvatar',
@@ -118,6 +120,15 @@ export default class extends BaseModal {
     }
 
     this.setState({ screen: newScreen });
+  }
+
+  onClickNavSkip() {
+    const curScreen = this.getState().screen;
+    const newScreen = this.screens[this.screens.indexOf(curScreen) + 1];
+
+    if (curScreen === 'encrypt') {
+      this.setState({ screen: newScreen });
+    }
   }
 
   onClickChangeAvatar() {
@@ -268,6 +279,7 @@ export default class extends BaseModal {
           settingsErrors: app.settings.validationError || {},
           countryList: this.countryList,
           currencyList: this.currencyList,
+          seed: this.options.seed,
         }));
 
         super.render();
