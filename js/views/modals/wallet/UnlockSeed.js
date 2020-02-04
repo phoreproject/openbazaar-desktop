@@ -14,6 +14,7 @@ export default class extends BaseModal {
       dismissOnOverlayClick: false,
       dismissOnEscPress: false,
       showCloseButton: false,
+      modelContentClass: 'modal__unlock-wallet-seed',
       defaultBtnClass: 'flexExpand btnFlx clrP',
       ...options,
     };

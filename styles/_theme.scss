@@ -2276,3 +2276,12 @@ div.headline {
     border:0;
   }
 }
+
+
+.unlockSeed {
+  width:500px;
+  text-align:center;
+  .spinner {
+    display:none!important;
+  }
+}
