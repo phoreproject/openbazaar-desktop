@@ -672,7 +672,6 @@ function connectToServer() {
 
   connectAttempt = serverConnect(app.serverConfigs.activeServer)
     .done(fetchSeedStatus().done((seedStatus) => {
-      console.log('seedStatus', seedStatus);
       if (seedStatus.isLocked === 'true') {
         const unlockSeedDialog = new UnlockSeed({
           title: 'Wallet seed words are encrypted',
@@ -683,8 +682,10 @@ function connectToServer() {
           showCloseButton: false,
         });
         unlockSeedDialog.render();
+        app.loadingModal.setState({ turnOffSpinner: true });
         app.loadingModal.open(unlockSeedDialog);
         unlockSeedDialog.waitForWalletUnlock().done(() => {
+          app.loadingModal.setState({ turnOffSpinner: false });
           app.loadingModal.close();
           app.loadingModal.open(startupConnectMessaging);
           start();

@@ -14,7 +14,6 @@ export default class extends BaseModal {
       dismissOnOverlayClick: false,
       dismissOnEscPress: false,
       showCloseButton: false,
-      modelContentClass: 'modal__unlock-wallet-seed',
       defaultBtnClass: 'flexExpand btnFlx clrP',
       ...options,
     };
@@ -39,7 +38,7 @@ export default class extends BaseModal {
     const password = this.$('#seedPassword').val();
     this.walletSeedFetch = $.post({
       url: app.getServerUrl('manage/unlockwallet'),
-      data: JSON.stringify({ password, temporary: this.options.temporaryUnlock }),
+      data: JSON.stringify({ password, omitDecryption: this.options.temporaryUnlock }),
       dataType: 'json',
       contentType: 'application/json',
     }).done((data) => {

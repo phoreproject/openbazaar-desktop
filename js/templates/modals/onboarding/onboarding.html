@@ -107,6 +107,7 @@
       </form>
     <% } else if (ob.screen === 'encrypt') { %>
       <form class="padStack">
+        #TODO 1. Explain why backup of seed words is necessary, ask to do it
         <p><%= ob.polyT('settings.advancedTab.server.walletSeed.introLine') %></p>
         <p class="pad border clrBr clrP"><%= ob.seed %></p>
         <p><%= ob.polyT('settings.advancedTab.server.walletSeed.directionLine') %></p>
@@ -117,6 +118,8 @@
           <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning3') %></li>
           <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning4') %></li>
         </ul>
+        <hr class="clrBr" />
+        # TODO 2. Explain why it is important to encrypt seed words
         <div class="row padMd">
           <% if (ob.passwordError) print(ob.formErrorTmpl({ errors: ob.passwordError })) %>
           <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword" value="" placeholder="<%= ob.polyT('onboarding.encryptScreen.seedPassword') %>" data-field-standalone="string">
