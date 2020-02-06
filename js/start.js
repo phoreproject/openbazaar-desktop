@@ -138,16 +138,24 @@ const fetchSeedStatusDeferred = $.Deferred();
 const fetchConfigDeferred = $.Deferred();
 
 function fetchSeedStatus() {
-  // TODO add retry, because backend start takes some time
-  $.get(app.getServerUrl('manage/iswalletlocked'))
-    .done((...args) => {
-      fetchSeedStatusDeferred.resolve(...args);
-    })
-    .fail(xhr => {
-      fetchSeedStatusDeferred.resolve({ isLocked: 'true' });
-      console.error('The seed status fetch failed. {0}'
-        .format(xhr && xhr.responseJSON && xhr.responseJSON.reason || ''));
-    });
+  function _fetchSeed(retryCnt) {
+    $.get(app.getServerUrl('manage/iswalletlocked'))
+      .done((...args) => {
+        app.pageNav.setState({ isLocked: args.isLocked === 'true' });
+        fetchSeedStatusDeferred.resolve(...args);
+      })
+      .fail(xhr => {
+        if (retryCnt < 5) {
+          console.warn('Request manage/iswalletlocked failed, retry.');
+          setTimeout(_fetchSeed, 1000, retryCnt + 1);
+          return;
+        }
+        fetchSeedStatusDeferred.resolve({ isLocked: 'true' });
+        console.error('The seed status fetch failed. {0}'
+          .format(xhr && xhr.responseJSON && xhr.responseJSON.reason || ''));
+      });
+  }
+  _fetchSeed(0);
 
   return fetchSeedStatusDeferred.promise();
 }
