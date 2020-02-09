@@ -145,7 +145,7 @@ function fetchSeedStatus() {
         fetchSeedStatusDeferred.resolve(...args);
       })
       .fail(xhr => {
-        if (retryCnt < 5) {
+        if (retryCnt < 20) {
           console.warn('Request manage/iswalletlocked failed, retry.');
           setTimeout(_fetchSeed, 1000, retryCnt + 1);
           return;
@@ -696,7 +696,7 @@ function connectToServer() {
           app.loadingModal.setState({ turnOffSpinner: false });
           app.loadingModal.close();
           app.loadingModal.open(startupConnectMessaging);
-          start();
+          setTimeout(start, 100);
         });
       } else {
         start();
