@@ -2,6 +2,7 @@ import $ from 'jquery';
 import loadTemplate from '../../../utils/loadTemplate';
 import BaseModal from '../BaseModal';
 import app from '../../../app';
+import { openSimpleMessage } from '../../modals/SimpleMessage';
 
 
 export default class extends BaseModal {
@@ -45,10 +46,12 @@ export default class extends BaseModal {
       if (data.isLocked === 'false') {
         this.walletUnlocked.resolve();
       } else {
-        this.trigger('seed-unlock-failed', 'Wallet is still locked');
+        openSimpleMessage(
+          app.polyglot.t('settings.advancedTab.server.walletManager.dialogFailTitle'));
       }
     }).fail(xhr => {
-      this.trigger('seed-unlock-failed', xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
+      openSimpleMessage(app.polyglot.t('settings.advancedTab.server.walletManager.dialogFailTitle'),
+        xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
     });
   }
 

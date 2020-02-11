@@ -15,6 +15,28 @@
           <%= ob.cryptoTeaserHtml %>
         </div>
       </div>
+      <% if (ob.isLocked) { %>
+        <div class="padMd">
+          <div class="flexRow">
+            <div class="rowMd padMd">
+              <input type="password" class="clrBr clrSh2 js-walletPassword" name="name" id="walletPassword" placeholder="<%= ob.polyT('wallet.walletPasswordPlaceholder') %>" data-field-standalone="string">
+            </div>
+          </div>
+          <div class="rowMd padMd">
+            <%= ob.processingButton({
+              className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-unlock',
+              btnText: ob.polyT('wallet.walletUnlockButton')
+            }) %>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="col3 rowMd padMd">
+          <%= ob.processingButton({
+            className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-lock',
+            btnText: ob.polyT('wallet.walletLockButton')
+          }) %>
+        </div>
+      <% } %>
     </div>
     <div class="col9">
       <div class="flexColWide gutterV">

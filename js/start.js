@@ -140,9 +140,9 @@ const fetchConfigDeferred = $.Deferred();
 function fetchSeedStatus() {
   function _fetchSeed(retryCnt) {
     $.get(app.getServerUrl('manage/iswalletlocked'))
-      .done((...args) => {
+      .done((args) => {
         app.pageNav.setState({ isLocked: args.isLocked === 'true' });
-        fetchSeedStatusDeferred.resolve(...args);
+        fetchSeedStatusDeferred.resolve(args);
       })
       .fail(xhr => {
         if (retryCnt < 20) {
@@ -682,8 +682,8 @@ function connectToServer() {
     .done(fetchSeedStatus().done((seedStatus) => {
       if (seedStatus.isLocked === 'true') {
         const unlockSeedDialog = new UnlockSeed({
-          title: 'Wallet seed words are encrypted',
-          message: 'Input seed password',
+          title: app.polyglot.t('startUp.fetchSeed.title'),
+          message: app.polyglot.t('startUp.fetchSeed.message'),
           temporaryUnlock: true,
           dismissOnOverlayClick: false,
           dismissOnEscPress: false,
@@ -696,6 +696,8 @@ function connectToServer() {
           app.loadingModal.setState({ turnOffSpinner: false });
           app.loadingModal.close();
           app.loadingModal.open(startupConnectMessaging);
+          // TODO Fix race condition here. Sometimes backend is not able to set up multiwallet,
+          // before GET to /ob/config
           setTimeout(start, 100);
         });
       } else {
