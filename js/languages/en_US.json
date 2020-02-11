@@ -160,6 +160,10 @@
     "connectMessaging": {
       "cancelLink": "cancel",
       "connectAttemptMsg": "Connecting to %{serverName}. %{cancelLink}"
+    },
+    "fetchSeed": {
+      "title": "Wallet seed words are encrypted",
+      "message": "Input seed password"
     }
   },
   "notifications": {
@@ -934,6 +938,9 @@
     "title": "Wallet",
     "closeLink": "Close wallet",
     "zeroSupportedCurs": "None of the wallets provided by your server use currencies supported by this client.",
+    "walletPasswordPlaceholder": "Wallet password",
+    "walletLockButton": "Lock",
+    "walletUnlockButton": "Unlock",
     "coinStats": {
       "balanceHeader": "Balance",
       "unconfirmedBalance": "(%{amount} unconfirmed)",
@@ -1013,6 +1020,11 @@
       "bodyLine": "Trade %{coinCount} on Phore Marketplace for free",
       "btnCreateListing": "Create Listing",
       "linkViewCryptoListings": "View crypto listings"
+    },
+    "manage": {
+      "unlockFailedDialogTitle": "Unlock wallet failed.",
+      "stateChangeFailedUnknownReason": "Unknown reason.",
+      "lockFailedDialogTitle": "Lock wallet failed."
     }
   },
   "formats": {
