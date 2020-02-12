@@ -160,6 +160,10 @@
     "connectMessaging": {
       "cancelLink": "annuler",
       "connectAttemptMsg": "Connexion à %{serverName}. %{cancelLink}"
+    },
+    "fetchSeed": {
+      "title": "Wallet seed words are encrypted",
+      "message": "Input seed password"
     }
   },
   "notifications": {
@@ -640,7 +644,29 @@
           "warning1": "Ne partagez jamais votre phrase de récupération. Toute personne avec cette phrase peut voler vos fonds.",
           "warning2": "Ne l'écrivez jamais sur un site internet.",
           "warning3": "Ne la conservez pas électroniquement.",
-          "warning4": "Ne perdez pas votre phrase de récupération, sinon vos fonds seront perdus à jamais si vos données sont effacées."
+          "warning4": "Ne perdez pas votre phrase de récupération, sinon vos fonds seront perdus à jamais si vos données sont effacées.",
+          "btnHideSeed": "Hide Seed",
+          "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet."
+        },
+        "lockOrUnlockWalletLbl": "Lock / Unlock Wallet Seed",
+        "lockOrUnlockWalletHelper": "You are able to encrypt or decrypt your seed words here.",
+        "unableToFetchSeedStatus": "There was an error fetching your seed status",
+        "walletManager": {
+          "btnShowManager": "Show Manager",
+          "btnLockWallet": "Lock wallet seed",
+          "btnUnlockWallet": "Unlock wallet seed",
+          "introLine": "Here you can encrypt or decrypt your seed words.",
+          "dialogSuccessTitle": "Wallet seed word status successfully changed.",
+          "dialogSuccessMsg": "Seed words are now %{isLocked}.",
+          "dialogFailTitle": "Manager was not able to change seed status",
+          "dialogFailMsg": "Wallet status should be %{shouldBe} but is still %{is}",
+          "encrypted": "encrypted",
+          "decrypted": "decrypted",
+          "shortPassword": "Your password is too short",
+          "passwordLenNotify": "The password length should be at least 8 characters long",
+          "passwordsNotEqual": "Passwords are not equal",
+          "enterPassword": "Enter password",
+          "repeatPassword": "Repeat password"
         }
       },
       "transaction": {
@@ -991,6 +1017,14 @@
       "bodyLine": "Trade %{coinCount} on Phore Marketplace for free",
       "btnCreateListing": "Ajouter une annonce",
       "linkViewCryptoListings": "View crypto listings"
+    },
+    "walletPasswordPlaceholder": "Wallet password",
+    "walletLockButton": "Lock",
+    "walletUnlockButton": "Unlock",
+    "manage": {
+      "unlockFailedDialogTitle": "Unlock wallet failed.",
+      "stateChangeFailedUnknownReason": "Unknown reason.",
+      "lockFailedDialogTitle": "Lock wallet failed."
     }
   },
   "formats": {
@@ -1135,8 +1169,8 @@
     "nsfwNo": "Non",
     "nsfwLabel": "Contenu interdit aux mineurs",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Général",
       "photos": "Photos",
@@ -1389,6 +1423,11 @@
     "tosScreen": {
       "heading": "Conditions d'utilisation",
       "tos": "Phore Marketplace est un réseau commercial de biens et services de personne à personne - utilisant des crypto-monnaies - sans aucune organisation centrale exerçant une autorité sur la plate-forme. Cela signifie que vous êtes seul responsable de votre activité sur le réseau. \n\nLes utilisateurs d'Phore Marketplace ne sont pas anonymes par défaut. La plupart des communications entre les partis sont chiffrées, mais les adresses IP sont publiques et peuvent être associées à une activité sur le réseau. Des partis malveillants pourraient utiliser ces informations contre vous ; protéger votre vie privée est votre propre responsabilité. \n\nLes utilisateurs d'Phore Marketplace doivent respecter les lois de leur propre pays aussi bien que leur conscience. Les développeurs d'Phore Marketplace ne tolèrent pas - et ne sont pas responsables -  de toute utilisation de la plate-forme à des fins illégales. \n\nLa communauté des développeurs d'Phore Marketplace a travaillé sans relâche afin d'offrir une plate-forme commerciale libre et mondiale. Mais, comme avec tout logiciel, des bugs seront trouvés. Les développeurs ne sont pas responsables de toute perte monétaire associée à des problèmes dans le logiciel. \n\nEn utilisant Phore Marketplace vous êtes seul responsable de vos actions sur le réseau d'Phore Marketplace."
+    },
+    "encryptScreen": {
+      "heading": "Secure your seed words",
+      "seedPassword": "Seed password",
+      "repeatPassword": "Repeat password"
     }
   },
   "pageControls": {

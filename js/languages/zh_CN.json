@@ -160,6 +160,10 @@
     "connectMessaging": {
       "cancelLink": "取消",
       "connectAttemptMsg": "连接到%{serverName}。 %{cancelLink}"
+    },
+    "fetchSeed": {
+      "title": "Wallet seed words are encrypted",
+      "message": "Input seed password"
     }
   },
   "notifications": {
@@ -504,10 +508,10 @@
       "sectionName": "通用",
       "bitcoinUnit": "比特币单位",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "μBTC",
-        "SATOSHI": "Satoshi（sat）"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "保存常规设置...",
       "statusSaveComplete": "已保存常规设置。",
@@ -640,7 +644,29 @@
           "warning1": "永远不要分享你的种子，任何拥有此种子的人都可以窃取你的资金。",
           "warning2": "永远不要在网站上输入。",
           "warning3": "请勿以电子方式存储。",
-          "warning4": "不要丢失种子，否则如果您的数据被删除，您的资金将永久丢失。"
+          "warning4": "不要丢失种子，否则如果您的数据被删除，您的资金将永久丢失。",
+          "btnHideSeed": "Hide Seed",
+          "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet."
+        },
+        "lockOrUnlockWalletLbl": "Lock / Unlock Wallet Seed",
+        "lockOrUnlockWalletHelper": "You are able to encrypt or decrypt your seed words here.",
+        "unableToFetchSeedStatus": "There was an error fetching your seed status",
+        "walletManager": {
+          "btnShowManager": "Show Manager",
+          "btnLockWallet": "Lock wallet seed",
+          "btnUnlockWallet": "Unlock wallet seed",
+          "introLine": "Here you can encrypt or decrypt your seed words.",
+          "dialogSuccessTitle": "Wallet seed word status successfully changed.",
+          "dialogSuccessMsg": "Seed words are now %{isLocked}.",
+          "dialogFailTitle": "Manager was not able to change seed status",
+          "dialogFailMsg": "Wallet status should be %{shouldBe} but is still %{is}",
+          "encrypted": "encrypted",
+          "decrypted": "decrypted",
+          "shortPassword": "Your password is too short",
+          "passwordLenNotify": "The password length should be at least 8 characters long",
+          "passwordsNotEqual": "Passwords are not equal",
+          "enterPassword": "Enter password",
+          "repeatPassword": "Repeat password"
         }
       },
       "transaction": {
@@ -991,6 +1017,14 @@
       "bodyLine": "免费在OpenBazaar上交易 %{coinCount} ",
       "btnCreateListing": "创建货币商品",
       "linkViewCryptoListings": "查看加密货币商品"
+    },
+    "walletPasswordPlaceholder": "Wallet password",
+    "walletLockButton": "Lock",
+    "walletUnlockButton": "Unlock",
+    "manage": {
+      "unlockFailedDialogTitle": "Unlock wallet failed.",
+      "stateChangeFailedUnknownReason": "Unknown reason.",
+      "lockFailedDialogTitle": "Lock wallet failed."
     }
   },
   "formats": {
@@ -1135,8 +1169,8 @@
     "nsfwNo": "否",
     "nsfwLabel": "成人内容（NSFW，成人，18+等）",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "通用",
       "photos": "照片",
@@ -1389,6 +1423,11 @@
     "tosScreen": {
       "heading": "服务条款",
       "tos": "OpenBazaar是一个提供人们之间点到点直接交易货物和服务的网络 - 内建加密货币机制 - 没有任何中央组织控制网络，这意味着您需要对网络上的活动负责。\n \nOpenBazaar用户不是默认匿名的，网络上用户之间大部分的通信都是加密的，但用户IP地址是公开的，可以与网络上的活动相关联，恶意使用者可以使用这些信息攻击你;保护您的隐私是您自己的责任。\n \nOpenBazaar用户必须遵守法律以及道德规范。OpenBazaar开发人员不会宽恕 - 也不负责 - 任何使用该平台进行非法活动。\n \n OpenBazaar致力于构建免费的交易平台，但是和任何软件一样，我们会发现错误，但不承担任何与软件问题带来的资金丢失。\n \n通过使用OpenBazaar，您需要对OpenBazaar网络上自己的行为负责。"
+    },
+    "encryptScreen": {
+      "heading": "Secure your seed words",
+      "seedPassword": "Seed password",
+      "repeatPassword": "Repeat password"
     }
   },
   "pageControls": {
@@ -2166,10 +2205,10 @@
     "invalidtorlistings": "您必须提供有效的Tor商品信息搜索URL。"
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",
