@@ -38,7 +38,7 @@ export default class extends BaseModal {
   onUnlockClick() {
     const password = this.$('#seedPassword').val();
     this.walletSeedFetch = $.post({
-      url: app.getServerUrl('manage/unlockwallet'),
+      url: app.getServerUrl('manage/initwallet'),
       data: JSON.stringify({ password, omitDecryption: this.options.temporaryUnlock }),
       dataType: 'json',
       contentType: 'application/json',

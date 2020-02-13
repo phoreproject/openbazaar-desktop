@@ -109,7 +109,7 @@ export default class extends BaseModal {
       }
 
       this.setState({ encryptionInProgress: true });
-      this.encryptWallet().done((seedStatus) => {
+      this.encryptWallet(password).done((seedStatus) => {
         if (seedStatus.isLocked === 'true') {
           this.setState({ screen: 'tos', isSeedEncrypted: seedStatus.isLocked === 'true' });
         }

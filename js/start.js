@@ -137,7 +137,7 @@ app.verifiedMods = new VerifiedMods();
 const fetchSeedStatusDeferred = $.Deferred();
 const fetchConfigDeferred = $.Deferred();
 
-function fetchSeedStatus() {
+function fetchWalletStatus() {
   function _fetchSeed(retryCnt) {
     $.get(app.getServerUrl('manage/iswalletlocked'))
       .done((args) => {
@@ -679,8 +679,8 @@ function connectToServer() {
     });
 
   connectAttempt = serverConnect(app.serverConfigs.activeServer)
-    .done(fetchSeedStatus().done((seedStatus) => {
-      if (seedStatus.isLocked === 'true') {
+    .done(fetchWalletStatus().done((walletStatus) => {
+      if (walletStatus.isInitialized !== 'true') {
         const unlockSeedDialog = new UnlockSeed({
           title: app.polyglot.t('startUp.fetchSeed.title'),
           message: app.polyglot.t('startUp.fetchSeed.message'),
