@@ -46,6 +46,7 @@ import SearchProvidersCol from './collections/search/SearchProviders';
 import defaultSearchProviders from './data/defaultSearchProviders';
 import VerifiedMods from './collections/VerifiedMods';
 import VerifiedModsError from './views/modals/VerifiedModsFetchError';
+import UnlockSeed from './views/modals/wallet/UnlockSeed';
 
 fixLinuxZoomIssue();
 handleServerShutdownRequests();
@@ -133,7 +134,46 @@ addFeedback();
 
 app.verifiedMods = new VerifiedMods();
 
+const fetchSeedStatusDeferred = $.Deferred();
 const fetchConfigDeferred = $.Deferred();
+
+function fetchWalletStatus() {
+  function _fetchSeed(retryCnt) {
+    $.get(app.getServerUrl('manage/iswalletlocked'))
+      .done((args) => {
+        app.pageNav.setState({ isLocked: args.isLocked === 'true' });
+        fetchSeedStatusDeferred.resolve(args);
+      })
+      .fail(xhr => {
+        if (retryCnt < 20) {
+          console.warn('Request manage/iswalletlocked failed, retry.');
+          setTimeout(_fetchSeed, 1000, retryCnt + 1);
+          return;
+        }
+        fetchSeedStatusDeferred.resolve({ isLocked: 'true' });
+        console.error('The seed status fetch failed. {0}'
+          .format(xhr && xhr.responseJSON && xhr.responseJSON.reason || ''));
+      });
+  }
+  _fetchSeed(0);
+
+  return fetchSeedStatusDeferred.promise();
+}
+
+function getSeedWithStatus() {
+  const getSeed = $.Deferred();
+  $.get(app.getServerUrl('wallet/mnemonic'))
+    .done((...args) => {
+      getSeed.resolve(...args);
+    })
+    .fail(xhr => {
+      getSeed.reject();
+      console.error('The seed fetch failed. {0}'
+        .format(xhr && xhr.responseJSON && xhr.responseJSON.reason || ''));
+    });
+
+  return getSeed.promise();
+}
 
 function fetchConfig() {
   $.get(app.getServerUrl('ob/config')).done((...args) => {
@@ -269,15 +309,21 @@ function isOnboardingNeeded() {
 const onboardDeferred = $.Deferred();
 
 function onboard() {
-  const onboarding = new Onboarding()
-    .render()
-    .open();
+  getSeedWithStatus().done((seed) => {
+    const onboarding = new Onboarding({ isSeedEncrypted: seed.isEncrypted === 'true',
+      seed: seed.mnemonic,
+    })
+      .render()
+      .open();
 
-  onboarding.on('onboarding-complete', () => {
-    // instead of search it is possible to use app.profile.id
-    location.hash = 'search';
-    onboardDeferred.resolve();
-    onboarding.remove();
+    onboarding.on('onboarding-complete', () => {
+      // instead of search it is possible to use app.profile.id
+      location.hash = 'search';
+      onboardDeferred.resolve();
+      onboarding.remove();
+    });
+  }).fail(() => {
+    onboardDeferred.reject();
   });
 
   return onboardDeferred.promise();
@@ -633,7 +679,31 @@ function connectToServer() {
     });
 
   connectAttempt = serverConnect(app.serverConfigs.activeServer)
-    .done(() => start())
+    .done(fetchWalletStatus().done((walletStatus) => {
+      if (walletStatus.isInitialized !== 'true') {
+        const unlockSeedDialog = new UnlockSeed({
+          title: app.polyglot.t('startUp.fetchSeed.title'),
+          message: app.polyglot.t('startUp.fetchSeed.message'),
+          temporaryUnlock: true,
+          dismissOnOverlayClick: false,
+          dismissOnEscPress: false,
+          showCloseButton: false,
+        });
+        unlockSeedDialog.render();
+        app.loadingModal.setState({ turnOffSpinner: true });
+        app.loadingModal.open(unlockSeedDialog);
+        unlockSeedDialog.waitForWalletUnlock().done(() => {
+          app.loadingModal.setState({ turnOffSpinner: false });
+          app.loadingModal.close();
+          app.loadingModal.open(startupConnectMessaging);
+          // TODO Fix race condition here. Sometimes backend is not able to set up multiwallet,
+          // before GET to /ob/config
+          setTimeout(start, 100);
+        });
+      } else {
+        start();
+      }
+    }))
     .fail(() => {
       app.connectionManagmentModal.open();
       app.loadingModal.close();

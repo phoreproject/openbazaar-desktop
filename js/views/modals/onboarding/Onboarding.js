@@ -8,6 +8,7 @@ import { getCurrencies } from '../../../data/currencies';
 import { openSimpleMessage } from '../SimpleMessage';
 import loadTemplate from '../../../utils/loadTemplate';
 import BaseModal from '../BaseModal';
+import { getPasswordIfCorrect } from '../../../utils/pass';
 
 export default class extends BaseModal {
   constructor(options = {}) {
@@ -17,6 +18,9 @@ export default class extends BaseModal {
       initialState: {
         screen: 'intro',
         saveInProgress: false,
+        encryptionInProgress: false,
+        isSeedEncrypted: false,
+        seed: '',
         ...options.initialState,
       },
       ...options,
@@ -24,7 +28,7 @@ export default class extends BaseModal {
 
     super(opts);
     this.options = opts;
-    this.screens = ['intro', 'info', 'tos'];
+    this.screens = ['intro', 'info', 'encrypt', 'tos'];
     this.lastAvatarImageRotate = 0;
     this.avatarChanged = false;
     this.countryList = getTranslatedCountries();
@@ -41,6 +45,7 @@ export default class extends BaseModal {
       'click .js-getStarted': 'onClickGetStarted',
       'click .js-navBack': 'onClickNavBack',
       'click .js-navNext': 'onClickNavNext',
+      'click .js-navSkip': 'onClickNavSkip',
       'click .js-avatarLeft': 'onAvatarLeftClick',
       'click .js-avatarRight': 'onAvatarRightClick',
       'click .js-changeAvatar': 'onClickChangeAvatar',
@@ -59,10 +64,15 @@ export default class extends BaseModal {
 
   onClickNavBack() {
     const curScreen = this.getState().screen;
-    const newScreen = this.screens[this.screens.indexOf(curScreen) - 1];
+    let newScreen = this.screens[this.screens.indexOf(curScreen) - 1];
 
     if (curScreen === 'info') {
       this.setModelsFromForm();
+    }
+
+    if (curScreen === 'tos' && this.options.isSeedEncrypted) {
+      // Seed is encrypted, so we don't need to encrypt it again. Skip this window.
+      newScreen = this.screens[this.screens.indexOf(newScreen) - 1];
     }
 
     this.setState({
@@ -72,23 +82,53 @@ export default class extends BaseModal {
 
   onClickNavNext() {
     const curScreen = this.getState().screen;
-    const newScreen = this.screens[this.screens.indexOf(curScreen) + 1];
+    let newScreen = this.screens[this.screens.indexOf(curScreen) + 1];
 
     if (curScreen === 'info') {
       this.setModelsFromForm();
 
-      if (newScreen === 'tos') {
-        app.profile.set({}, { validate: true });
-        app.settings.set({}, { validate: true });
+      if (this.options.isSeedEncrypted) {
+        // Seed is encrypted, so we don't need to encrypt it again. Skip this window.
+        newScreen = this.screens[this.screens.indexOf(newScreen) + 1];
+      }
 
-        if (app.settings.validationError || app.profile.validationError) {
-          this.render();
-          return;
-        }
+      app.profile.set({}, { validate: true });
+      app.settings.set({}, { validate: true });
+
+      if (app.settings.validationError || app.profile.validationError) {
+        this.render();
+        return;
       }
     }
 
+    if (curScreen === 'encrypt') {
+      const password = getPasswordIfCorrect(this.$('#seedPassword').val(),
+        this.$('#seedPassword2').val());
+      if (!password) {
+        return;
+      }
+
+      this.setState({ encryptionInProgress: true });
+      this.encryptWallet(password).done((seedStatus) => {
+        if (seedStatus.isLocked === 'true') {
+          this.setState({ screen: 'tos', isSeedEncrypted: seedStatus.isLocked === 'true' });
+        }
+      }).always(() => {
+        this.setState({ encryptionInProgress: false });
+      });
+      return;
+    }
+
     this.setState({ screen: newScreen });
+  }
+
+  onClickNavSkip() {
+    const curScreen = this.getState().screen;
+    const newScreen = this.screens[this.screens.indexOf(curScreen) + 1];
+
+    if (curScreen === 'encrypt') {
+      this.setState({ screen: newScreen });
+    }
   }
 
   onClickChangeAvatar() {
@@ -189,6 +229,27 @@ export default class extends BaseModal {
     }
   }
 
+  encryptWallet(password) {
+    const promise = $.Deferred();
+    this.walletManageRequest = $.post({
+      url: app.getServerUrl('manage/lockwallet'),
+      data: JSON.stringify({ password }),
+      dataType: 'json',
+      contentType: 'application/json',
+    }).done((data) => {
+      promise.resolve(data);
+    })
+    .fail(xhr => {
+      promise.reject();
+      openSimpleMessage(
+        '',
+        xhr.responseJSON && xhr.responseJSON.reason || ''
+      );
+    });
+
+    return promise.promise();
+  }
+
   render() {
     if (this.$avatarCropper) {
       this.lastAvatarZoom = this.$avatarCropper.cropit('zoom');
@@ -218,6 +279,7 @@ export default class extends BaseModal {
           settingsErrors: app.settings.validationError || {},
           countryList: this.countryList,
           currencyList: this.currencyList,
+          seed: this.options.seed,
         }));
 
         super.render();

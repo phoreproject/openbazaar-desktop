@@ -1,0 +1,32 @@
+<% if (!ob.wasFetched) { %>
+  <%= ob.processingButton({
+    className: `btn clrP clrBr clrSh2 js-showSeed ${ob.isFetching ? 'processing' : ''}`,
+    btnText: ob.polyT('settings.advancedTab.server.walletManager.btnShowManager'),
+  }) %>
+<% } else { %>
+  <p><%= ob.polyT('settings.advancedTab.server.walletManager.introLine') %></p>
+  <div class="padMdKids padStack pad0">
+    <div class="flexCol">
+      <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword" value="" placeholder="<%= ob.polyT('settings.advancedTab.server.walletManager.enterPassword') %>" data-field-standalone="string">
+    </div>
+    <div class="flexCol">
+      <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword2" value="" placeholder="<%= ob.polyT('settings.advancedTab.server.walletManager.repeatPassword') %>" data-field-standalone="string">
+    </div>
+    <div class="flexCol">
+      <div class="flexRow">
+        <div class="col6">
+          <%= ob.processingButton({
+          className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-unlock',
+          btnText: ob.polyT('settings.advancedTab.server.walletManager.btnUnlockWallet')
+          }) %>
+        </div>
+        <div class="col6 flexHRight">
+          <%= ob.processingButton({
+          className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-lock',
+          btnText: ob.polyT('settings.advancedTab.server.walletManager.btnLockWallet')
+          }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% } %>

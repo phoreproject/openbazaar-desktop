@@ -9,6 +9,7 @@ import baseVw from '../../../baseVw';
 import WalletSeed from './WalletSeed';
 import SmtpSettings from './SmtpSettings';
 import MetricsStatus from './MetricsStatus';
+import WalletManager from './WalletManager';
 
 export default class extends baseVw {
   constructor(options = {}) {
@@ -48,30 +49,65 @@ export default class extends baseVw {
   }
 
   onClickShowSeed() {
-    if (this.walletSeedFetch && this.walletSeedFetch.state() === 'pending') {
-      return this.walletSeedFetch;
-    }
-
     if (this.walletSeed) this.walletSeed.setState({ isFetching: true });
 
     recordEvent('Settings_Advanced_ShowSeed');
 
-    this.walletSeedFetch = $.get(app.getServerUrl('wallet/mnemonic')).done((data) => {
-      this.mnemonic = data.mnemonic;
-      if (this.walletSeed) {
-        this.walletSeed.setState({ seed: data.mnemonic });
-      }
-    }).always(() => {
-      if (this.walletSeed) this.walletSeed.setState({ isFetching: false });
-    })
-    .fail(xhr => {
-      openSimpleMessage(
-        app.polyglot.t('settings.advancedTab.server.unableToFetchSeedTitle'),
-        xhr.responseJSON && xhr.responseJSON.reason || ''
-      );
-    });
+    if (this.walletSeedFetch && this.walletSeedFetch.state() === 'pending') {
+      return this.walletSeedFetch;
+    }
+
+    this.walletSeedFetch = $.get(app.getServerUrl('wallet/mnemonic'))
+      .done((data) => {
+        this.isEncrypted = data.isEncrypted === 'true';
+        if (this.walletSeed) {
+          this.walletSeed.setState({ seed: data.mnemonic, isEncrypted: this.isEncrypted });
+          if (this.hideMnemonicTimer) {
+            clearTimeout(this.hideMnemonicTimer);
+          }
+          this.hideMnemonicTimer = setTimeout(() => {
+            this.walletSeed.onClickHideSeed();
+          }, 2 * 60 * 1000);
+        }
+      })
+      .always(() => {
+        if (this.walletSeed) this.walletSeed.setState({ isFetching: false });
+      })
+      .fail(xhr => {
+        openSimpleMessage(
+          app.polyglot.t('settings.advancedTab.server.unableToFetchSeedTitle'),
+          xhr.responseJSON && xhr.responseJSON.reason || '',
+        );
+      });
 
     return this.walletSeedFetch;
+  }
+
+  onClickShowManager() {
+    if (this.walletManager) this.walletManager.setState({ isFetching: true });
+
+    recordEvent('Settings_Advanced_ShowManager');
+
+    if (this.walletEncryptionStatusFetch && this.walletEncryptionStatusFetch.state() === 'pending') {
+      return this.walletEncryptionStatusFetch;
+    }
+
+    this.walletEncryptionStatusFetch = $.get(app.getServerUrl('manage/iswalletlocked'))
+      .done((data) => {
+        this.isEncrypted = data.isLocked === 'true';
+        if (this.walletManager) {
+          this.walletManager.setState({ isEncrypted: this.isEncrypted, wasFetched: true });
+        }
+      })
+      .always(() => {
+        if (this.walletManager) this.walletManager.setState({ isFetching: false });
+      })
+      .fail(xhr => {
+        openSimpleMessage(
+          app.polyglot.t('settings.advancedTab.server.unableToFetchSeedStatus'),
+          xhr.responseJSON && xhr.responseJSON.reason || '',
+        );
+      });
   }
 
   showConnectionManagement() {
@@ -94,12 +130,15 @@ export default class extends baseVw {
    * the call fails, even if they have navigated away from the view.
    */
   purgeCache() {
-    this.getCachedEl('.js-purge').addClass('processing');
-    this.getCachedEl('.js-purgeComplete').addClass('hide');
+    this.getCachedEl('.js-purge')
+      .addClass('processing');
+    this.getCachedEl('.js-purgeComplete')
+      .addClass('hide');
 
     this.purge = $.post(app.getServerUrl('ob/purgecache'))
       .always(() => {
-        this.getCachedEl('.js-purge').removeClass('processing');
+        this.getCachedEl('.js-purge')
+          .removeClass('processing');
       })
       .fail((xhr) => {
         const failReason = xhr.responseJSON && xhr.responseJSON.reason || '';
@@ -108,7 +147,8 @@ export default class extends baseVw {
           failReason);
       })
       .done(() => {
-        this.getCachedEl('.js-purgeComplete').removeClass('hide');
+        this.getCachedEl('.js-purgeComplete')
+          .removeClass('hide');
       });
   }
 
@@ -121,11 +161,13 @@ export default class extends baseVw {
    * Calls the server to retrieve and display information about the block the transactions are on
    */
   showBlockData() {
-    this.getCachedEl('.js-blockData').addClass('processing');
+    this.getCachedEl('.js-blockData')
+      .addClass('processing');
 
     this.blockData = $.get(app.getServerUrl('wallet/status'))
       .always(() => {
-        this.getCachedEl('.js-blockData').removeClass('processing');
+        this.getCachedEl('.js-blockData')
+          .removeClass('processing');
       })
       .fail((xhr) => {
         const failReason = xhr.responseJSON && xhr.responseJSON.reason || '';
@@ -138,29 +180,33 @@ export default class extends baseVw {
           text: app.polyglot.t('settings.advancedTab.server.blockDataCopy'),
           fragment: 'copyBlockData',
         }];
-        const message = Object.keys(data).map(coin => {
-          // If the block isn't available, a long string of zeroes is returned.
-          const hash = !/^0*$/.test(data[coin].bestHash) ? data[coin].bestHash :
-            app.polyglot.t('settings.advancedTab.server.blockHashUnknown');
-          const hashTxt = app.polyglot.t('settings.advancedTab.server.blockBestHash', { hash });
-          const height = data[coin].height ||
-            app.polyglot.t('settings.advancedTab.server.blockHeightUnknown');
-          const heightTxt = app.polyglot.t('settings.advancedTab.server.blockHeight', { height });
-          return {
-            htmlString: `<p><b>${coin}</b><br>${hashTxt}<br>${heightTxt}</p>`,
-            textString: `${coin}\n${hashTxt}\n${heightTxt}`,
-          };
-        });
+        const message = Object.keys(data)
+          .map(coin => {
+            // If the block isn't available, a long string of zeroes is returned.
+            const hash = !/^0*$/.test(data[coin].bestHash) ? data[coin].bestHash :
+              app.polyglot.t('settings.advancedTab.server.blockHashUnknown');
+            const hashTxt = app.polyglot.t('settings.advancedTab.server.blockBestHash', { hash });
+            const height = data[coin].height ||
+              app.polyglot.t('settings.advancedTab.server.blockHeightUnknown');
+            const heightTxt = app.polyglot.t('settings.advancedTab.server.blockHeight', { height });
+            return {
+              htmlString: `<p><b>${coin}</b><br>${hashTxt}<br>${heightTxt}</p>`,
+              textString: `${coin}\n${hashTxt}\n${heightTxt}`,
+            };
+          });
         const blockDataDialog = new Dialog({
           title: app.polyglot.t('settings.advancedTab.server.blockDataTitle'),
-          message: message.map(msg => msg.htmlString).join(''),
+          message: message.map(msg => msg.htmlString)
+            .join(''),
           messageClass: 'tx6',
           buttons,
           showCloseButton: true,
           removeOnClose: true,
-        }).render().open();
+        }).render()
+          .open();
         this.listenTo(blockDataDialog, 'click-copyBlockData', () => {
-          clipboard.writeText(message.map(msg => msg.textString).join('\n\n'));
+          clipboard.writeText(message.map(msg => msg.textString)
+            .join('\n\n'));
         });
       });
   }
@@ -223,7 +269,8 @@ export default class extends baseVw {
           });
         })
         .always(() => {
-          this.getCachedEl('.js-save').removeClass('processing');
+          this.getCachedEl('.js-save')
+            .removeClass('processing');
           setTimeout(() => statusMessage.remove(), 3000);
         });
     }
@@ -231,7 +278,8 @@ export default class extends baseVw {
     this.render();
 
     if (!this.localSettings.validationError && !this.settings.validationError) {
-      this.getCachedEl('.js-save').addClass('processing');
+      this.getCachedEl('.js-save')
+        .addClass('processing');
     } else {
       const $firstErr = this.$('.errorList:first');
 
@@ -282,23 +330,37 @@ export default class extends baseVw {
       if (this.walletSeed) this.walletSeed.remove();
       this.walletSeed = this.createChild(WalletSeed, {
         initialState: {
-          seed: this.mnemonic || '',
+          isEncrypted: this.isEncrypted || false,
           isFetching: this.walletSeedFetch && this.walletSeedFetch.state() === 'pending',
         },
       });
       this.listenTo(this.walletSeed, 'clickShowSeed', this.onClickShowSeed);
-      this.getCachedEl('.js-walletSeedContainer').append(this.walletSeed.render().el);
+      this.getCachedEl('.js-walletSeedContainer')
+        .append(this.walletSeed.render().el);
+
+      if (this.walletManager) this.walletManager.remove();
+      this.walletManager = this.createChild(WalletManager, {
+        initialState: {
+          isEncrypted: this.isEncrypted || null,
+          isFetching: this.walletSeedFetch && this.walletSeedFetch.state() === 'pending',
+        },
+      });
+      this.listenTo(this.walletManager, 'clickShowManager', this.onClickShowManager);
+      this.getCachedEl('.js-walletManagement')
+        .append(this.walletManager.render().el);
 
       if (this.smtpSettings) this.smtpSettings.remove();
       this.smtpSettings = this.createChild(SmtpSettings, {
         model: this.settings.get('smtpSettings'),
       });
-      this.getCachedEl('.js-smtpSettingsContainer').html(this.smtpSettings.render().el);
+      this.getCachedEl('.js-smtpSettingsContainer')
+        .html(this.smtpSettings.render().el);
 
       if (this.metricsStatus) this.metricsStatus.remove();
       if (bundled) {
         this.metricsStatus = this.createChild(MetricsStatus);
-        this.getCachedEl('.js-metricsStatusWrapper').append(this.metricsStatus.render().el);
+        this.getCachedEl('.js-metricsStatusWrapper')
+          .append(this.metricsStatus.render().el);
       }
     });
 

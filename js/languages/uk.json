@@ -160,6 +160,10 @@
     "connectMessaging": {
       "cancelLink": "скасувати",
       "connectAttemptMsg": "Підключення до %{serverName}. %{canceLink}"
+    },
+    "fetchSeed": {
+      "title": "Wallet seed words are encrypted",
+      "message": "Input seed password"
     }
   },
   "notifications": {
@@ -504,10 +508,10 @@
       "sectionName": "Загальні",
       "bitcoinUnit": "Одиниця Bitcoin",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Сатоші (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Збереження основних налаштувань...",
       "statusSaveComplete": "Основні налаштування збережено.",
@@ -640,7 +644,29 @@
           "warning1": "Ніколи не передавайте ваші секретні слова третім особам. Будь хто з цим списком може викрасти ваші кошти.",
           "warning2": "Ніколи не вказуйте це на вебсайті.",
           "warning3": "Не зберігайте цю інформацію в електронному вигляді.",
-          "warning4": "Не втрачайте seed-ключ, або ваші кошти будуть втрачені назавжди, якщо дані видаляються."
+          "warning4": "Не втрачайте seed-ключ, або ваші кошти будуть втрачені назавжди, якщо дані видаляються.",
+          "btnHideSeed": "Hide Seed",
+          "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet."
+        },
+        "lockOrUnlockWalletLbl": "Lock / Unlock Wallet Seed",
+        "lockOrUnlockWalletHelper": "You are able to encrypt or decrypt your seed words here.",
+        "unableToFetchSeedStatus": "There was an error fetching your seed status",
+        "walletManager": {
+          "btnShowManager": "Show Manager",
+          "btnLockWallet": "Lock wallet seed",
+          "btnUnlockWallet": "Unlock wallet seed",
+          "introLine": "Here you can encrypt or decrypt your seed words.",
+          "dialogSuccessTitle": "Wallet seed word status successfully changed.",
+          "dialogSuccessMsg": "Seed words are now %{isLocked}.",
+          "dialogFailTitle": "Manager was not able to change seed status",
+          "dialogFailMsg": "Wallet status should be %{shouldBe} but is still %{is}",
+          "encrypted": "encrypted",
+          "decrypted": "decrypted",
+          "shortPassword": "Your password is too short",
+          "passwordLenNotify": "The password length should be at least 8 characters long",
+          "passwordsNotEqual": "Passwords are not equal",
+          "enterPassword": "Enter password",
+          "repeatPassword": "Repeat password"
         }
       },
       "transaction": {
@@ -991,6 +1017,14 @@
       "bodyLine": "Trade %{coinCount} on Phore Marketplace for free",
       "btnCreateListing": "Створити список",
       "linkViewCryptoListings": "View crypto listings"
+    },
+    "walletPasswordPlaceholder": "Wallet password",
+    "walletLockButton": "Lock",
+    "walletUnlockButton": "Unlock",
+    "manage": {
+      "unlockFailedDialogTitle": "Unlock wallet failed.",
+      "stateChangeFailedUnknownReason": "Unknown reason.",
+      "lockFailedDialogTitle": "Lock wallet failed."
     }
   },
   "formats": {
@@ -1135,8 +1169,8 @@
     "nsfwNo": "Ні",
     "nsfwLabel": "Вміст для дорослих (NSFW, adult, 18+, та інше)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Загальні",
       "photos": "Зображення",
@@ -1389,6 +1423,11 @@
     "tosScreen": {
       "heading": "Умови використання",
       "tos": "Phore Marketplace - це мережа для торгівлі товарами та послугами безпосередньо між людьми - використовуючи криптографічні валюти - без будь-якої центральної організації, що контролює платформу. Це означає, що ви несете відповідальність за власну діяльність у мережі.\n\nКористувачі Phore Marketplace за замовчуванням не анонімні. Більшість повідомлень між сторонами зашифровані, але IP-адреси є загальнодоступними і можуть бути пов'язані з діяльністю в мережі. Зловмисні сторони можуть використовувати цю інформацію проти вас; Захист вашої конфіденційності - це ваша відповідальність.\n\nКористувачі Phore Marketplace повинні дотримуватися законів у своїй власній юридичній юрисдикції, а також їх совісті. Розробники Phore Marketplace не вважають та не несуть відповідальності за будь-яке використання платформи для незаконної діяльності.\n\nСпільнота розробників Phore Marketplace наполегливо працювала над створенням вільної платформи для торгівлі у світі. Але, як і будь-яке програмне забезпечення, помилки будуть виявлені та виправлені. Розробники не несуть відповідальності за будь-які грошові втрати, пов'язані з проблемами програмного забезпечення.\n\nВикористовуючи Phore Marketplace, ви несете відповідальність за власні дії в мережі Phore Marketplace."
+    },
+    "encryptScreen": {
+      "heading": "Secure your seed words",
+      "seedPassword": "Seed password",
+      "repeatPassword": "Repeat password"
     }
   },
   "pageControls": {
@@ -2166,10 +2205,10 @@
     "invalidtorlistings": "Ви повинні надати дійсну URL-адресу для пошуку в списках записів Tor."
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

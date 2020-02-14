@@ -160,6 +160,10 @@
     "connectMessaging": {
       "cancelLink": "إلغاء",
       "connectAttemptMsg": "يتصل على %{serverName}. %{cancelLink}"
+    },
+    "fetchSeed": {
+      "title": "Wallet seed words are encrypted",
+      "message": "Input seed password"
     }
   },
   "notifications": {
@@ -504,10 +508,10 @@
       "sectionName": "عام",
       "bitcoinUnit": "وحدة بيتكوين.",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "ساتوشي (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "جار حفظ الإعدادات العامة ...",
       "statusSaveComplete": "تم حفظ الإعدادات العامة.",
@@ -640,7 +644,29 @@
           "warning1": "لا تشارك أبداً كلمات الإستعادة. يمكن لأي شخص لديه هذه الكلمات سرقة أموالك.",
           "warning2": "لا تكتبه مطلقا على موقع ويب.",
           "warning3": "لا تخزنه بشكل رقمي أو إلكتروني.",
-          "warning4": "لا تفقد كلمات الإستعادة، أو سيتم فقدان أموالك للأبد إذا مُسحت بياناتك."
+          "warning4": "لا تفقد كلمات الإستعادة، أو سيتم فقدان أموالك للأبد إذا مُسحت بياناتك.",
+          "btnHideSeed": "Hide Seed",
+          "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet."
+        },
+        "lockOrUnlockWalletLbl": "Lock / Unlock Wallet Seed",
+        "lockOrUnlockWalletHelper": "You are able to encrypt or decrypt your seed words here.",
+        "unableToFetchSeedStatus": "There was an error fetching your seed status",
+        "walletManager": {
+          "btnShowManager": "Show Manager",
+          "btnLockWallet": "Lock wallet seed",
+          "btnUnlockWallet": "Unlock wallet seed",
+          "introLine": "Here you can encrypt or decrypt your seed words.",
+          "dialogSuccessTitle": "Wallet seed word status successfully changed.",
+          "dialogSuccessMsg": "Seed words are now %{isLocked}.",
+          "dialogFailTitle": "Manager was not able to change seed status",
+          "dialogFailMsg": "Wallet status should be %{shouldBe} but is still %{is}",
+          "encrypted": "encrypted",
+          "decrypted": "decrypted",
+          "shortPassword": "Your password is too short",
+          "passwordLenNotify": "The password length should be at least 8 characters long",
+          "passwordsNotEqual": "Passwords are not equal",
+          "enterPassword": "Enter password",
+          "repeatPassword": "Repeat password"
         }
       },
       "transaction": {
@@ -991,6 +1017,14 @@
       "bodyLine": "Trade %{coinCount} on Phore Marketplace for free",
       "btnCreateListing": "إنشاء قائمة",
       "linkViewCryptoListings": "View crypto listings"
+    },
+    "walletPasswordPlaceholder": "Wallet password",
+    "walletLockButton": "Lock",
+    "walletUnlockButton": "Unlock",
+    "manage": {
+      "unlockFailedDialogTitle": "Unlock wallet failed.",
+      "stateChangeFailedUnknownReason": "Unknown reason.",
+      "lockFailedDialogTitle": "Lock wallet failed."
     }
   },
   "formats": {
@@ -1135,8 +1169,8 @@
     "nsfwNo": "لا",
     "nsfwLabel": "محتوى للبالغين ( إباحي, كلمات نابية, 18+, إلخ .... )",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "عام",
       "photos": "الصور",
@@ -1389,6 +1423,11 @@
     "tosScreen": {
       "heading": "شروط الخدمة",
       "tos": "أوبن بازار هي شبكة لتجارة السلع والخدمات مباشرة بين الناس - باستخدام بيتكوين - من دون أي منظمة مركزية تتحكم بالمنصة. وهذا يعني أنك مسؤول عن النشاط الخاص بك على الشبكة.\n\n مستخدمين أوبن بازار ليسو مجهولون بالحالة الافتراضية, يتم تشفير معظم الاتصالات بين الأطراف، ولكن عناوين الشبكة عامة ويمكن ربطها بالنشاط على الشبكة. يمكن للأطراف الخبيثة استخدام هذه المعلومات ضدك ؛ وحماية خصوصيتك هي مسؤولية خاصة بك, يجب على مستخدمين أوبن بازار التقيد بالقوانين المعمول بها محليا وكذلك مراجعة ضمائرهم.  مطورين أوبن بازار لا تتغاضى - وغير مسؤولة عن - أي استخدام غير مشروع للمنصة. \n\nمجتمع مطورين أوبن بازار عمل بجد لتقديم منصة مجانية للتجارة إلى العالم. ولكن كما هو الحال مع أي برنامج، سيتم العثور على أخطاء.  المطورون ليسو مسؤولون عن أي خسارة نقدية مرتبطة بمشاكل في البرنامج. \n\nباستخدامك برنامج أوبن بازار أنت مسؤول عن النشاطات الخاصة بك على شبكة أوبن بازار."
+    },
+    "encryptScreen": {
+      "heading": "Secure your seed words",
+      "seedPassword": "Seed password",
+      "repeatPassword": "Repeat password"
     }
   },
   "pageControls": {
@@ -2166,10 +2205,10 @@
     "invalidtorlistings": "يجب وضع رابط بحث قوائم Tor صالح"
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "µBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

@@ -160,6 +160,10 @@
     "connectMessaging": {
       "cancelLink": "avbryt",
       "connectAttemptMsg": "Kobler til %{serverName}. %{cancelLink}"
+    },
+    "fetchSeed": {
+      "title": "Wallet seed words are encrypted",
+      "message": "Input seed password"
     }
   },
   "notifications": {
@@ -504,10 +508,10 @@
       "sectionName": "Generelt",
       "bitcoinUnit": "Bitcoin Enhet",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Satoshi (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Lagrer generelle innstillinger...",
       "statusSaveComplete": "Generelle innstillinger lagret.",
@@ -640,7 +644,29 @@
           "warning1": "Delaldri frøet med andre. Om noen har frøet kan de stjele pengene dine.",
           "warning2": "Aldri skriv den inn på en webside.",
           "warning3": "Ikke lagre den elektronisk.",
-          "warning4": "Ikke mist frøet, ellers er pengene borte permanent om dataene dine blir slettet."
+          "warning4": "Ikke mist frøet, ellers er pengene borte permanent om dataene dine blir slettet.",
+          "btnHideSeed": "Hide Seed",
+          "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet."
+        },
+        "lockOrUnlockWalletLbl": "Lock / Unlock Wallet Seed",
+        "lockOrUnlockWalletHelper": "You are able to encrypt or decrypt your seed words here.",
+        "unableToFetchSeedStatus": "There was an error fetching your seed status",
+        "walletManager": {
+          "btnShowManager": "Show Manager",
+          "btnLockWallet": "Lock wallet seed",
+          "btnUnlockWallet": "Unlock wallet seed",
+          "introLine": "Here you can encrypt or decrypt your seed words.",
+          "dialogSuccessTitle": "Wallet seed word status successfully changed.",
+          "dialogSuccessMsg": "Seed words are now %{isLocked}.",
+          "dialogFailTitle": "Manager was not able to change seed status",
+          "dialogFailMsg": "Wallet status should be %{shouldBe} but is still %{is}",
+          "encrypted": "encrypted",
+          "decrypted": "decrypted",
+          "shortPassword": "Your password is too short",
+          "passwordLenNotify": "The password length should be at least 8 characters long",
+          "passwordsNotEqual": "Passwords are not equal",
+          "enterPassword": "Enter password",
+          "repeatPassword": "Repeat password"
         }
       },
       "transaction": {
@@ -991,6 +1017,14 @@
       "bodyLine": "Trade %{coinCount} on Phore Marketplace for free",
       "btnCreateListing": "Opprett oppføring",
       "linkViewCryptoListings": "View crypto listings"
+    },
+    "walletPasswordPlaceholder": "Wallet password",
+    "walletLockButton": "Lock",
+    "walletUnlockButton": "Unlock",
+    "manage": {
+      "unlockFailedDialogTitle": "Unlock wallet failed.",
+      "stateChangeFailedUnknownReason": "Unknown reason.",
+      "lockFailedDialogTitle": "Lock wallet failed."
     }
   },
   "formats": {
@@ -1135,8 +1169,8 @@
     "nsfwNo": "Nei",
     "nsfwLabel": "Innhold for Voksne (NSFW, voksen, 18+, osv)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Generelt",
       "photos": "Bilder",
@@ -1389,6 +1423,11 @@
     "tosScreen": {
       "heading": "Vilkår for Bruk",
       "tos": "Phore Marketplace er et nettverk for å handle varer og tjenester direkte mellom mennesker - ved bruk av kryptovaluta - uten noen sentral organisasjon som styrer plattformen. Dette betyr at du er ansvarlig for din egen aktivitet på nettverket.\n\nPhore Marketplace brukere er ikke anonyme i utgangspunktet. Det meste av kommunikasjon mellom brukere er kryptert, men IP-adresser er offentlige og kan kobles til aktivitet på nettverket. Ondsinnede aktører kan bruke denne informasjonen mot deg; å beskytte ditt personvern er ditt eget ansvar.\n\nPhore Marketplace brukere må følge loven i deres eget juridiske område samt deres samvittighet. Phore Marketplace utviklerne støtter ikke - og er ikke ansvarlig for - bruk av plattformen for ulovlig aktivitet.\n\nFellesskapet av Phore Marketplace utviklere har arbeidet hardt for å levere en fri plattform for handel til verden. Men som med all programvare vil det forekomme feil. Utviklerne er ikke ansvarlig for pengemessig tap i forbindelse med feil i programvaren.\n\nVed å bruke Phore Marketplace er du ansvarlig for dine egne handlinger på Phore Marketplace nettverket."
+    },
+    "encryptScreen": {
+      "heading": "Secure your seed words",
+      "seedPassword": "Seed password",
+      "repeatPassword": "Repeat password"
     }
   },
   "pageControls": {
@@ -2166,10 +2205,10 @@
     "invalidtorlistings": "Du må oppgi en gyldig søke-URL for Tor oppføringer"
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

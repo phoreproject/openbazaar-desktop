@@ -6,6 +6,7 @@ export default class extends BaseVw {
     const opts = {
       initialState: {
         seed: '',
+        isEncrypted: '',
         isFetching: false,
         ...options.initialState || {},
       },
@@ -24,11 +25,17 @@ export default class extends BaseVw {
   events() {
     return {
       'click .js-showSeed': 'onClickShowSeed',
+      'click .js-hideSeed': 'onClickHideSeed',
     };
   }
 
   onClickShowSeed() {
     this.trigger('clickShowSeed');
+  }
+
+  onClickHideSeed() {
+    this.setState({ seed: '' });
+    this.trigger('clickHideSeed');
   }
 
   render() {

@@ -22,6 +22,7 @@ import ReceiveMoney from './ReceiveMoney';
 import TransactionsVw from './transactions/Transactions';
 import ReloadTransactions from './ReloadTransactions';
 import CryptoTicker from '../../components/CryptoTicker';
+import { openSimpleMessage } from '../../modals/SimpleMessage';
 
 export default class extends BaseModal {
   constructor(options = {}) {
@@ -209,6 +210,8 @@ export default class extends BaseModal {
     return {
       'click .js-createListing': 'onClickCreateListing',
       'click .js-viewCryptoListings': 'onClickViewCryptoListings',
+      'click .js-unlock': 'onUnlockClick',
+      'click .js-lock': 'onLockClick',
       ...super.events(),
     };
   }
@@ -244,6 +247,45 @@ export default class extends BaseModal {
 
   onClickViewCryptoListings() {
     recordEvent('Wallet_ViewCryptoListings');
+  }
+
+  onUnlockClick() {
+    const password = this.$('#walletPassword').val();
+    $.post({
+      url: app.getServerUrl('manage/unlockwallet'),
+      data: JSON.stringify({ password, omitDecryption: true }),
+      dataType: 'json',
+      contentType: 'application/json',
+    }).done((data) => {
+      if (data.isLocked === 'false') {
+        this.setState({ isLocked: false });
+      } else {
+        openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
+          app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
+      }
+    }).fail(xhr => {
+      openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
+        xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
+    });
+  }
+
+  onLockClick() {
+    $.post({
+      url: app.getServerUrl('manage/lockwallet'),
+      data: JSON.stringify({ omitDecryption: true }),
+      dataType: 'json',
+      contentType: 'application/json',
+    }).done((data) => {
+      if (data.isLocked === 'true') {
+        this.setState({ isLocked: true });
+      } else {
+        openSimpleMessage(app.polyglot.t('wallet.manage.lockFailedDialogTitle'),
+          app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
+      }
+    }).fail(xhr => {
+      openSimpleMessage(app.polyglot.t('wallet.manage.lockFailedDialogTitle'),
+        xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
+    });
   }
 
   /**
@@ -318,6 +360,10 @@ export default class extends BaseModal {
 
   get sendReceivNavState() {
     return { sendModeOn: this.sendModeOn };
+  }
+
+  get isLocked() {
+    return this._state.isLocked;
   }
 
   checkCoinType(coinType) {
@@ -564,6 +610,7 @@ export default class extends BaseModal {
               viewCryptoListingsUrl: this.viewCryptoListingsUrl,
             }),
             activeCoin: this.activeCoin,
+            isLocked: this.isLocked,
           }));
 
           super.render();

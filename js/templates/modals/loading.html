@@ -1,2 +1,6 @@
-<div class="flexCent"><%= ob.spinner({ className: 'spinnerLg' }) %></div>
+<div class="flexCent">
+  <% if(!ob.turnOffSpinner) { %>
+    <%= ob.spinner({ className: 'spinnerLg' }) %>
+  <% } %>
+</div>
 <div class="content js-content"></div>

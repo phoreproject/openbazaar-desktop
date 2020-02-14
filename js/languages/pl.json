@@ -160,6 +160,10 @@
     "connectMessaging": {
       "cancelLink": "anuluj",
       "connectAttemptMsg": "Łączę z %{serverName}. %{cancelLink}"
+    },
+    "fetchSeed": {
+      "title": "Wallet seed words are encrypted",
+      "message": "Input seed password"
     }
   },
   "notifications": {
@@ -504,10 +508,10 @@
       "sectionName": "Ogólne",
       "bitcoinUnit": "Jednostka Bitcoina",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Satoshi (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Zapisywanie ogólnych ustawień...",
       "statusSaveComplete": "Ogólne ustawienia zapisane.",
@@ -640,7 +644,29 @@
           "warning1": "Trzymaj seed w bezpiecznym miejscu, nigdy nikomu go nie pokazuj. Jeśli ktoś go zdobędzie, będzie mógł ukraść twoje środki.",
           "warning2": "Nigdy nie wpisuj go na żadnej stronie.",
           "warning3": "Nie przechowuj ich na komputerze.",
-          "warning4": "Jeśli zgubisz seeda, a dane programu zostaną usunięte,  bezpowrotnie stracisz dostęp do swoich środków."
+          "warning4": "Jeśli zgubisz seeda, a dane programu zostaną usunięte,  bezpowrotnie stracisz dostęp do swoich środków.",
+          "btnHideSeed": "Hide Seed",
+          "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet."
+        },
+        "lockOrUnlockWalletLbl": "Lock / Unlock Wallet Seed",
+        "lockOrUnlockWalletHelper": "You are able to encrypt or decrypt your seed words here.",
+        "unableToFetchSeedStatus": "There was an error fetching your seed status",
+        "walletManager": {
+          "btnShowManager": "Show Manager",
+          "btnLockWallet": "Lock wallet seed",
+          "btnUnlockWallet": "Unlock wallet seed",
+          "introLine": "Here you can encrypt or decrypt your seed words.",
+          "dialogSuccessTitle": "Wallet seed word status successfully changed.",
+          "dialogSuccessMsg": "Seed words are now %{isLocked}.",
+          "dialogFailTitle": "Manager was not able to change seed status",
+          "dialogFailMsg": "Wallet status should be %{shouldBe} but is still %{is}",
+          "encrypted": "encrypted",
+          "decrypted": "decrypted",
+          "shortPassword": "Your password is too short",
+          "passwordLenNotify": "The password length should be at least 8 characters long",
+          "passwordsNotEqual": "Passwords are not equal",
+          "enterPassword": "Enter password",
+          "repeatPassword": "Repeat password"
         }
       },
       "transaction": {
@@ -991,6 +1017,14 @@
       "bodyLine": "Wymieniaj %{coinCount} na Phore Marketplace za darmo",
       "btnCreateListing": "Wystaw przedmiot",
       "linkViewCryptoListings": "Zobacz aukcje kryptowalut"
+    },
+    "walletPasswordPlaceholder": "Wallet password",
+    "walletLockButton": "Lock",
+    "walletUnlockButton": "Unlock",
+    "manage": {
+      "unlockFailedDialogTitle": "Unlock wallet failed.",
+      "stateChangeFailedUnknownReason": "Unknown reason.",
+      "lockFailedDialogTitle": "Lock wallet failed."
     }
   },
   "formats": {
@@ -1305,7 +1339,10 @@
       "tooManyPhotosBody": "Nie udało się przesłać niektórych lub wszystkich zdjęć, ponieważ przekroczono by maksymalną dozwoloną ilość.",
       "unableToLoadImages": "Wystąpił problem z ładowaniem zdjęcia. |||| Wystąpił problem z ładowaniem zdjęć.",
       "uploadImageErrorTitle": "Podczas przesyłania zdjęcia wystąpił błąd. |||| Podczas przesyłania zdjęć wystąpił błąd."
-    }
+    },
+    "format": "Format",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}"
   },
   "search": {
     "title": "Odkrywaj",
@@ -1386,6 +1423,11 @@
     "tosScreen": {
       "heading": "Warunki użytkowania",
       "tos": "Phore Marketplace jest siecią pozwalającą handlowac towarami i serwisami bezpośrednio między ludźmi - używając kryptowalut - bez centralnej organizacji kontrolującej platformę. To znaczy, że jesteś odpowiedzialny za swoją aktywność w sieci.\n\n Użytkownicy Phore Marketplace nie są domyślnie anonimowi. Większość komunikacji pomiędzy stronami transakcji jest zaszyfrowana, ale adres IP jest publiczny i może być połączony z aktywnością w sieci. Złośliwy atakujący może użyć tych informacji przeciwko Tobie; chronienie prywatności jest Twoją odpowiedzialnością.\n\nUżytkownicy Phore Marketplace muszą przestrzegać prawa w swojej lokalnej jurysdykcji. Deweloperzy Phore nie zgadzają się - i nie są odpowiedzialni za - jakiekolwiek użycie platformy dla nielegalnej aktywności.\n\n Społeczność deweloperów Phore Marketplace ciężko pracowałą, aby zapewnić bezpłatną platformę wymiany handlowej na cały świat. Ale tak jak w przypadku każdego oprogramowania, błędy zostaną znalezione. Deweloperzy nie sa odpowiedzialni za straty pieniężne związane z problemami z oprogramowaniem.\n\nUżywając Phore Marketplace jesteś odpowiedzialny za swoje akcje w sieci Phore Marketplace."
+    },
+    "encryptScreen": {
+      "heading": "Secure your seed words",
+      "seedPassword": "Seed password",
+      "repeatPassword": "Repeat password"
     }
   },
   "pageControls": {
@@ -2163,10 +2205,10 @@
     "invalidtorlistings": "Musisz wprowadzić poprawny adres TOR wyszukiwania przedmiotu"
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

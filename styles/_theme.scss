@@ -1129,7 +1129,7 @@ border-radius: 0 0 0.5rem 0.5rem;
 
 
 
-.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-btnSendNav.active, .js-btnReceiveNav.active, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit {
+.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-btnSendNav.active, .js-btnReceiveNav.active, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit .js-lock .js-unlock {
   border: none;
   background: #00d188;
   border-radius: 4rem;
@@ -2274,5 +2274,14 @@ div.headline {
 .js-coinNavContainer {
   .coinNav {
     border:0;
+  }
+}
+
+
+.unlockSeed {
+  width:500px;
+  text-align:center;
+  .spinner {
+    display:none!important;
   }
 }
