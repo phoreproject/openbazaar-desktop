@@ -10,7 +10,7 @@
   <% if (ob.vendor) { %>
   <div class="contentBox clrP clrSh3 clrBr clrT">
     <div class="padSm gutterHSm overflowAuto margRSm flexVCent">
-      <a class="clrBr2 clrSh1 discTn flexNoShrink" style="<%= ob.getAvatarBgImage(ob.vendor.avatar) %>"></a>
+      <a class="clrBr2 clrSh1 discTn flexNoShrink" style="<%= ob.getAvatarBgImage(ob.vendor.avatarHashes) %>"></a>
       <p class="txUnl tx3 clamp"><%= ob.vendor.name %></p>
       <a class="link flexNoShrink tx6 js-goToListing"><% print(ob.polyT('purchase.returnToListing')) %></a>
     </div>
@@ -76,7 +76,11 @@
                 <div class="flexVCent gutterHLg">
                   <label for="cryptoAmount" class="clrT txB required"><%= ob.polyT('purchase.cryptoAmount') %></label>
                   <div class="inputSelect">
-                    <input type="text" class="clrBr clrP clrSh2" name="quantity" id="cryptoAmount" value="<%= ob.quantity %>" data-var-type="number" placeholder="0.0000" size="8">
+                    <% let placeholder = "0.0000";
+                      if (ob.displayCurrency === ob.listing.metadata.coinType) {
+                        placeholder += " " + ob.displayCurrency;
+                      } %>
+                      <input type="text" class="clrBr clrP clrSh2" name="quantity" id="cryptoAmount" value="<%= ob.quantity %>" data-var-type="number" placeholder="<%= placeholder %>" size="16">
                     <% if (ob.displayCurrency !== ob.listing.metadata.coinType) { %>
                       <select id="cryptoAmountCurrency" class="clrBr clrP nestInputRight">
                         <% [ob.listing.metadata.coinType, ob.displayCurrency].forEach((cur) => {%>
@@ -94,7 +98,10 @@
                   priceAmount: totalPrice,
                   priceCurrencyCode: pricingCurrency,
                   displayCurrency: ob.displayCurrency,
+                  acceptedCurrencies: ob.listing.metadata.acceptedCurrencies,
+                  viewType: 'pair',
                   priceModifier: ob.listing.metadata.priceModifier,
+                  format: ob.listing.metadata.format,
                 })
               %>
             </div>
@@ -141,11 +148,20 @@
         <% } %>
         <section class="contentBox padMd clrP clrBr clrSh3">
           <div class="flexColRows gutterVSm">
+            <div>
+              <div class="js-paymentCoin-errors"></div>
+              <h2 class="h4 flexExpand required"><%= ob.polyT('purchase.cryptoCurrencyTitle') %></h2>
+              <div class="js-cryptoCurSelectorWrapper"></div>
+            </div>
+          </div>
+        </section>
+        <section class="contentBox padMd clrP clrBr clrSh3">
+          <div class="flexColRows gutterVSm">
             <div class="flexVCentClearMarg">
               <h2 class="h4 flexExpand required"><%= ob.polyT('purchase.paymentTypeTitle') %></h2>
               <% if (ob.showModerators) { %>
-                <input type="checkbox" id="purchaseVerifiedOnly" class="js-purchaseVerifiedOnly"<% if(ob.showOnlyVerified) print('checked') %>>
-                <label class="tx5b <% if (ob.unverifedSelected) print('disabled') %>" for="purchaseVerifiedOnly"><%= ob.polyT('settings.storeTab.verifiedOnly') %></label>
+                <input type="checkbox" id="purchaseVerifiedOnly" class="js-purchaseVerifiedOnly"<% if (ob.showVerifiedOnly) print('checked') %>>
+                <label class="tx5b" for="purchaseVerifiedOnly"><%= ob.polyT('settings.storeTab.verifiedOnly') %></label>
               <% } %>
             </div>
             <% if (ob.showModerators && !ob.noValidModerators) { %>
@@ -158,28 +174,7 @@
               <% } %>
               <hr class="clrBr row">
             <% } %>
-            <% // duplicate the moderator card html to make sure everything aligns %>
-            <div class="moderatorsList">
-              <div class="moderatorsWrapper fauxModeratorsWrapper">
-                <div class="moderatorCard clrBrInvis js-directPayment">
-                  <div class="moderatorCardInner">
-                    <div class="flexRow gutterH moderatorCardContent">
-                      <div class="flexNoShrink">
-                        <div class="btnRadio">
-                          <div tabindex="0" class="fauxRadioBtn <% if (!ob.moderated) print('active') %>"></div>
-                        </div>
-                      </div>
-                      <div class="moderatorCardMiddle">
-                        <div class="flex rowSm">
-                          <b><%= ob.polyT('purchase.directPayment') %></b>
-                        </div>
-                        <div class="clrT2"><%= ob.polyT('purchase.directPaymentDetails') %></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="js-directPaymentWrapper moderatorsList"></div>
           </div>
         </section>
       <section class="contentBox padMd clrP clrBr clrSh3">
@@ -208,6 +203,7 @@
             </div>
           </div>
           <div class="col6">
+            <% if (ob.hasCoupons) { %>
             <div class="rowTn">
               <label for="couponCode" class="tx5">
                 <%= ob.polyT('purchase.couponCode') %>
@@ -220,13 +216,14 @@
                   id="couponCode"
                   name="couponCode"
                   placeholder="<%= ob.polyT('purchase.couponCodePlaceholder') %>">
-              <button class="btn clrP clrBr clrSh2 js-applyCoupon">
+              <button class="btn clrP clrBr clrSh2 flexNoShrink js-applyCoupon">
                 <%= ob.polyT('purchase.applyCode') %>
               </button>
             </div>
             <div class="js-couponsWrapper">
               <% // coupons are inserted here after they are added by the user. %>
             </div>
+            <% } %>
           </div>
         </div>
         <hr class="clrBr row">

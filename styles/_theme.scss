@@ -411,6 +411,14 @@ input[type=range][class~="clrS"] {
 }
 
 .wallet {
+  .coinNav {
+    .coinNavItem {
+      &.active {
+        outline-color: black;
+      }
+    }
+  }
+
   .walletTransactions {
     .statusIconCol {
       .ion-alert-circled {
@@ -1121,7 +1129,7 @@ border-radius: 0 0 0.5rem 0.5rem;
 
 
 
-.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit {
+.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-btnSendNav.active, .js-btnReceiveNav.active, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit {
   border: none;
   background: #00d188;
   border-radius: 4rem;
@@ -1287,12 +1295,11 @@ input.js-addressBar:focus {
   opacity:0.95;
 }
 
-.wallet .btnSendMoney, .wallet .btnReceiveMoney {
+.wallet .js-btnSendNav, .wallet .js-btnReceiveNav {
   padding-left:0.25rem;
   padding-right:0.25rem;
   display:inline-flex;
   color:white;
-  opacity:0.5;
   font-size:2.5rem;
   font-weight:300;
   margin-right:10rem;
@@ -1303,25 +1310,25 @@ input.js-addressBar:focus {
   }
 }
 
-.wallet .btnSendMoney {
+.wallet .js-btnSendNav {
   margin-left:6rem;
 }
 
-.wallet.receiveModeOn .btnReceiveMoney {
+.wallet.receiveModeOn .js-btnReceiveNav {
   color:black;
   border-bottom:2px solid black;
   opacity:1;
 
 }
 
-.wallet:not(.receiveModeOn) .btnSendMoney {
+.wallet:not(.receiveModeOn) .js-btnSendNav {
   color:black;
   border-bottom:2px solid black;
   opacity:1;
 
 }
 
-.wallet.receiveModeOn .btnReceiveMoney {
+.wallet.receiveModeOn .js-btnReceiveNav {
   display:inline-flex;
 }
 
@@ -1450,18 +1457,18 @@ input.js-addressBar:focus {
 
 
 
-.wallet.receiveModeOn .btnReceiveMoney {
+.wallet.receiveModeOn .js-btnReceiveNav {
   color:white;
   border-bottom: 2px solid #00d188;
 
 }
 
-.wallet:not(.receiveModeOn) .btnSendMoney {
+.wallet:not(.receiveModeOn) .js-btnSendNav {
   color:white;
   border-bottom: 2px solid #5ece8d;
 }
 
-.wallet.receiveModeOn .btnReceiveMoney {
+.wallet.receiveModeOn .js-btnReceiveNav {
   display:inline-flex;
 }
 
@@ -1507,40 +1514,58 @@ input.js-addressBar:focus {
 .current-price, .current-price strong {
   font-size: 1.5rem;
 }
+.js-btnSendNav, .js-btnReceiveNav {
+  position:relative;
+  margin:0!important;
+  border:0!important;
+  box-shadow: inset 0 0 0 2px #333b46;
+  width:50%!important;
+  &.active {
+    background-color:rgba(255, 255, 255, 0.03)!important;
+    box-shadow: inset 0 0 0 2px #333b46;
+    color:white!important;
+  }
+}
 
-
-.btnSendMoney:before {
-  content:'';
-  width:55px;
-  height:55px;
-  background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='55.01' height='55' viewBox='0 0 55.01 55'><path fill='%23FFF' d='M54.62,6.45,35.88,52.08A4.66,4.66,0,0,1,31.58,55h-.17a4.7,4.7,0,0,1-4.3-3.15L21.78,36.2a1.35,1.35,0,0,1,.29-1.38L38.8,15.1A1.43,1.43,0,0,1,41,16.94L24.76,36.08l5,14.85a1.78,1.78,0,0,0,1.66,1.21A1.81,1.81,0,0,0,33.19,51L52,5.36a1.64,1.64,0,0,0-.41-1.95A1.81,1.81,0,0,0,49.64,3L4,21.75a1.81,1.81,0,0,0-1.14,1.72,1.76,1.76,0,0,0,1.2,1.66l15.59,5.34a1.45,1.45,0,1,1-.92,2.75L3.15,27.89A4.65,4.65,0,0,1,0,23.59a4.6,4.6,0,0,1,2.93-4.47L48.55.37a4.59,4.59,0,0,1,5.1,1A4.49,4.49,0,0,1,54.62,6.45Z'/></svg>") center center no-repeat;
-  position: absolute;
-  left: -60px;
-    top: -14px;
+.js-btnSendNav {
+  &:before {
+    content:'';
+    width:55px;
+    height:55px;
+    background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='55.01' height='55' viewBox='0 0 55.01 55'><path fill='%23FFF' d='M54.62,6.45,35.88,52.08A4.66,4.66,0,0,1,31.58,55h-.17a4.7,4.7,0,0,1-4.3-3.15L21.78,36.2a1.35,1.35,0,0,1,.29-1.38L38.8,15.1A1.43,1.43,0,0,1,41,16.94L24.76,36.08l5,14.85a1.78,1.78,0,0,0,1.66,1.21A1.81,1.81,0,0,0,33.19,51L52,5.36a1.64,1.64,0,0,0-.41-1.95A1.81,1.81,0,0,0,49.64,3L4,21.75a1.81,1.81,0,0,0-1.14,1.72,1.76,1.76,0,0,0,1.2,1.66l15.59,5.34a1.45,1.45,0,1,1-.92,2.75L3.15,27.89A4.65,4.65,0,0,1,0,23.59a4.6,4.6,0,0,1,2.93-4.47L48.55.37a4.59,4.59,0,0,1,5.1,1A4.49,4.49,0,0,1,54.62,6.45Z'/></svg>") center center no-repeat;
+    position: absolute;
+    left: calc(50% - 45px);
     opacity: 0.5;
-    background-size: 80%;
+    background-size: 60%;
+  }
+  padding-left:55px!important;
+  border-radius:40px 0 0 40px!important;
 }
 
 
-.btnReceiveMoney:before {
-  content:'';
-  width:55px;
-  height:55px;
-  background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='49.5' height='49.5' viewBox='0 0 49.5 49.5'><path fill='%23FFF' d='M9.28,46.41H3.09V40.22a1.55,1.55,0,1,0-3.09,0V48A1.54,1.54,0,0,0,1.55,49.5H9.28a1.55,1.55,0,1,0,0-3.09ZM1.55,10.83A1.54,1.54,0,0,0,3.09,9.28V3.09H9.28A1.55,1.55,0,1,0,9.28,0H1.55A1.54,1.54,0,0,0,0,1.55V9.28A1.54,1.54,0,0,0,1.55,10.83ZM40.22,38.67V10.83a1.54,1.54,0,0,0-1.55-1.55H10.83a1.54,1.54,0,0,0-1.55,1.55V38.67a1.54,1.54,0,0,0,1.55,1.55H38.67A1.54,1.54,0,0,0,40.22,38.67Zm-3.09-1.55H12.38V12.38H37.13ZM48,38.67a1.54,1.54,0,0,0-1.54,1.55v6.19H40.22a1.55,1.55,0,1,0,0,3.09H48A1.54,1.54,0,0,0,49.5,48V40.22A1.54,1.54,0,0,0,48,38.67ZM48,0H40.22a1.55,1.55,0,1,0,0,3.09h6.19V9.28a1.55,1.55,0,1,0,3.09,0V1.55A1.54,1.54,0,0,0,48,0Z' transform='translate(0)'/></svg>") center center no-repeat;
-  position: absolute;
-  left: -60px;
-  top: -14px;
-  opacity: 0.5;
-  background-size: 80%;
+.js-btnReceiveNav {
+  &:before {
+    content:'';
+    width:55px;
+    height:55px;
+    background:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='49.5' height='49.5' viewBox='0 0 49.5 49.5'><path fill='%23FFF' d='M9.28,46.41H3.09V40.22a1.55,1.55,0,1,0-3.09,0V48A1.54,1.54,0,0,0,1.55,49.5H9.28a1.55,1.55,0,1,0,0-3.09ZM1.55,10.83A1.54,1.54,0,0,0,3.09,9.28V3.09H9.28A1.55,1.55,0,1,0,9.28,0H1.55A1.54,1.54,0,0,0,0,1.55V9.28A1.54,1.54,0,0,0,1.55,10.83ZM40.22,38.67V10.83a1.54,1.54,0,0,0-1.55-1.55H10.83a1.54,1.54,0,0,0-1.55,1.55V38.67a1.54,1.54,0,0,0,1.55,1.55H38.67A1.54,1.54,0,0,0,40.22,38.67Zm-3.09-1.55H12.38V12.38H37.13ZM48,38.67a1.54,1.54,0,0,0-1.54,1.55v6.19H40.22a1.55,1.55,0,1,0,0,3.09H48A1.54,1.54,0,0,0,49.5,48V40.22A1.54,1.54,0,0,0,48,38.67ZM48,0H40.22a1.55,1.55,0,1,0,0,3.09h6.19V9.28a1.55,1.55,0,1,0,3.09,0V1.55A1.54,1.54,0,0,0,48,0Z' transform='translate(0)'/></svg>") center center no-repeat;
+    position: absolute;
+    left: calc(50% - 55px);
+    opacity: 0.5;
+    background-size: 60%;
+  }
+  padding-left:55px!important;
+  border-radius:0 40px 40px 0!important;
+  // margin-left:-2px!important;
 }
 
 
 
-.wallet:not(.receiveModeOn) .btnSendMoney:before {
+.wallet:not(.receiveModeOn) .js-btnSendNav:before {
   opacity:1;
 }
 
-.wallet.receiveModeOn .btnReceiveMoney:before {
+.wallet.receiveModeOn .js-btnReceiveNav:before {
   opacity:1;
 }
 
@@ -2152,7 +2177,7 @@ a.listing-title-catalog {
 
 .search .searchBar .searchInput {
 
-   
+
 }
 
 .search .searchBar .searchBtn.js-searchBtn {
@@ -2182,7 +2207,7 @@ a.listing-title-catalog {
   display:none;
 }
 
-.searchWrapper:before { 
+.searchWrapper:before {
   content:none;
 
 }
@@ -2215,4 +2240,39 @@ div.headline {
 .js-filterWrapper .tx5b {
   font-size: 2rem;
   font-weight: normal!important;
+}
+
+
+.wallet .coinStats {
+  border:0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2rem;
+  .cryptoIcon {
+    display:none;
+  }
+}
+
+.js-cryptoListingsTeaser {
+  .cryptoIcon, .cryptoTradingPairXL {
+    display:none;
+  }
+}
+
+.jsModalClose, .walletIconWrap {
+  // display:none
+}
+
+.modal.wallet {
+  .topControls {
+    // display:none;
+    .clrSh3 {
+      display:none;
+    }
+  }
+}
+
+.js-coinNavContainer {
+  .coinNav {
+    border:0;
+  }
 }

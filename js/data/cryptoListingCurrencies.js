@@ -1,4 +1,7 @@
+import $ from 'jquery';
 import _ from 'underscore';
+import fs from 'fs';
+import workerize from 'workerize';
 import app from '../app';
 import fiatCurrencies from '../data/currencies';
 import {
@@ -11,82 +14,35 @@ import {
 // The base list could be updated from release to release. If there are additional crypto
 // currencies being returned by the exchange rate api, they will be merged into a combined
 // list the UI will use.
-const baseCurrencies = [ // limit trading pairs to BTC and PHR
-  'BTC',
-  'PHR',
-];
 
-// const baseCurrencies = [
-//   'BTC',
-//   'ADA',
-//   'ARK',
-//   'BCH',
-//   'BCN',
-//   'BTCD',
-//   'BTG',
-//   'BTS',
-//   'DASH',
-//   'DCR',
-//   'DGB',
-//   'DOGE',
-//   'ETC',
-//   'ETH',
-//   'FCT',
-//   'HSR',
-//   'KMD',
-//   'LSK',
-//   'LTC',
-//   'MIOTA',
-//   'MONA',
-//   'NANO',
-//   'NEBL',
-//   'NEO',
-//   'NXS',
-//   'NXT',
-//   'PHR',
-//   'PIVX',
-//   'QTUM',
-//   'RDD',
-//   'SC',
-//   'STEEM',
-//   'STRAT',
-//   'SYS',
-//   'VEN',
-//   'WAVES',
-//   'XDN',
-//   'XEM',
-//   'XLM',
-//   'XMR',
-//   'XRP',
-//   'XVC',
-//   'XVG',
-//   'ZCL',
-//   'ZEC',
-// ];
 
+const allowedCrypto = ['PHR', 'BTC', 'ETH', 'BNB', 'DOGE', 'RDD'];
 
 // Certain currencies are not in our fiat list, but they're also not crypto currencies.
 // They mainly conisist of obscure fiat currencies or precious metals.
-// const excludes = [
-//   'BYN',
-//   'CLF',
-//   'CNH',
-//   'CUC',
-//   'GGP',
-//   'JEP',
-//   'IMP',
-//   'XAG',
-//   'XAU',
-//   'XDR',
-//   'XPD',
-//   'XPT',
-// ];
+const excludes = [
+  'BYN',
+  'CLF',
+  'CNH',
+  'CUC',
+  'GGP',
+  'JEP',
+  'IMP',
+  'XAG',
+  'XAU',
+  'XDR',
+  'XPD',
+  'XPT',
+];
 
 let fiatCurrencyCodes;
 let currencies;
 let exchangeRateCurs = [];
 let currenciesNeedRefresh = true;
 let exchangeRateChangeBound = false;
+let currenciesSortedByNameDeferred = null;
+
+export const defaultQuantityBaseUnit = 100000000;
 
 export function getCurrencies() {
   if (!exchangeRateChangeBound) {
@@ -100,8 +56,10 @@ export function getCurrencies() {
           )
         ) {
           currenciesNeedRefresh = true;
+          currenciesSortedByNameDeferred = null;
         }
       });
+
     exchangeRateChangeBound = true;
   }
 
@@ -112,18 +70,18 @@ export function getCurrencies() {
   }
 
   const curs = new Set();
-  baseCurrencies.forEach(cur => curs.add(cur));
   const _exchangeRateCurs = Object.keys(getExchangeRates());
+
   exchangeRateCurs = _exchangeRateCurs.sort();
-  // TODO limit available currencies to PHR and BTC
-  // _exchangeRateCurs
-  //   .forEach(cur => {
-  //     // If it's not a fiat currency code (base on our hard-code list),
-  //     // or on our exclude list, we'll assume it's a crypto currency.
-  //     if (!fiatCurrencyCodes.includes(cur) && !excludes.includes(cur)) {
-  //       curs.add(cur);
-  //     }
-  //   });
+  _exchangeRateCurs
+    .forEach(cur => {
+      // If it's not a fiat currency code (base on our hard-code list),
+      // or on our exclude list, we'll assume it's a crypto currency.
+      if (!fiatCurrencyCodes.includes(cur) && !excludes.includes(cur)
+          && allowedCrypto.includes(cur)) {
+        curs.add(cur);
+      }
+    });
 
   // We'll merge in any previous currencies we had, so the UI lists don't potentially have
   // currencies that are there at one point and then gone later. If the exchange rate for
@@ -144,31 +102,88 @@ export function getCurrenciesSortedByCode() {
     return currenciesSortedByCode;
   }
 
-  currenciesSortedByCode = getCurrencies().sort();
+  currenciesSortedByCode = getCurrencies()
+    .sort();
 
   return currenciesSortedByCode;
 }
 
-let currenciesSortedByName;
-const defaultLang = app && app.localSettings &&
-  app.localSettings.standardizedTranslatedLang() || 'en-US';
+const WORKER_PATH = `${__dirname}/../utils/workers/cryptoListingCursWorker.js`;
+let getWorkerDeferred;
 
-export function getCurrenciesSortedByName(lang = defaultLang) {
-  if (currenciesSortedByName && !currenciesNeedRefresh) {
-    return currenciesSortedByName;
+function getWorker() {
+  if (!getWorkerDeferred) {
+    getWorkerDeferred = $.Deferred();
+
+    fs.readFile(WORKER_PATH, 'utf8', (err, data) => {
+      if (err) {
+        getWorkerDeferred.reject(err);
+        return;
+      }
+
+      getWorkerDeferred.resolve(workerize(data));
+    });
   }
 
-  currenciesSortedByName = getCurrencies().sort((a, b) => {
-    const aTranslationKey = `cryptoCurrencies.${a}`;
-    const bTranslationKey = `cryptoCurrencies.${b}`;
-    const aName = app.polyglot.t(aTranslationKey) === aTranslationKey ?
-      a : app.polyglot.t(aTranslationKey);
-    const bName = app.polyglot.t(bTranslationKey) === bTranslationKey ?
-      b : app.polyglot.t(bTranslationKey);
-    return aName.localeCompare(bName, lang);
-  });
-
-  return currenciesSortedByName;
+  return getWorkerDeferred.promise();
 }
 
-export const defaultQuantityBaseUnit = 100000000;
+let phrases = null;
+
+function getPhrases() {
+  if (phrases &&
+    phrases.locale === app.polyglot.currentLocale) {
+    return phrases.data;
+  }
+
+  phrases = {
+    locale: app.polyglot.currentLocale,
+    data: Object.keys(app.polyglot.phrases)
+      .filter(key => key.startsWith('cryptoCurrencies.'))
+      .reduce((obj, key) => {
+        obj[key] = app.polyglot.phrases[key];
+        return obj;
+      }, {}),
+  };
+
+  return phrases.data;
+}
+
+let langChangeBound = false;
+
+function bindLangChange() {
+  if (langChangeBound) return;
+
+  app.localSettings.on('change:language', () => {
+    currenciesSortedByNameDeferred = null;
+  });
+
+  langChangeBound = true;
+}
+
+// For some reason, if the promise returned by this function is already resolved, the
+// done() handler won't fire, but the then() handler will. So for now, please use then().
+// TODO: investigate why the done() handler isn't firing if the promise is already resolved.
+export function getCurrenciesSortedByName() {
+  if (currenciesSortedByNameDeferred) {
+    return currenciesSortedByNameDeferred.promise();
+  }
+
+  bindLangChange();
+
+  const deferred = currenciesSortedByNameDeferred = $.Deferred();
+
+  getWorker()
+    .done(worker => (
+      worker.getCurrenciesSortedByName(
+        getCurrencies(),
+        getPhrases(),
+        app.localSettings.standardizedTranslatedLang()
+      )
+        .then(data => deferred.resolve(data))
+        .catch(e => deferred.reject(e))
+    ))
+    .fail(e => deferred.reject(e));
+
+  return deferred.promise();
+}

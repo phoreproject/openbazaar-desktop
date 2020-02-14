@@ -77,9 +77,13 @@ export default class extends BaseOrder {
     return false;
   }
 
-  convertCryptoQuantity(contract = {}) {
+  convertQuantity(contract = {}) {
     contract.buyerOrder.items.forEach((item, index) => {
       const listing = contract.vendorListings[index];
+
+      // standardize the quantity field
+      item.quantity = item.quantity === 0 ?
+        item.quantity64 : item.quantity;
 
       if (listing.metadata.contractType === 'CRYPTOCURRENCY') {
         const coinDivisibility = listing.metadata
@@ -93,6 +97,8 @@ export default class extends BaseOrder {
   }
 
   parse(response = {}) {
+    const paymentCoin = BaseOrder.getPaymentCoin(response);
+
     // If only one contract has arrived, we'll fire an event when the other one comes
     if (!this._otherContractEventBound &&
       !this.vendorProcessingError &&
@@ -116,9 +122,9 @@ export default class extends BaseOrder {
       // convert price fields
       response.buyerContract.buyerOrder.payment.amount =
         integerToDecimal(response.buyerContract.buyerOrder.payment.amount,
-          app.serverConfig.cryptoCurrency);
+          paymentCoin);
 
-      response.buyerContract = this.convertCryptoQuantity(response.buyerContract);
+      response.buyerContract = this.convertQuantity(response.buyerContract);
     }
 
     if (response.vendorContract) {
@@ -130,7 +136,9 @@ export default class extends BaseOrder {
       // convert price fields
       response.vendorContract.buyerOrder.payment.amount =
         integerToDecimal(response.vendorContract.buyerOrder.payment.amount,
-          app.serverConfig.cryptoCurrency);
+          paymentCoin);
+
+      response.vendorContract = this.convertQuantity(response.vendorContract);
     }
 
     if (response.resolution) {
@@ -143,13 +151,13 @@ export default class extends BaseOrder {
 
       response.resolution.payout.buyerOutput.amount =
         integerToDecimal(response.resolution.payout.buyerOutput.amount || 0,
-          app.serverConfig.cryptoCurrency);
+          paymentCoin);
       response.resolution.payout.vendorOutput.amount =
         integerToDecimal(response.resolution.payout.vendorOutput.amount || 0,
-          app.serverConfig.cryptoCurrency);
+          paymentCoin);
       response.resolution.payout.moderatorOutput.amount =
         integerToDecimal(response.resolution.payout.moderatorOutput.amount || 0,
-          app.serverConfig.cryptoCurrency);
+          paymentCoin);
     }
 
     return response;

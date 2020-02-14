@@ -41,12 +41,21 @@ export default class extends BaseModel {
     if (parsedResponse.contractType === 'CRYPTOCURRENCY') {
       const modifier = parsedResponse.price.modifier || 0;
 
-      parsedResponse.price = {
-        ...parsedResponse.price,
-        amount: 1 + (modifier / 100),
-        currencyCode: parsedResponse.coinType,
-        modifier,
-      };
+      if (parsedResponse.format === 'MARKET_PRICE') {
+        parsedResponse.price = {
+          ...parsedResponse.price,
+          amount: 1 + (modifier / 100),
+          currencyCode: parsedResponse.coinType,
+          modifier,
+        };
+      } else {
+        parsedResponse.price = {
+          ...parsedResponse.price,
+          amount: parsedResponse.price.amount / parsedResponse.coinDivisibility,
+          currencyCode: parsedResponse.coinType,
+          modifier: 0,
+        };
+      }
 
       if (parsedResponse.totalInventoryQuantity >= 0 &&
         parsedResponse.coinDivisibility > 0) {

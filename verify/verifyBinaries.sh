@@ -2,7 +2,7 @@
 
 ### This utility is for users to verify that binaries they downloaded are the signed, correct versions
 
-BASEURL="https://phore.io/releases/"
+BASEURL="https://github.com/phoreproject/openbazaar-desktop/releases/"
 TMPFILE="hashes.tmp"
 TMPFOLDER="temp"
 
@@ -43,7 +43,7 @@ elif [[ "$platform" == 'linux' ]]; then
     hashcommand="sha256sum"
 fi
 
-GITHUBRELEASEURL="https://github.com/phoreproject/openbazaar-desktop/releases/download/v$VERSION/"
+GITHUBRELEASEURL="https://github.com/OpenBazaar/openbazaar-desktop/releases/download/v$VERSION/"
 SIGNATUREFILENAME="SHA256SUMS.${VERSION}.asc"
 
 # Retrieve the signature file
@@ -61,7 +61,7 @@ if [ $RET -ne 0 ]; then
       echo "Bad signature."
    elif [ $RET -eq 2 ]; then
       #or if a gpg error has occurred
-      echo "gpg error. Do you have the Phore signing key installed?"
+      echo "gpg error. Do you have the OpenBazaar signing key installed?"
    fi
 
    echo "gpg output:"

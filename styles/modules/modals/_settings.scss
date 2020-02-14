@@ -120,7 +120,14 @@
        min-height: 175px;
        border-width: 1px;
        border-style: solid;
+       align-items: center;
+       justify-content: center;
      }
+
+    .bulkCoinUpdateBtn .confirmBox {
+      left: 50%;
+      margin-top: 5px;
+    }
   }
 
   .settingsAdvanced {

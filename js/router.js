@@ -6,6 +6,7 @@ import { getGuid, isMultihash } from './utils';
 import { getPageContainer } from './utils/selectors';
 import { isPromise } from './utils/object';
 import { startAjaxEvent, endAjaxEvent, recordEvent } from './utils/metrics';
+import { getCurrentConnection } from './utils/serverConnect';
 import { isBlocked, isUnblocking, events as blockEvents } from './utils/block';
 import './lib/whenAll.jquery';
 import Profile from './models/profile/Profile';
@@ -37,10 +38,12 @@ export default class ObRouter extends Router {
       [/^@([^\/]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'userViaHandle'],
       [/^(?:pm:\/\/)(Qm[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
       [/^(Qm[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
+      [/^(?:pm:\/\/)(12D3Koo[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
+      [/^(12D3Koo[a-zA-Z0-9]+)[\/]?([^\/]*)[\/]?([^\/]*)[\/]?([^\/]*)\/?$/, 'user'],
       ['(pm://)transactions(/)', 'transactions'],
       ['(pm://)transactions/:tab(/)', 'transactions'],
       ['(pm://)connected-peers(/)', 'connectedPeers'],
-      ['(pm://)search(?query)', 'search'],
+      ['(pm://)search(/:tab)(?:query)', 'search'],
       ['(pm://)*path', 'pageNotFound'],
     ];
 
@@ -53,7 +56,6 @@ export default class ObRouter extends Router {
 
     $(window).on('hashchange', () => {
       this.setAddressBarText();
-      app.pageNav.updateTabs();
       if (window.Countly) {
         window.Countly.q.push(['track_pageview', location.hash]);
       }
@@ -196,6 +198,8 @@ export default class ObRouter extends Router {
           confirmPromises.push(closeConfirmed);
         } else if (closeConfirmed) {
           confirmPromises.push($.Deferred().resolve().promise());
+        } else {
+          confirmPromises.push($.Deferred().reject().promise());
         }
       });
 
@@ -567,9 +571,12 @@ export default class ObRouter extends Router {
     })
       .always(() => {
         this.off(null, onWillRoute);
+        const dismissedCallout = getCurrentConnection() &&
+          getCurrentConnection().server.get('dismissedDiscoverCallout');
         endAjaxEvent('UserPageLoad', {
           ownPage: guid === app.profile.id,
           tab: pageState,
+          dismissedCallout,
           listing: !!listingFetch,
           errors: userPageFetchError || 'none',
         });
@@ -618,9 +625,9 @@ export default class ObRouter extends Router {
     this.once('will-route', () => (peerFetch.abort()));
   }
 
-  search(query) {
+  search(tab = 'listings', query) {
     this.loadPage(
-      new Search({ query })
+      new Search({ query, initialState: { tab } })
     );
   }
 

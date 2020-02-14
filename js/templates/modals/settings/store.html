@@ -45,6 +45,22 @@
       <div class="box padMdKids padStack">
         <div class="flexRow gutterH">
           <div class="col3">
+            <label class="required"><%= ob.polyT('settings.storeTab.currencies') %></label>
+            <div class="clrT2 txSm rowSm"><%= ob.polyT('settings.storeTab.currenciesHelper') %></div>
+            <div class="clrT2 txSm"><%= ob.polyT('settings.storeTab.currenciesNote') %></div>
+          </div>
+          <div class="col9">
+            <% if (ob.errors.currencies) print(ob.formErrorTmpl({ errors: ob.errors.currencies })) %>
+            <div class="row js-currencySelector"></div>
+            <div class="flexHRight">
+              <div class="js-bulkCoinUpdateBtn"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box padMdKids padStack">
+        <div class="flexRow gutterH">
+          <div class="col3">
             <label><%= ob.polyT('settings.storeTab.moderators') %></label>
             <div class="clrT2 txSm"><%= ob.polyT('settings.storeTab.moderatorsHelper') %></div>
           </div>
@@ -63,27 +79,27 @@
                     class="btnHeight clrBr clrP clrSh2 js-submitModByIDInput"
                     placeholder="<%= ob.polyT('settings.storeTab.moderatorByIDPlaceholder') %>">
                 <%= ob.processingButton({
-                className: 'btn clrP clrBr js-submitModByID ',
+                className: 'btn clrP clrBr clrSh2 flexNoShrink js-submitModByID ',
                 btnText: ob.polyT('settings.storeTab.moderatoryByIDSubmit')
                 }) %>
               </div>
               <div class="js-modListByID"></div>
-
-              <hr class="clrBr unleaded">
               <div>
                 <div class="rowLg"><% // just a spacer %></div>
               </div>
               <div class="row">
-                <div class="flexVCentClearMarg tx5 rowTn">
-                  <h5 class="flexExpand"><%= ob.polyT('settings.storeTab.availableModerators') %></h5>
-                  <input type="checkbox" id="storeVerifiedOnly" class="js-storeVerifiedOnly"<% if (ob.showVerifiedOnly) print('checked') %>>
-                  <label class="tx5b" for="storeVerifiedOnly"><%= ob.polyT('settings.storeTab.verifiedOnly') %></label>
+                <div class="tx5 rowTn">
+                  <div class="flexVCentClearMarg">
+                    <h5 class="flexExpand"><%= ob.polyT('settings.storeTab.availableModerators') %></h5>
+                    <input type="checkbox" id="storeVerifiedOnly" class="js-storeVerifiedOnly"<% if (ob.showVerifiedOnly) print('checked') %>>
+                    <label class="tx5b" for="storeVerifiedOnly"><%= ob.polyT('settings.storeTab.verifiedOnly') %></label>
+                  </div>
                 </div>
                 <ul class="unstyled errorList hide js-modListAvailableError">
                   <li><i class="ion-alert-circled"></i><span class="js-modListAvailableErrorText"></span> </li>
                 </ul>
                 <div class="js-modListAvailable"></div>
-                <div class="noModsAdded clrBr flexCent <% if (ob.modsAvailable.length) print('hide') %> js-noModsAdded">
+                <div class="noModsAdded flex clrBr <% if (ob.modsAvailable.length) print('hide') %> js-noModsAdded">
                   <button class="btn clrP clrBr browseMods js-browseMods">
                      <%= ob.polyT('settings.storeTab.browseModerators') %>
                   </button>

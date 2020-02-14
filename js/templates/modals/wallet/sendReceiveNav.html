@@ -1,0 +1,8 @@
+<div class="flexBtnWrapper flexBtnTop flexRow">
+  <button class="btnFlx col6 flexExpand underlineOnly clrP clrBr gutterHSm js-btnSendNav <% if (ob.sendModeOn) print('active') %>">
+    <%= ob.polyT('wallet.sendBtn') %>
+  </button>
+  <button class="btnFlx col6 flexExpand underlineOnly clrP clrBr gutterHSm js-btnReceiveNav <% if (!ob.sendModeOn) print('active') %>">
+    <%= ob.polyT('wallet.receiveBtn') %>
+  </button>
+</div>

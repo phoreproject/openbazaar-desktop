@@ -51,9 +51,6 @@ export default class extends baseVw {
 
     this.options = opts;
     this.type = opts.type;
-    this._state = {
-      ...opts.initialState || {},
-    };
     this.views = [];
     this.curPage = 1;
     this.queryTotal = null;
@@ -256,6 +253,10 @@ export default class extends baseVw {
     this.fetchTransactions(this.curPage -= 1);
   }
 
+  onClickNumberedPage(pageNumber) {
+    this.fetchTransactions(this.curPage = pageNumber);
+  }
+
   onAttach() {
     this.setFilterOnRoute();
   }
@@ -447,27 +448,6 @@ export default class extends baseVw {
     });
   }
 
-  getState() {
-    return this._state;
-  }
-
-  setState(state, replace = false) {
-    let newState;
-
-    if (replace) {
-      this._state = {};
-    } else {
-      newState = _.extend({}, this._state, state);
-    }
-
-    if (!_.isEqual(this._state, newState)) {
-      this._state = newState;
-      this.render();
-    }
-
-    return this;
-  }
-
   remove() {
     if (this.avatarPost) this.avatarPost.abort();
     if (this.transactionsFetch) this.transactionsFetch.abort();
@@ -532,6 +512,7 @@ export default class extends baseVw {
         total: this.queryTotal,
       },
     });
+    this.listenTo(this.pageControls, 'onPageClick', this.onClickNumberedPage);
     this.listenTo(this.pageControls, 'clickNext', this.onClickNextPage);
     this.listenTo(this.pageControls, 'clickPrev', this.onClickPrevPage);
     this.$('.js-pageControlsContainer').html(this.pageControls.render().el);

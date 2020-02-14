@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import _ from 'underscore';
-import { Collection } from 'backbone';
+import Backbone, { Collection } from 'backbone';
 import 'jquery-zoom';
 import is from 'is_js';
 import app from '../../../app';
@@ -18,6 +18,7 @@ import {
   events as inventoryEvents,
 } from '../../../utils/inventory';
 import { endAjaxEvent, recordEvent, startAjaxEvent } from '../../../utils/metrics';
+import { events as outdatedListingHashesEvents } from '../../../utils/outdatedListingHashes';
 import { getTranslatedCountries } from '../../../data/countries';
 import BaseModal from '../BaseModal';
 import Purchase from '../purchase/Purchase';
@@ -26,12 +27,13 @@ import Reviews from '../../reviews/Reviews';
 import SocialBtns from '../../components/SocialBtns';
 import QuantityDisplay from '../../components/QuantityDisplay';
 import { events as listingEvents } from '../../../models/listing/';
+import Listings from '../../../collections/Listings';
 import PopInMessage, { buildRefreshAlertMessage } from '../../components/PopInMessage';
 import { openSimpleMessage } from '../SimpleMessage';
 import NsfwWarning from '../NsfwWarning';
-import CryptoTradingPair from '../../components/CryptoTradingPair';
-import Listings from '../../../collections/Listings';
 import MoreListings from './MoreListings';
+import CryptoTradingPair from '../../components/CryptoTradingPair';
+import SupportedCurrenciesList from '../../components/SupportedCurrenciesList';
 
 export default class extends BaseModal {
   constructor(options = {}) {
@@ -51,20 +53,18 @@ export default class extends BaseModal {
     this._shipsFreeToMe = this.model.shipsFreeToMe;
     this.activePhotoIndex = 0;
     this.totalPrice = this.model.get('item').get('price');
+    this._purchaseModal = null;
+    this._latestHash = this.model.get('hash');
+    this._renderedHash = null;
 
     // Sometimes a profile model is available and the vendor info
     // can be obtained from that.
     if (opts.profile) {
-      const avatarHashes = opts.profile.get('avatarHashes');
-
       this.vendor = {
         peerID: opts.profile.id,
         name: opts.profile.get('name'),
         handle: opts.profile.get('handle'),
-        avatar: {
-          tiny: avatarHashes.get('tiny'),
-          small: avatarHashes.get('small'),
-        },
+        avatarHashes: opts.profile.get('avatarHashes').toJSON(),
       };
     }
 
@@ -90,6 +90,8 @@ export default class extends BaseModal {
           this.shipsFreeToMe = this.model.shipsFreeToMe;
         }
       });
+
+    this.listenTo(this.model, 'someChange', () => this.showDataChangedMessage());
 
     if (this.model.isOwnListing) {
       this.listenTo(listingEvents, 'saved', (md, e) => {
@@ -129,6 +131,11 @@ export default class extends BaseModal {
       }
     });
 
+    this.listenTo(outdatedListingHashesEvents, 'newHash', e => {
+      this._latestHash = e.newHash;
+      if (e.oldHash === this._renderedHash) this.outdateHash();
+    });
+
     this.rating = this.createChild(Rating);
 
     // get the ratings data, if any
@@ -161,12 +168,12 @@ export default class extends BaseModal {
         .done(e => {
           this._inventory = e.inventory;
           endAjaxEvent('Listing_InventoryFetch', {
-            ownListing: !!this.ownListing,
+            ownListing: this.model.isOwnListing,
           });
         })
         .fail(e => {
           endAjaxEvent('Listing_InventoryFetch', {
-            ownListing: !!this.ownListing,
+            ownListing: this.model.isOwnListing,
             errors: e.error || e.errCode || 'unknown error',
           });
         });
@@ -200,6 +207,11 @@ export default class extends BaseModal {
     $(document).on('click', this.boundDocClick);
 
     this.rendered = false;
+    this._outdatedHashState = null;
+
+    this.purchaseErrorT = null;
+    loadTemplate('modals/listingDetail/purchaseError.html',
+      t => (this.purchaseErrorT = t));
   }
 
   className() {
@@ -224,6 +236,7 @@ export default class extends BaseModal {
       'click .js-purchaseBtn': 'startPurchase',
       'click .js-rating': 'clickRating',
       'change .js-variantSelect': 'onChangeVariantSelect',
+      'click .js-reloadOutdated': 'onClickReloadOutdated',
       ...super.events(),
     };
   }
@@ -318,16 +331,24 @@ export default class extends BaseModal {
   }
 
   onClickGotoPhotos() {
-    recordEvent('Listing_GoToPhotos');
+    recordEvent('Listing_GoToPhotos', { ownListing: this.model.isOwnListing });
     this.gotoPhotos();
   }
 
   onClickGoToStore() {
     if (this.options.openedFromStore) {
-      recordEvent('Listing_GoToStore', { OpenedFromStore: true });
+      recordEvent('Listing_GoToStore',
+        {
+          OpenedFromStore: true,
+          ownListing: this.model.isOwnListing,
+        });
       this.close();
     } else {
-      recordEvent('Listing_GoToStore', { OpenedFromStore: false });
+      recordEvent('Listing_GoToStore',
+        {
+          OpenedFromStore: false,
+          ownListing: this.model.isOwnListing,
+        });
       const base = this.vendor.handle ? `@${this.vendor.handle}` : this.vendor.peerID;
       app.router.navigateUser(`${base}/store`, this.vendor.peerID, { trigger: true });
     }
@@ -345,7 +366,7 @@ export default class extends BaseModal {
   }
 
   gotoPhotos() {
-    recordEvent('Listing_GoToPhotos');
+    recordEvent('Listing_GoToPhotos', { ownListing: this.model.isOwnListing });
     this.$photoSection.velocity(
       'scroll',
       {
@@ -356,7 +377,7 @@ export default class extends BaseModal {
   }
 
   clickRating() {
-    recordEvent('Listing_ClickOnRatings');
+    recordEvent('Listing_ClickOnRatings', { ownListing: this.model.isOwnListing });
     this.gotoReviews();
   }
 
@@ -371,7 +392,7 @@ export default class extends BaseModal {
   }
 
   onClickPhotoSelect(e) {
-    recordEvent('Listing_ClickOnPhoto');
+    recordEvent('Listing_ClickOnPhoto', { ownListing: this.model.isOwnListing });
     this.setSelectedPhoto($(e.target).index('.js-photoSelect'));
   }
 
@@ -422,7 +443,7 @@ export default class extends BaseModal {
   }
 
   onClickPhotoPrev() {
-    recordEvent('Listing_ClickOnPhotoPrev');
+    recordEvent('Listing_ClickOnPhotoPrev', { ownListing: this.model.isOwnListing });
     let targetIndex = this.activePhotoIndex - 1;
     const imagesLength = parseInt(this.model.toJSON().item.images.length, 10);
 
@@ -432,7 +453,7 @@ export default class extends BaseModal {
   }
 
   onClickPhotoNext() {
-    recordEvent('Listing_ClickOnPhotoNext');
+    recordEvent('Listing_ClickOnPhotoNext', { ownListing: this.model.isOwnListing });
     let targetIndex = this.activePhotoIndex + 1;
     const imagesLength = parseInt(this.model.toJSON().item.images.length, 10);
 
@@ -442,7 +463,7 @@ export default class extends BaseModal {
   }
 
   onClickFreeShippingLabel() {
-    recordEvent('Listing_ClickFreeShippingLabel');
+    recordEvent('Listing_ClickFreeShippingLabel', { ownListing: this.model.isOwnListing });
     this.gotoShippingOptions();
   }
 
@@ -499,6 +520,31 @@ export default class extends BaseModal {
     }
   }
 
+  outdateHash() {
+    const tip = app.polyglot.t('listingDetail.errors.outdatedHash', {
+      reloadLink: '<a class="js-reloadOutdated">' +
+        `${app.polyglot.t('listingDetail.errors.reloadOutdatedHash')}<a>`,
+    });
+    this.getCachedEl('.js-purchaseErrorWrap').html(
+      this.purchaseErrorT({ tip })
+    );
+    this.getCachedEl('.js-purchaseBtn').addClass('disabled');
+  }
+
+  onClickReloadOutdated() {
+    let defaultPrevented = false;
+
+    this.trigger('clickReloadOutdated', {
+      preventDefault: () => (defaultPrevented = true),
+    });
+
+    setTimeout(() => {
+      if (!defaultPrevented) {
+        Backbone.history.loadUrl();
+      }
+    });
+  }
+
   onSetShippingDestination(e) {
     this.renderShippingDestinations($(e.target).val());
   }
@@ -519,6 +565,32 @@ export default class extends BaseModal {
         pricingCurrency: this.model.get('metadata').get('pricingCurrency'),
       }));
     });
+  }
+
+  static get PURCHASE_MODAL_CREATE() {
+    return 'PURCHASE_MODAL_CREATE';
+  }
+
+  static get PURCHASE_MODAL_DESTROY() {
+    return 'PURCHASE_MODAL_DESTROY';
+  }
+
+  /**
+   * Returns a promise that will fire progress notifications when a purchase modal
+   * is created. Will also fire a notifications when one is destroyed.
+   */
+  get purchaseModal() {
+    this._purchaseModalDeferred =
+      this._purchaseModalDeferred || $.Deferred();
+
+    if (this._purchaseModal) {
+      this._purchaseModalDeferred.notify({
+        type: this.constructor.PURCHASE_MODAL_CREATE,
+        view: this._purchaseModal,
+      });
+    }
+
+    return this._purchaseModalDeferred.promise();
   }
 
   startPurchase() {
@@ -545,9 +617,9 @@ export default class extends BaseModal {
       selectedVariants.push(variant);
     });
 
-    if (this.purchaseModal) this.purchaseModal.remove();
+    if (this._purchaseModal) this._purchaseModal.remove();
 
-    this.purchaseModal = new Purchase({
+    this._purchaseModal = new Purchase({
       listing: this.model,
       variants: selectedVariants,
       vendor: this.vendor,
@@ -559,8 +631,23 @@ export default class extends BaseModal {
       .render()
       .open();
 
-    this.purchaseModal.on('modal-will-remove', () => (this.purchaseModal = null));
-    this.listenTo(this.purchaseModal, 'closeBtnPressed', () => this.close());
+    if (this._purchaseModalDeferred) {
+      this._purchaseModalDeferred.notify({
+        type: this.constructor.PURCHASE_MODAL_CREATE,
+        view: this._purchaseModal,
+      });
+    }
+
+    this._purchaseModal.on('modal-will-remove', () => {
+      this._purchaseModal = null;
+      if (this._purchaseModalDeferred) {
+        this._purchaseModalDeferred.notify({
+          type: this.constructor.PURCHASE_MODAL_DESTROY,
+        });
+      }
+    });
+
+    this.listenTo(this._purchaseModal, 'closeBtnPressed', () => this.close());
     recordEvent('Purchase_Start', { ownListing: this.model.isOwnListing });
   }
 
@@ -627,7 +714,7 @@ export default class extends BaseModal {
 
   remove() {
     if (this.editModal) this.editModal.remove();
-    if (this.purchaseModal) this.purchaseModal.remove();
+    if (this._purchaseModal) this._purchaseModal.remove();
     if (this.destroyRequest) this.destroyRequest.abort();
     if (this.ratingsFetch) this.ratingsFetch.abort();
     if (this.inventoryFetch) this.inventoryFetch.abort();
@@ -674,6 +761,8 @@ export default class extends BaseModal {
         verifiedModsData: app.verifiedMods.data,
         defaultBadge,
         isCrypto: this.model.isCrypto,
+        _: { sortBy: _.sortBy },
+        purchaseErrorT: this.purchaseErrorT,
       }));
 
       if (nsfwWarning) this.$el.addClass('hide');
@@ -682,6 +771,20 @@ export default class extends BaseModal {
       this.$('.js-rating').append(this.rating.render().$el);
       this.$reviews = this.$('.js-reviews');
       this.$reviews.append(this.reviews.render().$el);
+
+      if (this._latestHash !== this.model.get('hash')) {
+        this.outdateHash();
+      }
+
+      if (this.supportedCurrenciesList) this.supportedCurrenciesList.remove();
+      this.supportedCurrenciesList = this.createChild(SupportedCurrenciesList, {
+        initialState: {
+          currencies: this.model.get('metadata')
+            .get('acceptedCurrencies'),
+        },
+      });
+      this.getCachedEl('.js-supportedCurrenciesList')
+        .append(this.supportedCurrenciesList.render().el);
 
       if (!this.model.isOwnListing) {
         if (this.socialBtns) this.socialBtns.remove();
@@ -767,6 +870,7 @@ export default class extends BaseModal {
     });
 
     this.rendered = true;
+    this._renderedHash = this.model.get('hash');
 
     return this;
   }

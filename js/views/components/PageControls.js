@@ -1,21 +1,17 @@
-import _ from 'underscore';
 import baseVw from '../baseVw';
 import loadTemplate from '../../utils/loadTemplate';
 
 export default class extends baseVw {
   constructor(options = {}) {
     const opts = {
+      ...options,
       initialState: {
         start: 1,
+        ...options.initialState,
       },
-      ...options,
     };
 
     super(opts);
-
-    this._state = {
-      ...opts.initialState || {},
-    };
   }
 
   className() {
@@ -24,6 +20,8 @@ export default class extends baseVw {
 
   events() {
     return {
+      'click .js-pageNext': 'onClickNext',
+      'click .js-pagePrev': 'onClickPrev',
       'click .js-pageCnt': 'onPageClick',
     };
   }
@@ -32,32 +30,19 @@ export default class extends baseVw {
     this.trigger('onPageClick', this.$(ev.currentTarget).data('page'));
   }
 
-  getState() {
-    return this._state;
+  onClickNext() {
+    this.trigger('clickNext');
   }
 
-  setState(state, replace = false) {
-    let newState;
-
-    if (replace) {
-      this._state = {};
-    } else {
-      newState = _.extend({}, this._state, state);
-    }
-
-    if (!_.isEqual(this._state, newState)) {
-      this._state = newState;
-      this.render();
-    }
-
-    return this;
+  onClickPrev() {
+    this.trigger('clickPrev');
   }
 
   render() {
     loadTemplate('components/pageControls.html', (t) => {
       this.$el.html(t({
         type: this.type,
-        ...this._state,
+        ...this.getState(),
       }));
     });
 

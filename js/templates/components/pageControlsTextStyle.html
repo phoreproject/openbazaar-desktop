@@ -1,0 +1,46 @@
+<%
+const disabledPrev = ob.currentPage === 1;
+const disabledNext = !ob.morePages;
+const printForward = 4;
+const printBackward = 4;
+%>
+
+<div class="floR">
+  <div class="pageControls flexVCent gutterH tx5">
+    <div class="btnStrip">
+      <button class="btn clrP clrBr pageFirst js-pagePrev <% if (disabledPrev) print('disabled') %>">
+        <span class="txUnb">< <%= ob.polyT('pageControlsTextStyle.previous') %></span>
+      </button>
+      <% if (typeof ob.currentPage === 'number'){%>
+
+        <%
+        // print pages before current one
+        const firstPage = Math.max(ob.currentPage - printBackward, 0);
+        for(let i=firstPage; i < ob.currentPage - 1; i++) {
+          print('<button class="btn clrP clrBr pageLast js-pageCnt" data-page="' + i + '">');
+          print('<i>' + (i+1) + '</i>\n');
+          print('</button>\n');
+        }
+        %>
+
+        <div class="btn clrP clrBr unclickable">
+          <span class="txUnb"><%= ob.localizeNumber(ob.currentPage) %></span>
+        </div>
+
+        <%
+        // print pages after current one
+        const lastSearchPage = Math.min(ob.currentPage + printForward, ob.lastPage);
+        for(let i=ob.currentPage; i <= lastSearchPage - 1; i++) {
+          print('<button class="btn clrP clrBr pageLast js-pageCnt" data-page="' + i + '">');
+          print('<i>' + (i+1) + '</i>\n');
+          print('</button>\n');
+        }
+        %>
+
+      <% } %>
+      <button class="btn clrP clrBr pageLast js-pageNext <% if (disabledNext) print('disabled') %>">
+        <span class="txUnb"><%= ob.polyT('pageControlsTextStyle.next') %> ></span>
+      </button>
+    </div>
+  </div>
+</div>

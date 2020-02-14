@@ -466,7 +466,10 @@
         "resyncHelper": "トランザクションの抜けを同期により解消します",
         "reloadTransactionsWidget": {
           "resyncBtn": "トランザクションの再読み込み",
-          "resyncComplete": "トランザクションは再読み込みされます。5分から10分ほどかかります。",
+          "resyncStartedTitle": "%{cur} Resync Started",
+          "resyncStarted": "トランザクションは再読み込みされます。5分から10分ほどかかります。",
+          "resyncCompleteTitle": "%{cur} Resync Finished",
+          "resyncComplete": "Successfully resynced your wallet transactions",
           "syncUnavailable": "トランザクションの再読み込みは一時間に一回のみです。"
         },
         "purge": "シェアファイルをパージ",
@@ -793,6 +796,10 @@
     "DIGITAL_GOOD": "デジタル商品",
     "SERVICE": "サービス"
   },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
   "conditionTypes": {
     "NEW": "新品",
     "USED_EXCELLENT": "中古 - 最良",
@@ -902,6 +909,9 @@
     "nsfwYes": "はい",
     "nsfwNo": "いいえ",
     "nsfwLabel": "成人向けコンテンツ (NSFW, adult, 18+など)",
+    "format": "Format",
+    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "一般",
       "photos": "画像",
@@ -944,7 +954,8 @@
     "title": "タイトル",
     "type": "タイプ",
     "visibility": "閲覧可能",
-    "price": "価格",
+    "price": "バイヤー価格",
+    "price2": "価格",
     "condition": "条件",
     "sku": "SKU",
     "description": "説明",
@@ -1724,13 +1735,21 @@
     "uPHR": "µPHR",
     "pSAT": "pSAT"
   },
-  "bitcoinCurrencyFormat": {
-    "shortBTC": "%{symbol}%{amount}",
-    "longBTC": "%{amount} %{symbol}",
-    "MBTC": "%{amount} %{symbol}",
-    "UBTC": "%{amount} %{symbol}",
-    "SATOSHI": "%{amount} %{symbol}"
+  "cryptoCurrencyFormat": {
+    "curSymbolAmount": "%{symbol}%{amount}",
+    "curCodeAmount": "%{amount} %{code}"
   },
+  "cryptoCodeIconPairing": "%{icon} %{code}",
+  "cryptoAmountIconPairing": "%{amount} %{icon}",
+  "cryptoConversionPairing": "%{fromPairing} = %{toPairing} (%{fromCurAmount})",
+  "cryptoTradingPair": {
+    "cryptoConversionPairingNoToCurExchangeRate": "%{fromPairing} = %{icon}",
+    "tipMissingExchangeRate": "There is no exchange rate data available for %{coins}. If the data will not be available at the time of purchase, the listing will not be purchasable."
+  },
+  "cryptoPriceBelowMarket": "%{amount}% under market",
+  "cryptoPriceAboveMarket": "%{amount}% above market",
+  "cryptoPriceAtMarket": "market price",
+  "cryptoPriceFixMarket": "fix price",
   "countries": {
     "AFGHANISTAN": "Afghanistan",
     "ALAND_ISLANDS": "Aland Islands",

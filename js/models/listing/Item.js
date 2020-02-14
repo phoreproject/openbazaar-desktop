@@ -117,6 +117,14 @@ export default class extends BaseModel {
       addError('price', app.polyglot.t('itemModelErrors.provideAmountGreaterThanZero'));
     }
 
+    if (attrs.price2 !== undefined) {
+      if (is.not.number(attrs.price2)) {
+        addError('price2', app.polyglot.t('itemModelErrors.provideNumericAmount'));
+      } else if (attrs.price2 <= 0) {
+        addError('price2', app.polyglot.t('itemModelErrors.provideAmountGreaterThanZero'));
+      }
+    }
+
     if (!attrs.images.length) {
       addError('images', app.polyglot.t('itemModelErrors.imageRequired'));
     } else if (attrs.images.length > max.images) {

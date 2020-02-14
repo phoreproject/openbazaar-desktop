@@ -58,11 +58,7 @@ describe('the currency utility module', () => {
         const deferred = $.Deferred();
 
         deferred.resolve({
-          // The api is actually returning a non 1 for the phore value, which seems
-          // like a bug, but it will allow us to test that if we call our conversion
-          // functions to convert from or to PHR, it will ignore that PHR exchange rate
-          // and use an implied 1.
-          PHR: 1.02,
+          PHR: 1,
           PLN: 3148.48,
           USD: 750.6,
         });
@@ -112,7 +108,7 @@ describe('the currency utility module', () => {
         'the resulting value', () => {
         expect(cur.convertAndFormatCurrency(500, 'USD', 'PLN', { locale: 'en-US' }))
           .to
-          .equal('PLN2,097.31');
+          .satisfy(val => ['PLN2,097.31', 'PLN 2,097.31'].includes(val));
       });
 
       it('which will convert between a fiat currency and PHR and properly localize ' +

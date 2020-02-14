@@ -82,7 +82,7 @@ function handleStartupEvent() {
 }
 
 if (handleStartupEvent()) {
-  console.log('Phore Marketplace started on Windows...');
+  console.log('OpenBazaar started on Windows...');
 }
 
 const serverPath = `${__dirname}${path.sep}..${path.sep}openbazaar-go${path.sep}`;

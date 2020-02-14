@@ -6,7 +6,6 @@ import { cpus, totalmem, freemem } from 'os';
 import { getCurrentConnection } from './serverConnect';
 import { remote } from 'electron';
 
-
 let metricsRestartNeeded = false;
 
 /** Set the returned string to a higher number any time there are changes to the analytics that
@@ -37,17 +36,20 @@ export function userStats() {
   const p = app.profile;
   const pErr = 'Profile Not Available';
   const torErr = 'No Current Connection';
+  const connectedServer = getCurrentConnection() && getCurrentConnection().server.toJSON();
 
   return {
     vendor: p ? p.get('vendor') : pErr,
-    listingCount: p ? p.get('stats').get('listingCount') : pErr,
-    ratingCount: p ? p.get('stats').get('ratingCount') : pErr,
+    listingCount: p ? p.get('stats').get('listingCount') || 0 : 0,
+    ratingCount: p ? p.get('stats').get('ratingCount') || 0 : 0,
     moderator: p ? p.get('moderator') : pErr,
     crypto: p ? p.get('currencies') : pErr,
     displayCurrency: app.settings ? app.settings.get('localCurrency') : 'Settings Not Available',
     displayLanguage: app.localSettings.get('language'),
     bundled: remote.getGlobal('isBundledApp'),
-    Tor: getCurrentConnection() ? getCurrentConnection().server.get('useTor') : torErr,
+    Tor: connectedServer ? !!connectedServer.useTor : torErr,
+    DismissedDiscover: connectedServer ? !!connectedServer.dismissedDiscoverCallout : false,
+    DismissedStore: connectedServer ? !!connectedServer.dismissedStoreWelcome : false,
     systemLanguage: navigator.language,
     numberOfCPUs: cpus().length, // how many cores?
     CPU: cpus()[0].model, // how modern/powerful is this computer?
@@ -79,10 +81,6 @@ export function addMetrics() {
     window.Countly.url = 'https://countly.phore.io';
     window.Countly.interval = 30000;
     window.Countly.q.push(['track_sessions']);
-    window.Countly.q.push(['track_pageview', location.hash]);
-    window.Countly.q.push(['track_clicks']);
-    window.Countly.q.push(['track_links']);
-    window.Countly.q.push(['track_scrolls']);
     window.Countly.q.push(['track_errors']);
     // add anonymous details
     window.Countly.q.push(['user_details', {
@@ -95,7 +93,7 @@ export function addMetrics() {
     scriptEl.id = 'metricsScrtipt';
     scriptEl.type = 'text/javascript';
     scriptEl.async = true;
-    scriptEl.src = 'https://countly.phore.io/sdk/web/countly.min.js';
+    scriptEl.src = 'https://countly.openbazaar.org/sdk/web/countly.min.js';
     scriptEl.onload = () => window.Countly.init();
     (document.getElementsByTagName('head')[0]).appendChild(scriptEl);
   }
@@ -127,7 +125,7 @@ export function showMetricsModal(opts) {
   return metricsModal;
 }
 
-export function recordEvent(key, segmentation) {
+export function recordEvent(key, segmentation = {}) {
   if (!key) throw new Error('Please provide a key');
   if (segmentation && !_.isObject(segmentation)) {
     throw new Error('please provide the segmentation as an object');
@@ -146,7 +144,7 @@ export function startAjaxEvent(key) {
   if (window.Countly) window.Countly.q.push(['start_event', key]);
 }
 
-export function endAjaxEvent(key, segmentation) {
+export function endAjaxEvent(key, segmentation = {}) {
   if (!key) throw new Error('Please provide a key');
   if (segmentation && !_.isObject(segmentation)) {
     throw new Error('please provide the segmentation as an object');
