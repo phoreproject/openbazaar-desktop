@@ -28,6 +28,7 @@ jobs:
         osx_image: xcode11
         env: BINARY=osxclient
       - os: linux
+        dist: bionic
       - os: osx
         osx_image: xcode11.2
         env: BINARY=win
