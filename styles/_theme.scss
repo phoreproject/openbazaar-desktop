@@ -2285,3 +2285,21 @@ div.headline {
     display:none!important;
   }
 }
+
+
+// bottom toolbar
+
+#bottomToolBarContainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+
+#appFrame {
+  #contentFrame {
+    position: relative;
+    overflow-y: scroll;
+    height: calc(100% - #{$bar} - 36px);
+  }
+}
