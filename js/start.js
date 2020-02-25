@@ -25,6 +25,7 @@ import { persist as persistOutdatedListingHashes } from './utils/outdatedListing
 import Chat from './views/chat/Chat.js';
 import ChatHeads from './collections/ChatHeads';
 import PageNav from './views/PageNav.js';
+import ToolBar from './views/ToolBar';
 import LoadingModal from './views/modals/Loading';
 import StartupConnectMessaging from './views/StartupConnectMessaging';
 import { openSimpleMessage } from './views/modals/SimpleMessage';
@@ -103,7 +104,9 @@ app.serverConfigs = new ServerConfigs();
 app.pageNav = new PageNav({
   serverConfigs: app.serverConfigs,
 });
+app.toolBar = new ToolBar();
 $('#pageNavContainer').append(app.pageNav.render().el);
+$('#bottomToolBarContainer').append(app.toolBar.render().el);
 
 let externalRoute = remote.getGlobal('externalRoute');
 

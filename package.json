@@ -1,6 +1,6 @@
 {
   "name": "openbazaar-desktop",
-  "productName": "OpenBazaar Desktop Client",
+  "productName": "Phore Marketplace Client",
   "version": "2.3.8",
   "serverVersionRequired": "0.13.8",
   "description": "Decentralized p2p marketplace that uses Cryptocurrencies.",
