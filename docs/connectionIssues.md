@@ -4,7 +4,7 @@ Troubleshooting connection issues
 comming soon...
 
 ### Tor
-Refer to the guide to [configuring Phore Marketplace to run on Tor](https://github.com/phoreproject/openbazaar-desktop/wiki/Tor-Setup).
+Refer to the guide to [configuring Phore Marketplace to run on Tor](https://github.com/phoreproject/pm-desktop/wiki/Tor-Setup).
 
 More information is available in the [server Tor documentation](https://github.com/phoreproject/openbazaar-go/blob/master/docs/tor.md), if you need it.
 
@@ -19,7 +19,7 @@ Check your JS console. If you are **not** seeing any red `WebSocket...` errors:
 2. In the config file, ensure Addresses.Gateway has your server's IP embedded in it. For example, if your server ip is `123.45.6.78`, the `Gateway` value would be `/ip4/123.45.6.78/tcp/5002`.
 3. In the client, ensure the port set in the server configuration UI matches the port value you set above:
 
-![](https://github.com/phoreproject/openbazaar-desktop/blob/master/imgs/connectionIssues/setPortInUi.png)
+![](https://github.com/phoreproject/pm-desktop/blob/master/imgs/connectionIssues/setPortInUi.png)
 
 4. Check the JSON-API section of your config file. Make sure:
  - Authenticated is true
@@ -38,7 +38,7 @@ In the client, you should enter the plain text password in your server configura
 
 If you are seeing the following error in your JS console:
 
-![](https://github.com/phoreproject/openbazaar-desktop/blob/master/imgs/connectionIssues/sslProtocolError.png)
+![](https://github.com/phoreproject/pm-desktop/blob/master/imgs/connectionIssues/sslProtocolError.png)
 
 For your protection, the client will only connect to a remote server via SSL. The above error indicates that your server is not set-up to run SSL.
 
@@ -50,11 +50,11 @@ When you install the Phore Marketplace.crt file on your client machine, be sure 
 
 On OSX, this is done via the Always Trust button.
 
-![](https://github.com/phoreproject/openbazaar-desktop/blob/master/imgs/connectionIssues/osxTrustCertificate.png)
+![](https://github.com/phoreproject/pm-desktop/blob/master/imgs/connectionIssues/osxTrustCertificate.png)
 
 On Windows, you should import the certificate using the [Microsoft Management Console.](http://www.thewindowsclub.com/manage-trusted-root-certificates-windows)
 
-![](https://github.com/phoreproject/openbazaar-desktop/blob/master/imgs/connectionIssues/windowsCertManager.png)
+![](https://github.com/phoreproject/pm-desktop/blob/master/imgs/connectionIssues/windowsCertManager.png)
 
 For Linux, please follow step 2 in the next section.
 
@@ -62,7 +62,7 @@ For Linux, please follow step 2 in the next section.
 
 If you are seeing the following error in your JS console:
 
-![](https://github.com/phoreproject/openbazaar-desktop/blob/master/imgs/connectionIssues/sslBadHandshake.png)
+![](https://github.com/phoreproject/pm-desktop/blob/master/imgs/connectionIssues/sslBadHandshake.png)
 
 It is likely one of two things:
 
