@@ -686,7 +686,7 @@ html {
   display:none;
 }
 
-#appFrame #contentFrame #pageContainer #pageTabBar, #appFrame #pageNavContainer .clrBr, #appFrame #bottomToolBarContainer .clrBr {
+#appFrame #contentFrame #pageContainer #pageTabBar, #appFrame #pageNavContainer .clrBr, #appFrame #bottomToolBarContainer #bottomToolBarContent {
   .btn{
     color:white;
   }
@@ -2289,7 +2289,7 @@ div.headline {
 
 // bottom toolbar
 
-#bottomToolBarContainer {
+#bottomToolBarContent {
   position: fixed;
   bottom: 0;
   width: 100%;

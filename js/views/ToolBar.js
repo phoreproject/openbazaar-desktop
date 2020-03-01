@@ -1,43 +1,50 @@
 import BaseVw from './baseVw';
 import loadTemplate from '../utils/loadTemplate';
-import Dialog from './modals/Dialog';
-import app from '../app';
+import UnlockBtn from './modals/wallet/UnlockBtn';
 
 
 export default class extends BaseVw {
 
-  constructor(options) {
+  constructor(options = {}) {
     const opts = {
-      events: {
-        'click .js-lockWallet': 'lockWalletClick',
-      },
       ...options,
+      initialState: {
+        unlockBtnVisible: false,
+        ...options.initialState || {},
+      },
     };
+
     super(opts);
+    this.options = opts;
+
+    this.unlockBtn = this.createChild(UnlockBtn);
+  }
+
+  events() {
+    return {
+      'click .js-lockWallet': 'lockWalletClick',
+      'click .js-unlockWallet': 'unlockWalletClick',
+    };
   }
 
   lockWalletClick() {
-    this.passwordInputDialog = this.createChild(Dialog, {
-      removeOnClose: false,
-      title: app.polyglot.t('editListing.confirmCloseDialog.title'),
-      message: 'message',
-      buttons: [{
-        text: app.polyglot.t('editListing.confirmCloseDialog.btnNo'),
-        fragment: 'no',
-      }, {
-        text: app.polyglot.t('editListing.confirmCloseDialog.btnYes'),
-        fragment: 'yes',
-      }],
-    }).render()
-      .open();
+    this.unlockBtn.setState({ unlockBtnVisible: true });
+  }
+
+  // TODO impl
+  unlockWalletClick() {
   }
 
   render() {
-    loadTemplate('toolBar.html', (t) => {
-      this.$el.html(t({}));
-    });
+    const state = this.getState();
 
-    super.render();
+    loadTemplate('toolBar.html', (t) => {
+      this.$el.html(t(...state));
+      super.render();
+
+      this.unlockBtn.delegateEvents();
+      this.$('.js-unlockBtn').append(this.unlockBtn.render().el);
+    });
 
     return this;
   }
