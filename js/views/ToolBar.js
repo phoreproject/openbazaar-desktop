@@ -1,6 +1,7 @@
 import BaseVw from './baseVw';
 import loadTemplate from '../utils/loadTemplate';
 import UnlockBtn from './modals/wallet/UnlockBtn';
+import $ from 'jquery';
 
 
 export default class extends BaseVw {
@@ -18,6 +19,9 @@ export default class extends BaseVw {
     this.options = opts;
 
     this.unlockBtn = this.createChild(UnlockBtn);
+
+    this.boundOnDocClick = this.documentClick.bind(this);
+    $(document).on('click', this.boundOnDocClick);
   }
 
   events() {
@@ -25,6 +29,17 @@ export default class extends BaseVw {
       'click .js-lockWallet': 'lockWalletClick',
       'click .js-unlockWallet': 'unlockWalletClick',
     };
+  }
+
+  documentClick(e) {
+    const unlockBtn = this.getCachedEl('.js-unlockBtnPlaceholder')[0];
+    const lockWallet = this.getCachedEl('.js-lockWallet')[0];
+
+    if (this.unlockBtn && this.unlockBtn.getState().unlockBtnVisible &&
+      !$.contains(unlockBtn, e.target) && unlockBtn !== e.target &&
+      !$.contains(lockWallet, e.target) && lockWallet !== e.target) {
+      this.unlockBtn.setState({ unlockBtnVisible: false });
+    }
   }
 
   lockWalletClick() {
@@ -43,7 +58,8 @@ export default class extends BaseVw {
       super.render();
 
       this.unlockBtn.delegateEvents();
-      this.$('.js-unlockBtn').append(this.unlockBtn.render().el);
+      this.$('.js-unlockBtnPlaceholder')
+        .append(this.unlockBtn.render().el);
     });
 
     return this;

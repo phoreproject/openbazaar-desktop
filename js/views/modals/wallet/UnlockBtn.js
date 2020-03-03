@@ -1,5 +1,4 @@
 import baseView from '../../baseVw';
-import $ from 'jquery';
 import loadTemplate from '../../../utils/loadTemplate';
 
 
