@@ -1,6 +1,8 @@
 import baseView from '../../baseVw';
 import loadTemplate from '../../../utils/loadTemplate';
-
+import app from '../../../app';
+import { openSimpleMessage } from '../SimpleMessage';
+import { getWallet } from '../../../utils/modalManager';
 
 export default class extends baseView {
   constructor(options = {}) {
@@ -22,7 +24,26 @@ export default class extends baseView {
 
   events() {
     return {
+      'click .js-unlock': 'onUnlockClick',
     };
+  }
+
+  onUnlockClick() {
+    const password = this.$('#walletPassword').val();
+    getWallet()
+      .unlockWallet(password, true)
+      .done((data) => {
+        if (data.isLocked === 'false') {
+          this.setState({ isLocked: false });
+        } else {
+          openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
+            app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
+        }
+      })
+      .fail(xhr => {
+        openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
+          xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
+      });
   }
 
   render() {

@@ -2,7 +2,9 @@ import BaseVw from './baseVw';
 import loadTemplate from '../utils/loadTemplate';
 import UnlockBtn from './modals/wallet/UnlockBtn';
 import $ from 'jquery';
-
+import app from '../app';
+import { openSimpleMessage } from './modals/SimpleMessage';
+import { getWallet } from '../utils/modalManager';
 
 export default class extends BaseVw {
 
@@ -26,8 +28,8 @@ export default class extends BaseVw {
 
   events() {
     return {
-      'click .js-lockWallet': 'lockWalletClick',
-      'click .js-unlockWallet': 'unlockWalletClick',
+      'click .js-lockWallet': 'onLockClick',
+      'click .js-unlockWallet': 'onUnlockClick',
     };
   }
 
@@ -42,12 +44,24 @@ export default class extends BaseVw {
     }
   }
 
-  lockWalletClick() {
-    this.unlockBtn.setState({ unlockBtnVisible: true });
+  onLockClick() {
+    getWallet()
+      .lockWallet()
+      .done(data => {
+        if (data.isLocked === 'true') {
+          this.setState({ walletLocked: true });
+        } else {
+          // TODO print simple msg?
+          console.log('error?');
+        }
+      })
+      .fail(xhr => {
+        // TODO print simple msg?
+      });
   }
 
-  // TODO impl
-  unlockWalletClick() {
+  onUnlockClick() {
+    this.unlockBtn.setState({ unlockBtnVisible: true });
   }
 
   render() {

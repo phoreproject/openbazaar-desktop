@@ -38,7 +38,11 @@ import WalletBalances from './collections/wallet/Balances';
 import Followers from './collections/Followers';
 import { fetchExchangeRates } from './utils/currency';
 import './utils/exchangeRateSyncer';
-import { launchDebugLogModal, launchSettingsModal } from './utils/modalManager';
+import {
+  setWalletInitState,
+  launchDebugLogModal,
+  launchSettingsModal,
+} from './utils/modalManager';
 import listingDeleteHandler from './startup/listingDelete';
 import { fixLinuxZoomIssue, handleServerShutdownRequests } from './startup';
 import ConnectionManagement from './views/modals/connectionManagement/ConnectionManagement';
@@ -53,7 +57,8 @@ fixLinuxZoomIssue();
 handleServerShutdownRequests();
 
 app.localSettings = new LocalSettings({ id: 1 });
-app.localSettings.fetch().fail(() => app.localSettings.save());
+app.localSettings.fetch()
+  .fail(() => app.localSettings.save());
 
 // initialize language functionality
 function getValidLanguage(lang) {
@@ -144,7 +149,8 @@ function fetchWalletStatus() {
   function _fetchSeed(retryCnt) {
     $.get(app.getServerUrl('manage/iswalletlocked'))
       .done((args) => {
-        app.pageNav.setState({ isLocked: args.isLocked === 'true' });
+        // creates wallet instance with correct 'isLocked' state.
+        setWalletInitState({ isLocked: args.isLocked === 'true' } );
         fetchSeedStatusDeferred.resolve(args);
       })
       .fail(xhr => {
@@ -158,6 +164,7 @@ function fetchWalletStatus() {
           .format(xhr && xhr.responseJSON && xhr.responseJSON.reason || ''));
       });
   }
+
   _fetchSeed(0);
 
   return fetchSeedStatusDeferred.promise();

@@ -251,15 +251,8 @@ export default class extends BaseModal {
 
   onUnlockClick() {
     const password = this.$('#walletPassword').val();
-    $.post({
-      url: app.getServerUrl('manage/unlockwallet'),
-      data: JSON.stringify({ password, omitDecryption: true }),
-      dataType: 'json',
-      contentType: 'application/json',
-    }).done((data) => {
-      if (data.isLocked === 'false') {
-        this.setState({ isLocked: false });
-      } else {
+    this.unlockWallet(password, true).done((data) => {
+      if (data.isLocked !== 'false') {
         openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
           app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
       }
@@ -270,15 +263,8 @@ export default class extends BaseModal {
   }
 
   onLockClick() {
-    $.post({
-      url: app.getServerUrl('manage/lockwallet'),
-      data: JSON.stringify({ omitDecryption: true }),
-      dataType: 'json',
-      contentType: 'application/json',
-    }).done((data) => {
-      if (data.isLocked === 'true') {
-        this.setState({ isLocked: true });
-      } else {
+    this.lockWallet().done((data) => {
+      if (data.isLocked !== 'true') {
         openSimpleMessage(app.polyglot.t('wallet.manage.lockFailedDialogTitle'),
           app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
       }
@@ -443,6 +429,46 @@ export default class extends BaseModal {
     this.addressFetches[coinType].push(fetch);
 
     return fetch;
+  }
+
+  unlockWallet(password, omitDecryption = true) {
+    const postUnlockDeferred = $.Deferred();
+
+    $.post({
+      url: app.getServerUrl('manage/unlockwallet'),
+      data: JSON.stringify({ password, omitDecryption }),
+      dataType: 'json',
+      contentType: 'application/json',
+    }).done(data => {
+      if (data.isLocked === 'false') {
+        this.setState({ isLocked: false });
+      }
+      postUnlockDeferred.resolve(data);
+    }).fail(xhr => {
+      postUnlockDeferred.reject(xhr);
+    });
+
+    return postUnlockDeferred.promise();
+  }
+
+  lockWallet() {
+    const postLockDeferred = $.Deferred();
+
+    $.post({
+      url: app.getServerUrl('manage/lockwallet'),
+      data: '{}',
+      dataType: 'json',
+      contentType: 'application/json',
+    }).done(data => {
+      if (data.isLocked === 'true') {
+        this.setState({ isLocked: true });
+      }
+      postLockDeferred.resolve(data);
+    }).fail(xhr => {
+      postLockDeferred.reject(xhr);
+    });
+
+    return postLockDeferred.promise();
   }
 
   getCountAtFirstFetch(coinType = this.activeCoin) {

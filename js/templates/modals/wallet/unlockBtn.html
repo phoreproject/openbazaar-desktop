@@ -1,3 +1,20 @@
 <% if (ob.unlockBtnVisible) { %>
- <!--TODO impl-->
+  <div id="unlockBtn" class="confirmBox clrBr clrP clrT clrSh1">
+    <p>TODO You can encrypt seed words here</p>
+    <div class="padMdKids padStack pad0">
+      <div class="flexCol">
+        <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="walletPassword" placeholder="<%= ob.polyT('wallet.walletPasswordPlaceholder') %>" data-field-standalone="string">
+      </div>
+      <div class="flexCol">
+        <div class="flexRow posR">
+          <div class="col6">
+            <%= ob.processingButton({
+              className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-unlock',
+              btnText: ob.polyT('settings.advancedTab.server.walletManager.btnUnlockWallet')
+            }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <% } %>

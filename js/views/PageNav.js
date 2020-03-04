@@ -479,7 +479,7 @@ export default class extends BaseVw {
 
   navWalletClick() {
     recordEvent('NavClick', { target: 'walletOpen' });
-    launchWallet({ initialState: { isLocked: this._state.isLocked } });
+    launchWallet();
   }
 
   navCreateListingClick() {

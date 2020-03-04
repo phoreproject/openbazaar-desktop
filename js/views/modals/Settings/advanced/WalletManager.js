@@ -4,6 +4,7 @@ import $ from 'jquery';
 import app from '../../../../app';
 import { openSimpleMessage } from '../../SimpleMessage';
 import { getPasswordIfCorrect } from '../../../../utils/pass';
+import { getWallet } from '../../../../utils/modalManager';
 
 export default class extends BaseVw {
   constructor(options = {}) {
@@ -95,6 +96,7 @@ export default class extends BaseVw {
           openSimpleMessage(title, message);
         } else {
           this.setState({ isEncrypted: data.isLocked === 'true' });
+          getWallet().setState({ isLocked: data.isLocked === 'true' });
           openSimpleMessage(
             app.polyglot.t('settings.advancedTab.server.walletManager.dialogSuccessTitle'),
             app.polyglot.t('settings.advancedTab.server.walletManager.dialogSuccessMsg',
