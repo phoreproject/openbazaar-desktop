@@ -47,14 +47,13 @@ export default class extends baseView {
   }
 
   render() {
-    super.render();
     const state = this.getState();
 
     loadTemplate('modals/wallet/unlockBtn.html', t => {
       this.$el.html(t({ ...state }));
     });
 
-    return this;
+    return super.render();
   }
 
 }

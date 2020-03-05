@@ -68,14 +68,15 @@ export default class extends BaseVw {
     const state = this.getState();
 
     loadTemplate('toolBar.html', (t) => {
-      this.$el.html(t(...state));
-      super.render();
+      this.$el.html(t({
+        walletLocked: state.walletLocked,
+      }));
 
       this.unlockBtn.delegateEvents();
       this.$('.js-unlockBtnPlaceholder')
         .append(this.unlockBtn.render().el);
     });
 
-    return this;
+    return super.render();
   }
 }

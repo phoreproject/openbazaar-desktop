@@ -124,7 +124,6 @@ export function getWallet() {
   if (!_wallet) {
     createWalletInstance();
   }
-  console.log('wallet instance', _wallet);
   return _wallet;
 }
 
