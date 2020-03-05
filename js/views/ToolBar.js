@@ -35,11 +35,11 @@ export default class extends BaseVw {
 
   documentClick(e) {
     const unlockBtn = this.getCachedEl('.js-unlockBtnPlaceholder')[0];
-    const lockWallet = this.getCachedEl('.js-lockWallet')[0];
+    const unlockWallet = this.getCachedEl('.js-unlockWallet')[0];
 
     if (this.unlockBtn && this.unlockBtn.getState().unlockBtnVisible &&
       !$.contains(unlockBtn, e.target) && unlockBtn !== e.target &&
-      !$.contains(lockWallet, e.target) && lockWallet !== e.target) {
+      !$.contains(unlockWallet, e.target) && unlockWallet !== e.target) {
       this.unlockBtn.setState({ unlockBtnVisible: false });
     }
   }
