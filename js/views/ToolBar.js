@@ -2,8 +2,6 @@ import BaseVw from './baseVw';
 import loadTemplate from '../utils/loadTemplate';
 import UnlockBtn from './modals/wallet/UnlockBtn';
 import $ from 'jquery';
-import app from '../app';
-import { openSimpleMessage } from './modals/SimpleMessage';
 import { getWallet } from '../utils/modalManager';
 
 export default class extends BaseVw {
@@ -21,12 +19,9 @@ export default class extends BaseVw {
     this.options = opts;
 
     this.unlockBtn = this.createChild(UnlockBtn);
-    this.listenTo(this.unlockBtn, 'walletUnlocked', () => {
-      this.setState({ walletLocked: false });
-    });
-
     this.boundOnDocClick = this.documentClick.bind(this);
     $(document).on('click', this.boundOnDocClick);
+    this.wallet = null;
   }
 
   events() {
@@ -47,13 +42,22 @@ export default class extends BaseVw {
     }
   }
 
+  prepareWallet() {
+    if (this.wallet == null) {
+      this.wallet = getWallet();
+
+      this.listenTo(this.wallet, 'lockStatusChanged', (status) => {
+        this.setState({ walletLocked: status });
+      });
+    }
+  }
+
   onLockClick() {
-    getWallet()
-      .lockWallet()
+    this.prepareWallet();
+
+    this.wallet.lockWallet()
       .done(data => {
-        if (data.isLocked === 'true') {
-          this.setState({ walletLocked: true });
-        } else {
+        if (data.isLocked !== 'true') {
           // TODO print simple msg?
           console.log('error?');
         }
@@ -64,6 +68,7 @@ export default class extends BaseVw {
   }
 
   onUnlockClick() {
+    this.prepareWallet();
     this.unlockBtn.setState({ unlockBtnVisible: true });
   }
 

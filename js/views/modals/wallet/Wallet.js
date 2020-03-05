@@ -349,7 +349,7 @@ export default class extends BaseModal {
   }
 
   get isLocked() {
-    return this._state.isLocked;
+    return this.getState().isLocked;
   }
 
   checkCoinType(coinType) {
@@ -442,6 +442,7 @@ export default class extends BaseModal {
     }).done(data => {
       if (data.isLocked === 'false') {
         this.setState({ isLocked: false });
+        this.trigger('lockStatusChanged', false);
       }
       postUnlockDeferred.resolve(data);
     }).fail(xhr => {
@@ -451,17 +452,18 @@ export default class extends BaseModal {
     return postUnlockDeferred.promise();
   }
 
-  lockWallet() {
+  lockWallet(password = '') {
     const postLockDeferred = $.Deferred();
 
     $.post({
       url: app.getServerUrl('manage/lockwallet'),
-      data: '{}',
+      data: JSON.stringify({ password }),
       dataType: 'json',
       contentType: 'application/json',
     }).done(data => {
       if (data.isLocked === 'true') {
         this.setState({ isLocked: true });
+        this.trigger('lockStatusChanged', true);
       }
       postLockDeferred.resolve(data);
     }).fail(xhr => {
@@ -500,10 +502,7 @@ export default class extends BaseModal {
     this.checkCoinType(coinType);
     const curCount = this.getCountAtFirstFetch(coinType);
 
-    this.setCountAtFirstFetch(
-      typeof curCount === 'number' ? curCount + 1 : 1,
-      coinType
-    );
+    this.setCountAtFirstFetch(typeof curCount === 'number' ? curCount + 1 : 1, coinType);
   }
 
   open(...args) {

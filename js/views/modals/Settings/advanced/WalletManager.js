@@ -1,6 +1,5 @@
 import loadTemplate from '../../../../utils/loadTemplate';
 import BaseVw from '../../../baseVw';
-import $ from 'jquery';
 import app from '../../../../app';
 import { openSimpleMessage } from '../../SimpleMessage';
 import { getPasswordIfCorrect } from '../../../../utils/pass';
@@ -44,11 +43,11 @@ export default class extends BaseVw {
   }
 
   onClickLockWallet() {
-    this.manageSeedStatus('manage/lockwallet', 'true');
+    this.manageSeedStatus(getWallet().lockwallet, 'true');
   }
 
   onClickUnlockWallet() {
-    this.manageSeedStatus('manage/unlockwallet', 'false');
+    this.manageSeedStatus(getWallet().unlockwallet, 'false');
   }
 
   isEncryptedChanged() {
@@ -70,7 +69,7 @@ export default class extends BaseVw {
       app.polyglot.t('settings.advancedTab.server.walletManager.decrypted');
   }
 
-  manageSeedStatus(url, isLocked) {
+  manageSeedStatus(callable, isLocked) {
     const password = getPasswordIfCorrect(this.$('#seedPassword').val(),
       this.$('#seedPassword2').val());
     if (!password) {
@@ -81,12 +80,7 @@ export default class extends BaseVw {
       return this.walletManageRequest;
     }
 
-    this.walletManageRequest = $.post({
-      url: app.getServerUrl(url),
-      data: JSON.stringify({ password }),
-      dataType: 'json',
-      contentType: 'application/json',
-    })
+    this.walletManageRequest = callable(password, false)
       .done((data) => {
         if (data.isLocked !== isLocked) {
           const title = app.polyglot.t('settings.advancedTab.server.walletManager.dialogFailTitle');
@@ -96,7 +90,6 @@ export default class extends BaseVw {
           openSimpleMessage(title, message);
         } else {
           this.setState({ isEncrypted: data.isLocked === 'true' });
-          getWallet().setState({ isLocked: data.isLocked === 'true' });
           openSimpleMessage(
             app.polyglot.t('settings.advancedTab.server.walletManager.dialogSuccessTitle'),
             app.polyglot.t('settings.advancedTab.server.walletManager.dialogSuccessMsg',

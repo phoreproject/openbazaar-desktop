@@ -35,7 +35,6 @@ export default class extends baseView {
       .done((data) => {
         if (data.isLocked === 'false') {
           this.setState({ unlockBtnVisible: false });
-          this.trigger('walletUnlocked');
         } else {
           openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
             app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));

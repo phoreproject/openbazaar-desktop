@@ -150,7 +150,7 @@ function fetchWalletStatus() {
     $.get(app.getServerUrl('manage/iswalletlocked'))
       .done((args) => {
         // creates wallet instance with correct 'isLocked' state.
-        setWalletInitState({ isLocked: args.isLocked === 'true' } );
+        setWalletInitState({ isLocked: args.isLocked === 'true' });
         fetchSeedStatusDeferred.resolve(args);
       })
       .fail(xhr => {
