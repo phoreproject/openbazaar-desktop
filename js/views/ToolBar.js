@@ -21,6 +21,9 @@ export default class extends BaseVw {
     this.options = opts;
 
     this.unlockBtn = this.createChild(UnlockBtn);
+    this.listenTo(this.unlockBtn, 'walletUnlocked', () => {
+      this.setState({ walletLocked: false });
+    });
 
     this.boundOnDocClick = this.documentClick.bind(this);
     $(document).on('click', this.boundOnDocClick);
