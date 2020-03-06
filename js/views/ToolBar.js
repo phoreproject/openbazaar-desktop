@@ -3,6 +3,8 @@ import loadTemplate from '../utils/loadTemplate';
 import UnlockBtn from './modals/wallet/UnlockBtn';
 import $ from 'jquery';
 import { getWallet } from '../utils/modalManager';
+import { openSimpleMessage } from './modals/SimpleMessage';
+import app from '../app';
 
 export default class extends BaseVw {
 
@@ -58,12 +60,13 @@ export default class extends BaseVw {
     this.wallet.lockWallet()
       .done(data => {
         if (data.isLocked !== 'true') {
-          // TODO print simple msg?
-          console.log('error?');
+          openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
+            app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
         }
       })
       .fail(xhr => {
-        // TODO print simple msg?
+        openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
+          xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
       });
   }
 
