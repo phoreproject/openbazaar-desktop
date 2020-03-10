@@ -1024,7 +1024,9 @@
     "manage": {
       "unlockFailedDialogTitle": "Unlock wallet failed.",
       "stateChangeFailedUnknownReason": "Unknown reason.",
-      "lockFailedDialogTitle": "Lock wallet failed."
+      "lockFailedDialogTitle": "Lock wallet failed.",
+      "cannotLockUntilPassSetUp": "Cannot lock wallet, because password is not set up.",
+      "lockWalletInSettingsFirst": "Go to the settings -> advanced -> lock wallet and lock wallet seed with password."
     }
   },
   "formats": {
