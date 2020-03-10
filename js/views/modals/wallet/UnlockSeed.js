@@ -39,7 +39,7 @@ export default class extends BaseModal {
     const password = this.$('#seedPassword').val();
     this.walletSeedFetch = $.post({
       url: app.getServerUrl('manage/initwallet'),
-      data: JSON.stringify({ password, omitDecryption: this.options.temporaryUnlock }),
+      data: JSON.stringify({ password, skipCrypt: this.options.temporaryUnlock }),
       dataType: 'json',
       contentType: 'application/json',
     }).done((data) => {
