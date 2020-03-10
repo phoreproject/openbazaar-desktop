@@ -1,15 +1,15 @@
 # OpenBazaar Client v2
 
-This is the reference client for the OpenBazaar network. It is an interface for your OpenBazaar node, to use it you will need to run an [OpenBazaar node](https://github.com/OpenBazaar/openbazaar-go) either locally or on a remote server.
+This is the reference client for the OpenBazaar network. It is an interface for your OpenBazaar node, to use it you will need to run an [OpenBazaar node](https://github.com/phoreproject/pm-go) either locally or on a remote server.
 
 For full installable versions of the OpenBazaar app, with the server and client bundled together, go to [the OpenBazaar download page.](https://www.openbazaar.org/download/)
 
-[![Build Status](https://travis-ci.org/OpenBazaar/openbazaar-desktop.svg?branch=master)](https://travis-ci.org/OpenBazaar/openbazaar-desktop)
+[![Build Status](https://travis-ci.org/phoreproject/pm-desktop.svg?branch=master)](https://travis-ci.org/phoreproject/pm-desktop)
 
 ## Getting Started
 
 To create a local development copy of the reference client, clone the client repository into a directory of your choice:
-- `git clone https://github.com/phoreproject/openbazaar-desktop`
+- `git clone https://github.com/phoreproject/pm-desktop`
 
 Make sure you have Node.js and NPM installed. Node versions older than 8.9.2 or NPM versions older than 5.5.1 may not work.
 
@@ -64,9 +64,9 @@ This will prevent your system from having errors due to too many files being wat
 
 ## Contributing
 
-We welcome contributions to the reference client. The best way to get started is to look for an issue with the [Help Wanted label](https://github.com/OpenBazaar/openbazaar-desktop/labels/help%20wanted).
+We welcome contributions to the reference client. The best way to get started is to look for an issue with the [Help Wanted label](https://github.com/phoreproject/pm-desktop/labels/help%20wanted).
 
-You can also look for issues with the [bug label](https://github.com/OpenBazaar/openbazaar-desktop/labels/bug). These are confirmed bugs that need to be fixed.
+You can also look for issues with the [bug label](https://github.com/phoreproject/pm-desktop/labels/bug). These are confirmed bugs that need to be fixed.
 
 Contributions are expected to match the coding style already present in this repo, and must pass es-lint with no errors.
 
@@ -79,5 +79,5 @@ You can request new languages there, and contribute to the translation of existi
 New languages are usually added when they reach 80% or more completion, and not removed from the client unless they fall below 60% for several releases.
 
 ## License
-This project is licensed under the MIT License. You can view [LICENSE.MD](https://github.com/OpenBazaar/openbazaar-desktop/blob/master/LICENSE) for more details.
+This project is licensed under the MIT License. You can view [LICENSE.MD](https://github.com/phoreproject/pm-desktop/blob/master/LICENSE) for more details.
 
