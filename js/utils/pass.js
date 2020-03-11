@@ -2,8 +2,8 @@ import { openSimpleMessage } from '../views/modals/SimpleMessage';
 import app from '../app';
 
 
-export function getPasswordIfCorrect(password, password2) {
-  if (password !== password2) {
+export function getPasswordIfCorrect(password, password2, isEncrypted) {
+  if (!isEncrypted && password !== password2) {
     openSimpleMessage(
       app.polyglot.t('settings.advancedTab.server.walletManager.passwordsNotEqual'));
     return null;

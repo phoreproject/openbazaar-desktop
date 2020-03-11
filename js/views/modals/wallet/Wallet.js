@@ -442,7 +442,7 @@ export default class extends BaseModal {
       data: JSON.stringify({ password, skipCrypt }),
       dataType: 'json',
       contentType: 'application/json',
-    }).done(data => {
+    }).done((data) => {
       if (data.isLocked === 'false') {
         this.setState({ isLocked: false });
         this.trigger('lockStatusChanged', false);
@@ -463,7 +463,7 @@ export default class extends BaseModal {
       data: JSON.stringify({ password, skipCrypt }),
       dataType: 'json',
       contentType: 'application/json',
-    }).done(data => {
+    }).done((data) => {
       if (data.isLocked === 'true') {
         this.setState({ isLocked: true });
         this.trigger('lockStatusChanged', true);

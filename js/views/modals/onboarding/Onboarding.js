@@ -103,7 +103,7 @@ export default class extends BaseModal {
 
     if (curScreen === 'encrypt') {
       const password = getPasswordIfCorrect(this.$('#seedPassword').val(),
-        this.$('#seedPassword2').val());
+        this.$('#seedPassword2').val(), false);
       if (!password) {
         return;
       }
