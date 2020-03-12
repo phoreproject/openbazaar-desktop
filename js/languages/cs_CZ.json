@@ -160,6 +160,10 @@
     "connectMessaging": {
       "cancelLink": "Zrušit",
       "connectAttemptMsg": "Připojuje se k %{serverName}. %{cancelLink}"
+    },
+    "fetchSeed": {
+      "title": "Wallet seed words are encrypted",
+      "message": "Input seed password"
     }
   },
   "notifications": {
@@ -504,10 +508,10 @@
       "sectionName": "Základní",
       "bitcoinUnit": "Bitcoinová jednotka",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Satoshi (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Ukládání základního nastavení...",
       "statusSaveComplete": "Základní nastavení bylo uloženo.",
@@ -640,7 +644,29 @@
           "warning1": "Nikdy nesdílej svůj Seed. Kdokoli s tímto Seedem může ukrást tvé finanční prostředky.",
           "warning2": "Nikdy ho nepiš na web.",
           "warning3": "Neukládej to v elektronické podobě.",
-          "warning4": "Neztrať svůj Seed, jinak budou tvé finanční prostředky trvale ztraceny, pokud se smažou tvá data."
+          "warning4": "Neztrať svůj Seed, jinak budou tvé finanční prostředky trvale ztraceny, pokud se smažou tvá data.",
+          "btnHideSeed": "Hide Seed",
+          "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet."
+        },
+        "lockOrUnlockWalletLbl": "Lock / Unlock Wallet Seed",
+        "lockOrUnlockWalletHelper": "You are able to encrypt or decrypt your seed words here.",
+        "unableToFetchSeedStatus": "There was an error fetching your seed status",
+        "walletManager": {
+          "btnShowManager": "Show Manager",
+          "btnLockWallet": "Lock wallet seed",
+          "btnUnlockWallet": "Unlock wallet seed",
+          "introLine": "Here you can encrypt or decrypt your seed words.",
+          "dialogSuccessTitle": "Wallet seed word status successfully changed.",
+          "dialogSuccessMsg": "Seed words are now %{isLocked}.",
+          "dialogFailTitle": "Manager was not able to change seed status",
+          "dialogFailMsg": "Wallet status should be %{shouldBe} but is still %{is}",
+          "encrypted": "encrypted",
+          "decrypted": "decrypted",
+          "shortPassword": "Your password is too short",
+          "passwordLenNotify": "The password length should be at least 8 characters long",
+          "passwordsNotEqual": "Passwords are not equal",
+          "enterPassword": "Enter password",
+          "repeatPassword": "Repeat password"
         }
       },
       "transaction": {
@@ -982,13 +1008,25 @@
       "resyncBtn": "Znovu synchronizovat",
       "resyncCompleteTitle": "%{cur} byla zahájena synchronizace",
       "resyncComplete": "Tvoje transakce se začnou znovu synchronizovat. Dokončení může trvat minutu nebo dvě.",
-      "syncUnavailable": "Transakce můžeš znovu načíst pouze jednou za minutu."
+      "syncUnavailable": "Transakce můžeš znovu načíst pouze jednou za minutu.",
+      "resyncStartedTitle": "%{cur} Resync Started",
+      "resyncStarted": "Your transactions will begin resyncing. This may take five to ten minutes or longer."
     },
     "cryptoTeaser": {
       "coinCount": "%{count}+ mince",
       "bodyLine": "Obchoduj %{coinCount} na OpenBazaar zdarma",
       "btnCreateListing": "Vytvořit záznam",
       "linkViewCryptoListings": "Zobrazení krypto záznamů"
+    },
+    "walletPasswordPlaceholder": "Wallet password",
+    "walletLockButton": "Lock",
+    "walletUnlockButton": "Unlock",
+    "manage": {
+      "unlockFailedDialogTitle": "Unlock wallet failed.",
+      "stateChangeFailedUnknownReason": "Unknown reason.",
+      "lockFailedDialogTitle": "Lock wallet failed.",
+      "cannotLockUntilPassSetUp": "Cannot lock wallet, because password is not set up.",
+      "lockWalletInSettingsFirst": "Go to the settings -> advanced -> lock wallet and lock wallet seed with password."
     }
   },
   "formats": {
@@ -1298,7 +1336,11 @@
       "tooManyPhotosBody": "Některé nebo všechny tvé fotografie nemohly být nahrány, protože bys překročil maximální povolenou částku.",
       "unableToLoadImages": "Nepovedlo se nám nahrát tvůj obrázek. |||| Nepovedlo se nám nahrát tvé obrázky.",
       "uploadImageErrorTitle": "Při nahrávání tvého obrázku došlo k chybě. |||| Při nahrávání tvých obrázků došlo k chybě."
-    }
+    },
+    "format": "Format",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "price2": "Price"
   },
   "search": {
     "title": "Objevit",
@@ -1379,6 +1421,11 @@
     "tosScreen": {
       "heading": "Podmínky služby",
       "tos": "OpenBazaar je síť pro přímý obchod zboží a služeb mezi lidmi - využívající kryptoměny - bez jakékoli centrální organizace, která by platformu ovládala. To znamená, že jsi zodpovědný(á) za svou vlastní aktivitu v síti.\n\nUživatelé OpenBazaaru nejsou ve výchozím nastavení anonymní. Většina komunikace mezi stranami je šifrována, ale IP adresy jsou veřejné a mohou být spojeny s činností v síti. Škodlivé strany by mohly tyto informace použít proti tobě; ochrana tvého soukromí je tvou vlastní odpovědností.\n\nUživatelé OpenBazaar musí dodržovat zákony ve své vlastní právní jurisdikci i své svědomí. Vývojáři OpenBazaar neuznávají - a nenesou odpovědnost - jakékoli použití platformy pro nezákonnou činnost.\n\nKomunita vývojářů OpenBazaar usilovně pracovala na poskytování bezplatné platformy pro obchod do světa. Ale stejně jako u jakéhokoli softwaru chyby budou nalezeny. Vývojáři neodpovídají za žádné peněžní ztráty spojené s problémy v softwaru.\n\nPoužíváním OpenBazaar zodpovídáš za své vlastní chování v síti OpenBazaar."
+    },
+    "encryptScreen": {
+      "heading": "Secure your seed words",
+      "seedPassword": "Seed password",
+      "repeatPassword": "Repeat password"
     }
   },
   "pageControls": {
@@ -2156,10 +2203,10 @@
     "invalidtorlistings": "Musíš zadat platnou Tor URL adresu produktu pro vyhledávání."
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",
@@ -5739,5 +5786,10 @@
     "zh-TW": "Čínština (T)",
     "zu": "Zulu",
     "zu-ZA": "Zulu (Jižní Afrika)"
-  }
+  },
+  "priceTypes": {
+    "FIXED_PRICE": "Fixed Price",
+    "MARKET_PRICE": "Market Price"
+  },
+  "cryptoPriceFixMarket": "fix price"
 }

@@ -9,8 +9,8 @@ Features:
 """
 
 import json
-import pprint
 import os
+import pprint
 
 BaseFile = "en_US.json"
 CNT = 1

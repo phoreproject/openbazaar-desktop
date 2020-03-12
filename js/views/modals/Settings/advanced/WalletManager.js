@@ -43,11 +43,11 @@ export default class extends BaseVw {
   }
 
   onClickLockWallet() {
-    this.manageSeedStatus(getWallet().lockwallet, 'true');
+    this.changeSeedStatus('true');
   }
 
   onClickUnlockWallet() {
-    this.manageSeedStatus(getWallet().unlockwallet, 'false');
+    this.changeSeedStatus('false');
   }
 
   isEncryptedChanged() {
@@ -69,41 +69,46 @@ export default class extends BaseVw {
       app.polyglot.t('settings.advancedTab.server.walletManager.decrypted');
   }
 
-  manageSeedStatus(callable, isLocked) {
-    const password = getPasswordIfCorrect(this.$('#seedPassword').val(),
-      this.$('#seedPassword2').val());
+  changeSeedStatus(isLocked) {
+    const password = getPasswordIfCorrect(this.$('#seedPassword')
+        .val(),
+      this.$('#seedPassword2')
+        .val(), this.getState().isEncrypted);
     if (!password) {
-      return null;
+      return;
     }
 
-    if (this.walletManageRequest && this.walletManageRequest.state() === 'pending') {
-      return this.walletManageRequest;
+    const wallet = getWallet();
+    let promise = undefined;
+    if (isLocked === 'true') {
+      promise = wallet.lockWallet(password, false);
+    } else {
+      promise = wallet.unlockWallet(password, false);
     }
 
-    this.walletManageRequest = callable(password, false)
-      .done((data) => {
-        if (data.isLocked !== isLocked) {
-          const title = app.polyglot.t('settings.advancedTab.server.walletManager.dialogFailTitle');
-          const message = app.polyglot.t('settings.advancedTab.server.walletManager.dialogFailMsg',
-            { shouldBe: this.getStringFromStatus(isLocked),
-              is: this.getStringFromStatus(data.isLocked) });
-          openSimpleMessage(title, message);
-        } else {
-          this.setState({ isEncrypted: data.isLocked === 'true' });
-          openSimpleMessage(
-            app.polyglot.t('settings.advancedTab.server.walletManager.dialogSuccessTitle'),
-            app.polyglot.t('settings.advancedTab.server.walletManager.dialogSuccessMsg',
-              { isLocked: this.getStringFromStatus(isLocked) }));
-        }
-      })
+    promise.done((data) => {
+      if (data.isLocked !== isLocked) {
+        const title = app.polyglot.t('settings.advancedTab.server.walletManager.dialogFailTitle');
+        const message = app.polyglot.t('settings.advancedTab.server.walletManager.dialogFailMsg',
+          {
+            shouldBe: this.getStringFromStatus(isLocked),
+            is: this.getStringFromStatus(data.isLocked),
+          });
+        openSimpleMessage(title, message);
+      } else {
+        this.setState({ isEncrypted: data.isLocked === 'true' });
+        openSimpleMessage(
+          app.polyglot.t('settings.advancedTab.server.walletManager.dialogSuccessTitle'),
+          app.polyglot.t('settings.advancedTab.server.walletManager.dialogSuccessMsg',
+            { isLocked: this.getStringFromStatus(isLocked) }));
+      }
+    })
       .fail(xhr => {
         openSimpleMessage(
           '',
           xhr.responseJSON && xhr.responseJSON.reason || ''
         );
       });
-
-    return this.walletManageRequest;
   }
 
   render() {

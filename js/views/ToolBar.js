@@ -59,13 +59,16 @@ export default class extends BaseVw {
 
     this.wallet.lockWallet()
       .done(data => {
-        if (data.isLocked !== 'true') {
-          openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
+        if (data.isLocked === 'false' && data.isEncrypted === 'false') {
+          openSimpleMessage(app.polyglot.t('wallet.manage.cannotLockUntilPassSetUp'),
+            app.polyglot.t('wallet.manage.lockWalletInSettingsFirst'));
+        } else if (data.isLocked !== 'true') {
+          openSimpleMessage(app.polyglot.t('wallet.manage.lockFailedDialogTitle'),
             app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
         }
       })
       .fail(xhr => {
-        openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
+        openSimpleMessage(app.polyglot.t('wallet.manage.lockFailedDialogTitle'),
           xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
       });
   }

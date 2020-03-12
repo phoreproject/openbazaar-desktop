@@ -264,7 +264,10 @@ export default class extends BaseModal {
 
   onLockClick() {
     this.lockWallet().done((data) => {
-      if (data.isLocked !== 'true') {
+      if (data.isLocked === 'false' && data.isEncrypted === 'false') {
+        openSimpleMessage(app.polyglot.t('wallet.manage.cannotLockUntilPassSetUp'),
+          app.polyglot.t('wallet.manage.lockWalletInSettingsFirst'));
+      } else if (data.isLocked !== 'true') {
         openSimpleMessage(app.polyglot.t('wallet.manage.lockFailedDialogTitle'),
           app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
       }
@@ -431,15 +434,15 @@ export default class extends BaseModal {
     return fetch;
   }
 
-  unlockWallet(password, omitDecryption = true) {
+  unlockWallet(password, skipCrypt = true) {
     const postUnlockDeferred = $.Deferred();
 
     $.post({
       url: app.getServerUrl('manage/unlockwallet'),
-      data: JSON.stringify({ password, omitDecryption }),
+      data: JSON.stringify({ password, skipCrypt }),
       dataType: 'json',
       contentType: 'application/json',
-    }).done(data => {
+    }).done((data) => {
       if (data.isLocked === 'false') {
         this.setState({ isLocked: false });
         this.trigger('lockStatusChanged', false);
@@ -452,15 +455,15 @@ export default class extends BaseModal {
     return postUnlockDeferred.promise();
   }
 
-  lockWallet(password = '') {
+  lockWallet(password = '', skipCrypt = true) {
     const postLockDeferred = $.Deferred();
 
     $.post({
       url: app.getServerUrl('manage/lockwallet'),
-      data: JSON.stringify({ password }),
+      data: JSON.stringify({ password, skipCrypt }),
       dataType: 'json',
       contentType: 'application/json',
-    }).done(data => {
+    }).done((data) => {
       if (data.isLocked === 'true') {
         this.setState({ isLocked: true });
         this.trigger('lockStatusChanged', true);
