@@ -2295,6 +2295,7 @@ div.headline {
   bottom: 0;
   width: 100%;
   z-index:1000;
+  border-top: 1px solid rgba(59, 67, 74, 0.35);
 }
 
 
@@ -2304,4 +2305,23 @@ div.headline {
     overflow-y: scroll;
     height: calc(100% - #{$bar} - 36px);
   }
+}
+
+
+
+#unlockBtn {
+  position: fixed;
+  width: 20%;
+  height: 20%;
+  left:50%;
+  top:50%;
+}
+
+#unlockBtn.confirmBox {
+  bottom: 0;
+    top: auto;
+    right: 0;
+    left: auto;
+    width:40%;
+    background:#121c29;
 }
