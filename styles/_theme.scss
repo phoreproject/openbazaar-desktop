@@ -749,6 +749,7 @@ html {
 #doorbell-button {
   background: #162231;
   left: 30px;
+  z-index:1001;
 }
 
 #appFrame #contentFrame #pageContainer #pageTabBar {
@@ -1855,7 +1856,7 @@ background:none;
 #appFrame #chatContainer {
   right:12px;
   background:none;
-  height: calc(100% - 150px);
+  height: calc(100% - 180px);
 }
 
 .chat .chatIcon {
@@ -2293,6 +2294,7 @@ div.headline {
   position: fixed;
   bottom: 0;
   width: 100%;
+  z-index:1000;
 }
 
 
