@@ -23,6 +23,7 @@ import TransactionsVw from './transactions/Transactions';
 import ReloadTransactions from './ReloadTransactions';
 import CryptoTicker from '../../components/CryptoTicker';
 import { openSimpleMessage } from '../../modals/SimpleMessage';
+import * as moment from 'moment';
 
 export default class extends BaseModal {
   constructor(options = {}) {
@@ -55,7 +56,6 @@ export default class extends BaseModal {
     // If at this point the initialActiveCoin and consequently this.activeCoin
     // are null, it indicates that none of the wallet currencies are supported by
     // this client.
-
     const opts = {
       initialSendModeOn: app.walletBalances.get(initialActiveCoin) &&
         app.walletBalances.get(initialActiveCoin).get('confirmed') || false,
@@ -212,6 +212,8 @@ export default class extends BaseModal {
       'click .js-viewCryptoListings': 'onClickViewCryptoListings',
       'click .js-unlock': 'onUnlockClick',
       'click .js-lock': 'onLockClick',
+      'click .js-addTime': 'onAddTimeClick',
+      'change .js-walletUnlockTimeout': 'onTimePeriodChange',
       ...super.events(),
     };
   }
@@ -275,6 +277,31 @@ export default class extends BaseModal {
       openSimpleMessage(app.polyglot.t('wallet.manage.lockFailedDialogTitle'),
         xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
     });
+  }
+
+  onAddTimeClick(ev) {
+    const seconds = parseInt($(ev.currentTarget).data('time'), 10);
+    this.updateWalletTimoutAndHint(this.$('#unlockTimeout').val(), seconds);
+  }
+
+  onTimePeriodChange() {
+    this.updateWalletTimoutAndHint(this.$('#unlockTimeout').val(), 0);
+  }
+
+// || currentStr === '0'
+  updateWalletTimoutAndHint(currentStr, addValue) {
+    if (currentStr === '' && addValue === 0) {
+      this.setState({
+        timePeriodHelper: app.polyglot.t('wallet.manage.lockWalletIndefinitely'),
+        walletUnlockTimeout: addValue });
+    } else {
+      const newValue = parseInt(currentStr || '0', 10) + addValue;
+      const timePeriod = moment.duration(newValue * 1000).humanize();
+      this.setState({
+        timePeriodHelper:
+          app.polyglot.t('wallet.manage.lockWalletForParticularTime', { timePeriod }),
+        walletUnlockTimeout: newValue });
+    }
   }
 
   /**
@@ -353,6 +380,14 @@ export default class extends BaseModal {
 
   get isLocked() {
     return this.getState().isLocked;
+  }
+
+  get timePeriodHelper() {
+    return this.getState().timePeriodHelper;
+  }
+
+  get walletUnlockTimeout() {
+    return this.getState().walletUnlockTimeout;
   }
 
   checkCoinType(coinType) {
@@ -639,6 +674,9 @@ export default class extends BaseModal {
             }),
             activeCoin: this.activeCoin,
             isLocked: this.isLocked,
+            timePeriodHelper: this.timePeriodHelper ||
+              app.polyglot.t('wallet.manage.lockWalletIndefinitely'),
+            walletUnlockTimeout: this.walletUnlockTimeout || 0,
           }));
 
           super.render();
