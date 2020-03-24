@@ -18,6 +18,8 @@ export default class extends baseView {
 
     super(opts);
     this.options = opts;
+
+    this.updateWalletTimoutAndHint('', 0);
   }
 
   className() {
