@@ -1028,7 +1028,7 @@
       "cannotLockUntilPassSetUp": "Cannot lock wallet, because password is not set up.",
       "lockWalletInSettingsFirst": "Go to the settings -> advanced -> lock wallet and lock wallet seed with password.",
       "lockWalletIndefinitely": "Lock wallet indefinitely.",
-      "lockWalletForParticularTime": "Wallet will be unlocked after about %{timePeriod}"
+      "lockWalletForParticularTime": "Wallet will be locked within around %{timePeriod}."
     }
   },
   "formats": {
