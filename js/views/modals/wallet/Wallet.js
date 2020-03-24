@@ -253,8 +253,9 @@ export default class extends BaseModal {
 
   onUnlockClick() {
     const password = this.$('#walletPassword').val();
-    this.unlockWallet(password, true).done((data) => {
-      if (data.isLocked !== 'false') {
+    const unlockTimeout = parseInt(this.$('#unlockTimeout').val() || '0', 10);
+    this.unlockWallet(password, unlockTimeout, true).done((data) => {
+      if (data.isLocked === 'false') {
         openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
           app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
       }
@@ -280,7 +281,7 @@ export default class extends BaseModal {
   }
 
   onAddTimeClick(ev) {
-    const seconds = parseInt($(ev.currentTarget).data('time'), 10);
+    const seconds = parseInt($(ev.currentTarget).data('seconds'), 10);
     this.updateWalletTimoutAndHint(this.$('#unlockTimeout').val(), seconds);
   }
 
@@ -288,7 +289,6 @@ export default class extends BaseModal {
     this.updateWalletTimoutAndHint(this.$('#unlockTimeout').val(), 0);
   }
 
-// || currentStr === '0'
   updateWalletTimoutAndHint(currentStr, addValue) {
     if (currentStr === '' && addValue === 0) {
       this.setState({
@@ -469,18 +469,27 @@ export default class extends BaseModal {
     return fetch;
   }
 
-  unlockWallet(password, skipCrypt = true) {
+  unlockWallet(password, unlockTimestamp = 0, skipCrypt = true) {
     const postUnlockDeferred = $.Deferred();
 
     $.post({
       url: app.getServerUrl('manage/unlockwallet'),
-      data: JSON.stringify({ password, skipCrypt }),
+      data: JSON.stringify({ password, skipCrypt, unlockTimestamp }),
       dataType: 'json',
       contentType: 'application/json',
     }).done((data) => {
       if (data.isLocked === 'false') {
         this.setState({ isLocked: false });
         this.trigger('lockStatusChanged', false);
+        if (unlockTimestamp > 0) {
+          if (this.autoLockTimeout) {
+            clearInterval(this.autoLockTimeout);
+          }
+          this.autoLockTimeout = setTimeout(() => {
+            this.setState({ isLocked: true });
+            this.trigger('lockStatusChanged', true);
+          }, unlockTimestamp * 1000);
+        }
       }
       postUnlockDeferred.resolve(data);
     }).fail(xhr => {

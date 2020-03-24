@@ -1,6 +1,6 @@
 import BaseVw from './baseVw';
 import loadTemplate from '../utils/loadTemplate';
-import UnlockBtn from './modals/wallet/UnlockBtn';
+import UnlockBtn from './modals/wallet/UnlockPopUp';
 import $ from 'jquery';
 import { getWallet } from '../utils/modalManager';
 import { openSimpleMessage } from './modals/SimpleMessage';
@@ -36,10 +36,10 @@ export default class extends BaseVw {
   documentClick(e) {
     const unlockBtn = this.getCachedEl('.js-unlockBtnPlaceholder')[0];
     const unlockWallet = this.getCachedEl('.js-unlockWallet')[0];
-
     if (this.unlockBtn && this.unlockBtn.getState().unlockBtnVisible &&
       !$.contains(unlockBtn, e.target) && unlockBtn !== e.target &&
-      !$.contains(unlockWallet, e.target) && unlockWallet !== e.target) {
+      !$.contains(unlockWallet, e.target) && unlockWallet !== e.target &&
+      e.target.className !== 'js-addTime') {
       this.unlockBtn.setState({ unlockBtnVisible: false });
     }
   }

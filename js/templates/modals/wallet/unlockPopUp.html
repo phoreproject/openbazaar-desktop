@@ -1,0 +1,35 @@
+<% if (ob.unlockBtnVisible) { %>
+  <div id="unlockBtn" class="confirmBox clrBr clrP clrT clrSh1">
+    <p>TODO You can encrypt seed words here</p>
+    <div class="padMdKids padStack pad0">
+      <div class="flexRow">
+        <div class="rowMd">
+          <button class="js-addTime" data-seconds="60">+1m</button>
+          <button class="js-addTime" data-seconds="300">+5m</button>
+          <button class="js-addTime" data-seconds="1800">+30m</button>
+          <button class="js-addTime" data-seconds="10800">+3h</button>
+          <button class="js-addTime" data-seconds="43200">+12h</button>
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="rowMd padMd">
+          <input type="number" class="clrBr clrSh2 js-walletUnlockTimeout" name="name" id="unlockTimeout" value="<%= ob.walletUnlockTimeout %>" min="0">
+          <div class="clrT2 txSm helper js-timePeriodHelper"><%= ob.timePeriodHelper %></div>
+        </div>
+      </div>
+      <div class="flexCol">
+        <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="walletPassword" placeholder="<%= ob.polyT('wallet.walletPasswordPlaceholder') %>" data-field-standalone="string">
+      </div>
+      <div class="flexCol">
+        <div class="flexRow posR">
+          <div class="col6">
+            <%= ob.processingButton({
+              className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-unlock',
+              btnText: ob.polyT('settings.advancedTab.server.walletManager.btnUnlockWallet')
+            }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% } %>

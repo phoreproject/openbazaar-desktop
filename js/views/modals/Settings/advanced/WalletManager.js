@@ -83,7 +83,7 @@ export default class extends BaseVw {
     if (isLocked === 'true') {
       promise = wallet.lockWallet(password, false);
     } else {
-      promise = wallet.unlockWallet(password, false);
+      promise = wallet.unlockWallet(password, 0, false);
     }
 
     promise.done((data) => {
