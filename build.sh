@@ -85,7 +85,7 @@ case "$TRAVIS_OS_NAME" in
     # Retrieve Latest Server Binaries
     sudo apt-get install jq
     cd PHORE_MARKETPLACE_TEMP/
-    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/openbazaar-go/releases/$SERVERTAG > release.txt
+    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/pm-go/releases/$SERVERTAG > release.txt
     cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
 
@@ -97,12 +97,12 @@ case "$TRAVIS_OS_NAME" in
     electron-packager . ${APPNAME} --platform=linux --arch=x64 --electronVersion=${ELECTRONVER} --overwrite --ignore="PHORE_MARKETPLACE_TEMP" --prune --out=dist
 
     echo 'Move go server to electron app'
-    mkdir dist/${APPNAME}-linux-x64/resources/openbazaar-go/
-    cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-linux-amd64 dist/${APPNAME}-linux-x64/resources/openbazaar-go
+    mkdir dist/${APPNAME}-linux-x64/resources/pm-go/
+    cp -rf PHORE_MARKETPLACE_TEMP/pm-go-linux-amd64 dist/${APPNAME}-linux-x64/resources/pm-go
     rm -rf PHORE_MARKETPLACE_TEMP/*
-    mv dist/${APPNAME}-linux-x64/resources/openbazaar-go/openbazaar-go-linux-amd64 dist/${APPNAME}-linux-x64/resources/openbazaar-go/openbazaard
+    mv dist/${APPNAME}-linux-x64/resources/pm-go/pm-go-linux-amd64 dist/${APPNAME}-linux-x64/resources/pm-go/marketplaced
     rm -rf dist/${APPNAME}-linux-x64/resources/app/.travis
-    chmod +x dist/${APPNAME}-linux-x64/resources/openbazaar-go/openbazaard
+    chmod +x dist/${APPNAME}-linux-x64/resources/pm-go/marketplaced
 
     echo 'Create debian archive'
     electron-installer-debian --config .travis/config_amd64.json
@@ -140,7 +140,7 @@ case "$TRAVIS_OS_NAME" in
 
 #   Retrieve Latest Server Binaries
     cd PHORE_MARKETPLACE_TEMP/
-    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/openbazaar-go/releases/$SERVERTAG > release.txt
+    curl -u $GITHUB_USER:$GITHUB_TOKEN -s https://api.github.com/repos/phoreproject/pm-go/releases/$SERVERTAG > release.txt
     cat release.txt | jq -r ".assets[].browser_download_url" | xargs -n 1 curl -L -O
     cd ..
 
@@ -170,11 +170,11 @@ case "$TRAVIS_OS_NAME" in
         node_modules/electron-packager/bin/electron-packager.js . PhoreMarketplace --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplace" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplace.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
         echo 'Copying server binary into application folder...'
-        cp -rf PHORE_MARKETPLACE_TEMP/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/
+        cp -rf PHORE_MARKETPLACE_TEMP/pm-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/
         cp -rf PHORE_MARKETPLACE_TEMP/libwinpthread-1.win64.dll dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll
-        mkdir dist/PhoreMarketplace-win32-x64/resources/openbazaar-go
-        mv dist/PhoreMarketplace-win32-x64/resources/openbazaar-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/openbazaar-go/openbazaard.exe
-        mv dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll dist/PhoreMarketplace-win32-x64/resources/openbazaar-go/libwinpthread-1.dll
+        mkdir dist/PhoreMarketplace-win32-x64/resources/pm-go
+        mv dist/PhoreMarketplace-win32-x64/resources/pm-go-windows-4.0-amd64.exe dist/PhoreMarketplace-win32-x64/resources/pm-go/marketplaced.exe
+        mv dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll dist/PhoreMarketplace-win32-x64/resources/pm-go/libwinpthread-1.dll
 
         echo 'Building Installer...'
         grunt create-windows-installer --appname=PhoreMarketplace --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplace-win32-x64 --outdir=dist/win64
@@ -205,11 +205,11 @@ case "$TRAVIS_OS_NAME" in
         echo 'Installing electron-installer-dmg'
         npm install -g electron-installer-dmg
 
-        # Sign openbazaar-go binary
+        # Sign pm-go binary
         echo 'Signing Go binary'
-        mv PHORE_MARKETPLACE_TEMP/openbazaar-go-darwin-10.6-amd64 dist/osx/openbazaard
+        mv PHORE_MARKETPLACE_TEMP/pm-go-darwin-10.6-amd64 dist/osx/marketplaced
         rm -rf PHORE_MARKETPLACE_TEMP/*
-        codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime dist/osx/openbazaard
+        codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime dist/osx/marketplaced
 
         # Notarize the zip files
         UPLOAD_INFO_PLIST="uploadinfo.plist"
@@ -277,12 +277,12 @@ case "$TRAVIS_OS_NAME" in
             echo 'Running Electron Packager...'
             electron-packager . PhoreMarketplace --out=dist -app-category-type=public.app-category.business --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --protocol=pm --platform=darwin --arch=x64 --icon=imgs/openbazaar2.icns --electron-version=${ELECTRONVER} --overwrite --app-version=$PACKAGE_VERSION
 
-            echo 'Creating openbazaar-go folder in the OS X .app'
-            mkdir dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go
+            echo 'Creating pm-go folder in the OS X .app'
+            mkdir dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/pm-go
 
             echo 'Moving binary to correct folder'
-            mv dist/osx/openbazaard dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go/openbazaard
-            chmod +x dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/openbazaar-go/openbazaard
+            mv dist/osx/marketplaced dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/pm-go/marketplaced
+            chmod +x dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app/Contents/Resources/pm-go/marketplaced
 
             echo 'Codesign the .app'
             codesign --force --deep --sign "$SIGNING_IDENTITY" --options runtime --entitlements phore.entitlements dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app

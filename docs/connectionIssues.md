@@ -6,7 +6,7 @@ comming soon...
 ### Tor
 Refer to the guide to [configuring Phore Marketplace to run on Tor](https://github.com/phoreproject/pm-desktop/wiki/Tor-Setup).
 
-More information is available in the [server Tor documentation](https://github.com/phoreproject/openbazaar-go/blob/master/docs/tor.md), if you need it.
+More information is available in the [server Tor documentation](https://github.com/phoreproject/pm-go/blob/master/docs/tor.md), if you need it.
 
 
 ### Local Stand-alone Server
@@ -42,9 +42,9 @@ If you are seeing the following error in your JS console:
 
 For your protection, the client will only connect to a remote server via SSL. The above error indicates that your server is not set-up to run SSL.
 
-To enable SSL on your remote server, follow this [doc](https://github.com/phoreproject/openbazaar-go/blob/master/docs/ssl.md).
+To enable SSL on your remote server, follow this [doc](https://github.com/phoreproject/pm-go/blob/master/docs/ssl.md).
 
-You may also find this [guide to remote server security helpful.](https://github.com/phoreproject/openbazaar-go/blob/master/docs/security.md#basic-authentication)
+You may also find this [guide to remote server security helpful.](https://github.com/phoreproject/pm-go/blob/master/docs/security.md#basic-authentication)
 
 When you install the Phore Marketplace.crt file on your client machine, be sure to enable it as a trusted certificate.
 
@@ -66,7 +66,7 @@ If you are seeing the following error in your JS console:
 
 It is likely one of two things:
 
-1. You may have not properly specified your server ip when generating the server.csr file. When following this [doc](https://github.com/phoreproject/openbazaar-go/blob/master/docs/ssl.md), be sure to replace \<server-ip\> with the ip of your remote server when executing this command `openssl req -new -key server.key -out server.csr `...
+1. You may have not properly specified your server ip when generating the server.csr file. When following this [doc](https://github.com/phoreproject/pm-go/blob/master/docs/ssl.md), be sure to replace \<server-ip\> with the ip of your remote server when executing this command `openssl req -new -key server.key -out server.csr `...
 
 2. If you're running on Linux, that error could also indicate that the certificate needs to be added to the trusted list. Here's how to do it on Ubuntu ([detailed instructions](http://blog.tkassembled.com/410/adding-a-certificate-authority-to-the-trusted-list-in-ubuntu/)):
   - First, install libnss3-tools, which contains the certutil command: `sudo apt-get install libnss3-tools`
