@@ -1,8 +1,8 @@
 {
   "name": "marketplace-desktop",
   "productName": "Phore Marketplace Client",
-  "version": "2.3.1",
-  "serverVersionRequired": "2.3.1-dev4",
+  "version": "2.3.2",
+  "serverVersionRequired": "v2.3.2",
   "forceServerVersion": true,
   "apple_notarization": false,
   "description": "Decentralized p2p marketplace that uses Cryptocurrencies.",
