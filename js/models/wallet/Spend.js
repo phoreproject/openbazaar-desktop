@@ -179,7 +179,7 @@ export default Spend;
  */
 export function _spend(fields, options = {}) {
   const attrs = {
-    currency: app && app.settings && app.settings.get('localCurrency') || 'PHR',
+    currency: app && app.settings && app.settings.get('localCurrency') || 'USD',
     feeLevel: app &&
       app.localSettings && app.localSettings.get('defaultTransactionFee') || 'PRIORITY',
     memo: '',
