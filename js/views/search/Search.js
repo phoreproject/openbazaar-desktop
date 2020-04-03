@@ -413,7 +413,7 @@ export default class extends baseVw {
         })
         .always(() => {
           self._categoryTerms.forEach(cat => {
-            self._categorySearches.push({ ...self._categorySearch, q: cat });
+            self._categorySearches.push({ ...self._categorySearch, q: cat, sortBy: 'RAND' });
           });
           self.buildCategories();
         });
