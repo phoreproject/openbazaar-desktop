@@ -28,7 +28,7 @@ Check your JS console. If you are **not** seeing any red `WebSocket...` errors:
  - SSLKey is the path to your key
  - Username is your username
 5. The password in your config file, in the JSON-API section, must be the hex-encoded SHA-256 hash of your plain text password. There are several options for setting it:
-- In the remote server, in your Phore Marketplace server directory, you can enter the command `go run openbazaard.go setapicreds` and follow the instructions.
+- In the remote server, in your Phore Marketplace server directory, you can enter the command `go run marketplaced.go setapicreds` and follow the instructions.
 - On Linux or Macintosh, you can use this command in your terminal: `echo -n yourpassword | sha256sum` (replace "yourpassword" with your actual password), and paste the hash into your config file.
 - You can use an online hex generator (there are many options, just search for "create hex-encoded SHA-256 hash"), and paste the hash into your config file.
 
