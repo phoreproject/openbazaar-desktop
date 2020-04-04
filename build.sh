@@ -77,7 +77,7 @@ case "$TRAVIS_OS_NAME" in
     sudo apt-get install libgconf2-4 libgconf-2-4
 
     # Install rpmbuild
-    sudo apt-get --only-upgrade install rpm
+    sudo apt-get install rpm
 
     # Ensure fakeroot is installed
     sudo apt-get install fakeroot
