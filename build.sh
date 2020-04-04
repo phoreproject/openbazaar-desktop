@@ -77,7 +77,7 @@ case "$TRAVIS_OS_NAME" in
     sudo apt-get install libgconf2-4 libgconf-2-4
 
     # Install rpmbuild
-    sudo apt-get install rpm
+    sudo apt-get --only-upgrade install rpm
 
     # Ensure fakeroot is installed
     sudo apt-get install fakeroot
@@ -147,6 +147,7 @@ case "$TRAVIS_OS_NAME" in
     if [[ $BINARY == 'win' ]]; then
 
         brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
+        brew link libgsf glib pcre
 
         brew remove osslsigncode
         brew install mono osslsigncode
@@ -160,10 +161,10 @@ case "$TRAVIS_OS_NAME" in
 
         export WINEARCH=win64
 
-        npm install electron-packager
+        npm i electron-packager
 
         cd node_modules/electron-packager
-        npm install rcedit@2.1.0
+        npm install rcedit
         cd ../..
 
         echo 'Running Electron Packager...'
@@ -221,6 +222,8 @@ case "$TRAVIS_OS_NAME" in
 
             echo "Checking Apple for notarization status..."; \
             /usr/bin/xcrun altool --notarization-info `/usr/libexec/PlistBuddy -c "Print :notarization-upload:RequestUUID" $UPLOAD_INFO_PLIST` -u $APPLE_ID -p $APPLE_PASS --output-format xml > "$REQUEST_INFO_PLIST" ;\
+
+            cat $REQUEST_INFO_PLIST
 
             if [[ `/usr/libexec/PlistBuddy -c "Print :notarization-info:Status" ${REQUEST_INFO_PLIST}` != "in progress" ]] || [[ "$requestUUID" == "" ]] ; then \
 
