@@ -76,7 +76,7 @@ export function addMetrics() {
 
     window.Countly = {};
     window.Countly.q = [];
-    window.Countly.app_key = '979774c41bab3a6e5232a3630e6e151e439c412e';
+    window.Countly.app_key = 'b7156f705135211f3c3e2ff224f6ff58d3176c91';
     window.Countly.app_version = `client_${version}|server_${app.settings.prettyServerVer}`;
     window.Countly.url = 'https://countly.phore.io';
     window.Countly.interval = 30000;
