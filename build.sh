@@ -136,6 +136,7 @@ case "$TRAVIS_OS_NAME" in
     brew link xz
     brew remove openssl
     brew install openssl
+    brew upgrade openssl@1.1
     brew link freetype graphicsmagick mono
 
 #   Retrieve Latest Server Binaries
