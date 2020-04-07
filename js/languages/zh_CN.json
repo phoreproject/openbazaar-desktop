@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "无法打开钱包",
         "body": "无法打开钱包中的地址，因为付款正在发送。请等待发送完成，然后重试。"
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "许可",
@@ -504,10 +506,10 @@
       "sectionName": "通用",
       "bitcoinUnit": "比特币单位",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "μBTC",
-        "SATOSHI": "Satoshi（sat）"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "保存常规设置...",
       "statusSaveComplete": "已保存常规设置。",
@@ -1135,8 +1137,8 @@
     "nsfwNo": "否",
     "nsfwLabel": "成人内容（NSFW，成人，18+等）",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "通用",
       "photos": "照片",
@@ -2166,10 +2168,10 @@
     "invalidtorlistings": "您必须提供有效的Tor商品信息搜索URL。"
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "Öffnen in Wallet nicht möglich",
         "body": "Die Adresse kann nicht in der Wallet geöffnet werden, da momentant eine Zahlung gesendet wird. Bitte warten Sie bis diese abgeschlossen wurde und versuchen Sie es anschließend erneut."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Lizenz",
@@ -1135,8 +1137,8 @@
     "nsfwNo": "Nein",
     "nsfwLabel": "Inhalte für Erwachsene (NSFW, 18+, usw.)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Allgemein",
       "photos": "Fotos",

@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "Kan ikke åbne i tegnebog",
         "body": "Kan ikke åbne adressen i tegnebogen, da en betaling er under afsendelse. Vent venligst indtil afsendelsen afsluttes og prøv da igen."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Licens",
@@ -1135,8 +1137,8 @@
     "nsfwNo": "Nej",
     "nsfwLabel": "Mature Content (NSFW, adult, 18+, etc)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Generelt",
       "photos": "Fotos",

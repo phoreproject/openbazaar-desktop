@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "تعذر الفتح في المحفظة",
         "body": "تعذر فتح العنوان في المحفظة لأن هناك عملية دفع قيد الإرسال. يرجى الانتظار حتى يكتمل الإرسال والمحاولة مرة أخرى."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "رخصة",
@@ -504,10 +506,10 @@
       "sectionName": "عام",
       "bitcoinUnit": "وحدة بيتكوين.",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "ساتوشي (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "جار حفظ الإعدادات العامة ...",
       "statusSaveComplete": "تم حفظ الإعدادات العامة.",
@@ -1135,8 +1137,8 @@
     "nsfwNo": "لا",
     "nsfwLabel": "محتوى للبالغين ( إباحي, كلمات نابية, 18+, إلخ .... )",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "عام",
       "photos": "الصور",
@@ -2166,10 +2168,10 @@
     "invalidtorlistings": "يجب وضع رابط بحث قوائم Tor صالح"
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "µBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",
