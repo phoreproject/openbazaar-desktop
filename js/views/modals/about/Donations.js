@@ -30,7 +30,7 @@ export default class extends baseVw {
     this.options = opts;
 
     const phrAddress = 'PRZsB1sNgJXeKeC7sx5YJBfRS3Cz9RyCcF';
-    const phrQRAddress = getCurrencyByCode('BTC').qrCodeText(phrAddress);
+    const phrQRAddress = getCurrencyByCode('PHR').qrCodeText(phrAddress);
 
     this.dCoins = {
       PHR: {
@@ -45,7 +45,7 @@ export default class extends baseVw {
     return {
       'click .js-copyAddress': 'copyDonationAddress',
       'click .js-openInWallet': 'openInWalletClick',
-      'click .js-btc': 'showPHR',
+      'click .js-phr': 'showPHR',
     };
   }
 
