@@ -1,7 +1,7 @@
 <%
     const badgeFrag = `<div class="badge" style="background-image: ${ob.badgeUrl ? `url(${ob.badgeUrl}),` : ''}url('../imgs/verifiedModeratorBadgeDefault-tiny.png');" tabindex="0"></div>`;
     const warnFrag = `<div class="warning"><i class="ion-alert-circled clrTAlert"></i></div>`;
-    const arrowBoxColor = ob.verified ? 'clrBrAlert2 clrBAlert2Grad' : 'clrP clrBr';
+    const arrowBoxColor = ob.verified ? 'clrBrAlert1 clrBAlert2Grad' : 'clrBrAlert2 clrBAlert2Grad';
     const arrowBoxClass = `${ob.arrowClass} ${arrowBoxColor}`;
 
     const arrowBox = `

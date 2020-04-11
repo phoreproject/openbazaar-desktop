@@ -193,6 +193,10 @@ input[type=range][class~="clrS"] {
   }
 }
 
+.clrBrAlert1 {
+  border-color: $navIcon;
+}
+
 .clrBrAlert2 {
   border-color: $alert2;
 }
