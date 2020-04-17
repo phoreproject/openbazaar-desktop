@@ -4,7 +4,7 @@
    /* Disable the card if it is invalid and the controls should be shown, and it is not selected. This allow the user to de-select invalid cards.
       The view should prevent the invalid card from being selected again, disabling it is redundant but important visually. */
    const isDisabled = (!ob.valid && !ob.controlsOnInvalid ) || (!ob.valid && ob.controlsOnInvalid && ob.selectedState !== 'selected') || !loaded ? 'disabled' : '';
-   const style = ob.verified ? 'verified clrBrAlert1 clrBAlert2Grad' : '';
+   const style = ob.verified ? 'verified clrBrAlert1 clrBAlert1Grad' : '';
 %>
 
 <div class="moderatorCardInner clrP <%= isDisabled %> <%= style %>">

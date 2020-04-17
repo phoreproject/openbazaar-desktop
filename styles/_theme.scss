@@ -80,6 +80,10 @@ input[type=range][class~="clrS"] {
   background-color: $error;
 }
 
+.clrTBase {
+  @include textColor($text)
+}
+
 .clrT {
   @include textColor($text, $text2, $text);
 }
@@ -227,6 +231,11 @@ input[type=range][class~="clrS"] {
 
 .clrBAlert2 {
   background: $alert2Background;
+}
+
+.clrBAlert1Grad {
+  background: $secondary;
+  background-color: $alert2Background;
 }
 
 .clrBAlert2Grad {
