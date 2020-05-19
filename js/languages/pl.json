@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "Nie można przejść do portfela",
         "body": "Nie można otworzyć adresu portfela, ponieważ trwa wysyłanie płatności. Spróbuj ponownie, gdy transakcja płatność zostanie zrealizowana."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Licencja",
@@ -504,10 +506,10 @@
       "sectionName": "Ogólne",
       "bitcoinUnit": "Jednostka Bitcoina",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Satoshi (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Zapisywanie ogólnych ustawień...",
       "statusSaveComplete": "Ogólne ustawienia zapisane.",
@@ -1305,7 +1307,10 @@
       "tooManyPhotosBody": "Nie udało się przesłać niektórych lub wszystkich zdjęć, ponieważ przekroczono by maksymalną dozwoloną ilość.",
       "unableToLoadImages": "Wystąpił problem z ładowaniem zdjęcia. |||| Wystąpił problem z ładowaniem zdjęć.",
       "uploadImageErrorTitle": "Podczas przesyłania zdjęcia wystąpił błąd. |||| Podczas przesyłania zdjęć wystąpił błąd."
-    }
+    },
+    "format": "Format",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}"
   },
   "search": {
     "title": "Odkrywaj",
@@ -2163,10 +2168,10 @@
     "invalidtorlistings": "Musisz wprowadzić poprawny adres TOR wyszukiwania przedmiotu"
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

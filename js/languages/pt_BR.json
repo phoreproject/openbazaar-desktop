@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "Não foi possível abrir na carteira",
         "body": "Não foi possível abrir o endereço na carteira porque um pagamento está sendo efetuado nesse momento. Por favor, aguarde até que o pagamento seja realizado e tente novamente mais tarde."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Licença",
@@ -984,7 +986,6 @@
       "resyncStarted": "A sincronização de suas transações irá começar. Isso pode levar 1-2 minutos para finalizar.",
       "resyncCompleteTitle": "%{cur} Resync Finished",
       "resyncComplete": "Successfully resynced your wallet transactions",
-
       "syncUnavailable": "Você só pode recarregar as transações uma vez a cada minuto."
     },
     "cryptoTeaser": {
@@ -1136,8 +1137,8 @@
     "nsfwNo": "Não",
     "nsfwLabel": "Conteúdo Adulto/Ofensivo (NSFW, adulto, 18+, etc)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Geral",
       "photos": "Fotos",
@@ -5627,5 +5628,6 @@
     "zh-TW": "Chinês (T)",
     "zu": "Zulu",
     "zu-ZA": "Zulu (África do Sul)"
-  }
+  },
+  "cryptoPriceFixMarket": "fix price"
 }

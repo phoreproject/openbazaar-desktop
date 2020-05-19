@@ -82,12 +82,12 @@ function handleStartupEvent() {
 }
 
 if (handleStartupEvent()) {
-  console.log('OpenBazaar started on Windows...');
+  console.log('Phore Marketplace started on Windows...');
 }
 
-const serverPath = `${__dirname}${path.sep}..${path.sep}openbazaar-go${path.sep}`;
+const serverPath = `${__dirname}${path.sep}..${path.sep}pm-go${path.sep}`;
 const serverFilename = process.platform === 'darwin' || process.platform === 'linux' ?
-  'openbazaard' : 'openbazaard.exe';
+  'marketplaced' : 'marketplaced.exe';
 const isBundledApp = fs.existsSync(serverPath + serverFilename);
 global.isBundledApp = isBundledApp;
 let localServer;
@@ -140,8 +140,8 @@ if (isBundledApp || argv.userData) {
 }
 
 crashReporter.start({
-  productName: 'OpenBazaar 2',
-  companyName: 'OpenBazaar',
+  productName: 'Phore Marketplace',
+  companyName: 'Phore Blockchain',
   submitURL: 'http://104.131.17.128:1127/post',
   uploadToServer: true,
   extra: {
@@ -182,19 +182,10 @@ function createWindow() {
         shell.openExternal('https://phore.io');
       },
     },
-    // until the documentation page is updated, don't show it
-    /*
-    {
-      label: 'Documentation',
-      click() {
-        shell.openExternal('https://docs.openbazaar.org');
-      },
-    },
-    */
     {
       label: 'Support',
       click() {
-        shell.openExternal('https://phore.io');
+        shell.openExternal('https://phore.io/information/');
       },
     },
   ];
@@ -207,7 +198,7 @@ function createWindow() {
           if (updatesSupported) {
             checkForUpdates();
           } else {
-            shell.openExternal('https://github.com/phoreproject/openbazaar-desktop/releases');
+            shell.openExternal('https://github.com/phoreproject/pm-desktop/releases');
           }
         },
       },

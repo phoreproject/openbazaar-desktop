@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "Не вдається відкрити в гаманцю",
         "body": "Неможливо відкрити адресу в гаманці, оскільки платіж наразі надсилається. Будь ласка, зачекайте, поки завершиться надсилання, і повторіть спробу."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Ліцензія",
@@ -504,10 +506,10 @@
       "sectionName": "Загальні",
       "bitcoinUnit": "Одиниця Bitcoin",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Сатоші (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Збереження основних налаштувань...",
       "statusSaveComplete": "Основні налаштування збережено.",
@@ -1135,8 +1137,8 @@
     "nsfwNo": "Ні",
     "nsfwLabel": "Вміст для дорослих (NSFW, adult, 18+, та інше)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Загальні",
       "photos": "Зображення",
@@ -2166,10 +2168,10 @@
     "invalidtorlistings": "Ви повинні надати дійсну URL-адресу для пошуку в списках записів Tor."
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

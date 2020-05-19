@@ -7,10 +7,10 @@ module.exports = function setup(grunt) {
     'electron-installer-debian': {
       options: {
         productName: 'PhoreMarketplace',
-        name: 'openbazaar2',
+        name: 'marketplace',
         arch: 'amd64',
         version: '1.3.4',
-        bin: 'openbazaar2',
+        bin: 'marketplace',
         maintainer: 'Phore <admin@phore.io>',
         rename(dest) {
           return `${dest}<%= name %>_<%= version %>_<%= arch %>.deb`;
@@ -26,7 +26,7 @@ module.exports = function setup(grunt) {
         priority: 'optional',
       },
       'app-with-asar': {
-        src: 'temp-linux64/openbazaar-linux-x64/',
+        src: 'temp-linux64/PhoreMarketplace-linux-x64/',
         dest: 'build-linux64/',
         rename(dest) {
           return path.join(dest, '<%= name %>_<%= arch %>.deb');
@@ -45,7 +45,6 @@ module.exports = function setup(grunt) {
         description: `${grunt.option('appname')}`,
         version: grunt.option('obversion') || '',
         title: 'PhoreMarketplace',
-        iconUrl: 'https://www.openbazaar.org/wp-content/uploads/2017/07/windows-icon.ico',
         setupIcon: 'imgs/windows-icon.ico',
         skipUpdateIcon: true,
         loadingGif: 'imgs/windows-loading.gif',

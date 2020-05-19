@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "Невозможно открыть в кошельке",
         "body": "Не удалось открыть этот адрес в кошельке, потому что передаётся платеж . Подождите, пока передача завершится и повторите попытку."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Лицензия",
@@ -1135,8 +1137,8 @@
     "nsfwNo": "Нет",
     "nsfwLabel": "Контент для взрослых (NSFW, 18+, и т. д.)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Общий",
       "photos": "Фотографии",

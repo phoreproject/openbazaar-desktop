@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "Kunne ikke åpne i lommebok",
         "body": "Kunne ikke åpne adressen i lommeboken fordi en betaling holder på å bli sendt. Vennligst vent på at sendingen fullføres og forsøk igjen."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Lisens",
@@ -504,10 +506,10 @@
       "sectionName": "Generelt",
       "bitcoinUnit": "Bitcoin Enhet",
       "bitcoinUnitTypes": {
-        "BTC": "BTC",
-        "MBTC": "mBTC",
-        "UBTC": "µBTC",
-        "SATOSHI": "Satoshi (sat)"
+        "PHR": "PHR",
+        "mPHR": "mPHR",
+        "uPHR": "µPHR",
+        "pSAT": "Satoshi"
       },
       "statusSaving": "Lagrer generelle innstillinger...",
       "statusSaveComplete": "Generelle innstillinger lagret.",
@@ -1135,8 +1137,8 @@
     "nsfwNo": "Nei",
     "nsfwLabel": "Innhold for Voksne (NSFW, voksen, 18+, osv)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Generelt",
       "photos": "Bilder",
@@ -2166,10 +2168,10 @@
     "invalidtorlistings": "Du må oppgi en gyldig søke-URL for Tor oppføringer"
   },
   "bitcoinCurrencyUnits": {
-    "BTC": "BTC",
-    "MBTC": "mBTC",
-    "UBTC": "μBTC",
-    "SATOSHI": "sat"
+    "PHR": "PHR",
+    "mPHR": "mPHR",
+    "uPHR": "µPHR",
+    "pSAT": "pSAT"
   },
   "cryptoCurrencyFormat": {
     "curSymbolAmount": "%{symbol}%{amount}",

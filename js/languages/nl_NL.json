@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "Kan niet openen in wallet",
         "body": "Kan het adres niet openen in de wallet omdat een betaling wordt verzonden. Wacht tot verzending afgerond is en probeer opnieuw."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Licentie",
@@ -1135,8 +1137,8 @@
     "nsfwNo": "Nee",
     "nsfwLabel": "Inhoud voor volwassenen (NSFW, adult, 18+, etc)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Algemeen",
       "photos": "Foto's",

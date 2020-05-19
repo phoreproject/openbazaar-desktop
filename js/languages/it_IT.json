@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "Non è stato possibile aprire l'indirizzo con il wallet.",
         "body": "Non è stato possibile aprire l'indirizzo con il portafoglio perché è in corso un pagamento. Aspetta fin quando il pagamento è completato e prova di nuovo."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Licenza",
@@ -1135,8 +1137,8 @@
     "nsfwNo": "No",
     "nsfwLabel": "Contenuto per adulti (contenuti non appropriati, 18+, ecc.)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "Generale",
       "photos": "Immagini",

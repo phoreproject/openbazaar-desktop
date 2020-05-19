@@ -447,7 +447,9 @@
       "unableToOpenInWallet": {
         "title": "Incapaz de abrir en el monedero",
         "body": "No se pudo abrir la dirección en el monedero porque un pago está en proceso de envío. Espere hasta que el envío se complete e intente de nuevo."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Licencia",
@@ -1135,8 +1137,8 @@
     "nsfwNo": "No",
     "nsfwLabel": "Contenido Para Adultos (NSFW, adult, 18+, etc)",
     "format": "Format",
-    "fixRatePriceHelper" : "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2" : "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
     "sectionNames": {
       "general": "General",
       "photos": "Fotos",

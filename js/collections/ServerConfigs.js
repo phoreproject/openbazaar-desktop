@@ -77,19 +77,19 @@ export default class extends Collection {
   get walletCurrencyToDataDir() {
     return {
       BTC: {
-        win32: `${this.homedir}/OpenBazaar2.0`,
-        darwin: `${this.homedir}/Library/Application Support/OpenBazaar2.0`,
-        linux: `${this.homedir}/.openbazaar2.0`,
+        win32: `${this.homedir}/PhoreMarketplace`,
+        darwin: `${this.homedir}/Library/Application Support/PhoreMarketplace`,
+        linux: `${this.homedir}/.PhoreMarketplace`,
       },
       BCH: {
-        win32: `${this.homedir}/OpenBazaar2.0-bitcoincash`,
-        darwin: `${this.homedir}/Library/Application Support/OpenBazaar2.0-bitcoincash`,
-        linux: `${this.homedir}/.openbazaar2.0-bitcoincash`,
+        win32: `${this.homedir}/PhoreMarketplace-bitcoincash`,
+        darwin: `${this.homedir}/Library/Application Support/PhoreMarketplace-bitcoincash`,
+        linux: `${this.homedir}/.PhoreMarketplace-bitcoincash`,
       },
       ZEC: {
-        win32: `${this.homedir}/OpenBazaar2.0-zcash`,
-        darwin: `${this.homedir}/Library/Application Support/OpenBazaar2.0-zcash`,
-        linux: `${this.homedir}/.openbazaar2.0-zcash`,
+        win32: `${this.homedir}/PhoreMarketplace-zcash`,
+        darwin: `${this.homedir}/Library/Application Support/PhoreMarketplace-zcash`,
+        linux: `${this.homedir}/.PhoreMarketplace-zcash`,
       },
     };
   }
