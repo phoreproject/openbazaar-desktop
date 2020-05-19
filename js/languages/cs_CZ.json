@@ -1482,8 +1482,8 @@
       "send": "Poslat",
       "share": {
         "title": "Sdílet s přáteli",
-        "body": "Právě jsem provedl nákup na OpenBazaar, na svobodném trhu bez poplatků a omezení. Další informaci nalezneš na %{link}.",
-        "shareMsg": "Právě jsem provedl nákup na @OpenBazaar, svobodném trhu bez poplatků a omezení.",
+        "body": "Právě jsem provedl nákup na @PhoreCrypto Marketplace, na svobodném trhu bez poplatků a omezení. Další informaci nalezneš na %{link}.",
+        "shareMsg": "Právě jsem provedl nákup na @PhoreCrypto Marketplace, svobodném trhu bez poplatků a omezení.",
         "postToTwitter": "Sdílet na Twitter",
         "postToFacebook": "Sdílet na Facebook",
         "postToPinterest": "Sdílet na Pinterest",

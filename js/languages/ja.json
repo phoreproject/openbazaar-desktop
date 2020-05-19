@@ -1378,8 +1378,8 @@
       "send": "送る",
       "share": {
         "title": "友人などにシェア",
-        "body": "Phore マーケットプレイスで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。 詳しくは %{link}",
-        "shareMsg": "Phore マーケットプレイスで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。",
+        "body": "PhoreCrypto マーケットプレイスで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。 詳しくは %{link}",
+        "shareMsg": "@PhoreCrypto マーケットプレイスで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。",
         "postToTwitter": "Twitterに投稿",
         "postToFacebook": "Facebookに投稿",
         "postToPinterest": "Pinterestに投稿",

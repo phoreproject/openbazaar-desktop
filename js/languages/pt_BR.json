@@ -1486,8 +1486,8 @@
       "send": "Enviar",
       "share": {
         "title": "Compartilhe com amigos",
-        "body": "Acabei de fazer uma compra no Phore Marketplace, o mercado online livre de taxas e restrições. Informe-se mais em %{link}.",
-        "shareMsg": "Acabei de fazer uma compra no @PhoreMarketplace, o mercado online livre de taxas e restrições.",
+        "body": "Acabei de fazer uma compra no PhoreCrypto Marketplace, o mercado online livre de taxas e restrições. Informe-se mais em %{link}.",
+        "shareMsg": "Acabei de fazer uma compra no @PhoreCrypto Marketplace, o mercado online livre de taxas e restrições.",
         "postToTwitter": "Publicar no Twitter",
         "postToFacebook": "Publicar no Facebook",
         "postToPinterest": "Publicar no Pinterest",

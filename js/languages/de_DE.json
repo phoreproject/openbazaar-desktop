@@ -1486,8 +1486,8 @@
       "send": "Senden",
       "share": {
         "title": "Mit Freunden teilen",
-        "body": "Ich habe gerade auf Phore Marketplace, dem freien Marktplatz ohne Gebühren oder Einschränkungen, einen Kauf getätigt. Erfahrt mehr unter %{Link}.",
-        "shareMsg": "Ich habe gerade auf @PhoreMarketplace, dem freien Marktplatz ohne Gebühren oder Einschränkungen, einen Kauf getätigt.",
+        "body": "Ich habe gerade auf PhoreCrypto Marketplace, dem freien Marktplatz ohne Gebühren oder Einschränkungen, einen Kauf getätigt. Erfahrt mehr unter %{Link}.",
+        "shareMsg": "Ich habe gerade auf @PhoreCrypto Marketplace, dem freien Marktplatz ohne Gebühren oder Einschränkungen, einen Kauf getätigt.",
         "postToTwitter": "Auf Twitter posten",
         "postToFacebook": "Auf Facebook posten",
         "postToPinterest": "Auf Printerest posten",

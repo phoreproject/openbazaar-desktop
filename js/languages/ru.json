@@ -1486,8 +1486,8 @@
       "send": "Отправить",
       "share": {
         "title": "Поделитесь с друзьями",
-        "body": "I just made a purchase on Phore Marketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
-        "shareMsg": "I just made a purchase on @PhoreMarketplace, the free marketplace without fees or restrictions.",
+        "body": "I just made a purchase on PhoreCrypto Marketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
+        "shareMsg": "I just made a purchase on @PhoreCrypto Marketplace, the free marketplace without fees or restrictions.",
         "postToTwitter": "Опубликовать в Twitter",
         "postToFacebook": "Опубликовать в Facebook",
         "postToPinterest": "Опубликовать в Pinterest",

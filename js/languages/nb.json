@@ -1486,8 +1486,8 @@
       "send": "Send",
       "share": {
         "title": "Del med venner",
-        "body": "Jeg gjorde akkurat et kjøp på Phore Marketplace, den frie markedsplassen uten avgifter eller begrensninger. Lær mer på %{link}.",
-        "shareMsg": "Jeg gjorde akkurat et kjøp på @PhoreMarketplace, den frie markedsplassen uten avgifter eller begrensninger.",
+        "body": "Jeg gjorde akkurat et kjøp på PhoreCrypto Marketplace, den frie markedsplassen uten avgifter eller begrensninger. Lær mer på %{link}.",
+        "shareMsg": "Jeg gjorde akkurat et kjøp på @PhoreCrypto Marketplace, den frie markedsplassen uten avgifter eller begrensninger.",
         "postToTwitter": "Post på Twitter",
         "postToFacebook": "Post på Facebook",
         "postToPinterest": "Post på Pinterest",

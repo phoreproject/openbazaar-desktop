@@ -1478,20 +1478,20 @@
       "purchases": "Kupione",
       "progressMessage": "Dziękujemy za zakup! Możesz sprawdzić status swojego zamówienia tutaj %{link}.",
       "estimatedProcessing": "Szacowany czas realizacji: %{time}",
-      "noData": "Not Specified ",
-      "vendorMessage": "Message for Vendor (optional)",
-      "vendorMessagePlaceholder": "Provide additional details, ask a question, provide feedback…",
-      "vendorMessageLink": "discussion section of the order details",
+      "noData": "Nieokreślone dane",
+      "vendorMessage": "Wiadomość dla sprzedawcy (opcjonalna)",
+      "vendorMessagePlaceholder": "Dosatrcz dodatkowych informacji, zadaj pytanie, napisz opinie…",
+      "vendorMessageLink": "sekcja dyskusyjna innych detali",
       "vendorMessageSent": "Wiadomość do %{name} została wysłana, możesz kontynuować konwersację pod %{orderLink}.",
       "send": "Wyślij",
       "share": {
-        "title": "Share with friends",
-        "body": "Przed chwilą kupiłem przedmiot na Phore Marketplace, darmowej platformie handlowej pozbawionej ograniczeń. Dowiedź się więcej pod %{link}.",
-        "shareMsg": "I just made a purchase on @PhoreMarketplace, the free marketplace without fees or restrictions.",
-        "postToTwitter": "Post to Twitter",
-        "postToFacebook": "Post to Facebook",
-        "postToPinterest": "Post to Pinterest",
-        "postToTumblr": "Post to Tumblr"
+        "title": "Podziel się z przyjaciółmi",
+        "body": "Przed chwilą kupiłem przedmiot na PhoreCrypto Marketplace, darmowej platformie handlowej pozbawionej ograniczeń. Dowiedź się więcej pod %{link}.",
+        "shareMsg": "Przed chwilą kupiłem przedmiot na @PhoreCrypto Marketplace, darmowej platformie handlowej pozbawionej ograniczeń.",
+        "postToTwitter": "Post na Twitter",
+        "postToFacebook": "Post na Facebook",
+        "postToPinterest": "Post na Pinterest",
+        "postToTumblr": "Post na Tumblr"
       }
     },
     "receipt": {
