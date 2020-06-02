@@ -567,7 +567,7 @@ function createWindow() {
   });
 
   // Set up protocol
-  app.setAsDefaultProtocolClient('ob');
+  app.setAsDefaultProtocolClient('pm');
 
   // Check for URL hijacking in the browser
   preventWindowNavigation(mainWindow);
