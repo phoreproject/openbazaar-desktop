@@ -11,7 +11,6 @@
 
 
 ELECTRONVER=1.8.7
-NODEJSVER=5.1.1
 
 OS="${1}"
 if [ -z "${2}" ]; then
