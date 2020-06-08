@@ -736,55 +736,32 @@ export default class extends BaseModal {
     this.$photoUploadingLabel.removeClass('hide');
 
     const toCur = this.cryptoCurrencyType.toCur;
-    const fromCur = this.cryptoCurrencyType.fromCur;
 
-    const newImageFrom = document.createElement('img');
-    newImageFrom.src = `../imgs/cryptoIcons/${fromCur}-icon.png`;
-    newImageFrom.onload = () => {
-      const newImageTo = document.createElement('img');
-      newImageTo.src = `../imgs/cryptoIcons/${toCur}-icon.png`;
-      newImageTo.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+    const newImageTo = document.createElement('img');
+    newImageTo.src = `../imgs/cryptoIcons/${toCur}-icon.png`;
+    newImageTo.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
 
-        canvas.width = newImageFrom.width * 2;
-        canvas.height = newImageFrom.height * 2;
+      canvas.width = newImageTo.width;
+      canvas.height = newImageTo.height;
 
-        // Fill png with white background
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Fill png with white background
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Draw both images
-        ctx.drawImage(newImageFrom, 0, 0);
-        ctx.drawImage(newImageTo, newImageFrom.width, newImageFrom.height);
+      // Draw both images
+      ctx.drawImage(newImageTo, 0, 0);
 
-        // Write diagonal line
-        ctx.beginPath();
-        ctx.moveTo(0, canvas.height);
-        ctx.lineTo(canvas.width, 0);
-        ctx.stroke();
-
-        const toUpload = [{
-          filename: this.truncateImageFilename(`generated-${fromCur}-to-${toCur}`),
-          image: canvas.toDataURL('image/jpeg', 0.9)
-            .replace(/^data:image\/(png|jpeg|webp);base64,/, ''),
-        }];
-        this.uploadImages(toUpload);
-      };
-
-      newImageTo.onerror = () => {
-        this.$photoUploadingLabel.addClass('hide');
-
-        new SimpleMessage({
-          title: app.polyglot.t('editListing.errors.unableToLoadImages',
-            { smart_count: 1 }),
-        })
-          .render()
-          .open();
-      };
+      const toUpload = [{
+        filename: this.truncateImageFilename(`generated-${toCur}`),
+        image: canvas.toDataURL('image/jpeg', 0.9)
+          .replace(/^data:image\/(png|jpeg|webp);base64,/, ''),
+      }];
+      this.uploadImages(toUpload);
     };
 
-    newImageFrom.onerror = () => {
+    newImageTo.onerror = () => {
       this.$photoUploadingLabel.addClass('hide');
 
       new SimpleMessage({
