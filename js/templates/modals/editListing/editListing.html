@@ -199,6 +199,8 @@
           %>
         </ul>
         <div class="clrT2 txSm helper"><%= ob.polyT('editListing.helperPhotos', { maxPhotos: ob.max.photos }) %></div>
+
+        <button class="btn clrP clrBr clrT tx6 js-generatePhoto <% if (ob.metadata.contractType !== 'CRYPTOCURRENCY') print('hide') %>"><%= ob.polyT('editListing.btnGenerateCryptoPhoto') %></button>
       </section>
 
       <section class="js-scrollToSection js-sectionShipping shippingSection">
