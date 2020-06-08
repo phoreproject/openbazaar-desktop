@@ -1310,7 +1310,8 @@
       "tooManyPhotosBody": "Algumas de suas fotos não foram enviadas porque você excedeu a quantia máxima permitida.",
       "unableToLoadImages": "Não foi possível carregar a sua imagem. |||| Não foi possível carregar as suas imagens.",
       "uploadImageErrorTitle": "Houve um erro ao enviar a sua imagem. |||| Houve um erro ao enviar as suas imagens."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Descobrir",

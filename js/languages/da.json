@@ -1310,7 +1310,8 @@
       "tooManyPhotosBody": "Nogle af eller alle dine billeder blev forhindret i at blive uploadet, da du ellers ville overskride det maksimalt tilladte antal.",
       "unableToLoadImages": "Dit billede kunne ikke indlæses. |||| Dine billeder kunne ikke indlæses.",
       "uploadImageErrorTitle": "Dit billede kunne ikke uploades. |||| Dine billeder kunne ikke uploades."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Opdagelse",

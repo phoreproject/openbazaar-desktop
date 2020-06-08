@@ -1310,7 +1310,8 @@
       "tooManyPhotosBody": "Noen eller alle bildene dine kunne ikke lastes opp fordi du ville brutt grensen for maks antall bilder.",
       "unableToLoadImages": "Vi kunne ikke laste bildet ditt. |||| Vi kunne ikke laste bildene dine.",
       "uploadImageErrorTitle": "Det oppstod en feil ved opplasting av bildet ditt. |||| Det oppstod en feil ved opplasting av bildene dine."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Oppdag",

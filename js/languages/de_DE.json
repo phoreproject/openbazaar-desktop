@@ -1310,7 +1310,8 @@
       "tooManyPhotosBody": "Einige oder alle Ihrer Fotos konnten nicht hochgeladen werden, da diese die maximal zulässige Menge an Fotos überschreiten würden.",
       "unableToLoadImages": "Ihr Bild konnte nicht geladen werden. |||| Ihre Bilder konnten nicht geladen werden.",
       "uploadImageErrorTitle": "Beim Hochladen Ihres Bildes ist ein Fehler aufgetreten. |||| Beim Hochladen Ihrer Bilder ist ein Fehler aufgetreten."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Entdecken",

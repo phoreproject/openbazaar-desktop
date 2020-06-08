@@ -1310,7 +1310,8 @@
       "tooManyPhotosBody": "Не удалось загрузить некоторые или все фотографии, так как Вы превысили бы максимальное количество.",
       "unableToLoadImages": "We were unable to load your image. |||| We were unable to load your images.",
       "uploadImageErrorTitle": "Произошла ошибка при загрузке изображения. |||| Произошла ошибка при загрузке изображений."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Сёрфинг",

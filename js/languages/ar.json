@@ -1310,7 +1310,8 @@
       "tooManyPhotosBody": "تم منع تحميل بعض أو كل صورك لأنك تجاوزت الحد الأقصى من الكمية المسموح به.",
       "unableToLoadImages": "تعذر تحميل صورتك. |||| تعذر تحميل الصور.",
       "uploadImageErrorTitle": "حدث خطأ أثناء تحميل الصورة. |||| حدث خطأ أثناء تحميل الصور."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "اكتشاف",

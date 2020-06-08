@@ -1310,7 +1310,8 @@
       "tooManyPhotosBody": "Alguna de sus fotografías no se subieron porque habría excedido la cantidad máxima permitida.",
       "unableToLoadImages": "No pudimos cargar su imagen. |||| No hemos podido cargar sus imágenes.",
       "uploadImageErrorTitle": "Ha ocurrido un error subiendo su imagen. |||| Ha ocurrido un error subiendo sus imágenes."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Descubrir",

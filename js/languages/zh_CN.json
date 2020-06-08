@@ -1310,7 +1310,8 @@
       "tooManyPhotosBody": "您的部分或全部照片被阻止上传，因为已经超过了允许的最大数量。",
       "unableToLoadImages": "我们无法加载你的图片。 |||| 我们无法加载您的图片。",
       "uploadImageErrorTitle": "上传图片时出错。 |||| 上传图片时出错。"
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "发现",

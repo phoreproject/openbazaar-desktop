@@ -1310,7 +1310,8 @@
     },
     "format": "Format",
     "fixRatePriceHelper": "Buy 1 %{fromCur} for %{rate} %{toCur}",
-    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}"
+    "fixRatePriceHelper2": "Sell 1 %{fromCur} for %{rate} %{toCur}",
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Odkrywaj",
