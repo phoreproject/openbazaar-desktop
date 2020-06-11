@@ -79,6 +79,24 @@
       <div class="box padMdKids padStack">
         <div class="flexRow gutterH">
           <div class="col3">
+            <label class="required"><%= ob.polyT('settings.storeTab.returnPolicy') %></label>
+            <div class="clrT2 txSm rowSm"><%= ob.polyT('settings.storeTab.returnPolicyHelper') %></div>
+          </div>
+          <div class="col9">
+            <% if (ob.errors.returnPolicy) print(ob.formErrorTmpl({ errors: ob.errors.returnPolicy })) %>
+            <div class="row">
+              <textarea rows="6" name="returnPolicy" class="clrBr clrSh2" id="settingReturnPolicy"
+                        placeholder="<%= ob.polyT('editListing.placeholderReturnPolicy') %>"><%= ob.returnPolicy %></textarea>
+            </div>
+            <div class="flexHRight">
+              <div class="js-bulkReturnPolicyUpdateBtn"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box padMdKids padStack">
+        <div class="flexRow gutterH">
+          <div class="col3">
             <label><%= ob.polyT('settings.storeTab.moderators') %></label>
             <div class="clrT2 txSm"><%= ob.polyT('settings.storeTab.moderatorsHelper') %></div>
           </div>

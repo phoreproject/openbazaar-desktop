@@ -741,7 +741,9 @@
       "currenciesHelper": "These currencies will be auto-selected on new listings you create.",
       "currenciesNote": "Accepting all currencies will attract the largest audience.",
       "termsAndConditions": "Terms and Conditions",
-      "termsAndConditionsHelper": "There terms and conditions are selected by default for a new listings.",
+      "termsAndConditionsHelper": "These terms and conditions are selected by default for a new listings.",
+      "returnPolicy": "Return Policy",
+      "returnPolicyHelper": "These return policy is selected by default for a new listings.",
       "bulkListingCoinUpdate": {
         "mainButton": "Update All Current Listings",
         "confirmTitle": "Are You Sure?",
@@ -758,7 +760,19 @@
       "bulkListingTermsUpdate": {
         "mainButton": "Update All Current Listings",
         "confirmTitle": "Are You Sure?",
-        "confirmMessage": "All of your current listings will be updated to accept new return policy terms.",
+        "confirmMessage": "All of your current listings will be updated to accept a new terms and conditions.",
+        "cancel": "Cancel",
+        "apply": "Apply",
+        "errors": {
+          "errorTitle": "There Was An Error When Updating Your Listings",
+          "errorMessage": "One or more listings failed to update.",
+          "reasonForError": "Reason: %{reason}"
+        }
+      },
+      "bulkListingReturnPolicyUpdate": {
+        "mainButton": "Update All Current Listings",
+        "confirmTitle": "Are You Sure?",
+        "confirmMessage": "All of your current listings will be updated to accept a new return policy.",
         "cancel": "Cancel",
         "apply": "Apply",
         "errors": {

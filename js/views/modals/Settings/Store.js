@@ -7,13 +7,15 @@ import baseVw from '../../baseVw';
 import loadTemplate from '../../../utils/loadTemplate';
 import { isMultihash } from '../../../utils';
 import { bulkCoinUpdate } from '../../../utils/bulkCoinUpdate';
+import { bulkTermsUpdate } from '../../../utils/bulkTermsUpdate';
+import { bulkReturnPolicyUpdate } from '../../../utils/bulkReturnPolicyUpdate';
 import { supportedWalletCurs } from '../../../data/walletCurrencies';
 import Moderators from '../../components/moderators/Moderators';
 import BulkCoinUpdateBtn from './BulkCoinUpdateBtn';
 import BulkTermsUpdateBtn from './BulkTermsUpdateBtn';
+import BulkReturnPolicyUpdateBtn from './BulkReturnPolicyUpdateBtn';
 import CurrencySelector from '../../components/CryptoCurSelector';
 import { openSimpleMessage } from '../SimpleMessage';
-import { bulkTermsUpdate } from '../../../utils/bulkTermsUpdate';
 
 export default class extends baseVw {
   constructor(options = {}) {
@@ -147,6 +149,16 @@ export default class extends baseVw {
       bulkTermsUpdate(this.getCachedEl('#settingTermsAndConditions').val());
       this.bulkTermsAndConditionsUpdateBtn.setState({
         isBulkTermsUpdating: true,
+        showConfirmTooltip: false,
+        error: '',
+      });
+    });
+
+    this.bulkReturnPolicyUpdateBtn = new BulkReturnPolicyUpdateBtn();
+    this.listenTo(this.bulkReturnPolicyUpdateBtn, 'bulkReturnPolicyUpdateConfirm', () => {
+      bulkTermsUpdate(this.getCachedEl('#settingReturnPolicy').val());
+      this.bulkReturnPolicyUpdateBtn.setState({
+        isBulkReturnPolicyUpdating: true,
         showConfirmTooltip: false,
         error: '',
       });
@@ -396,6 +408,10 @@ export default class extends baseVw {
       this.bulkTermsAndConditionsUpdateBtn.delegateEvents();
       this.getCachedEl('.js-bulkTermsAndConditionsUpdateBtn')
         .append(this.bulkTermsAndConditionsUpdateBtn.render().el);
+
+      this.bulkReturnPolicyUpdateBtn.delegateEvents();
+      this.getCachedEl('.js-bulkReturnPolicyUpdateBtn')
+        .append(this.bulkReturnPolicyUpdateBtn.render().el);
     });
 
     return this;
