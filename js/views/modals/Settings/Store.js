@@ -156,7 +156,7 @@ export default class extends baseVw {
 
     this.bulkReturnPolicyUpdateBtn = new BulkReturnPolicyUpdateBtn();
     this.listenTo(this.bulkReturnPolicyUpdateBtn, 'bulkReturnPolicyUpdateConfirm', () => {
-      bulkTermsUpdate(this.getCachedEl('#settingReturnPolicy').val());
+      bulkReturnPolicyUpdate(this.getCachedEl('#settingReturnPolicy').val());
       this.bulkReturnPolicyUpdateBtn.setState({
         isBulkReturnPolicyUpdating: true,
         showConfirmTooltip: false,
