@@ -10,8 +10,10 @@ import { bulkCoinUpdate } from '../../../utils/bulkCoinUpdate';
 import { supportedWalletCurs } from '../../../data/walletCurrencies';
 import Moderators from '../../components/moderators/Moderators';
 import BulkCoinUpdateBtn from './BulkCoinUpdateBtn';
+import BulkTermsUpdateBtn from './BulkTermsUpdateBtn';
 import CurrencySelector from '../../components/CryptoCurSelector';
 import { openSimpleMessage } from '../SimpleMessage';
+import { bulkTermsUpdate } from '../../../utils/bulkTermsUpdate';
 
 export default class extends baseVw {
   constructor(options = {}) {
@@ -138,6 +140,16 @@ export default class extends baseVw {
           error: 'NoCoinsError',
         });
       }
+    });
+
+    this.bulkTermsAndConditionsUpdateBtn = new BulkTermsUpdateBtn();
+    this.listenTo(this.bulkTermsAndConditionsUpdateBtn, 'bulkTermsUpdateConfirm', () => {
+      bulkTermsUpdate(this.getCachedEl('#settingTermsAndConditions').val());
+      this.bulkTermsAndConditionsUpdateBtn.setState({
+        isBulkTermsUpdating: true,
+        showConfirmTooltip: false,
+        error: '',
+      });
     });
   }
 
@@ -380,6 +392,10 @@ export default class extends baseVw {
 
       this.bulkCoinUpdateBtn.delegateEvents();
       this.getCachedEl('.js-bulkCoinUpdateBtn').append(this.bulkCoinUpdateBtn.render().el);
+
+      this.bulkTermsAndConditionsUpdateBtn.delegateEvents();
+      this.getCachedEl('.js-bulkTermsAndConditionsUpdateBtn')
+        .append(this.bulkTermsAndConditionsUpdateBtn.render().el);
     });
 
     return this;

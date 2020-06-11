@@ -61,6 +61,24 @@
       <div class="box padMdKids padStack">
         <div class="flexRow gutterH">
           <div class="col3">
+            <label class="required"><%= ob.polyT('settings.storeTab.termsAndConditions') %></label>
+            <div class="clrT2 txSm rowSm"><%= ob.polyT('settings.storeTab.termsAndConditionsHelper') %></div>
+          </div>
+          <div class="col9">
+            <% if (ob.errors.termsAndConditions) print(ob.formErrorTmpl({ errors: ob.errors.termsAndConditions })) %>
+            <div class="row">
+              <textarea rows="6" name="termsAndConditions" class="clrBr clrSh2" id="settingTermsAndConditions"
+                        placeholder="<%= ob.polyT('editListing.placeholderTerms') %>"><%= ob.termsAndConditions %></textarea>
+            </div>
+            <div class="flexHRight">
+              <div class="js-bulkTermsAndConditionsUpdateBtn"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box padMdKids padStack">
+        <div class="flexRow gutterH">
+          <div class="col3">
             <label><%= ob.polyT('settings.storeTab.moderators') %></label>
             <div class="clrT2 txSm"><%= ob.polyT('settings.storeTab.moderatorsHelper') %></div>
           </div>
