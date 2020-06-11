@@ -644,8 +644,8 @@ function start() {
 
           // Make sure the client is running on a compatible version of the server.
           if (app.settings.prettyServerVer !== serverVersionRequired) {
-            const cLink = `<a href="https://github.com/phoreproject/openbazaar-desktop/releases">${app.polyglot.t('serverVersionWarning.clientLink')}</a>`;
-            const sLink = `<a href="https://github.com/phoreproject/openbazaar-go/releases">${app.polyglot.t('serverVersionWarning.serverLink')}</a>`;
+            const cLink = `<a href="https://github.com/phoreproject/pm-desktop/releases">${app.polyglot.t('serverVersionWarning.clientLink')}</a>`;
+            const sLink = `<a href="https://github.com/phoreproject/pm-go/releases">${app.polyglot.t('serverVersionWarning.serverLink')}</a>`;
             const message = app.polyglot.t('serverVersionWarning.message', {
               serverVersion: app.settings.prettyServerVer,
               expectedVersion: serverVersionRequired,

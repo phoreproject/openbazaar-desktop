@@ -451,7 +451,9 @@
       "unableToOpenInWallet": {
         "title": "无法打开钱包",
         "body": "无法打开钱包中的地址，因为付款正在发送。请等待发送完成，然后重试。"
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "许可",
@@ -1342,7 +1344,8 @@
       "tooManyPhotosBody": "您的部分或全部照片被阻止上传，因为已经超过了允许的最大数量。",
       "unableToLoadImages": "我们无法加载你的图片。 |||| 我们无法加载您的图片。",
       "uploadImageErrorTitle": "上传图片时出错。 |||| 上传图片时出错。"
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "发现",
@@ -1523,8 +1526,8 @@
       "send": "发送",
       "share": {
         "title": "与朋友分享",
-        "body": "我在OpenBazaar上进行了购买，这是一个没有任何其他费用或限制的免费市场，请通过%{link}了解更多信息。",
-        "shareMsg": "我刚在免费市场@OpenBazaar进行了购买，没有任何手续费用或限制。",
+        "body": "我在PhoreCrypto上进行了购买，这是一个没有任何其他费用或限制的免费市场，请通过%{link}了解更多信息。",
+        "shareMsg": "我刚在免费市场@PhoreCrypto进行了购买，没有任何手续费用或限制。",
         "postToTwitter": "发布到Twitter",
         "postToFacebook": "发布到Facebook",
         "postToPinterest": "发布到Pinterest",

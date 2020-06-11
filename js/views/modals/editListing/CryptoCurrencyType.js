@@ -263,15 +263,17 @@ export default class extends BaseView {
       return;
     }
 
-    const formattedFromCurAmount = Number(convertAndFormatCurrency(1, this.fromCur, this.toCur, {
+    let formattedFromCurAmount = Number(convertAndFormatCurrency(1, this.fromCur, this.toCur, {
       minimumFractionDigits: 0,
       maximumFractionDigits: 8,
     }).replace(/[^0-9\.-]+/g, ''));
+    formattedFromCurAmount = formatPrice(formattedFromCurAmount, this.toCur);
 
-    const formattedFromCurAmount2 = Number(convertAndFormatCurrency(1, this.toCur, this.fromCur, {
+    let formattedFromCurAmount2 = Number(convertAndFormatCurrency(1, this.toCur, this.fromCur, {
       minimumFractionDigits: 0,
       maximumFractionDigits: 8,
     }).replace(/[^0-9\.-]+/g, ''));
+    formattedFromCurAmount2 = formatPrice(formattedFromCurAmount2, this.fromCur);
 
     this.$editListingCryptoPriceInput.prop('placeholder', formattedFromCurAmount);
     this.$editListingCryptoPriceInput2.prop('placeholder', formattedFromCurAmount2);

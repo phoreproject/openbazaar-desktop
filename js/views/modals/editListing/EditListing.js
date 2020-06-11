@@ -210,6 +210,7 @@ export default class extends BaseModal {
       'change .js-price': 'onChangePrice',
       'change #inputPhotoUpload': 'onChangePhotoUploadInput',
       'click .js-addPhoto': 'onClickAddPhoto',
+      'click .js-generatePhoto': 'onGenerateCryptoPhoto',
       'click .js-removeImage': 'onClickRemoveImage',
       'click .js-cancelPhotoUploads': 'onClickCancelPhotoUploads',
       'click .js-addReturnPolicy': 'onClickAddReturnPolicy',
@@ -325,6 +326,12 @@ export default class extends BaseModal {
 
   onChangeContractType(e, data = {}) {
     this.setContractTypeClass(e.target.value);
+
+    if (e.target.value === 'CRYPTOCURRENCY') {
+      this.$generatePhoto.removeClass('hide');
+    } else {
+      this.$generatePhoto.addClass('hide');
+    }
 
     if (!data.fromCryptoTypeChange) {
       if (e.target.value === 'CRYPTOCURRENCY') {
@@ -725,6 +732,47 @@ export default class extends BaseModal {
     this.$inputPhotoUpload.trigger('click');
   }
 
+  onGenerateCryptoPhoto() {
+    this.$photoUploadingLabel.removeClass('hide');
+
+    const toCur = this.cryptoCurrencyType.toCur;
+
+    const newImageTo = document.createElement('img');
+    newImageTo.src = `../imgs/cryptoIcons/${toCur}-icon.png`;
+    newImageTo.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      canvas.width = newImageTo.width;
+      canvas.height = newImageTo.height;
+
+      // Fill png with white background
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw both images
+      ctx.drawImage(newImageTo, 0, 0);
+
+      const toUpload = [{
+        filename: this.truncateImageFilename(`generated-${toCur}`),
+        image: canvas.toDataURL('image/jpeg', 0.9)
+          .replace(/^data:image\/(png|jpeg|webp);base64,/, ''),
+      }];
+      this.uploadImages(toUpload);
+    };
+
+    newImageTo.onerror = () => {
+      this.$photoUploadingLabel.addClass('hide');
+
+      new SimpleMessage({
+        title: app.polyglot.t('editListing.errors.unableToLoadImages',
+          { smart_count: 1 }),
+      })
+        .render()
+        .open();
+    };
+  }
+
   scrollTo($el) {
     if (!$el) {
       throw new Error('Please provide a jQuery element to scroll to.');
@@ -1115,6 +1163,11 @@ export default class extends BaseModal {
       (this._$photoUploadingLabel = this.$('.js-photoUploadingLabel'));
   }
 
+  get $generatePhoto() {
+    return this._$generatePhotoButton ||
+      (this._$generatePhotoButton = this.$('.js-generatePhoto'));
+  }
+
   get $editListingReturnPolicy() {
     return this._$editListingReturnPolicy ||
       (this._$editListingReturnPolicy = this.$('#editListingReturnPolicy'));
@@ -1265,6 +1318,7 @@ export default class extends BaseModal {
         this._$buttonSave = null;
         this._$inputPhotoUpload = null;
         this._$photoUploadingLabel = null;
+        this._$generatePhotoButton = null;
         this._$editListingReturnPolicy = null;
         this._$editListingTermsAndConditions = null;
         this._$sectionShipping = null;

@@ -451,7 +451,9 @@
       "unableToOpenInWallet": {
         "title": "Kan ikke åbne i tegnebog",
         "body": "Kan ikke åbne adressen i tegnebogen, da en betaling er under afsendelse. Vent venligst indtil afsendelsen afsluttes og prøv da igen."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Licens",
@@ -1342,7 +1344,8 @@
       "tooManyPhotosBody": "Nogle af eller alle dine billeder blev forhindret i at blive uploadet, da du ellers ville overskride det maksimalt tilladte antal.",
       "unableToLoadImages": "Dit billede kunne ikke indlæses. |||| Dine billeder kunne ikke indlæses.",
       "uploadImageErrorTitle": "Dit billede kunne ikke uploades. |||| Dine billeder kunne ikke uploades."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Opdagelse",
@@ -1523,8 +1526,8 @@
       "send": "Send",
       "share": {
         "title": "Share with friends",
-        "body": "I just made a purchase on Phore Marketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
-        "shareMsg": "I just made a purchase on @PhoreMarketplace, the free marketplace without fees or restrictions.",
+        "body": "I just made a purchase on PhoreCrypto Marketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
+        "shareMsg": "I just made a purchase on @PhoreCrypto Marketplace, the free marketplace without fees or restrictions.",
         "postToTwitter": "Post to Twitter",
         "postToFacebook": "Post to Facebook",
         "postToPinterest": "Post to Pinterest",

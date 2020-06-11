@@ -451,7 +451,9 @@
       "unableToOpenInWallet": {
         "title": "تعذر الفتح في المحفظة",
         "body": "تعذر فتح العنوان في المحفظة لأن هناك عملية دفع قيد الإرسال. يرجى الانتظار حتى يكتمل الإرسال والمحاولة مرة أخرى."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "رخصة",
@@ -1342,7 +1344,8 @@
       "tooManyPhotosBody": "تم منع تحميل بعض أو كل صورك لأنك تجاوزت الحد الأقصى من الكمية المسموح به.",
       "unableToLoadImages": "تعذر تحميل صورتك. |||| تعذر تحميل الصور.",
       "uploadImageErrorTitle": "حدث خطأ أثناء تحميل الصورة. |||| حدث خطأ أثناء تحميل الصور."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "اكتشاف",
@@ -1524,7 +1527,7 @@
       "share": {
         "title": "شارك مع أصدقائك",
         "body": "لقد أجريت للتو عملية شراء على اوبن بازار، السوق الحر بدون رسوم أو قيود. اعرف المزيد على %{link}.",
-        "shareMsg": "لقد أجريت للتو عملية شراء على @PhoreMarketplace، السوق الحر بدون رسوم أو قيود.",
+        "shareMsg": "لقد أجريت للتو عملية شراء على @PhoreCrypto، السوق الحر بدون رسوم أو قيود.",
         "postToTwitter": "نشر على تويتر",
         "postToFacebook": "نشر على فيسبوك",
         "postToPinterest": "نشر على بينتريست",

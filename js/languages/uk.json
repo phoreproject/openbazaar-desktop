@@ -451,7 +451,9 @@
       "unableToOpenInWallet": {
         "title": "Не вдається відкрити в гаманцю",
         "body": "Неможливо відкрити адресу в гаманці, оскільки платіж наразі надсилається. Будь ласка, зачекайте, поки завершиться надсилання, і повторіть спробу."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Ліцензія",
@@ -1342,7 +1344,8 @@
       "tooManyPhotosBody": "Деякі або всі ваші фотографії не можна завантажувати через те, що ви перевищили максимально допустиму кількість.",
       "unableToLoadImages": "Ми не змогли завантажити ваше зображення. |||| Ми не змогли завантажити ваші зображення.",
       "uploadImageErrorTitle": "Ой! Під час завантаження зображення виникла помилка. |||| Ой! Під час завантаження ваших зображень виникла помилка."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Перегляд",
@@ -1523,8 +1526,8 @@
       "send": "Відправити",
       "share": {
         "title": "Поділитися з друзями",
-        "body": "Я тільки що зробив покупку на Phore Marketplace, на вільному ринку без комісій або обмежень. Дізнайтеся більше на сайті %{link}.",
-        "shareMsg": "Я тільки що зробив покупку на @PhoreMarketplace, на вільному ринку без комісій або обмежень.",
+        "body": "Я тільки що зробив покупку на PhoreCrypto Marketplace, на вільному ринку без комісій або обмежень. Дізнайтеся більше на сайті %{link}.",
+        "shareMsg": "Я тільки що зробив покупку на @PhoreCrypto Marketplace, на вільному ринку без комісій або обмежень.",
         "postToTwitter": "Поширити в Twitter",
         "postToFacebook": "Поширити в Facebook",
         "postToPinterest": "Поширити в Pinterest",

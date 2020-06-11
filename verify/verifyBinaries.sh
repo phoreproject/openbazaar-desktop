@@ -2,7 +2,7 @@
 
 ### This utility is for users to verify that binaries they downloaded are the signed, correct versions
 
-BASEURL="https://github.com/phoreproject/openbazaar-desktop/releases/"
+BASEURL="https://github.com/phoreproject/pm-desktop/releases/"
 TMPFILE="hashes.tmp"
 TMPFOLDER="temp"
 
@@ -43,7 +43,7 @@ elif [[ "$platform" == 'linux' ]]; then
     hashcommand="sha256sum"
 fi
 
-GITHUBRELEASEURL="https://github.com/OpenBazaar/openbazaar-desktop/releases/download/v$VERSION/"
+GITHUBRELEASEURL="https://github.com/phoreproject/pm-desktop/releases/download/v$VERSION/"
 SIGNATUREFILENAME="SHA256SUMS.${VERSION}.asc"
 
 # Retrieve the signature file

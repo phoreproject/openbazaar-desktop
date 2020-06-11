@@ -367,8 +367,10 @@
       },
       "bannerTitleBTC": "Scan or send Bitcoin (BTC) to this address",
       "bannerTitleBCH": "Scan or send Bitcoin Cash (BCH) to this address",
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
       "BCHWarning": "Do not send Bitcoin (BTC) to this address.",
-      "BTCWarning": "Do not send Bitcoin Cash (BCH) to this address."
+      "BTCWarning": "Do not send Bitcoin Cash (BCH) to this address.",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "ライセンス",
@@ -1415,8 +1417,8 @@
       "send": "送る",
       "share": {
         "title": "友人などにシェア",
-        "body": "Phore マーケットプレイスで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。 詳しくは %{link}",
-        "shareMsg": "Phore マーケットプレイスで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。",
+        "body": "PhoreCrypto マーケットプレイスで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。 詳しくは %{link}",
+        "shareMsg": "@PhoreCrypto マーケットプレイスで商品を購入しました。手数料や制限のない自由なマーケットプレイスです。",
         "postToTwitter": "Twitterに投稿",
         "postToFacebook": "Facebookに投稿",
         "postToPinterest": "Pinterestに投稿",

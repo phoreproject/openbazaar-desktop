@@ -446,8 +446,10 @@
       "btnOpenInWallet": "Open in Wallet",
       "bannerTitleBTC": "Scan or send Bitcoin (BTC) to this address",
       "bannerTitleBCH": "Scan or send Bitcoin Cash (BCH) to this address",
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
       "BCHWarning": "Do not send Bitcoin (BTC) to this address.",
       "BTCWarning": "Do not send Bitcoin Cash (BCH) to this address.",
+      "PHRWarning": "Do not send any other coins than Phore to this address.",
       "unableToOpenInWallet": {
         "title": "Unable to open in wallet",
         "body": "Unable to open the address in the wallet because a payment is in the process of being sent. Please wait until the send completes and try again."
@@ -1225,6 +1227,7 @@
     "tagsPlaceholder": "Enter #tags…",
     "btnCancelUpload": "cancel",
     "btnAddPhoto": "Add",
+    "btnGenerateCryptoPhoto": "Generate",
     "btnAddShippingOptionShort": "Add",
     "btnAddReturnPolicy": "Add Return Policy",
     "btnTermsAndConditions": "Add Terms and Conditions",
@@ -1523,8 +1526,8 @@
       "send": "Send",
       "share": {
         "title": "Share with friends",
-        "body": "I just made a purchase on Phore Marketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
-        "shareMsg": "I just made a purchase on @Phore Marketplace, the free marketplace without fees or restrictions.",
+        "body": "I just made a purchase on PhoreCrypto Marketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
+        "shareMsg": "I just made a purchase on @PhoreCrypto Marketplace, the free marketplace without fees or restrictions.",
         "postToTwitter": "Post to Twitter",
         "postToFacebook": "Post to Facebook",
         "postToPinterest": "Post to Pinterest",

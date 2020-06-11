@@ -451,7 +451,9 @@
       "unableToOpenInWallet": {
         "title": "Unable to open in wallet",
         "body": "Unable to open the address in the wallet because a payment is in the process of being sent. Please wait until the send completes and try again."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "License",
@@ -1342,7 +1344,8 @@
       "tooManyPhotosBody": "Some or all of your photos were prevented from being uploaded because you would have exceeded the maximum allowable amount.",
       "unableToLoadImages": "We were unable to load your image. |||| We were unable to load your images.",
       "uploadImageErrorTitle": "There was an error uploading your image. |||| There was an error uploading your images."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Discover",
@@ -1523,8 +1526,8 @@
       "send": "Send",
       "share": {
         "title": "Share with friends",
-        "body": "I just made a purchase on Phore Marketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
-        "shareMsg": "I just made a purchase on @PhoreMarketplace, the free marketplace without fees or restrictions.",
+        "body": "I just made a purchase on PhoreCrypto Marketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
+        "shareMsg": "I just made a purchase on @PhoreCrypto Marketplace, the free marketplace without fees or restrictions.",
         "postToTwitter": "Post to Twitter",
         "postToFacebook": "Post to Facebook",
         "postToPinterest": "Post to Pinterest",

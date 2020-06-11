@@ -15,7 +15,7 @@ const currencies = [
     // Not allowing fee bump on BTC right now given the fees.
     // feeBumpTransactionSize: 154,
     qrCodeText: address => `phore:${address}`,
-    icon: 'imgs/cryptoIcons/PHR.png',
+    icon: 'imgs/cryptoIcons/PHR-icon.png',
     url: 'https://phore.io/',
     getBlockChainAddressUrl: (address, _) => ( // eslint-disable-line
         `https://chainz.cryptoid.info/phr/address.dws?${address}.htm`
@@ -52,7 +52,7 @@ const currencies = [
     // Not allowing fee bump on BTC right now given the fees.
     // feeBumpTransactionSize: 154,
     qrCodeText: address => `bitcoin:${address}`,
-    icon: 'imgs/cryptoIcons/BTC.png',
+    icon: 'imgs/cryptoIcons/BTC-icon.png',
     url: 'https://bitcoin.org/',
     getBlockChainAddressUrl: (address, isTestnet) => (
       isTestnet ?
@@ -84,80 +84,74 @@ const currencies = [
     supportsEscrowTimeout: true,
     blockTime: 1000 * 60 * 10,
   },
-  // {
-  //   code: 'BCH',
-  //   testnetCode: 'TBCH',
-  //   baseUnit: 100000000,
-  //   averageModeratedTransactionSize: 184,
-  //   feeBumpTransactionSize: 154,
-  //   qrCodeText: address => {
-  //     let prefixedAddress = address;
-  //
-  //     const prefix = app.serverConfig.testnet ? 'bchtest' : 'bitcoincash';
-  //     prefixedAddress = address.startsWith(prefix) ?
-  //       prefixedAddress : `${prefix}:${address}`;
-  //
-  //     return prefixedAddress;
-  //   },
-  //   icon: 'imgs/cryptoIcons/BCH.png',
-  //   url: 'https://bitcoincash.org/',
-  //   getBlockChainAddressUrl: (address, isTestnet) => (
-  //     isTestnet ?
-  //       `https://explorer.bitcoin.com/tbch/address/bchtest:${address}` :
-  //       `https://blockchair.com/bitcoin-cash/address/${address}`
-  //   ),
-  //   getBlockChainTxUrl: (txid, isTestnet) => (
-  //     isTestnet ?
-  //       `https://explorer.bitcoin.com/tbch/tx/${txid}` :
-  //       `https://blockchair.com/bitcoin-cash/transaction/${txid}`
-  //   ),
-  //   supportsEscrowTimeout: true,
-  //   blockTime: 1000 * 60 * 10,
-  // },
-  // {
-  //   code: 'LTC',
-  //   testnetCode: 'TLTC',
-  //   baseUnit: 100000000,
-  //   averageModeratedTransactionSize: 184,
-  //   feeBumpTransactionSize: 154,
-  //   qrCodeText: address => `litecoin:${address}`,
-  //   icon: 'imgs/cryptoIcons/LTC.png',
-  //   url: 'https://litecoin.org/',
-  //   getBlockChainAddressUrl: (address, isTestnet) => (
-  //     isTestnet ?
-  //       `https://chain.so/address/LTCTEST/${address}` :
-  //       `https://blockchair.com/litecoin/address/${address}`
-  //   ),
-  //   getBlockChainTxUrl: (txid, isTestnet) => (
-  //     isTestnet ?
-  //       `https://chain.so/tx/LTCTEST/${txid}` :
-  //       `https://blockchair.com/litecoin/transaction/${txid}`
-  //   ),
-  //   supportsEscrowTimeout: true,
-  //   blockTime: 1000 * 60 * 2.5,
-  // },
-  // {
-  //   code: 'ZEC',
-  //   testnetCode: 'TZEC',
-  //   baseUnit: 100000000,
-  //   averageModeratedTransactionSize: 184,
-  //   feeBumpTransactionSize: 154,
-  //   qrCodeText: address => `zcash:${address}`,
-  //   icon: 'imgs/cryptoIcons/ZEC.png',
-  //   url: 'https://z.cash',
-  //   getBlockChainAddressUrl: (address, isTestnet) => (
-  //     isTestnet ?
-  //       `https://explorer.testnet.z.cash/address/${address}` :
-  //       `https://explorer.zcha.in/accounts/${address}`
-  //   ),
-  //   getBlockChainTxUrl: (txid, isTestnet) => (
-  //     isTestnet ?
-  //       `https://explorer.testnet.z.cash/tx/${txid}` :
-  //       `https://explorer.zcha.in/transactions/${txid}`
-  //   ),
-  //   supportsEscrowTimeout: false,
-  //   blockTime: 1000 * 60 * 2.5,
-  // },
+  {
+    code: 'ETH',
+    testnetCode: 'TETH',
+    qrCodeText: address => `ethereum:${address}`,
+    icon: 'imgs/cryptoIcons/ETH-icon.png',
+    url: 'https://ethereum.org/',
+    getBlockChainAddressUrl: (address, isTestnet) => (
+      isTestnet ?
+        `https://rinkeby.etherscan.io/address/${address}` :
+        `https://blockchair.com/ethereum/address/${address}`
+    ),
+    getBlockChainTxUrl: (txid, isTestnet) => (
+      isTestnet ?
+        `https://rinkeby.etherscan.io/tx/${txid}` :
+        `https://blockchair.com/ethereum/transaction/${txid}`
+    ),
+    supportsEscrowTimeout: true,
+    blockTime: 1000 * 10,
+    externallyFundableOrders: false,
+  },
+  {
+    code: 'BNB',
+    testnetCode: 'TBNB',
+    qrCodeText: address => `binance:${address}`,
+    icon: 'imgs/cryptoIcons/BNB-icon.png',
+    url: 'https://www.binance.com/en/bnb',
+    getBlockChainAddressUrl: (address, isTestnet) => (
+      isTestnet ? '' :
+        `https://explorer.binance.org/address/${address}`
+    ),
+    getBlockChainTxUrl: (txid, isTestnet) => (
+      isTestnet ? '' :
+        `https://explorer.binance.org/tx/${txid}`
+    ),
+    blockTime: 1000 * 10,
+  },
+  {
+    code: 'DOGE',
+    testnetCode: 'TDOGE',
+    qrCodeText: address => `doge:${address}`,
+    icon: 'imgs/cryptoIcons/DOGE-icon.png',
+    url: 'https://dogecoin.com',
+    getBlockChainAddressUrl: (address, isTestnet) => (
+      isTestnet ? '' :
+        `https://dogechain.info/address/${address}`
+    ),
+    getBlockChainTxUrl: (txid, isTestnet) => (
+      isTestnet ? '' :
+        `https://dogechain.info/tx/${txid}`
+    ),
+    blockTime: 1000,
+  },
+  {
+    code: 'RDD',
+    testnetCode: 'TRDD',
+    qrCodeText: address => `reddcoin:${address}`,
+    icon: 'imgs/cryptoIcons/RDD-icon.png',
+    url: 'https://reddcoin.com',
+    getBlockChainAddressUrl: (address, isTestnet) => (
+      isTestnet ? `https://test.reddcoin.com/address/${address}` :
+        `https://live.reddcoin.com/address/${address}`
+    ),
+    getBlockChainTxUrl: (txid, isTestnet) => (
+      isTestnet ? `https://test.reddcoin.com/tx/${txid}` :
+        `https://live.reddcoin.com/tx/${txid}`
+    ),
+    blockTime: 1000,
+  },
 ];
 
 export default currencies;

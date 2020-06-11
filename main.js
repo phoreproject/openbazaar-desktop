@@ -22,7 +22,7 @@ const version = app.getVersion();
 // We no longer support win32, but process.platform returns Windows 64 bit as win32.
 const plat = process.platform === 'win32' ? 'win64' : process.platform;
 
-const feedURL = `https://updates2.openbazaar.org:5001/update/${plat}/${version}`;
+const feedURL = `https://updates.phore.io:5001/update/${plat}/${version}`;
 
 global.serverLog = '';
 
@@ -78,12 +78,12 @@ const handleStartupEvent = function () {
 };
 
 if (handleStartupEvent()) {
-  console.log('OpenBazaar started on Windows...');
+  console.log('Phore Marketplace started on Windows...');
 }
 
-const serverPath = `${__dirname}${path.sep}..${path.sep}openbazaar-go${path.sep}`;
+const serverPath = `${__dirname}${path.sep}..${path.sep}pm-go${path.sep}`;
 const serverFilename = process.platform === 'darwin' || process.platform === 'linux' ?
-  'openbazaard' : 'openbazaard.exe';
+  'marketplaced' : 'marketplaced.exe';
 const isBundledApp = fs.existsSync(serverPath + serverFilename);
 global.isBundledApp = isBundledApp;
 let localServer;
@@ -136,8 +136,8 @@ if (isBundledApp || argv.userData) {
 }
 
 crashReporter.start({
-  productName: 'OpenBazaar 2',
-  companyName: 'OpenBazaar',
+  productName: 'Phore Marketplace',
+  companyName: 'Phore Blockchain',
   submitURL: 'http://104.131.17.128:1127/post',
   uploadToServer: true,
   extra: {
@@ -178,19 +178,10 @@ function createWindow() {
         shell.openExternal('https://openbazaar.org');
       },
     },
-    // until the documentation page is updated, don't show it
-    /*
-    {
-      label: 'Documentation',
-      click() {
-        shell.openExternal('https://docs.openbazaar.org');
-      },
-    },
-    */
     {
       label: 'Support',
       click() {
-        shell.openExternal('https://openbazaar.org/support');
+        shell.openExternal('https://phore.io/information/');
       },
     },
   ];
@@ -203,7 +194,7 @@ function createWindow() {
           if (updatesSupported) {
             checkForUpdates();
           } else {
-            shell.openExternal('https://www.openbazaar.org/download/');
+            shell.openExternal('https://github.com/phoreproject/pm-desktop/releases');
           }
         },
       },
@@ -567,7 +558,7 @@ function createWindow() {
   });
 
   // Set up protocol
-  app.setAsDefaultProtocolClient('ob');
+  app.setAsDefaultProtocolClient('pm');
 
   // Check for URL hijacking in the browser
   preventWindowNavigation(mainWindow);

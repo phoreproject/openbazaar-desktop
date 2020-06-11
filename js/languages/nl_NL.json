@@ -451,7 +451,9 @@
       "unableToOpenInWallet": {
         "title": "Kan niet openen in wallet",
         "body": "Kan het adres niet openen in de wallet omdat een betaling wordt verzonden. Wacht tot verzending afgerond is en probeer opnieuw."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Licentie",
@@ -1342,7 +1344,8 @@
       "tooManyPhotosBody": "Enkele of al je foto's zijn niet geupload, omdate je het maximaal aantal foto's bereikt hebt.",
       "unableToLoadImages": "Je afbeelding kon niet worden geladen. |||| Je  afbeelding kon niet worden geladen.",
       "uploadImageErrorTitle": "Fout bij het uploaden van je afbeelding. |||| Fout bij het uploaden van je afbeelding."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Ontdek",
@@ -1523,8 +1526,8 @@
       "send": "Verzend",
       "share": {
         "title": "Deel met vrienden",
-        "body": "Ik heb net wat gekocht op Phore Marketplace, de gratis marktplaats zonder kosten en zonder beperkingen. ",
-        "shareMsg": "Ik heb net wat gekocht op @PhoreMarketplace, de gratis marktplaats zonder kosten en zonder beperkingen. ",
+        "body": "Ik heb net wat gekocht op PhoreCrypto Marketplace, de gratis marktplaats zonder kosten en zonder beperkingen. ",
+        "shareMsg": "Ik heb net wat gekocht op @PhoreCrypto Marketplace, de gratis marktplaats zonder kosten en zonder beperkingen. ",
         "postToTwitter": "Post op Twitter",
         "postToFacebook": "Deel op Facebook",
         "postToPinterest": "Deel op Pinterest",

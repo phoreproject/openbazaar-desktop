@@ -451,7 +451,9 @@
       "unableToOpenInWallet": {
         "title": "Невозможно открыть в кошельке",
         "body": "Не удалось открыть этот адрес в кошельке, потому что передаётся платеж . Подождите, пока передача завершится и повторите попытку."
-      }
+      },
+      "bannerTitlePHR": "Scan or send Phore (PHR) to this address",
+      "PHRWarning": "Do not send any other coins than Phore to this address."
     },
     "licenseTab": {
       "linkText": "Лицензия",
@@ -1342,7 +1344,8 @@
       "tooManyPhotosBody": "Не удалось загрузить некоторые или все фотографии, так как Вы превысили бы максимальное количество.",
       "unableToLoadImages": "We were unable to load your image. |||| We were unable to load your images.",
       "uploadImageErrorTitle": "Произошла ошибка при загрузке изображения. |||| Произошла ошибка при загрузке изображений."
-    }
+    },
+    "btnGenerateCryptoPhoto": "Generate"
   },
   "search": {
     "title": "Сёрфинг",
@@ -1523,8 +1526,8 @@
       "send": "Отправить",
       "share": {
         "title": "Поделитесь с друзьями",
-        "body": "I just made a purchase on Phore Marketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
-        "shareMsg": "I just made a purchase on @PhoreMarketplace, the free marketplace without fees or restrictions.",
+        "body": "I just made a purchase on PhoreCrypto Marketplace, the free marketplace without fees or restrictions. Learn more at %{link}.",
+        "shareMsg": "I just made a purchase on @PhoreCrypto Marketplace, the free marketplace without fees or restrictions.",
         "postToTwitter": "Опубликовать в Twitter",
         "postToFacebook": "Опубликовать в Facebook",
         "postToPinterest": "Опубликовать в Pinterest",
