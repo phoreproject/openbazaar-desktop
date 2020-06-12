@@ -61,6 +61,31 @@
       <div class="box padMdKids padStack">
         <div class="flexRow gutterH">
           <div class="col3">
+            <label class="required"><%= ob.polyT('settings.storeTab.shippingOptions') %></label>
+            <div class="clrT2 txSm rowSm"><%= ob.polyT('settings.storeTab.shippingOptionsHelper') %></div>
+          </div>
+          <div class="col9">
+            <% if (ob.errors.shippingOptions) print(ob.formErrorTmpl({ errors: ob.errors.shippingOptions })) %>
+            <div class="row js-shippingOptionsSelector"></div>
+            <div class="contentBox padMd clrP clrBr clrSh3 tx3 shipOptPlaceholder">
+              <%
+              if (ob.errors['shippingOptions']) print(ob.formErrorTmpl({
+                errors: ob.errors['shippingOptions'],
+                class: 'topLevelShipOptErrs'
+              })) %>
+              <h2 class="h4 clrT js-addShipOptSectionHeading"><%= ob.polyT('editListing.shippingOptions.optionHeading', { listPosition: ob.shippingOptions.length + 1 }) %></h2>
+              <a class="btn clrBr clrP clrSh2 rowSm js-addShippingOption"><%= ob.polyT('editListing.shippingOptions.btnAddShippingOption') %></a>
+              <div class="clrT2 txSm helper"><%= ob.polyT('editListing.helperShipping') %></div>
+            </div>
+            <div class="flexHRight">
+              <div class="js-bulkShippingOptionsUpdateBtn"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box padMdKids padStack">
+        <div class="flexRow gutterH">
+          <div class="col3">
             <label class="required"><%= ob.polyT('settings.storeTab.termsAndConditions') %></label>
             <div class="clrT2 txSm rowSm"><%= ob.polyT('settings.storeTab.termsAndConditionsHelper') %></div>
           </div>

@@ -9,13 +9,19 @@ import { isMultihash } from '../../../utils';
 import { bulkCoinUpdate } from '../../../utils/bulkCoinUpdate';
 import { bulkTermsUpdate } from '../../../utils/bulkTermsUpdate';
 import { bulkReturnPolicyUpdate } from '../../../utils/bulkReturnPolicyUpdate';
+import { bulkShippingOptionsUpdate } from '../../../utils/bulkShippingOptionsUpdate';
 import { supportedWalletCurs } from '../../../data/walletCurrencies';
 import Moderators from '../../components/moderators/Moderators';
 import BulkCoinUpdateBtn from './BulkCoinUpdateBtn';
 import BulkTermsUpdateBtn from './BulkTermsUpdateBtn';
 import BulkReturnPolicyUpdateBtn from './BulkReturnPolicyUpdateBtn';
+import BulkShippingOptionsUpdateBtn from './BulkShippingOptionsUpdateBtn';
 import CurrencySelector from '../../components/CryptoCurSelector';
 import { openSimpleMessage } from '../SimpleMessage';
+import Listing from '../../../models/listing/Listing';
+import ShippingOption from '../editListing/ShippingOption';
+import ShippingOptionMd from '../../../models/listing/ShippingOption';
+import Service from '../../../models/listing/Service';
 
 export default class extends baseVw {
   constructor(options = {}) {
@@ -58,6 +64,37 @@ export default class extends baseVw {
 
     this.listenTo(this.currencySelector, 'currencyClicked', sOpts => {
       this.handleCurrencyClicked(sOpts);
+    });
+
+    const listingModel = new Listing({}, { guid: app.profile.id });
+    this.shippingOptions = listingModel.get('shippingOptions');
+    this.shippingOptionViews = [];
+
+    this.listenTo(this.shippingOptions, 'add', (shipOptMd) => {
+      const shipOptVw = this.createShippingOptionView({
+        listPosition: this.shippingOptions.length,
+        model: shipOptMd,
+      });
+
+      this.shippingOptionViews.push(shipOptVw);
+      this.$shippingOptionsWrap.append(shipOptVw.render().el);
+    });
+
+    this.listenTo(this.shippingOptions, 'remove', (shipOptMd, shipOptCl, removeOpts) => {
+      const [splicedVw] = this.shippingOptionViews.splice(removeOpts.index, 1);
+      splicedVw.remove();
+      this.shippingOptionViews.slice(removeOpts.index)
+        .forEach(shipOptVw => (shipOptVw.listPosition = shipOptVw.listPosition - 1));
+    });
+
+    this.listenTo(this.shippingOptions, 'update', (cl, updateOpts) => {
+      if (!(updateOpts.changes.added.length || updateOpts.changes.removed.length)) {
+        return;
+      }
+
+      // this.$addShipOptSectionHeading
+      //   .text(app.polyglot.t('editListing.shippingOptions.optionHeading',
+      //     { listPosition: this.shippingOptions.length + 1 }));
     });
 
     this.currentMods = this.settings.get('storeModerators');
@@ -144,6 +181,16 @@ export default class extends baseVw {
       }
     });
 
+    this.bulkShippingOptionsUpdateBtn = new BulkShippingOptionsUpdateBtn();
+    this.listenTo(this.bulkShippingOptionsUpdateBtn, 'bulkShippingOptionsUpdateConfirm', () => {
+      bulkShippingOptionsUpdate(this.shippingOptions);
+      this.bulkShippingOptionsUpdateBtn.setState({
+        isBulkShippingOptionsUpdating: true,
+        showConfirmTooltip: false,
+        error: '',
+      });
+    });
+
     this.bulkTermsAndConditionsUpdateBtn = new BulkTermsUpdateBtn();
     this.listenTo(this.bulkTermsAndConditionsUpdateBtn, 'bulkTermsUpdateConfirm', () => {
       bulkTermsUpdate(this.getCachedEl('#settingTermsAndConditions').val());
@@ -171,8 +218,25 @@ export default class extends baseVw {
       'click .js-submitModByID': 'clickSubmitModByID',
       'click .js-save': 'save',
       'click .js-storeVerifiedOnly': 'onClickVerifiedOnly',
+      'click .js-addShippingOption': 'onClickAddShippingOption',
     };
   }
+
+  createShippingOptionView(opts) {
+    const options = {
+      getCurrency: () => ('USD'),
+      ...opts || {},
+    };
+    const view = this.createChild(ShippingOption, options);
+
+    this.listenTo(view, 'click-remove', e => {
+      this.shippingOptions.remove(
+        this.shippingOptions.at(this.shippingOptionViews.indexOf(e.view)));
+    });
+
+    return view;
+  }
+
 
   noModsByIDFound(guids) {
     const modsNotFound = app.polyglot.t('settings.storeTab.errors.modsNotFound',
@@ -245,6 +309,15 @@ export default class extends baseVw {
 
   onClickVerifiedOnly(e) {
     this.showVerifiedOnly = $(e.target).prop('checked');
+  }
+
+  onClickAddShippingOption() {
+    this.shippingOptions
+      .push(new ShippingOptionMd({
+        services: [
+          new Service(),
+        ],
+      }));
   }
 
   getProfileFormData(subset = this.$profileFormFields) {
@@ -375,6 +448,7 @@ export default class extends baseVw {
       this.$el.html(t({
         modsAvailable: this.modsAvailable.allIDs,
         showVerifiedOnly: this._showVerifiedOnly,
+        shippingOptions: this.shippingOptions,
         errors: {
           ...(this.profile.validationError || {}),
           ...(this.settings.validationError || {}),
@@ -404,6 +478,29 @@ export default class extends baseVw {
 
       this.bulkCoinUpdateBtn.delegateEvents();
       this.getCachedEl('.js-bulkCoinUpdateBtn').append(this.bulkCoinUpdateBtn.render().el);
+
+      // Shipping options
+      this.shippingOptionViews.forEach((shipOptVw) => shipOptVw.remove());
+      this.shippingOptionViews = [];
+      const shipOptsFrag = document.createDocumentFragment();
+
+      this.shippingOptions.forEach((shipOpt, shipOptIndex) => {
+        const shipOptVw = this.createShippingOptionView({
+          model: shipOpt,
+          listPosition: shipOptIndex + 1,
+        });
+
+        this.shippingOptionViews.push(shipOptVw);
+        shipOptVw.render().$el.appendTo(shipOptsFrag);
+      });
+
+      this.$shippingOptionsWrap = this.$('.js-shippingOptionsSelector');
+      this.$shippingOptionsWrap.append(shipOptsFrag);
+
+
+      this.bulkShippingOptionsUpdateBtn.delegateEvents();
+      this.getCachedEl('.js-bulkShippingOptionsUpdateBtn')
+        .append(this.bulkShippingOptionsUpdateBtn.render().el);
 
       this.bulkTermsAndConditionsUpdateBtn.delegateEvents();
       this.getCachedEl('.js-bulkTermsAndConditionsUpdateBtn')
