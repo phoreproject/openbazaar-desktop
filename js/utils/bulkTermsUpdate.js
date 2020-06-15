@@ -25,8 +25,8 @@ export function bulkTermsUpdate(terms) {
   } else {
     events.trigger('bulkTermsUpdating');
     bulkTermsUpdateSave = $.post({
-      url: app.getServerUrl('ob/bulkupdateterms'),
-      data: JSON.stringify({ terms }),
+      url: app.getServerUrl('ob/bulkupdatetermsandconditions'),
+      data: JSON.stringify({ termsAndConditions: terms }),
       dataType: 'json',
     }).done(() => {
       events.trigger('bulkTermsUpdateDone');

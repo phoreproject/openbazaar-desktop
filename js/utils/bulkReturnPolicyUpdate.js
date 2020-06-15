@@ -25,8 +25,8 @@ export function bulkReturnPolicyUpdate(returnPolicy) {
   } else {
     events.trigger('bulkReturnPolicyUpdating');
     bulkReturnPolicyUpdateSave = $.post({
-      url: app.getServerUrl('ob/bulkupdatereturnpolicy'),
-      data: JSON.stringify({ returnPolicy }),
+      url: app.getServerUrl('ob/bulkupdaterefundpolicy'),
+      data: JSON.stringify({ refundPolicy: returnPolicy }),
       dataType: 'json',
     }).done(() => {
       events.trigger('bulkReturnPolicyUpdateDone');

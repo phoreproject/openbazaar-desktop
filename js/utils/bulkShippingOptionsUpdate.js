@@ -27,16 +27,15 @@ export function bulkShippingOptionsUpdate(listingModel) {
     events.trigger('bulkShippingOptionsUpdating');
 
     const listing = listingModel.toJSON();
-
-    // const shippingOptionsJSON = shippingOptions.toJSON();
     listing.shippingOptions.forEach(shipOpt => {
       shipOpt.services.forEach(service => {
         if (typeof service.price === 'number') {
-          service.price = decimalToInteger(service.price, 'USD');
+          service.price = decimalToInteger(service.price, app.settings.get('localCurrency'));
         }
 
         if (typeof service.additionalItemPrice === 'number') {
-          service.additionalItemPrice = decimalToInteger(service.additionalItemPrice, 'USD');
+          service.additionalItemPrice = decimalToInteger(service.additionalItemPrice,
+            app.settings.get('localCurrency'));
         }
       });
     });
