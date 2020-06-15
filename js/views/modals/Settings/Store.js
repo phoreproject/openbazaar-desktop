@@ -18,10 +18,10 @@ import BulkReturnPolicyUpdateBtn from './BulkReturnPolicyUpdateBtn';
 import BulkShippingOptionsUpdateBtn from './BulkShippingOptionsUpdateBtn';
 import CurrencySelector from '../../components/CryptoCurSelector';
 import { openSimpleMessage } from '../SimpleMessage';
-import Listing from '../../../models/listing/Listing';
 import ShippingOption from '../editListing/ShippingOption';
 import ShippingOptionMd from '../../../models/listing/ShippingOption';
 import Service from '../../../models/listing/Service';
+import Listing from '../../../models/listing/Listing';
 
 export default class extends baseVw {
   constructor(options = {}) {
@@ -66,8 +66,8 @@ export default class extends baseVw {
       this.handleCurrencyClicked(sOpts);
     });
 
-    const listingModel = new Listing({}, { guid: app.profile.id });
-    this.shippingOptions = listingModel.get('shippingOptions');
+    this.listingModel = new Listing({}, { guid: app.profile.id });
+    this.shippingOptions = this.listingModel.get('shippingOptions');
     this.shippingOptionViews = [];
 
     this.listenTo(this.shippingOptions, 'add', (shipOptMd) => {
@@ -183,12 +183,22 @@ export default class extends baseVw {
 
     this.bulkShippingOptionsUpdateBtn = new BulkShippingOptionsUpdateBtn();
     this.listenTo(this.bulkShippingOptionsUpdateBtn, 'bulkShippingOptionsUpdateConfirm', () => {
-      bulkShippingOptionsUpdate(this.shippingOptions);
-      this.bulkShippingOptionsUpdateBtn.setState({
-        isBulkShippingOptionsUpdating: true,
-        showConfirmTooltip: false,
-        error: '',
-      });
+      this.shippingOptionViews.forEach((shipOptVw) => shipOptVw.setModelData());
+
+      if (this.createShippingOptionView.length) {
+        bulkShippingOptionsUpdate(this.listingModel);
+        this.bulkShippingOptionsUpdateBtn.setState({
+          isBulkShippingOptionsUpdating: true,
+          showConfirmTooltip: false,
+          error: '',
+        });
+      } else {
+        this.bulkShippingOptionsUpdateBtn.setState({
+          isBulkShippingOptionsUpdating: false,
+          showConfirmTooltip: false,
+          error: 'NoShippingError',
+        });
+      }
     });
 
     this.bulkTermsAndConditionsUpdateBtn = new BulkTermsUpdateBtn();

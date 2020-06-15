@@ -792,6 +792,7 @@
         "errors": {
           "errorTitle": "There Was An Error When Updating Your Listings",
           "errorMessage": "One or more listings failed to update.",
+          "noShippingError": "You must select at least one coin when updating your listings.",
           "reasonForError": "Reason: %{reason}"
         }
       },
