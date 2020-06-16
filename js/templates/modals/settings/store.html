@@ -111,7 +111,7 @@
             <% if (ob.errors.returnPolicy) print(ob.formErrorTmpl({ errors: ob.errors.returnPolicy })) %>
             <div class="row">
               <textarea rows="6" name="returnPolicy" class="clrBr clrSh2" id="settingReturnPolicy"
-                        placeholder="<%= ob.polyT('editListing.placeholderReturnPolicy') %>"><%= ob.returnPolicy %></textarea>
+                        placeholder="<%= ob.polyT('editListing.placeholderReturnPolicy') %>"><%= ob.refundPolicy %></textarea>
             </div>
             <div class="flexHRight">
               <div class="js-bulkReturnPolicyUpdateBtn"></div>

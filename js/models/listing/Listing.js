@@ -64,11 +64,11 @@ export default class extends BaseModel {
 
   defaults() {
     return {
-      termsAndConditions: '',
-      refundPolicy: '',
+      termsAndConditions: app.profile.get('termsAndConditions') || '',
+      refundPolicy: app.profile.get('refundPolicy') || '',
       item: new Item(),
       metadata: new Metadata(),
-      shippingOptions: new ShippingOptions(),
+      shippingOptions: app.profile.get('shippingOptions') || new ShippingOptions(),
       coupons: new Coupons(),
     };
   }

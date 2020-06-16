@@ -459,6 +459,8 @@ export default class extends baseVw {
         modsAvailable: this.modsAvailable.allIDs,
         showVerifiedOnly: this._showVerifiedOnly,
         shippingOptions: this.shippingOptions,
+        termsAndConditions: app.profile.get('termsAndConditions'),
+        refundPolicy: app.profile.get('refundPolicy'),
         errors: {
           ...(this.profile.validationError || {}),
           ...(this.settings.validationError || {}),
