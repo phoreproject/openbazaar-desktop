@@ -654,7 +654,7 @@
         "walletManager": {
           "btnShowManager": "Show Manager",
           "btnLockWallet": "Lock wallet seed",
-          "btnUnlockWallet": "Unlock wallet seed",
+          "btnUnlockWallet": "Unlock wallet",
           "introLine": "Here you can encrypt or decrypt your seed words.",
           "dialogSuccessTitle": "Wallet seed word status successfully changed.",
           "dialogSuccessMsg": "Seed words are now %{isLocked}.",
@@ -666,7 +666,8 @@
           "passwordLenNotify": "The password length should be at least 8 characters long",
           "passwordsNotEqual": "Passwords are not equal",
           "enterPassword": "Enter password",
-          "repeatPassword": "Repeat password"
+          "repeatPassword": "Repeat password",
+          "decryptWalletPopupTitle": "Unlock wallet"
         }
       },
       "transaction": {
