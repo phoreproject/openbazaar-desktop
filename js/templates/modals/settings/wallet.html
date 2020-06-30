@@ -4,7 +4,41 @@
   </div>
   <hr class="clrBr" />
 
+  <div class="contentBox padMd clrP clrBr clrSh3">
+    <div class="tabFormWrapper clrS">
+      <div class="js-serverContainer">
+        <form class="box padMdKids padStack clrP clrBr js-server">
 
+          <div class="flexRow gutterH js-backupWalletSection">
+            <div class="col3">
+              <label>
+                <%= ob.polyT('settings.advancedTab.server.backupWalletLbl') %>
+              </label>
+              <div class="clrT2 txSm">
+                <%= ob.polyT('settings.advancedTab.server.backupWalletHelper') %>
+              </div>
+            </div>
+            <div class="col9 js-walletSeedContainer">
+            </div>
+          </div>
+          <div class="flexRow gutterH js-manageWalletSecuritySection">
+            <div class="col3">
+              <label>
+                <%= ob.polyT('settings.advancedTab.server.lockOrUnlockWalletLbl') %>
+              </label>
+              <div class="clrT2 txSm">
+                <%= ob.polyT('settings.advancedTab.server.lockOrUnlockWalletHelper') %>
+              </div>
+            </div>
+            <div class="col9 js-walletManagement">
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
   <hr class="clrBr" />
   <div class="flexHRight">
     <%= ob.processingButton({
