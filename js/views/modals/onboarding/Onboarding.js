@@ -28,7 +28,7 @@ export default class extends BaseModal {
 
     super(opts);
     this.options = opts;
-    this.screens = ['intro', 'info', 'encrypt', 'tos'];
+    this.screens = ['intro', 'info', 'seed', 'backupSeed', 'encrypt', 'tos'];
     this.lastAvatarImageRotate = 0;
     this.avatarChanged = false;
     this.countryList = getTranslatedCountries();
@@ -101,6 +101,13 @@ export default class extends BaseModal {
       }
     }
 
+    if (curScreen === 'backupSeed') {
+      const success = this.checkSeedBackup();
+      if (!success) {
+        return;
+      }
+    }
+
     if (curScreen === 'encrypt') {
       const password = getPasswordIfCorrect(this.$('#seedPassword').val(),
         this.$('#seedPassword2').val(), false);
@@ -125,10 +132,7 @@ export default class extends BaseModal {
   onClickNavSkip() {
     const curScreen = this.getState().screen;
     const newScreen = this.screens[this.screens.indexOf(curScreen) + 1];
-
-    if (curScreen === 'encrypt') {
-      this.setState({ screen: newScreen });
-    }
+    this.setState({ screen: newScreen });
   }
 
   onClickChangeAvatar() {
@@ -229,9 +233,14 @@ export default class extends BaseModal {
     }
   }
 
+  checkSeedBackup() {
+
+    return true;
+  }
+
   encryptWallet(password) {
     const promise = $.Deferred();
-    this.walletManageRequest = $.post({
+    $.post({
       url: app.getServerUrl('manage/lockwallet'),
       data: JSON.stringify({ password }),
       dataType: 'json',

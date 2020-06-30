@@ -573,6 +573,9 @@
       "addAddressErrorAlertTitle": "Unable to add address %{name}",
       "btnDelete": "Delete"
     },
+    "walletTab": {
+      "sectionName": "Wallet"
+    },
     "advancedTab": {
       "sectionName": "Advanced",
       "helperVisualEffects": "Transitions, Easing, Opacity",
@@ -643,8 +646,12 @@
           "btnShowSeed": "Show Seed",
           "btnHideSeed": "Hide Seed",
           "introLine": "Your wallet generation seed is:",
+          "explanationLine": "Backup of seed words will allow you to restore wallet in case of data corruption or disk failure.",
           "directionLine": "Write the following words on paper and keep them somewhere safe. They must be in this exact order.",
           "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet.",
+          "encryptExplanationHeader": "Funds stored in unsecured wallet can be easily stolen from you, it is highly recommended to secure wallet now.",
+          "encryptExplanationLine": "Put your wallet password below.",
+          "seedBackupHeader": "Please put your seed words in a fields below.",
           "warningHeading": "Warning:",
           "warning1": "Never share your seed. Anyone with this seed can steal your funds.",
           "warning2": "Never type it on a website.",
@@ -1424,6 +1431,12 @@
       "currencyLbl": "Currency",
       "changeAvatarLbl": "Change Avatar",
       "heading": "Set Your Information"
+    },
+    "seedScreen": {
+      "heading": "Make a seed backup"
+    },
+    "backupSeedScreen": {
+      "heading": "Check your seed backup"
     },
     "encryptScreen": {
       "heading": "Secure your seed words",

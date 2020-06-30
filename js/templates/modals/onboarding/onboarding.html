@@ -15,17 +15,27 @@
       <div class="flexExpand txB tx3">
         <div class="center"><%= ob.polyT('onboarding.infoScreen.heading') %></div>
       </div>
-      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 1, totalPages: 3 }) %></div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 1, totalPages: 5 }) %></div>
+    <% } else if (ob.screen === 'seed') { %>
+      <div class="flexExpand txB tx3">
+        <div class="center"><%= ob.polyT('onboarding.seedScreen.heading') %></div>
+      </div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 2, totalPages: 5 }) %></div>
+    <% } else if (ob.screen === 'backupSeed') { %>
+      <div class="flexExpand txB tx3">
+        <div class="center"><%= ob.polyT('onboarding.backupSeedScreen.heading') %></div>
+      </div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 3, totalPages: 5 }) %></div>
     <% } else if (ob.screen === 'encrypt') { %>
       <div class="flexExpand txB tx3">
         <div class="center"><%= ob.polyT('onboarding.encryptScreen.heading') %></div>
       </div>
-      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 2, totalPages: 3 }) %></div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 4, totalPages: 5 }) %></div>
     <% } else if (ob.screen === 'tos') { %>
       <div class="flexExpand txB tx3">
         <div class="center"><%= ob.polyT('onboarding.tosScreen.heading') %></div>
       </div>
-      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 3, totalPages: 3 }) %></div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 5, totalPages: 5 }) %></div>
     <% } %>
   </div>
   <hr class="clrBr" />
@@ -105,9 +115,9 @@
           </select>
         </div>
       </form>
-    <% } else if (ob.screen === 'encrypt') { %>
+    <% } else if (ob.screen === 'seed') { %>
       <form class="padStack">
-        #TODO 1. Explain why backup of seed words is necessary, ask to do it
+        <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.explanationLine') %></h5>
         <p><%= ob.polyT('settings.advancedTab.server.walletSeed.introLine') %></p>
         <p class="pad border clrBr clrP"><%= ob.seed %></p>
         <p><%= ob.polyT('settings.advancedTab.server.walletSeed.directionLine') %></p>
@@ -118,8 +128,20 @@
           <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning3') %></li>
           <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning4') %></li>
         </ul>
-        <hr class="clrBr" />
-        # TODO 2. Explain why it is important to encrypt seed words
+      </form>
+    <% } else if (ob.screen === 'backupSeed') { %>
+      <form class="padStack">
+        <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.seedBackupHeader') %></h5>
+
+        <% for (let i = 0; i < ob.seed.split(" ").length; i++) { %>
+          <input class="clrBr clrSh2" id="seedBackup_<%= i %>" placeholder="word <%= i %>" data-field-standalone="string">
+        <% } %>
+
+      </form>
+    <% } else if (ob.screen === 'encrypt') { %>
+      <form class="padStack">
+        <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.encryptExplanationHeader') %></h5>
+        <p><%= ob.polyT('settings.advancedTab.server.walletSeed.encryptExplanationLine') %></p>
         <div class="row padMd">
           <% if (ob.passwordError) print(ob.formErrorTmpl({ errors: ob.passwordError })) %>
           <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword" value="" placeholder="<%= ob.polyT('onboarding.encryptScreen.seedPassword') %>" data-field-standalone="string">
@@ -155,7 +177,7 @@
           className: `btn clrP js-tosAgree ${ob.saveInProgress ? 'processing' : ''}`,
           btnText: 'I Agree'
         }) %>
-      <% } else if (ob.screen === 'encrypt') { %>
+      <% } else if (ob.screen === 'encrypt' || ob.screen === 'backupSeed') { %>
         <%= ob.processingButton({
           className: `btn clrP js-navSkip`,
           btnText: 'Skip'
