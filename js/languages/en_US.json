@@ -574,7 +574,11 @@
       "btnDelete": "Delete"
     },
     "walletTab": {
-      "sectionName": "Wallet"
+      "sectionName": "Wallet",
+      "autoLock": {
+        "sectionName": "Auto Lock",
+        "explanation": "Unlocked wallet will be locked after particular period of minutes. To disable this features put '0'."
+      }
     },
     "advancedTab": {
       "sectionName": "Advanced",

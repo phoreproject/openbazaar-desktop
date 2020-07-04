@@ -16,6 +16,11 @@ export default class extends baseVw {
     });
   }
 
+  get events() {
+    return {
+      'click .js-save': 'save',
+    };
+  }
 
   onClickShowSeed() {
     if (this.walletSeed) this.walletSeed.setState({ isFetching: true });
@@ -82,12 +87,15 @@ export default class extends baseVw {
     return this.walletEncryptionStatusFetch;
   }
 
+  save() {
+  }
+
   render() {
     super.render();
     loadTemplate('modals/settings/wallet.html', (t) => {
       this.$el.html(t({
+        lockTime: app.profile.walletAutoLockTime || 0,
       }));
-
 
       if (this.walletSeed) this.walletSeed.remove();
       this.walletSeed = this.createChild(WalletSeed, {
