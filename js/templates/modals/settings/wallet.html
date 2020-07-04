@@ -8,7 +8,16 @@
     <div class="tabFormWrapper clrS">
       <div class="js-serverContainer">
         <form class="box padMdKids padStack clrP clrBr js-server">
-
+          <div class="timeSlider">
+            <input id="rangeInput" type="range" min="0" value="15" max="720" step="1" oninput="amount.value=rangeInput.value" list="ticks"/>
+            <datalist id="ticks">
+              <option>1</option>
+              <option>5</option>
+              <option>60</option>
+              <option>720</option>
+            </datalist>
+            <input id="amount" type="number" value="15" min="0" max="720" oninput="rangeInput.value=amount.value" />
+          </div>
           <div class="flexRow gutterH js-backupWalletSection">
             <div class="col3">
               <label>
@@ -37,7 +46,6 @@
         </form>
       </div>
     </div>
-
   </div>
   <hr class="clrBr" />
   <div class="flexHRight">
