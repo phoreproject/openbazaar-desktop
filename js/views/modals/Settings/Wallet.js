@@ -1,6 +1,6 @@
 import baseVw from '../../baseVw';
 import loadTemplate from '../../../utils/loadTemplate';
-import { recordEvent } from '../../../utils/metrics';
+import { endAjaxEvent, recordEvent } from '../../../utils/metrics';
 import $ from 'jquery';
 import app from '../../../app';
 import { openSimpleMessage } from '../SimpleMessage';
@@ -88,13 +88,18 @@ export default class extends baseVw {
   }
 
   save() {
+    const newLockTime = this.getCachedEl('.js-autoLockTimeInput').val();
+    if (newLockTime !== app.profile.get('walletAutoLockTime')) {
+      app.profile.set({ walletAutoLockTime: parseInt(newLockTime, 10) });
+      app.profile.sync('update', app.profile, {});
+    }
   }
 
   render() {
     super.render();
     loadTemplate('modals/settings/wallet.html', (t) => {
       this.$el.html(t({
-        lockTime: app.profile.walletAutoLockTime || 0,
+        lockTime: app.profile.get('walletAutoLockTime') || 0,
       }));
 
       if (this.walletSeed) this.walletSeed.remove();
