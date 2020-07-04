@@ -29,14 +29,12 @@ export default class extends baseView {
   events() {
     return {
       'click .js-unlock': 'onUnlockClick',
-      'click .js-addTime': 'onAddTimeClick',
-      'change .js-walletUnlockTimeout': 'onTimePeriodChange',
     };
   }
 
   onUnlockClick() {
     const password = this.$('#walletPassword').val();
-    const unlockTimeout = parseInt(this.$('#unlockTimeout').val() || '0', 10);
+    const unlockTimeout = parseInt(app.profile.get('walletAutoLockTime') || '0', 10) * 60;
     getWallet()
       .unlockWallet(password, unlockTimeout, true)
       .done((data) => {
@@ -51,15 +49,6 @@ export default class extends baseView {
         openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
           xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
       });
-  }
-
-  onAddTimeClick(ev) {
-    const seconds = parseInt($(ev.currentTarget).data('seconds'), 10);
-    this.updateWalletTimoutAndHint(this.$('#unlockTimeout').val(), seconds);
-  }
-
-  onTimePeriodChange() {
-    this.updateWalletTimoutAndHint(this.$('#unlockTimeout').val(), 0);
   }
 
   updateWalletTimoutAndHint(currentStr, addValue) {
