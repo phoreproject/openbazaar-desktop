@@ -575,6 +575,10 @@
     },
     "walletTab": {
       "sectionName": "Wallet",
+      "statusSaving": "Saving wallet settings...",
+      "statusSaveComplete": "Wallet settings saved.",
+      "statusSaveFailed": "Unable to save wallet settings.",
+      "saveErrorAlertTitle": "Unable to save wallet settings",
       "autoLock": {
         "sectionName": "Auto Lock",
         "explanation": "Unlocked wallet will be locked after particular period of minutes. To disable this features put '0'."

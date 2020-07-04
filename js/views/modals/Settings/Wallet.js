@@ -91,7 +91,37 @@ export default class extends baseVw {
     const newLockTime = this.getCachedEl('.js-autoLockTimeInput').val();
     if (newLockTime !== app.profile.get('walletAutoLockTime')) {
       app.profile.set({ walletAutoLockTime: parseInt(newLockTime, 10) });
-      app.profile.sync('update', app.profile, {});
+
+      const msg = {
+        msg: app.polyglot.t('settings.walletTab.statusSaving'),
+        type: 'message',
+      };
+
+      const statusMessage = app.statusBar.pushMessage({
+        ...msg,
+        duration: 9999999999999999,
+      });
+
+      this.getCachedEl('.js-save').addClass('processing');
+      const synching = app.profile.sync('update', app.profile, {});
+      synching.done(() => {
+        statusMessage.update({
+          msg: app.polyglot.t('settings.walletTab.statusSaveComplete'),
+          type: 'confirmed',
+        });
+      }).fail((...args) => {
+        const errMsg = args[0] && args[0].responseJSON && args[0].responseJSON.reason || '';
+
+        openSimpleMessage(app.polyglot.t('settings.walletTab.saveErrorAlertTitle'), errMsg);
+
+        statusMessage.update({
+          msg: app.polyglot.t('settings.walletTab.statusSaveFailed'),
+          type: 'warning',
+        });
+      }).always(() => {
+        this.getCachedEl('.js-save').removeClass('processing');
+        setTimeout(() => statusMessage.remove(), 3000);
+      });
     }
   }
 
