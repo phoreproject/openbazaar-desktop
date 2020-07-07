@@ -1444,7 +1444,10 @@
       "heading": "Make a seed backup"
     },
     "backupSeedScreen": {
-      "heading": "Check your seed backup"
+      "heading": "Check your seed backup",
+      "seedBackupIncorrect": "Backup of your seed is incorrect",
+      "notAllSeedWordsAreSpecified": "Not all of your seed words are specified.",
+      "oneOfTheSeedWordsIsIncorrect": "One of your seeds words is incorrect."
     },
     "encryptScreen": {
       "heading": "Secure your seed words",

@@ -241,11 +241,19 @@ export default class extends BaseModal {
   checkSeedBackup() {
     const correctSeed = this.options.seed.split(' ');
     if (Object.keys(this.seedsWordsBackupOrder).length !== correctSeed.length) {
+      openSimpleMessage(
+        app.polyglot.t('onboarding.backupSeedScreen.seedBackupIncorrect'),
+        app.polyglot.t('onboarding.backupSeedScreen.notAllSeedWordsAreSpecified')
+      );
       return false;
     }
 
     for (let i = 0; i < correctSeed.length; i++) {
       if (this.seedsWordsBackupOrder[i] !== correctSeed[i]) {
+        openSimpleMessage(
+          app.polyglot.t('onboarding.backupSeedScreen.seedBackupIncorrect'),
+          app.polyglot.t('onboarding.backupSeedScreen.oneOfTheSeedWordsIsIncorrect')
+        );
         return false;
       }
     }
