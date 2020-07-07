@@ -132,11 +132,19 @@
     <% } else if (ob.screen === 'backupSeed') { %>
       <form class="padStack">
         <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.seedBackupHeader') %></h5>
-
-        <% for (let i = 0; i < ob.seed.split(" ").length; i++) { %>
-          <input class="clrBr clrSh2" id="seedBackup_<%= i %>" placeholder="word <%= i %>" data-field-standalone="string">
-        <% } %>
-
+        <div>
+          <% for (let i = 0; i < ob.seed.split(' ').length; i++) { %>
+          <span class="clrBr clrSh2 js-seedBackupDroppable" id="seedBackupDroppable_<%= i %>">
+            <button class="btn clrP" id="seedBackupDroppableBtn_<%= i %>">word <%= i + 1 %></button>
+          </span>
+          <% } %>
+        </div>
+        <hr class="clrBr row" />
+        <div id="js-seedBackupDraggableParent">
+          <% for (let i = 0; i < ob.shuffledSeedWords.length; i++) { %>
+            <button class="btn clrP js-seedBackupDraggable" id="seedBackupDraggable_<%= i %>" draggable='true'><%= ob.shuffledSeedWords[i] %></button>
+          <% } %>
+        </div>
       </form>
     <% } else if (ob.screen === 'encrypt') { %>
       <form class="padStack">

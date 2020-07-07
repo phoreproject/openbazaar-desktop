@@ -50,6 +50,10 @@ export default class extends BaseModal {
       'click .js-avatarRight': 'onAvatarRightClick',
       'click .js-changeAvatar': 'onClickChangeAvatar',
       'click .js-tosAgree': 'onClickTosAgree',
+      'dragstart .js-seedBackupDraggable': 'onDragStart',
+      'click .js-seedBackupDraggable': 'onDraggableClick',
+      'dragover .js-seedBackupDroppable': 'onDragOver',
+      'drop .js-seedBackupDroppable': 'onDrop',
       ...super.events(),
     };
   }
@@ -259,6 +263,52 @@ export default class extends BaseModal {
     return promise.promise();
   }
 
+  onDragStart(event) {
+    event
+      .originalEvent
+      .dataTransfer
+      .setData('text/plain', event.target.id);
+  }
+
+  onDragOver(event) {
+    event.preventDefault();
+  }
+
+  onDrop(event) {
+    const id = event
+      .originalEvent
+      .dataTransfer
+      .getData('text');
+    const draggableElement = this.getCachedEl(`#${id}`)[0];
+    const dropZoneBtnJQ = this.getCachedEl(`#${event.target.id}`);
+    const dropZoneJQ = this.getCachedEl(`#${event.target.id}`).parent();
+
+    if (dropZoneJQ.children().length > 1) {
+      // One span can contain only 1 word.
+      return;
+    }
+    dropZoneBtnJQ.addClass('hide');
+    dropZoneJQ[0].appendChild(draggableElement);
+
+    event
+      .originalEvent
+      .dataTransfer
+      .clearData();
+  }
+
+  onDraggableClick(event) {
+    const draggableOriginalParentJQ = this.getCachedEl('#js-seedBackupDraggableParent');
+    if ($.contains(draggableOriginalParentJQ[0], event.target)) {
+      // Draggable in original place, do nothing.
+      return;
+    }
+
+    const draggableNewParentJQ = this.getCachedEl(`#${event.target.id}`).parent();
+    draggableOriginalParentJQ[0].appendChild(event.target);
+    const hiddenButton = draggableNewParentJQ.children();
+    hiddenButton.removeClass('hide');
+  }
+
   render() {
     if (this.$avatarCropper) {
       this.lastAvatarZoom = this.$avatarCropper.cropit('zoom');
@@ -276,6 +326,10 @@ export default class extends BaseModal {
     loadTemplate('modals/onboarding/onboarding.html', t => {
       loadTemplate('components/brandingBox.html', brandingBoxT => {
         const state = this.getState();
+        const shuffled = this.options.seed.split(' ')
+          .map((a) => ({ sort: Math.random(), value: a }))
+          .sort((a, b) => a.sort - b.sort)
+          .map((a) => a.value);
 
         this.$el.html(t({
           brandingBoxT,
@@ -289,6 +343,7 @@ export default class extends BaseModal {
           countryList: this.countryList,
           currencyList: this.currencyList,
           seed: this.options.seed,
+          shuffledSeedWords: shuffled,
         }));
 
         super.render();
