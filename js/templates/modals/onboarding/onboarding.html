@@ -134,9 +134,9 @@
         <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.seedBackupHeader') %></h5>
         <div>
           <% for (let i = 0; i < ob.seed.split(' ').length; i++) { %>
-          <span class="clrBr clrSh2 js-seedBackupDroppable" id="seedBackupDroppable_<%= i %>">
-            <button class="btn clrP" id="seedBackupDroppableBtn_<%= i %>">word <%= i + 1 %></button>
-          </span>
+            <span class="clrBr clrSh2 js-seedBackupDroppable" id="seedBackupDroppable_<%= i %>">
+              <button class="btn clrP" id="seedBackupDroppableBtn_<%= i %>">word <%= i + 1 %></button>
+            </span>
           <% } %>
         </div>
         <hr class="clrBr row" />

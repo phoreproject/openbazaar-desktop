@@ -33,6 +33,7 @@ export default class extends BaseModal {
     this.avatarChanged = false;
     this.countryList = getTranslatedCountries();
     this.currencyList = getCurrencies();
+    this.seedsWordsBackupOrder = {};
   }
 
   className() {
@@ -238,6 +239,16 @@ export default class extends BaseModal {
   }
 
   checkSeedBackup() {
+    const correctSeed = this.options.seed.split(' ');
+    if (Object.keys(this.seedsWordsBackupOrder).length !== correctSeed.length) {
+      return false;
+    }
+
+    for (let i = 0; i < correctSeed.length; i++) {
+      if (this.seedsWordsBackupOrder[i] !== correctSeed[i]) {
+        return false;
+      }
+    }
 
     return true;
   }
@@ -279,7 +290,7 @@ export default class extends BaseModal {
       .originalEvent
       .dataTransfer
       .getData('text');
-    const draggableElement = this.getCachedEl(`#${id}`)[0];
+    const draggableElementJQ = this.getCachedEl(`#${id}`);
     const dropZoneBtnJQ = this.getCachedEl(`#${event.target.id}`);
     const dropZoneJQ = this.getCachedEl(`#${event.target.id}`).parent();
 
@@ -288,7 +299,10 @@ export default class extends BaseModal {
       return;
     }
     dropZoneBtnJQ.addClass('hide');
-    dropZoneJQ[0].appendChild(draggableElement);
+    dropZoneJQ[0].appendChild(draggableElementJQ[0]);
+
+    this.seedsWordsBackupOrder[parseInt(event.target.id.split('_')[1], 10)] =
+      draggableElementJQ.text();
 
     event
       .originalEvent
@@ -303,6 +317,8 @@ export default class extends BaseModal {
       return;
     }
 
+    delete this.seedsWordsBackupOrder[parseInt(event.target.id.split('_')[1], 10)];
+
     const draggableNewParentJQ = this.getCachedEl(`#${event.target.id}`).parent();
     draggableOriginalParentJQ[0].appendChild(event.target);
     const hiddenButton = draggableNewParentJQ.children();
@@ -310,6 +326,7 @@ export default class extends BaseModal {
   }
 
   render() {
+    this.seedsWordsBackupOrder = {};
     if (this.$avatarCropper) {
       this.lastAvatarZoom = this.$avatarCropper.cropit('zoom');
       this.lastAvatarImageSrc = this.$avatarCropper.cropit('imageSrc');
