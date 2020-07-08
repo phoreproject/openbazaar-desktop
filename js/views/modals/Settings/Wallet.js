@@ -1,6 +1,6 @@
 import baseVw from '../../baseVw';
 import loadTemplate from '../../../utils/loadTemplate';
-import { endAjaxEvent, recordEvent } from '../../../utils/metrics';
+import { recordEvent } from '../../../utils/metrics';
 import $ from 'jquery';
 import app from '../../../app';
 import { openSimpleMessage } from '../SimpleMessage';

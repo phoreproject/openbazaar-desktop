@@ -3,7 +3,6 @@ import loadTemplate from '../../../utils/loadTemplate';
 import app from '../../../app';
 import { openSimpleMessage } from '../SimpleMessage';
 import { getWallet } from '../../../utils/modalManager';
-import $ from 'jquery';
 import * as moment from 'moment';
 
 export default class extends baseView {
