@@ -1130,8 +1130,8 @@ border-radius: 0 0 0.5rem 0.5rem;
 
 
 
-.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-btnSendNav.active, .js-btnReceiveNav.active, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit .js-lock .js-unlock {
-  border: none;
+.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-btnSendNav.active, .js-btnReceiveNav.active, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit .js-lock .js-unlock, .js-unlock {
+  border: none!important;
   background: #00d188;
   border-radius: 4rem;
   box-shadow: none;
@@ -2311,12 +2311,25 @@ div.headline {
 
 #unlockBtn {
   position: fixed;
-  width: 40%;
-  height: 20%;
+  width: 500px;
+  height: 120px;
 }
 
 #unlockBtn.confirmBox {
   bottom: 0;
   right: 0;
   background:#121c29;
+}
+
+
+.unlockText {
+  text-align:left;
+  padding-bottom:10px;
+  display:block;
+}
+
+.unlockHelper {
+  font-size:0.8rem;
+  color:#777777;
+  text-align:left;
 }
