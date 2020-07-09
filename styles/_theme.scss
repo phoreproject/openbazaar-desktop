@@ -1130,8 +1130,8 @@ border-radius: 0 0 0.5rem 0.5rem;
 
 
 
-.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-btnSendNav.active, .js-btnReceiveNav.active, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit .js-lock .js-unlock {
-  border: none;
+.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-btnSendNav.active, .js-btnReceiveNav.active, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit .js-lock .js-unlock, .js-unlock {
+  border: none!important;
   background: #00d188;
   border-radius: 4rem;
   box-shadow: none;
@@ -2309,8 +2309,8 @@ div.headline {
 
 #unlockBtn {
   position: fixed;
-  width: 40%;
-  height: 20%;
+  width: 500px;
+  height: 120px;
 }
 
 #unlockBtn.confirmBox {
@@ -2319,33 +2319,34 @@ div.headline {
   background:#121c29;
 }
 
-
 // time slider
 
 .timeSlider {
 
   #rangeInput {
-    width:85%;
+    width: 85%;
   }
 
   #amount {
-    background:#232c38;
-    border:0;
-    color:#a9a9a9;
-    padding:0.5rem;
-    border-radius:4px;
+    background: #232c38;
+    border: 0;
+    color: #a9a9a9;
+    padding: 0.5rem;
+    border-radius: 4px;
     width: 10%;
-    min-width:80px;
+    min-width: 80px;
     padding: 0.75rem;
   }
 
   #amount:focus {
-    border:0;
-    outline:0;
+    border: 0;
+    outline: 0;
     box-shadow: inset 0px 0px 0px 1px #4e69e0;
   }
 
-  input[type=range]::-webkit-track { color: red; }
+  input[type=range]::-webkit-track {
+    color: red;
+  }
 
   input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -2357,15 +2358,27 @@ div.headline {
     cursor: pointer;
     margin-top: -5px; /* specify a margin in Chrome, Firefox and IE is automatic */
     /*   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;  */
-    cursor:default;
+    cursor: default;
   }
 
   input[type=range]::-webkit-slider-runnable-track {
-    margin-top:14px;
+    margin-top: 14px;
     width: 100%;
     height: 8px;
     cursor: pointer;
     background: #232c38;
     border-radius: 8px;
   }
+}
+
+.unlockText {
+  text-align:left;
+  padding-bottom:10px;
+  display:block;
+}
+
+.unlockHelper {
+  font-size:0.8rem;
+  color:#777777;
+  text-align:left;
 }
