@@ -46,7 +46,7 @@ rm -rf PHORE_MARKETPLACE_TEMP/*
 echo 'Preparing to build installers...'
 
 echo 'Installing npm packages...'
-npm i -g npm@5.2
+npm i -g npm@6.2
 npm install electron-packager -g --silent
 npm install npm-run-all -g --silent
 npm install grunt-cli -g --silent
