@@ -46,13 +46,15 @@ rm -rf PHORE_MARKETPLACE_TEMP/*
 echo 'Preparing to build installers...'
 
 echo 'Installing npm packages...'
-npm i -g npm@6.2
+npm i -g npm@5.2
 npm install electron-packager -g --silent
 npm install npm-run-all -g --silent
 npm install grunt-cli -g --silent
 npm install grunt --save-dev --silent
 npm install grunt-electron-installer --save-dev --silent
 npm install --silent
+
+rvm reinstall ruby
 
 echo 'Building PhoreMarketplace app...'
 npm run build
@@ -69,6 +71,8 @@ case "$TRAVIS_OS_NAME" in
     echo 'Making dist directories'
     mkdir dist/linux64
 
+    sudo apt-get install rpm
+
     echo 'Install npm packages for Linux'
     npm install -g --save-dev electron-installer-debian --silent
     npm install -g --save-dev electron-installer-redhat --silent
@@ -77,7 +81,7 @@ case "$TRAVIS_OS_NAME" in
     sudo apt-get install libgconf2-4 libgconf-2-4
 
     # Install rpmbuild
-    sudo apt-get install rpm
+    sudo apt-get --only-upgrade install rpm
 
     # Ensure fakeroot is installed
     sudo apt-get install fakeroot
@@ -147,6 +151,7 @@ case "$TRAVIS_OS_NAME" in
     if [[ $BINARY == 'win' ]]; then
 
         brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
+        brew link libgsf glib pcre
 
         brew remove osslsigncode
         brew install mono osslsigncode
@@ -163,7 +168,7 @@ case "$TRAVIS_OS_NAME" in
         npm install electron-packager
 
         cd node_modules/electron-packager
-        npm install rcedit@2.1.0
+        npm install rcedit
         cd ../..
 
         echo 'Running Electron Packager...'
