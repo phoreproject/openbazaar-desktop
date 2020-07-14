@@ -81,9 +81,9 @@ if (handleStartupEvent()) {
   console.log('OpenBazaar started on Windows...');
 }
 
-const serverPath = `${__dirname}${path.sep}..${path.sep}openbazaar-go${path.sep}`;
+const serverPath = `${__dirname}${path.sep}..${path.sep}pm-go${path.sep}`;
 const serverFilename = process.platform === 'darwin' || process.platform === 'linux' ?
-  'openbazaard' : 'openbazaard.exe';
+  'marketplaced' : 'marketplaced.exe';
 const isBundledApp = fs.existsSync(serverPath + serverFilename);
 global.isBundledApp = isBundledApp;
 let localServer;
