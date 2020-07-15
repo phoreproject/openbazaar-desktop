@@ -43,12 +43,13 @@ elif [[ "$platform" == 'linux' ]]; then
     hashcommand="sha256sum"
 fi
 
-GITHUBRELEASEURL="https://github.com/phoreproject/pm-desktop/releases/download/v$VERSION/"
+GITHUBRELEASEURL="https://github.com/phoreproject/pm-desktop/releases/download/$VERSION/"
 SIGNATUREFILENAME="SHA256SUMS.${VERSION}.asc"
-
+#https://github.com/OpenBazaar/openbazaar-desktop/releases/download/v2.3.8/SHA256SUMS.v2.3.8.asc
 # Retrieve the signature file
 echo "Downloading binaries to $TMPFOLDER..."
-wget --quiet -N "$BASEURL$SIGNATUREFILENAME" 2>&1
+echo "$GITHUBRELEASEURL$SIGNATUREFILENAME"
+wget --quiet -N "$GITHUBRELEASEURL$SIGNATUREFILENAME" 2>&1
 mv $SIGNATUREFILENAME temp/
 
 # GPG check the downloaded file

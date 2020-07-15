@@ -155,7 +155,6 @@ case "$TRAVIS_OS_NAME" in
 
         brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
         brew link libgsf glib pcre
-
         brew remove osslsigncode
         brew install mono osslsigncode
         brew reinstall openssl@1.1
@@ -185,7 +184,7 @@ case "$TRAVIS_OS_NAME" in
         mv dist/PhoreMarketplace-win32-x64/resources/libwinpthread-1.dll dist/PhoreMarketplace-win32-x64/resources/pm-go/libwinpthread-1.dll
 
         echo 'Building Installer...'
-        grunt create-windows-installer --appname=PhoreMarketplace --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplace-win32-x64 --outdir=dist/win64
+        grunt -v create-windows-installer --appname=PhoreMarketplace --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplace-win32-x64 --outdir=dist/win64
         mv dist/win64/PhoreMarketplaceSetup.exe dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
         mv dist/win64/RELEASES dist/win64/RELEASES-x64
 
@@ -194,12 +193,12 @@ case "$TRAVIS_OS_NAME" in
         electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
 
         echo 'Building Installer...'
-        grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
+        grunt -v create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
         mv dist/win64/PhoreMarketplaceClientSetup.exe dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
 
         echo 'Do not sign the installer'
-    #    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
-    #    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
+    #    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.pvk -pass "$PHORE_SECRET" -certs .travis/phore.spc -in dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
+    #    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.pvk -pass "$PHORE_SECRET" -certs .travis/phore.spc -in dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
 
         mv dist/win64/RELEASES-x64 dist/win64/RELEASES
 
@@ -217,7 +216,7 @@ case "$TRAVIS_OS_NAME" in
         echo 'Signing Go binary'
         mv PHORE_MARKETPLACE_TEMP/pm-go-darwin-10.6-amd64 dist/osx/marketplaced
         rm -rf PHORE_MARKETPLACE_TEMP/*
-        codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime dist/osx/marketplaced
+        codesign --force --sign "$SIGNING_IDENTITY2" --timestamp --options runtime dist/osx/marketplaced
 
         # Notarize the zip files
         UPLOAD_INFO_PLIST="uploadinfo.plist"
@@ -299,7 +298,7 @@ case "$TRAVIS_OS_NAME" in
             electron-installer-dmg dist/PhoreMarketplace-darwin-x64/PhoreMarketplace.app PhoreMarketplace-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplace-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
 
             echo 'Codesign the DMG and zip'
-            codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
+            codesign --force --sign "$SIGNING_IDENTITY2" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplace-darwin-x64/PhoreMarketplace-$PACKAGE_VERSION.dmg
             cd dist/PhoreMarketplace-darwin-x64/
             zip -q -r PhoreMarketplace-mac-$PACKAGE_VERSION.zip PhoreMarketplace.app
             cp -r PhoreMarketplace.app ../osx/
@@ -334,7 +333,7 @@ case "$TRAVIS_OS_NAME" in
             electron-installer-dmg dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceClient.app PhoreMarketplaceC-$PACKAGE_VERSION --icon ./imgs/openbazaar2.icns --out=dist/PhoreMarketplaceClient-darwin-x64 --overwrite --background=./imgs/osx-finder_background.png --debug
 
             # Client Only
-            codesign --force --sign "$SIGNING_IDENTITY" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceC-$PACKAGE_VERSION.dmg
+            codesign --force --sign "$SIGNING_IDENTITY2" --timestamp --options runtime --entitlements phore.entitlements dist/PhoreMarketplaceClient-darwin-x64/PhoreMarketplaceC-$PACKAGE_VERSION.dmg
             cd dist/PhoreMarketplaceClient-darwin-x64/
             zip -q -r PhoreMarketplaceClient-mac-$PACKAGE_VERSION.zip PhoreMarketplaceClient.app
             cp -r PhoreMarketplaceClient.app ../osx/
