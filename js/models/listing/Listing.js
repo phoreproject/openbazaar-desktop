@@ -887,6 +887,20 @@ export default class extends BaseModel {
         }
       }
 
+      if (parsedResponse.metadata !== undefined) {
+        if (parsedResponse.metadata.shippingFromCountryCode === 'NA') {
+          parsedResponse.metadata.shippingFromCountryCode = '';
+        }
+
+        if (parsedResponse.metadata.shippingFromCountryCode !== '') {
+          const countries = getIndexedCountries();
+          const countryCode = parsedResponse.metadata.shippingFromCountryCode;
+          if (countryCode !== undefined) {
+            parsedResponse.metadata.shippingFromCountryName = countries[countryCode].name;
+          }
+        }
+      }
+
       // Re-organize variant structure so a "dummy" SKU (if present) has its quanitity
       // and productID moved to be attributes of the Item model
       if (

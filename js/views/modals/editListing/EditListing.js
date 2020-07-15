@@ -40,6 +40,7 @@ import SkuField from './SkuField';
 import UnsupportedCurrency from './UnsupportedCurrency';
 import CryptoCurrencyType from './CryptoCurrencyType';
 import CryptoCurSelector from '../../components/CryptoCurSelector';
+import { getTranslatedCountries } from '../../../data/countries';
 
 export default class extends BaseModal {
   constructor(options = {}) {
@@ -109,6 +110,7 @@ export default class extends BaseModal {
     this.shippingOptions = this.model.get('shippingOptions');
     this.shippingOptionViews = [];
     this.getCoinTypesDeferred = $.Deferred();
+    this.countryList = getTranslatedCountries();
 
     // Since the UI is driven from the model and since the Receive field
     // and the Accepted Currencies select list are both driven by the same
@@ -942,6 +944,10 @@ export default class extends BaseModal {
     this.variantInventory.setCollectionData();
     this.couponsView.setCollectionData();
 
+    if (formData.metadata.shippingFromCountryCode === '') {
+      formData.metadata.shippingFromCountryCode = 'NA';
+    }
+
     if (!isCrypto) {
       if (item.get('options').length) {
         // If we have options, we shouldn't be providing certain properties on the Item
@@ -1030,6 +1036,9 @@ export default class extends BaseModal {
     // If the type is not 'PHYSICAL_GOOD', we'll clear out any shipping options.
     if (metadata.get('contractType') !== 'PHYSICAL_GOOD') {
       this.model.get('shippingOptions').reset();
+      const m = this.model.get('metadata');
+      m.set('shippingFromCountryCode', 'NA');
+      m.set('shippingFromPostalCode', '');
     } else {
       // If any shipping options have a type of 'LOCAL_PICKUP', we'll
       // clear out any services that may be there.
@@ -1329,6 +1338,7 @@ export default class extends BaseModal {
           selectedNavTabIndex: this.selectedNavTabIndex,
           returnText: this.options.returnText,
           listingCurrency: this.currency,
+          countryList: this.countryList,
           currencies: this.currencies,
           contractTypes: metadata.contractTypesVerbose,
           conditionTypes: this.model.get('item')
@@ -1348,6 +1358,7 @@ export default class extends BaseModal {
             cats: item.max.cats,
             tags: item.max.tags,
             photos: this.MAX_PHOTOS,
+            shippingFromPostalCode: item.max.shippingFromPostalCodeLength,
           },
           shouldShowVariantInventorySection: this.shouldShowVariantInventorySection,
           viewListingsT,
@@ -1383,10 +1394,11 @@ export default class extends BaseModal {
         this.$couponsSection = this.$('.js-couponsSection');
         this.$variantsSection = this.$('.js-variantsSection');
 
-        this.$('#editContractType, #editListingVisibility, #editListingCondition').select2({
+        this.$('#editContractType, #editListingVisibility, #editListingCondition, ' +
+          '#editListingCountrySelect').select2({
           // disables the search box
-          minimumResultsForSearch: Infinity,
-        });
+            minimumResultsForSearch: Infinity,
+          });
 
         this.$('#editListingCurrency').select2({
           matcher: (params, data) => {
