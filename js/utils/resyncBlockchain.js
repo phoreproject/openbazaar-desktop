@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { getServer } from './serverConnect';
-import walletCurs, { ensureMainnetCode } from '../data/walletCurrencies';
+import { supportedWalletCurs } from '../data/walletCurrencies';
 import { openSimpleMessage } from '../views/modals/SimpleMessage';
 import { Events } from 'backbone';
 import app from '../app';
@@ -11,7 +11,6 @@ const events = {
 
 export { events };
 
-let walletCurCodes = [];
 let server;
 
 // If you change this, be sure to change anywhere in the GUI you may have output how
@@ -76,7 +75,7 @@ function setlastResyncExpiresTimeouts(coinType) {
     if (fromNow > 0) {
       lastResyncExpiresTimeouts[coinType] = setTimeout(() => {
         setResyncAvailable(coinType);
-      }, fromNow + (1000 * 60));
+      }, fromNow + (1000 * 10));
       // Giving a 10s buffer in case the timeout is a little fast
     }
   }
@@ -97,8 +96,7 @@ export function init() {
       'Ensure that init is not called before that point.');
   }
 
-  walletCurCodes =
-    walletCurs.map(cur => (app.serverConfig.testnet ? cur.testnetCode : cur.code));
+  const walletCurCodes = supportedWalletCurs();
 
   walletCurCodes.forEach(cur => {
     setResyncAvailable(cur);
@@ -145,13 +143,6 @@ export default function resyncBlockchain(coinType) {
   }
 
   const _server = server;
-
-  openSimpleMessage(
-    app.polyglot.t('wallet.reloadTransactionsWidget.resyncStartedTitle', {
-      cur: ensureMainnetCode(coinType),
-    }),
-    app.polyglot.t('wallet.reloadTransactionsWidget.resyncStarted')
-  );
 
   const post = resyncPosts[coinType] =
     $.post(app.getServerUrl(`wallet/resyncblockchain/${coinType}`))

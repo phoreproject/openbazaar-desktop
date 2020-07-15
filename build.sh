@@ -54,6 +54,8 @@ npm install grunt --save-dev --silent
 npm install grunt-electron-installer --save-dev --silent
 npm install --silent
 
+rvm reinstall ruby
+
 echo 'Building PhoreMarketplace app...'
 npm run build
 
@@ -69,6 +71,8 @@ case "$TRAVIS_OS_NAME" in
     echo 'Making dist directories'
     mkdir dist/linux64
 
+    sudo apt-get install rpm
+
     echo 'Install npm packages for Linux'
     npm install -g --save-dev electron-installer-debian --silent
     npm install -g --save-dev electron-installer-redhat@2.0.0 --silent
@@ -77,7 +81,7 @@ case "$TRAVIS_OS_NAME" in
     sudo apt-get install libgconf2-4 libgconf-2-4
 
     # Install rpmbuild
-    sudo apt-get install rpm
+    sudo apt-get --only-upgrade install rpm
 
     # Ensure fakeroot is installed
     sudo apt-get install fakeroot

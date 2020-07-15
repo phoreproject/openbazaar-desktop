@@ -37,6 +37,7 @@
   <% } %>
 </div>
 
+
 <div class="listingContent flexColRow gutterVMd2">
   <div class="contentBox padLg clrP clrBr clrSh3">
     <%
@@ -51,7 +52,7 @@
         <h2 class="txUnb flexExpand"><%= ob.item.title %></h2>
         <h2 class="txUnb flexNoShrink js-price">
           <%=
-            ob.currencyMod.formattedCurrency(
+            ob.currencyMod.convertAndFormatCurrency(
               ob.price.amount,
               ob.price.currencyCode,
               ob.displayCurrency
@@ -67,10 +68,7 @@
             priceAmount: ob.price.amount,
             priceCurrencyCode: ob.price.currencyCode,
             displayCurrency: ob.displayCurrency,
-            priceModifier: ob.metadata.priceModifier,
-            format: ob.metadata.format,
-            acceptedCurrencies: ob.metadata.acceptedCurrencies,
-            viewType: 'pair',
+            priceModifier: ob.price.modifier,
             wrappingTag: 'h2',
             wrappingClass: 'flexNoShrink txRgt tx3',
           })
@@ -87,20 +85,12 @@
         <% } %>
         ></div>
         <div class="txCtr">
-          <!-- <a class="tx5 js-gotoPhotos">
+          <a class="tx5 js-gotoPhotos">
             <u><%= ob.polyT('listingDetail.viewPhotos', { count: ob.item.images.length, smart_count: ob.item.images.length }) %></u>
-          </a> -->
+          </a>
         </div>
       </div>
       <div class="flexExpand">
-        <%
-        if (ob.metadata.contractType !== 'CRYPTOCURRENCY') {
-        %>
-          <div>
-              <h2 class="txUnb flexExpand listing-title"><%= ob.item.title %></h2>
-              <h2 class="flexNoShrink js-price"><%= ob.currencyMod.convertAndFormatCurrency(ob.item.price, ob.metadata.pricingCurrency, ob.displayCurrency) %></h2>
-          </div>
-        <% } %>
         <div class="buyBox clrP clrBr">
           <div class="flexColRows flexHCent gutterV">
             <% ob.item.options.forEach((item) => { %>
@@ -124,6 +114,16 @@
                 'listingDetail.buyCryptoNow';
               let unpurchaseable = true;
 
+              let coinTypeRateAvailable;
+              let cryptoPaymentCoinRateAvailable;
+
+              if (ob.metadata.contractType === 'CRYPTOCURRENCY') {
+                coinTypeRateAvailable =
+                  !!ob.currencyMod.getExchangeRate(ob.metadata.coinType);
+                cryptoPaymentCoinRateAvailable =
+                  !!ob.currencyMod.getExchangeRate(ob.metadata.acceptedCurrencies[0]);
+              }
+
               if (!ob.crypto.anySupportedByWallet(ob.metadata.acceptedCurrencies)) {
                 tip = ob.polyT('listingDetail.unableToPurchase.incompatibleCrypto',
                   {
@@ -131,21 +131,33 @@
                     walletCurs: ob.crypto.supportedWalletCurs()
                       .join(', '),
                   });
-              } else if (ob.metadata.contractType !== 'CRYPTOCURRENCY' &&
+              } else if (
+                ob.metadata.contractType !== 'CRYPTOCURRENCY' &&
+                !ob.currencyMod.getExchangeRate(ob.price.currencyCode) &&
                 !(
-                  priceCryptoCode &&
-                  ob.crypto.anySupportedByWallet([priceCryptoCode.code, priceCryptoCode.testnetCode])
-                ) &&
-                ob.currencyMod.getCurrencyValidity(ob.price.currencyCode) !== 'VALID') {
-                tip = ob.currencyValidity === 'UNRECOGNIZED_CURRENCY' ?
-                   ob.polyT('listingDetail.unableToPurchase.unrecognizedCur',
-                    { cur: ob.price.currencyCode }) :
-                  ob.polyT('listingDetail.unableToPurchase.noExchangeRateInfo', {
-                    cur: ob.price.currencyCode
-                  });
-              } else if (ob.metadata.contractType === 'CRYPTOCURRENCY' &&
-                !ob.currencyMod.getExchangeRate(ob.price.currencyCode)) {
-                tip = ob.polyT('listingDetail.unableToPurchase.noExchangeRateInfo');
+                  ob.crypto.supportedWalletCurs().includes(ob.price.currencyCode) &&
+                  ob.metadata.acceptedCurrencies.includes(ob.price.currencyCode)
+                )
+              ) {
+                // If it's priced in a wallet cur and that cur is one of the accepted
+                // curs, we won't disable purchase even if there's no exchange rate for the
+                // cur because they could still pay for it using that cur making the
+                // pricing and payment curs the same and therefore the exchange rate
+                // unnecessary.
+                tip = ob.polyT('listingDetail.unableToPurchase.noExchangeRateInfo', {
+                  cur: ob.price.currencyCode
+                });
+              } else if (
+                ob.metadata.contractType === 'CRYPTOCURRENCY' &&
+                ob.metadata.coinType !== ob.metadata.acceptedCurrencies[0] &&
+                (!coinTypeRateAvailable || !cryptoPaymentCoinRateAvailable)
+              ) {
+                const cursNoRate = [];
+                if (!coinTypeRateAvailable) cursNoRate.push(ob.metadata.coinType);
+                if (!cryptoPaymentCoinRateAvailable) cursNoRate.push(ob.metadata.acceptedCurrencies[0]);
+                tip = ob.polyT('listingDetail.unableToPurchase.noCryptoExchangeRateInfo', {
+                  cur: cursNoRate.join(', '),
+                });
               } else {
                 buyNowClass = '';
                 unpurchaseable = false;
@@ -173,11 +185,12 @@
             </div>
           </div>
         </div>
-        <div class="flexHLeft gutterHLg tx5 rowLg product-types">
+        <div class="flexHCent gutterHLg tx5 rowLg">
           <div>
             <%= ob.polyT('listingDetail.type', { type: `<b>${ob.polyT(`formats.${ob.metadata.contractType}`)}</b>` }) %>
           </div>
-          <% if (ob.isCrypto) { %>
+          <% // not showing the inventory for now since it's broken on the server %>
+          <% if (ob.isCrypto && false) { %>
             <div>
               <%= ob.polyT('listingDetail.inventory', {
                 inventory: '<span class="js-cryptoInventory"></span>'
@@ -189,8 +202,8 @@
             </div>
           <% } %>
         </div>
-        <!-- <hr class="rowLg"> -->
-        <h2 class="txUnb"><%= ob.polyT('listingDetail.tags') %></h2>
+        <hr class="rowLg">
+        <h5><%= ob.polyT('listingDetail.tags') %></h5>
         <div class="tagWrapper rowLg">
           <% ob.item.tags.forEach(function(tag){
           print(`<a class="btn tag clrSh2 clrBr" href="#search?q=${tag}">#${ob.parseEmojis(tag)}</a>`);

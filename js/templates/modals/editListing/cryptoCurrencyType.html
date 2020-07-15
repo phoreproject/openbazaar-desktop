@@ -18,6 +18,11 @@
       <option value="<%= contractType.code %>" <% if (contractType.code === ob.metadata.contractType) print('selected') %>><%= contractType.name %></option>
       <% }); %>
     </select>
+    <div class="clrT2 txSm helper">
+      <%= ob.polyT('editListing.cryptoCurrencyType.helperType', {
+        count: `<b>${ob.polyT('editListing.cryptoCurrencyType.helperTypeCount')}</b>`,
+      }) %>
+    </div>
   </div>
 </div>
 <div class="flexRow gutterH">
@@ -30,7 +35,7 @@
       <label for="editListingCryptoQuantity" class="required"><%= ob.polyT('editListing.cryptoCurrencyType.quantity') %></label>
       <% if (ob.errors['item.cryptoQuantity']) print(ob.formErrorTmpl({ errors: ob.errors['item.cryptoQuantity'] })) %>
       <div class="posR">
-        <input type="text" class="clrBr clrP clrSh2" name="item.cryptoQuantity" id="editListingCryptoQuantity" value="<%= ob.item.cryptoQuantity %>" placeholder="0.00" data-var-type="number">
+        <input type="text" class="clrBr clrP clrSh2" name="item.cryptoQuantity" id="editListingCryptoQuantity" value="<%= ob.number.toStandardNotation(ob.item.cryptoQuantity) %>" placeholder="0.00" data-var-type="bignumber">
         <%
           const selectedCoinType = ob.coinTypes ?
             ob.metadata.coinType || ob.coinTypes[0].code : '';
@@ -40,6 +45,7 @@
       <div class="clrT2 txSm helper"><%= ob.polyT('editListing.cryptoCurrencyType.helperQuantity') %></div>
     </div>
   </div>
+</div>
 <div class="flexRow gutterH">
   <div class="col6 simpleFlexCol">
     <label for="editListingCryptoReceive" class="required"><%= ob.polyT('editListing.cryptoCurrencyType.lblReceive') %></label>
@@ -59,45 +65,12 @@
     </div>
   </div>
   <div class="col6 simpleFlexCol">
-    <label for="editFormatType" class="required"><%= ob.polyT('editListing.format') %></label>
-    <% if (ob.errors['metadata.format']) print(ob.formErrorTmpl({ errors: ob.errors['metadata.format'] })) %>
-    <select id="editFormatType" name="metadata.format" class="clrBr clrP clrSh2 marginTopAuto" style="width: 100%">
-      <% ob.priceTypes.forEach((format) => { %>
-      <option value="<%= format.code %>" <% if (format.code === ob.metadata.format) print('selected') %>><%= format.name %></option>
-      <% }); %>
-    </select>
-    <div class="clrT2 txSm helper"><%= ob.polyT('editListing.helperType', { smart_count: 2 }) %></div>
-  </div>
-</div>
-<div class="flexRow gutterH">
-  <div class="col6 simpleFlexCol">
-    <section class="js-editListingCryptoPriceModifier <% if(ob.metadata.format !== 'MARKET_PRICE') { %> hide <% } %> ">
-      <label for="editListingCryptoPriceModifier" class="required"><%= ob.polyT('editListing.cryptoCurrencyType.priceModifier') %></label>
-      <% if (ob.errors['metadata.priceModifier']) print(ob.formErrorTmpl({ errors: ob.errors['metadata.priceModifier'] })) %>
-      <div class="posR marginTopAuto">
-        <input type="text" class="clrBr clrP clrSh2" name="metadata.priceModifier" id="editListingCryptoPriceModifier" value="<%= ob.metadata.priceModifier %>" placeholder="<%= ob.polyT('editListing.cryptoCurrencyType.priceModifierPlaceholder') %>" data-var-type="number">
-        <div class="cryptoPriceModifierPercentSymbol clrT2 tx5">%</div>
-      </div>
-      <div class="clrT2 txSm helper"><%= ob.polyT('editListing.cryptoCurrencyType.helperPriceModifier') %></div>
-    </section>
-
-    <section class="js-editListingCryptoPrice <% if(ob.metadata.format !== 'FIXED_PRICE') { %> hide <% } %> ">
-      <label for="editListingCryptoPrice" class="required"><%= ob.polyT('editListing.price') %></label>
-      <% if (ob.errors['item.price']) print(ob.formErrorTmpl({ errors: ob.errors['item.price'] })) %>
-      <div class="posR marginTopAuto">
-        <input type="text" class="clrBr clrP clrSh2 js-price" name="item.price" id="editListingCryptoPrice2" value="<%= ob.item.price %>" placeholder="0.00" data-var-type="number">
-      </div>
-      <div class="clrT2 txSm helper" id="editListingCryptoPriceHelper2"></div>
-    </section>
-  </div>
-  <div class="col6 simpleFlexCol">
-    <section class="js-editListingCryptoPrice2 <% if(ob.metadata.format !== 'FIXED_PRICE') { %> hide <% } %> ">
-      <label for="editListingCryptoPrice2" class="required"><%= ob.polyT('editListing.price2') %></label>
-      <% if (ob.errors['item.price2']) print(ob.formErrorTmpl({ errors: ob.errors['item.price2'] })) %>
-      <div class="posR marginTopAuto">
-        <input type="text" class="clrBr clrP clrSh2 js-price" name="item.price2" id="editListingCryptoPrice" value="<%= ob.item.price2 %>" placeholder="0.00" data-var-type="number">
-      </div>
-      <div class="clrT2 txSm helper" id="editListingCryptoPriceHelper"></div>
-    </section>
+    <label for="editListingCryptoPriceModifier" class="required"><%= ob.polyT('editListing.cryptoCurrencyType.priceModifier') %></label>
+    <% if (ob.errors['item.priceModifier']) print(ob.formErrorTmpl({ errors: ob.errors['item.priceModifier'] })) %>
+    <div class="posR marginTopAuto">
+      <input type="text" class="clrBr clrP clrSh2" name="item.priceModifier" id="editListingCryptoPriceModifier" value="<%= ob.item.priceModifier %>" placeholder="<%= ob.polyT('editListing.cryptoCurrencyType.priceModifierPlaceholder') %>" data-var-type="number">
+      <div class="cryptoPriceModifierPercentSymbol clrT2 tx5">%</div>
+    </div>
+    <div class="clrT2 txSm helper"><%= ob.polyT('editListing.cryptoCurrencyType.helperPriceModifier') %></div>
   </div>
 </div>

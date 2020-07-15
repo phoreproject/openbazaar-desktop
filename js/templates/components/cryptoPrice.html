@@ -8,50 +8,30 @@
     priceSymbol = ob.priceModifier > 0 ?
       `(<span class="icon ion-arrow-up-c"></span>)` :
       `(<span class="icon ion-arrow-down-c"></span>)`;
-  }  
+  }
 %>
 <<%= ob.wrappingTag %> class="<%= ob.wrappingClass %> <%= colorClass %>">
   <span>
-    <%
-      const method = (ob.viewType === 'pair') ? ob.currencyMod.pairedCurrency : ob.currencyMod.formattedCurrency;
-      const fromCur = ob.acceptedCurrencies && ob.acceptedCurrencies[0];
-    %>
-    <% if (ob.format === 'MARKET_PRICE') { %>
-      <% if (ob.viewType === 'pair') { %>
-        <%
-          const am = ob.currencyMod.convertCurrency(ob.priceAmount, ob.priceCurrencyCode, fromCur)
-        %>
-        <%=
-          method(am, fromCur, ob.displayCurrency)
-        %>
-      <% } else { %>
-        <%=
-          method(ob.priceAmount, ob.priceCurrencyCode, ob.displayCurrency)
-        %>
-      <% } %>
-      <span class="priceSymbol"><%= priceSymbol %></span>
-    <% } else { %>
-      <%=
-        method(ob.priceAmount, fromCur, ob.displayCurrency)
-      %>
-    <% } %>
+    <%=
+      ob.currencyMod.convertAndFormatCurrency(
+        ob.priceAmount,
+        ob.priceCurrencyCode,
+        ob.displayCurrency,
+        ob.convertAndFormatOpts
+      )
+    %>&nbsp;<span class="priceSymbol"><%= priceSymbol %></span>
   </span>
   <span class="marketRelativity <%= ob.marketRelativityClass %> <% if (ob.priceModifier === 0) print('clrT2') %>">
     <%
-      let priceLine = '';
-      if (ob.format === 'MARKET_PRICE') {
-        priceLine = ob.polyT('cryptoPriceAtMarket');
+      let marketPriceLine = ob.polyT('cryptoPriceAtMarket');
 
-        if (ob.priceModifier > 0) {
-          priceLine = ob.polyT('cryptoPriceAboveMarket', { amount: ob.priceModifier });
-        } else if (ob.priceModifier < 0) {
-          priceLine = ob.polyT('cryptoPriceBelowMarket', { amount: ob.priceModifier });
-        }
-      } else {
-        priceLine = ob.polyT('cryptoPriceFixMarket');
+      if (ob.priceModifier > 0) {
+        marketPriceLine = ob.polyT('cryptoPriceAboveMarket', { amount: ob.priceModifier });
+      } else if (ob.priceModifier < 0) {
+        marketPriceLine = ob.polyT('cryptoPriceBelowMarket', { amount: ob.priceModifier });
       }
 
-      print(priceLine);
+      print(marketPriceLine);
     %>
   </span>
 </<%= ob.wrappingTag %>>

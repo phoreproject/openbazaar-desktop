@@ -6,7 +6,7 @@ import bech32 from 'bech32';
 // If a currency does not support fee bumping or you want to disable it, do not provide a
 // feeBumpTransactionSize setting.
 
-const currencies = [
+let _currencies = [
   {
     code: 'PHR',
     testnetCode: 'TPHR',
@@ -47,12 +47,10 @@ const currencies = [
     code: 'BTC',
     testnetCode: 'TBTC',
     symbol: '₿',
-    baseUnit: 100000000,
-    averageModeratedTransactionSize: 184,
     // Not allowing fee bump on BTC right now given the fees.
     // feeBumpTransactionSize: 154,
     qrCodeText: address => `bitcoin:${address}`,
-    icon: 'imgs/cryptoIcons/BTC-icon.png',
+    icon: 'imgs/cryptoIcons/BTC.png',
     url: 'https://bitcoin.org/',
     getBlockChainAddressUrl: (address, isTestnet) => (
       isTestnet ?
@@ -83,12 +81,42 @@ const currencies = [
     },
     supportsEscrowTimeout: true,
     blockTime: 1000 * 60 * 10,
+    externallyFundableOrders: true,
+  },
+  {
+    code: 'BCH',
+    testnetCode: 'TBCH',
+    feeBumpTransactionSize: 154,
+    qrCodeText: address => {
+      let prefixedAddress = address;
+
+      const prefix = app.serverConfig.testnet ? 'bchtest' : 'bitcoincash';
+      prefixedAddress = address.startsWith(prefix) ?
+        prefixedAddress : `${prefix}:${address}`;
+
+      return prefixedAddress;
+    },
+    icon: 'imgs/cryptoIcons/BCH.png',
+    url: 'https://bitcoincash.org/',
+    getBlockChainAddressUrl: (address, isTestnet) => (
+      isTestnet ?
+        `https://explorer.bitcoin.com/tbch/address/bchtest:${address}` :
+        `https://blockchair.com/bitcoin-cash/address/${address}`
+    ),
+    getBlockChainTxUrl: (txid, isTestnet) => (
+      isTestnet ?
+        `https://explorer.bitcoin.com/tbch/tx/${txid}` :
+        `https://blockchair.com/bitcoin-cash/transaction/${txid}`
+    ),
+    supportsEscrowTimeout: true,
+    blockTime: 1000 * 60 * 10,
+    externallyFundableOrders: true,
   },
   {
     code: 'ETH',
     testnetCode: 'TETH',
     qrCodeText: address => `ethereum:${address}`,
-    icon: 'imgs/cryptoIcons/ETH-icon.png',
+    icon: 'imgs/cryptoIcons/ETH.png',
     url: 'https://ethereum.org/',
     getBlockChainAddressUrl: (address, isTestnet) => (
       isTestnet ?
@@ -105,68 +133,128 @@ const currencies = [
     externallyFundableOrders: false,
   },
   {
-    code: 'BNB',
-    testnetCode: 'TBNB',
-    qrCodeText: address => `binance:${address}`,
-    icon: 'imgs/cryptoIcons/BNB-icon.png',
-    url: 'https://www.binance.com/en/bnb',
+    code: 'LTC',
+    testnetCode: 'TLTC',
+    feeBumpTransactionSize: 154,
+    qrCodeText: address => `litecoin:${address}`,
+    icon: 'imgs/cryptoIcons/LTC.png',
+    url: 'https://litecoin.org/',
     getBlockChainAddressUrl: (address, isTestnet) => (
-      isTestnet ? '' :
-        `https://explorer.binance.org/address/${address}`
+      isTestnet ?
+        `https://chain.so/address/LTCTEST/${address}` :
+        `https://blockchair.com/litecoin/address/${address}`
     ),
     getBlockChainTxUrl: (txid, isTestnet) => (
-      isTestnet ? '' :
-        `https://explorer.binance.org/tx/${txid}`
+      isTestnet ?
+        `https://chain.so/tx/LTCTEST/${txid}` :
+        `https://blockchair.com/litecoin/transaction/${txid}`
     ),
-    blockTime: 1000 * 10,
+    supportsEscrowTimeout: true,
+    blockTime: 1000 * 60 * 2.5,
+    externallyFundableOrders: true,
   },
   {
-    code: 'DOGE',
-    testnetCode: 'TDOGE',
-    qrCodeText: address => `doge:${address}`,
-    icon: 'imgs/cryptoIcons/DOGE-icon.png',
-    url: 'https://dogecoin.com',
+    code: 'ZEC',
+    testnetCode: 'TZEC',
+    feeBumpTransactionSize: 154,
+    qrCodeText: address => `zcash:${address}`,
+    icon: 'imgs/cryptoIcons/ZEC.png',
+    url: 'https://z.cash',
     getBlockChainAddressUrl: (address, isTestnet) => (
-      isTestnet ? '' :
-        `https://dogechain.info/address/${address}`
+      isTestnet ?
+        `https://explorer.testnet.z.cash/address/${address}` :
+        `https://explorer.zcha.in/accounts/${address}`
     ),
     getBlockChainTxUrl: (txid, isTestnet) => (
-      isTestnet ? '' :
-        `https://dogechain.info/tx/${txid}`
+      isTestnet ?
+        `https://explorer.testnet.z.cash/tx/${txid}` :
+        `https://explorer.zcha.in/transactions/${txid}`
     ),
-    blockTime: 1000,
-  },
-  {
-    code: 'RDD',
-    testnetCode: 'TRDD',
-    qrCodeText: address => `reddcoin:${address}`,
-    icon: 'imgs/cryptoIcons/RDD-icon.png',
-    url: 'https://reddcoin.com',
-    getBlockChainAddressUrl: (address, isTestnet) => (
-      isTestnet ? `https://test.reddcoin.com/address/${address}` :
-        `https://live.reddcoin.com/address/${address}`
-    ),
-    getBlockChainTxUrl: (txid, isTestnet) => (
-      isTestnet ? `https://test.reddcoin.com/tx/${txid}` :
-        `https://live.reddcoin.com/tx/${txid}`
-    ),
-    blockTime: 1000,
+    supportsEscrowTimeout: false,
+    blockTime: 1000 * 60 * 2.5,
+    externallyFundableOrders: true,
   },
 ];
 
-export default currencies;
+let _initialized = false;
+
+function enforceInitialized() {
+  if (!_initialized) {
+    throw new Error('This module must be initialized before proceeeding.');
+  }
+}
+
+let _indexedCurrencies;
+
+function getIndexedCurrencies() {
+  if (_indexedCurrencies) return _indexedCurrencies;
+
+  _indexedCurrencies = _currencies
+    .reduce((indexedObj, currency) => {
+      indexedObj[currency.code] = indexedObj[currency.testnetCode] = { ...currency };
+      return indexedObj;
+    }, {});
+
+  return _indexedCurrencies;
+}
+
+export function init(walletCurs, walletCurDef) {
+  if (!Array.isArray(walletCurs)) {
+    // the wallet curs as provided in the 'wallets' property of 'ob/config'
+    throw new Error('Please provide a list of wallet currencies.');
+  }
+
+  if (typeof walletCurDef !== 'object') {
+    // the wallet cur definition as provided in 'ob/wallet/currencies'
+    throw new Error('Please provide the wallet currencies definition as an object.');
+  }
+
+  // The final currencies list stored in this module will be a union of
+  // the walletCurs, the walletCur def and the initial currencies declared
+  // here in the _currencies variable. The currency must be declared in all
+  // three for it to remain.
+  const curs = [];
+
+  const indexedCurs = getIndexedCurrencies();
+  // We don't want the indexed curs cached since the definition is about to change
+  _indexedCurrencies = null;
+
+  Object
+    .keys(indexedCurs)
+    .forEach(curCode => {
+      const curDef = walletCurDef[curCode];
+
+      if (
+        curDef &&
+        walletCurs.includes(curDef.code)
+      ) {
+        const clientCur = indexedCurs[curDef.code];
+        const curData = {
+          ...clientCur,
+          coinDivisibility: curDef.divisibility,
+        };
+
+        curs.push(curData);
+      }
+    });
+
+  _currencies = curs;
+  _initialized = true;
+}
 
 function getTranslatedCurrencies(
   lang = app && app.localSettings &&
     app.localSettings.standardizedTranslatedLang() || 'en-US',
   sort = true
 ) {
+  enforceInitialized();
+
   if (!lang) {
     throw new Error('Please provide the language the translated currencies' +
       ' should be returned in.');
   }
 
-  let translated = currencies.map((currency) => ({
+  let translated = _currencies.map((currency) => ({
     ...currency,
     name: app.polyglot.t(`cryptoCurrencies.${currency.code}`),
   }));
@@ -183,21 +271,9 @@ const memoizedGetTranslatedCurrencies =
 
 export { memoizedGetTranslatedCurrencies as getTranslatedCurrencies };
 
-let _indexedCurrencies;
-
-function getIndexedCurrencies() {
-  if (_indexedCurrencies) return _indexedCurrencies;
-
-  _indexedCurrencies = currencies
-    .reduce((indexedObj, currency) => {
-      indexedObj[currency.code] = indexedObj[currency.testnetCode] = { ...currency };
-      return indexedObj;
-    }, {});
-
-  return _indexedCurrencies;
-}
-
 export function getCurrencyByCode(code) {
+  enforceInitialized();
+
   if (typeof code !== 'string') {
     throw new Error('Please provide a currency code as a string.');
   }
@@ -208,11 +284,13 @@ export function getCurrencyByCode(code) {
 let currenciesSortedByCode;
 
 export function getCurrenciesSortedByCode() {
+  enforceInitialized();
+
   if (currenciesSortedByCode) {
     return currenciesSortedByCode;
   }
 
-  currenciesSortedByCode = currencies.sort((a, b) => {
+  currenciesSortedByCode = _currencies.sort((a, b) => {
     if (a.code < b.code) return -1;
     if (a.code > b.code) return 1;
     return 0;
@@ -229,6 +307,8 @@ export function getCurrenciesSortedByCode() {
  * the only ones that should ever come as testnet codes.
  */
 export function ensureMainnetCode(cur) {
+  enforceInitialized();
+
   if (typeof cur !== 'string' || !cur.length) {
     throw new Error('Please provide a non-empty string.');
   }
@@ -237,41 +317,29 @@ export function ensureMainnetCode(cur) {
   return curObj ? curObj.code : cur;
 }
 
+export function getWalletCurs() {
+  return _currencies;
+}
+
 /**
- * Returns a list of the crypto currencies supported by the wallet.
+ * Returns a list of the wallet currency codes supported by the wallet.
  *
  * @param {object} [options={}] - Function options
- * @param {boolean} [options.clientSupported=true] - If true, it will only include
- *   currencies that are supported by both the client and the server. For the client to
- *   support the currency, it must have an entry in the walletCurrencies data file. Without
- *   that information, the client can't really support the currency since fundamental information
- *   (e.g baseUnits) aren't available. In most context, we will not want to show a currency if it
- *   is not client supported.
- * @param {Array} [options.serverCurs=app.serverConfig.wallets] - The list of currencies that
- *   are supported by the server's wallet. By default, this is obtained from the server config
- *   API. In almost all cases, the default should be used. It's mainly exposed as an option
- *   for unit testing.
+ * @param {boolean} [options.testnet=apps.serverConfig.testnet] - Indicates if the app
+ *   is running on testnet. If so, testnet codes will be returned.
  * @return {Array} An Array containing the currency codes that are supported by the wallet.
  */
 export function supportedWalletCurs(options = {}) {
   const opts = {
-    clientSupported: true,
-    serverCurs: app && app.serverConfig && app.serverConfig.wallets || [],
+    testnet: app && app.serverConfig && app.serverConfig.testnet || false,
     ...options,
   };
 
-  if (!Array.isArray(opts.serverCurs)) {
-    throw new Error('options.serverCurs must be provided as an Array.');
-  }
+  enforceInitialized();
 
-  return opts.serverCurs
-    .filter(cur =>
-      (
-        opts.clientSupported ?
-          !!getIndexedCurrencies()[cur] :
-          true
-      )
-    );
+  return getWalletCurs()
+    .filter(cur => (opts.testnet ? cur.testnetCode : true))
+    .map(cur => (opts.testnet ? cur.testnetCode : cur.code));
 }
 
 /**
@@ -282,6 +350,8 @@ export function supportedWalletCurs(options = {}) {
  * @return {boolean} A boolean indicating whether the given code is supported by the wallet.
  */
 export function isSupportedWalletCur(cur, options = {}) {
+  enforceInitialized();
+
   if (typeof cur !== 'string') {
     throw new Error('Please provide a cur as a string.');
   }
@@ -299,6 +369,8 @@ export function isSupportedWalletCur(cur, options = {}) {
  *   wallt curs.
  */
 export function onlySupportedWalletCurs(curs = [], options = {}) {
+  enforceInitialized();
+
   if (!Array.isArray(curs)) {
     throw new Error('Curs must be provided as an Array.');
   }
@@ -318,5 +390,6 @@ export function onlySupportedWalletCurs(curs = [], options = {}) {
  *   as wallet currencies.
  */
 export function anySupportedByWallet(...args) {
+  enforceInitialized();
   return !!(onlySupportedWalletCurs(...args).length);
 }
