@@ -1,16 +1,25 @@
 <% if (ob.unlockBtnVisible) { %>
   <div id="unlockBtn" class="confirmBox clrBr clrP clrT clrSh1">
-    <p><%= ob.polyT('settings.advancedTab.server.walletManager.decryptWalletPopupTitle') %></p>
-    <div class="padMdKids padStack pad0">
+    <div class="padStack pad0">
       <div class="flexRow">
-        <div class="col9">
+        <div class="col12">
+          <p class="unlockText"><%= ob.polyT('settings.advancedTab.server.walletManager.decryptWalletPopupTitle') %></p>
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="col8">
           <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="walletPassword" placeholder="<%= ob.polyT('wallet.walletPasswordPlaceholder') %>" data-field-standalone="string">
         </div>
-        <div class="col3">
+        <div class="col4">
           <%= ob.processingButton({
             className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-unlock',
             btnText: ob.polyT('settings.advancedTab.server.walletManager.btnUnlockWallet')
           }) %>
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="col12">
+          <p class="unlockHelper">Wallet is set to automatically lock in 15 minutes. <a href="#">Click here</a> to change this setting. </p>
         </div>
       </div>
     </div>

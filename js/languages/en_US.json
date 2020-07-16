@@ -659,7 +659,7 @@
           "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet.",
           "encryptExplanationHeader": "Funds stored in unsecured wallet can be easily stolen from you, it is highly recommended to secure wallet now.",
           "encryptExplanationLine": "Put your wallet password below.",
-          "seedBackupHeader": "Please put your seed words in a fields below.",
+          "seedBackupHeader": "Please drag and drop your seed words below into the correct order from the previous step.",
           "warningHeading": "Warning:",
           "warning1": "Never share your seed. Anyone with this seed can steal your funds.",
           "warning2": "Never type it on a website.",
@@ -667,10 +667,10 @@
           "warning4": "Do not lose your seed, or your funds will be permanently lost if your data is erased."
         },
         "walletManager":{
-          "decryptWalletPopupTitle": "Unlock wallet",
+          "decryptWalletPopupTitle": "Please enter password to unlock wallet:",
           "btnShowManager": "Show Manager",
           "btnLockWallet": "Lock wallet seed",
-          "btnUnlockWallet": "Unlock wallet",
+          "btnUnlockWallet": "Unlock",
           "introLine": "Here you can encrypt or decrypt your seed words.",
           "dialogSuccessTitle": "Wallet seed word status successfully changed.",
           "dialogSuccessMsg": "Seed words are now %{isLocked}.",
