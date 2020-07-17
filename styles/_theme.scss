@@ -1130,8 +1130,8 @@ border-radius: 0 0 0.5rem 0.5rem;
 
 
 
-.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-btnSendNav.active, .js-btnReceiveNav.active, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit .js-lock .js-unlock, .js-unlock {
-  border: none!important;
+.btn.js-save, .js-save.btnRadio, .js-save.btnTxt, .js-save.btnTxtOnly, .js-save.btnAsLink, .js-save.iconBtn, .js-save.iconBtnSm, .js-save.iconBtnTn, .js-save.btnHg, .js-purchaseBtn, .js-btnSend, .js-btnSendNav.active, .js-btnReceiveNav.active, .js-addAddress, .js-payBtn, .js-confirmPayConfirm, .js-deleteConfirmed, .js-getStarted, .js-searchBtn, .js-fulfillOrder, .js-refundConfirmed, .js-btnConfirmSend, .js-submit .js-lock .js-unlock {
+  border: none;
   background: #00d188;
   border-radius: 4rem;
   box-shadow: none;
@@ -2309,8 +2309,8 @@ div.headline {
 
 #unlockBtn {
   position: fixed;
-  width: 500px;
-  height: 120px;
+  width: 40%;
+  height: 20%;
 }
 
 #unlockBtn.confirmBox {
@@ -2318,6 +2318,7 @@ div.headline {
   right: 0;
   background:#121c29;
 }
+
 
 // time slider
 
@@ -2381,4 +2382,97 @@ div.headline {
   font-size:0.8rem;
   color:#777777;
   text-align:left;
+}
+
+.seed-instructions {
+  text-align:center;
+}
+.seed-item-container {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom:40px;
+  .seed-item {
+    text-align:center;
+  }
+}
+
+.seed-item-container {
+  margin-top:40px;
+  padding: 10px 0 10px 0;
+}
+.seed-target-container, .seed-item-container {
+  height:150px;
+}
+.seed-target {
+  display:block;
+  padding: 20px 10px 0px 10px;
+  position:relative;
+  // border-bottom:2px solid #0086f4;
+  button {
+    border:0;
+    position: relative;
+    z-index: 2;
+    width:100%;
+    height:20px;
+    padding:0;
+    background:0;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    &:focus {
+      outline:0;
+    }
+  }
+}
+
+.seed-item {
+  button, span {
+  font-weight:bold;
+  background: none;
+  border: 0;
+  color: white;
+  // width:100%;
+  text-align:center;
+  padding: 10px;
+  font-size:16px;
+  display:inline-block;
+  &:focus {
+    outline:0;
+  }
+}
+}
+
+.seed-target:after {
+  content:'';
+  display: block;
+  height: 2px;
+  background: #0086f4;
+  bottom:0;
+  left:0;
+  right:10px;
+  left:10px;
+  margin:0 auto;
+  position:absolute;
+}
+
+.seed-item-row, .seed-target-row {
+  margin:20px 0;
+  height:40px;
+}
+
+
+
+.onboarding-navigation {
+  .btn {
+    padding:0 40px;
+    &.js-navNext {
+      background: #00d188;
+      border-color:#00d188!important;
+      margin-left:10px;
+    }
+    &.js-navBack {
+      padding:0 40px 0 44px!important;
+    }
+  }
+
 }
