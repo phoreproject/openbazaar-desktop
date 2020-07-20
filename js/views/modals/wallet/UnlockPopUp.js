@@ -32,7 +32,8 @@ export default class extends baseView {
   }
 
   onUnlockClick() {
-    const password = this.$('#walletPassword').val();
+    const password = this.$('#walletPassword')
+      .val();
     const unlockTimeout = parseInt(app.profile.get('walletAutoLockTime') || '0', 10) * 60;
     getWallet()
       .unlockWallet(password, unlockTimeout, true)
@@ -54,22 +55,33 @@ export default class extends baseView {
     if (currentStr === '' && addValue === 0) {
       this.setState({
         timePeriodHelper: app.polyglot.t('wallet.manage.lockWalletIndefinitely'),
-        walletUnlockTimeout: addValue });
+        walletUnlockTimeout: addValue,
+      });
     } else {
       const newValue = parseInt(currentStr || '0', 10) + addValue;
-      const timePeriod = moment.duration(newValue * 1000).humanize();
+      const timePeriod = moment.duration(newValue * 1000)
+        .humanize();
       this.setState({
         timePeriodHelper:
           app.polyglot.t('wallet.manage.lockWalletForParticularTime', { timePeriod }),
-        walletUnlockTimeout: newValue });
+        walletUnlockTimeout: newValue,
+      });
     }
   }
 
   render() {
     const state = this.getState();
 
+    let lockTime = 0;
+    if (app.profile !== undefined) {
+      lockTime = app.profile.get('walletAutoLockTime');
+    }
+
     loadTemplate('modals/wallet/unlockPopUp.html', t => {
-      this.$el.html(t({ ...state }));
+      this.$el.html(t({
+        ...state,
+        lockTime,
+      }));
     });
 
     return super.render();

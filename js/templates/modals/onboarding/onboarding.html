@@ -121,12 +121,12 @@
         <p><%= ob.polyT('settings.advancedTab.server.walletSeed.introLine') %></p>
         <div class="seed-item-container border clrBr">
 
-          <% for (let i = 0; i < ob.shuffledSeedWords.length; i++) { %>
+          <% for (let i = 0; i < ob.seed.length; i++) { %>
             <% if (i%6 == 0) { %>
               <div class="seed-item-row flexRow">
             <% } %>
             <div class="seed-item col2">
-              <span><%= ob.shuffledSeedWords[i] %></span>
+              <span><%= ob.seed[i] %></span>
             </div>
             <% if ((i-5)%6 == 0) { %>
               </div>
@@ -148,12 +148,12 @@
         <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.explanationLine') %></h5>
         <p><%= ob.polyT('settings.advancedTab.server.walletSeed.seedBackupHeader') %></p>
       
-        <div class="seed-item-container border clrBr" id="js-seedBackupDraggableParent">
+        <div class="seed-item-container border clrBr">
           <% for (let i = 0; i < ob.shuffledSeedWords.length; i++) { %>
             <% if (i%6 == 0) { %>
               <div class="seed-item-row flexRow">
             <% } %>
-              <div class="seed-item col2">
+              <div class="seed-item col2" id="js-seedBackupDraggableParent_<%= i %>">
                 <button class="js-seedBackupDraggable" id="seedBackupDraggable_<%= i %>" draggable='true'><%= ob.shuffledSeedWords[i] %></button>
               </div>
             <% if ((i-5)%6 == 0) { %>
@@ -168,7 +168,6 @@
               <div class="seed-item-row flexRow">
             <% } %>
               <div class="clrBr clrSh2 js-seedBackupDroppable seed-target col2" id="seedBackupDroppable_<%= i %>">
-                <button class="clrP" id="seedBackupDroppableBtn_<%= i %>"></button>
               </div>
             <% if ((i-5)%6 == 0) { %>
               </div>

@@ -19,7 +19,13 @@
       </div>
       <div class="flexRow">
         <div class="col12">
-          <p class="unlockHelper">Wallet is set to automatically lock in 15 minutes. <a href="#">Click here</a> to change this setting. </p>
+          <p class="unlockHelper">
+            <% if (ob.lockTime === 0) { %>
+              <%= ob.polyT('wallet.manage.lockWalletIndefinitely', {'minutes': ob.lockTime}) %>
+            <% } else { %>
+              <%= ob.polyT('wallet.manage.unlockHelperPopUp', {'minutes': ob.lockTime}) %>
+            <% } %>
+          </p>
         </div>
       </div>
     </div>

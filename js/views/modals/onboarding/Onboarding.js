@@ -297,20 +297,29 @@ export default class extends BaseModal {
     const id = event
       .originalEvent
       .dataTransfer
-      .getData('text');
+      .getData('text'); // source event
     const draggableElementJQ = this.getCachedEl(`#${id}`);
-    const dropZoneBtnJQ = this.getCachedEl(`#${event.target.id}`);
-    const dropZoneJQ = this.getCachedEl(`#${event.target.id}`).parent();
-
-    if (dropZoneJQ.children().length > 1) {
-      // One span can contain only 1 word.
+    const dropZoneJQ = this.getCachedEl(`#${event.target.id}`); // target view.
+    if (dropZoneJQ.hasClass('js-seedBackupDraggable')) {
+      // Do not drop from draggable to draggable;
       return;
     }
-    dropZoneBtnJQ.addClass('hide');
-    dropZoneJQ[0].appendChild(draggableElementJQ[0]);
 
-    this.seedsWordsBackupOrder[parseInt(event.target.id.split('_')[1], 10)] =
-      draggableElementJQ.text();
+    if (dropZoneJQ.children().length >= 1) {
+      // One div can contain only 1 word.
+      return;
+    }
+    dropZoneJQ.append(draggableElementJQ);
+
+    // remove duplicates
+    const seedCnt = this.options.seed.split(' ').length;
+    for (let i = 0; i < seedCnt; i++) {
+      if (this.seedsWordsBackupOrder[i] === draggableElementJQ.text()) {
+        delete this.seedsWordsBackupOrder[i];
+      }
+    }
+    const targetId = parseInt(event.target.id.split('_')[1], 10);
+    this.seedsWordsBackupOrder[targetId] = draggableElementJQ.text();
 
     event
       .originalEvent
@@ -319,18 +328,23 @@ export default class extends BaseModal {
   }
 
   onDraggableClick(event) {
-    const draggableOriginalParentJQ = this.getCachedEl('#js-seedBackupDraggableParent');
+    const draggableId = event.target.id.split('_')[1];
+    const draggableOriginalParentJQ = this.getCachedEl(
+      `#js-seedBackupDraggableParent_${draggableId}`);
     if ($.contains(draggableOriginalParentJQ[0], event.target)) {
       // Draggable in original place, do nothing.
       return;
     }
 
-    delete this.seedsWordsBackupOrder[parseInt(event.target.id.split('_')[1], 10)];
+    const draggableElementJQ = this.getCachedEl(`#${event.target.id}`);
+    const seedCnt = this.options.seed.split(' ').length;
+    for (let i = 0; i < seedCnt; i++) {
+      if (this.seedsWordsBackupOrder[i] === draggableElementJQ.text()) {
+        delete this.seedsWordsBackupOrder[i];
+      }
+    }
 
-    const draggableNewParentJQ = this.getCachedEl(`#${event.target.id}`).parent();
-    draggableOriginalParentJQ[0].appendChild(event.target);
-    const hiddenButton = draggableNewParentJQ.children();
-    hiddenButton.removeClass('hide');
+    draggableOriginalParentJQ.append(event.target);
   }
 
   render() {
@@ -367,7 +381,7 @@ export default class extends BaseModal {
           settingsErrors: app.settings.validationError || {},
           countryList: this.countryList,
           currencyList: this.currencyList,
-          seed: this.options.seed,
+          seed: this.options.seed.split(' '),
           shuffledSeedWords: shuffled,
         }));
 

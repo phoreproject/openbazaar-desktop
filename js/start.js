@@ -274,6 +274,7 @@ function isOnboardingNeeded() {
     })
     .done(() => {
       onboardingNeededDeferred.resolve(false);
+      app.toolBar.render();
     })
     .fail(() => {
       const jqXhr = fetches.find(
