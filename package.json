@@ -1,7 +1,7 @@
 {
   "name": "marketplace-desktop",
   "productName": "Phore Marketplace Client",
-  "version": "2.4.0-dev5",
+  "version": "2.4.0-dev7",
   "serverVersionRequired": "2.4.0-dev5",
   "forceServerVersion": true,
   "apple_notarization": false,
