@@ -22,7 +22,7 @@ const version = app.getVersion();
 // We no longer support win32, but process.platform returns Windows 64 bit as win32.
 const plat = process.platform === 'win32' ? 'win64' : process.platform;
 
-const feedURL = `https://updates2.openbazaar.org:5001/update/${plat}/${version}`;
+const feedURL = `https://search.phore.io/update/${plat}/${version}`;
 
 global.serverLog = '';
 
