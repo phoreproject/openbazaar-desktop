@@ -120,7 +120,7 @@ describe('the Listing model', () => {
           {
             services: [
               {
-                price: 281649276
+                price: 281649276,
               },
             ],
           },
