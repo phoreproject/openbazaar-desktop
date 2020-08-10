@@ -240,7 +240,7 @@ export default class extends BaseModal {
 
   checkSeedBackup() {
     const correctSeed = this.options.seed.split(' ');
-    if (Object.keys(this.seedsWordsBackupOrder).length !== correctSeed.length) {
+    if (Object.entries(this.seedsWordsBackupOrder).length !== correctSeed.length) {
       openSimpleMessage(
         app.polyglot.t('onboarding.backupSeedScreen.seedBackupIncorrect'),
         app.polyglot.t('onboarding.backupSeedScreen.notAllSeedWordsAreSpecified')
@@ -311,13 +311,6 @@ export default class extends BaseModal {
     }
     dropZoneJQ.append(draggableElementJQ);
 
-    // remove duplicates
-    const seedCnt = this.options.seed.split(' ').length;
-    for (let i = 0; i < seedCnt; i++) {
-      if (this.seedsWordsBackupOrder[i] === draggableElementJQ.text()) {
-        delete this.seedsWordsBackupOrder[i];
-      }
-    }
     const targetId = parseInt(event.target.id.split('_')[1], 10);
     this.seedsWordsBackupOrder[targetId] = draggableElementJQ.text();
 
@@ -337,11 +330,10 @@ export default class extends BaseModal {
     }
 
     const draggableElementJQ = this.getCachedEl(`#${event.target.id}`);
-    const seedCnt = this.options.seed.split(' ').length;
-    for (let i = 0; i < seedCnt; i++) {
-      if (this.seedsWordsBackupOrder[i] === draggableElementJQ.text()) {
-        delete this.seedsWordsBackupOrder[i];
-      }
+    const currentDraggableParentJQ = draggableElementJQ.parent();
+    const currentDraggableParentId = currentDraggableParentJQ.attr('id').split('_')[1];
+    if (this.seedsWordsBackupOrder[currentDraggableParentId] === draggableElementJQ.text()) {
+      delete this.seedsWordsBackupOrder[currentDraggableParentId];
     }
 
     draggableOriginalParentJQ.append(event.target);

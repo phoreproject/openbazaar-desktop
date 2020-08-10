@@ -125,7 +125,7 @@
       <form class="padStack">
         <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.explanationLine') %></h5>
         <p><%= ob.polyT('settings.advancedTab.server.walletSeed.introLine') %></p>
-        <div class="seed-item-container border clrBr">
+        <div class="seed-item-container seed-item-container-<%= ob.shuffledSeedWords.length %> border clrBr">
 
           <% for (let i = 0; i < ob.seed.length; i++) { %>
             <% if (i%6 == 0) { %>
@@ -154,7 +154,7 @@
         <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.explanationLine') %></h5>
         <p><%= ob.polyT('settings.advancedTab.server.walletSeed.seedBackupHeader') %></p>
 
-        <div class="seed-item-container border clrBr">
+        <div class="seed-item-container seed-item-container-<%= ob.shuffledSeedWords.length %> border clrBr">
           <% for (let i = 0; i < ob.shuffledSeedWords.length; i++) { %>
             <% if (i%6 == 0) { %>
               <div class="seed-item-row flexRow">
@@ -168,7 +168,7 @@
           <% } %>
         </div>
 
-        <div class="seed-target-container">
+        <div class="seed-target-container-<%= ob.shuffledSeedWords.length %>">
           <% for (let i = 0; i < ob.shuffledSeedWords.length; i++) { %>
             <% if (i%6 == 0) { %>
               <div class="seed-item-row flexRow">
