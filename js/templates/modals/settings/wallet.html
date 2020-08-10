@@ -1,0 +1,62 @@
+<div class="contentBox padMd clrP clrBr clrSh3">
+  <div class="flexHCent">
+    <h2 class="h3 clrT"><%= ob.polyT('settings.walletTab.sectionName') %></h2>
+  </div>
+  <hr class="clrBr" />
+
+  <div class="contentBox padMd clrP clrBr clrSh3">
+    <div class="tabFormWrapper clrS">
+      <div class="js-serverContainer">
+        <form>
+          <h2 class="h4 clrT"><%= ob.polyT('settings.walletTab.autoLock.sectionName') %></h2>
+          <%= ob.polyT('settings.walletTab.autoLock.explanation') %>
+          <div class="timeSlider">
+            <input class="js-autoLockTimeInput" id="rangeInput" value="<%= ob.lockTime %>" type="range" min="0" max="720" oninput="amount.value=rangeInput.value" list="times"/>
+            <datalist id="times">
+              <option value="1" label="1 min">
+              <option value="5" label="5 min">
+              <option value="60" label="1 hr">
+              <option value="720" label="12 hrs">
+            </datalist>
+            <input id="amount" type="number" value="<%= ob.lockTime %>" min="0" max="720" oninput="rangeInput.value=amount.value" />
+          </div>
+        </form>
+        <hr class="clrBr" />
+        <form class="box padMdKids padStack clrP clrBr js-server">
+          <div class="flexRow gutterH js-backupWalletSection">
+            <div class="col3">
+              <label>
+                <%= ob.polyT('settings.advancedTab.server.backupWalletLbl') %>
+              </label>
+              <div class="clrT2 txSm">
+                <%= ob.polyT('settings.advancedTab.server.backupWalletHelper') %>
+              </div>
+            </div>
+            <div class="col9 js-walletSeedContainer">
+            </div>
+          </div>
+          <div class="flexRow gutterH js-manageWalletSecuritySection">
+            <div class="col3">
+              <label>
+                <%= ob.polyT('settings.advancedTab.server.lockOrUnlockWalletLbl') %>
+              </label>
+              <div class="clrT2 txSm">
+                <%= ob.polyT('settings.advancedTab.server.lockOrUnlockWalletHelper') %>
+              </div>
+            </div>
+            <div class="col9 js-walletManagement">
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr class="clrBr" />
+  <div class="flexHRight">
+    <%= ob.processingButton({
+    className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-save',
+    btnText: ob.polyT('settings.btnSave')
+    }) %>
+  </div>
+</div>

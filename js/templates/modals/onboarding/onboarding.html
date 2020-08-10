@@ -15,12 +15,27 @@
       <div class="flexExpand txB tx3">
         <div class="center"><%= ob.polyT('onboarding.infoScreen.heading') %></div>
       </div>
-      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 1, totalPages: 2 }) %></div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 1, totalPages: 5 }) %></div>
+    <% } else if (ob.screen === 'seed') { %>
+      <div class="flexExpand txB tx3">
+        <div class="center"><%= ob.polyT('onboarding.seedScreen.heading') %></div>
+      </div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 2, totalPages: 5 }) %></div>
+    <% } else if (ob.screen === 'backupSeed') { %>
+      <div class="flexExpand txB tx3">
+        <div class="center"><%= ob.polyT('onboarding.backupSeedScreen.heading') %></div>
+      </div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 3, totalPages: 5 }) %></div>
+    <% } else if (ob.screen === 'encrypt') { %>
+      <div class="flexExpand txB tx3">
+        <div class="center"><%= ob.polyT('onboarding.encryptScreen.heading') %></div>
+      </div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 4, totalPages: 5 }) %></div>
     <% } else if (ob.screen === 'tos') { %>
       <div class="flexExpand txB tx3">
         <div class="center"><%= ob.polyT('onboarding.tosScreen.heading') %></div>
       </div>
-      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 2, totalPages: 2 }) %></div>
+      <div class="clrT2 txB"><%= ob.polyT('onboarding.pageOfPage', { startPage: 5, totalPages: 5 }) %></div>
     <% } %>
   </div>
   <hr class="clrBr" />
@@ -106,6 +121,80 @@
           </select>
         </div>
       </form>
+    <% } else if (ob.screen === 'seed') { %>
+      <form class="padStack">
+        <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.explanationLine') %></h5>
+        <p><%= ob.polyT('settings.advancedTab.server.walletSeed.introLine') %></p>
+        <div class="seed-item-container border clrBr">
+
+          <% for (let i = 0; i < ob.seed.length; i++) { %>
+            <% if (i%6 == 0) { %>
+              <div class="seed-item-row flexRow">
+            <% } %>
+            <div class="seed-item col2">
+              <span><%= ob.seed[i] %></span>
+            </div>
+            <% if ((i-5)%6 == 0) { %>
+              </div>
+            <% } %>
+          <% } %>
+
+        </div>
+        <p><%= ob.polyT('settings.advancedTab.server.walletSeed.directionLine') %></p>
+        <p class="txB row"><%= ob.polyT('settings.advancedTab.server.walletSeed.warningHeading') %></p>
+        <ul class="seedWarnings">
+          <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning1') %></li>
+          <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning2') %></li>
+          <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning3') %></li>
+          <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning4') %></li>
+        </ul>
+      </form>
+    <% } else if (ob.screen === 'backupSeed') { %>
+      <form class="padStack">
+        <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.explanationLine') %></h5>
+        <p><%= ob.polyT('settings.advancedTab.server.walletSeed.seedBackupHeader') %></p>
+
+        <div class="seed-item-container border clrBr">
+          <% for (let i = 0; i < ob.shuffledSeedWords.length; i++) { %>
+            <% if (i%6 == 0) { %>
+              <div class="seed-item-row flexRow">
+            <% } %>
+              <div class="seed-item col2" id="js-seedBackupDraggableParent_<%= i %>">
+                <button class="js-seedBackupDraggable" id="seedBackupDraggable_<%= i %>" draggable='true'><%= ob.shuffledSeedWords[i] %></button>
+              </div>
+            <% if ((i-5)%6 == 0) { %>
+              </div>
+            <% } %>
+          <% } %>
+        </div>
+
+        <div class="seed-target-container">
+          <% for (let i = 0; i < ob.shuffledSeedWords.length; i++) { %>
+            <% if (i%6 == 0) { %>
+              <div class="seed-item-row flexRow">
+            <% } %>
+              <div class="clrBr clrSh2 js-seedBackupDroppable seed-target col2" id="seedBackupDroppable_<%= i %>">
+              </div>
+            <% if ((i-5)%6 == 0) { %>
+              </div>
+            <% } %>
+          <% } %>
+        </div>
+      </div>
+      </form>
+    <% } else if (ob.screen === 'encrypt') { %>
+      <form class="padStack">
+        <h5><%= ob.polyT('settings.advancedTab.server.walletSeed.encryptExplanationHeader') %></h5>
+        <p><%= ob.polyT('settings.advancedTab.server.walletSeed.encryptExplanationLine') %></p>
+        <div class="row padMd">
+          <% if (ob.passwordError) print(ob.formErrorTmpl({ errors: ob.passwordError })) %>
+          <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword" value="" placeholder="<%= ob.polyT('onboarding.encryptScreen.seedPassword') %>" data-field-standalone="string">
+        </div>
+        <div class="row padMd">
+          <% if (ob.passwordError) print(ob.formErrorTmpl({ errors: ob.passwordError })) %>
+          <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword2" value="" placeholder="<%= ob.polyT('onboarding.encryptScreen.repeatPassword') %>" data-field-standalone="string">
+        </div>
+      </form>
     <% } else if (ob.screen === 'tos') { %>
       <%
         // split the TOS on line breaks so that we could ouput in p elements
@@ -122,18 +211,27 @@
   </div>
   <% if (ob.screen !== 'intro') { %>
   <hr class="clrBr row" />
-  <div class="flexVCent">
+  <div class="flexVCent onboarding-navigation">
     <div class="flexExpand">
       <button class="btn clrP js-navBack">Back</button>
     </div>
     <div>
-      <% if (ob.screen !== 'tos') { %>
-        <button class="btn clrP js-navNext">Next</button>
-      <% } else { %>
+      <% if (ob.screen === 'tos') { %>
         <%= ob.processingButton({
           className: `btn clrP js-tosAgree ${ob.saveInProgress ? 'processing' : ''}`,
           btnText: 'I Agree'
         }) %>
+      <% } else if (ob.screen === 'encrypt' || ob.screen === 'backupSeed') { %>
+        <%= ob.processingButton({
+          className: `btn clrP js-navSkip`,
+          btnText: 'Skip'
+        }) %>
+        <%= ob.processingButton({
+          className: `btn clrP js-navNext ${ob.encryptionInProgress ? 'processing' : ''}`,
+          btnText: 'Next'
+        }) %>
+      <% } else { %>
+        <button class="btn clrP js-navNext">Next</button>
       <% } %>
     </div>
   </div>

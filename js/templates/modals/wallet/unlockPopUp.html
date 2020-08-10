@@ -1,0 +1,33 @@
+<% if (ob.unlockBtnVisible) { %>
+  <div id="unlockBtn" class="confirmBox clrBr clrP clrT clrSh1">
+    <div class="padStack pad0">
+      <div class="flexRow">
+        <div class="col12">
+          <p class="unlockText"><%= ob.polyT('settings.advancedTab.server.walletManager.decryptWalletPopupTitle') %></p>
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="col8">
+          <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="walletPassword" placeholder="<%= ob.polyT('wallet.walletPasswordPlaceholder') %>" data-field-standalone="string">
+        </div>
+        <div class="col4">
+          <%= ob.processingButton({
+            className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-unlock',
+            btnText: ob.polyT('settings.advancedTab.server.walletManager.btnUnlockWallet')
+          }) %>
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="col12">
+          <p class="unlockHelper">
+            <% if (ob.lockTime === 0) { %>
+              <%= ob.polyT('wallet.manage.lockWalletIndefinitely', {'minutes': ob.lockTime}) %>
+            <% } else { %>
+              <%= ob.polyT('wallet.manage.unlockHelperPopUp', {'minutes': ob.lockTime}) %>
+            <% } %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% } %>

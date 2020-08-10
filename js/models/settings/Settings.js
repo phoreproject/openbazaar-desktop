@@ -10,7 +10,7 @@ export default class extends BaseModel {
       paymentDataInQR: false,
       showNotifications: true,
       showNsfw: false,
-      localCurrency: 'PHR',
+      localCurrency: 'USD',
       country: 'UNITED_STATES',
       termsAndConditions: '',
       refundPolicy: '',

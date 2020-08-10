@@ -6,7 +6,11 @@
 <% } else { %>
   <p><%= ob.polyT('settings.advancedTab.server.walletSeed.introLine') %></p>
   <p class="pad border clrBr clrP"><%= ob.seed %></p>
-  <p><%= ob.polyT('settings.advancedTab.server.walletSeed.directionLine') %></p>
+  <% if (!ob.isEncrypted) { %>
+    <p><%= ob.polyT('settings.advancedTab.server.walletSeed.directionLine') %></p>
+  <% } else { %>
+    <p><%= ob.polyT('settings.advancedTab.server.walletSeed.encryptedSeed') %></p>
+  <% } %>
   <p class="txB row"><%= ob.polyT('settings.advancedTab.server.walletSeed.warningHeading') %></p>
   <ul class="seedWarnings">
     <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning1') %></li>
@@ -14,4 +18,8 @@
     <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning3') %></li>
     <li><%= ob.polyT('settings.advancedTab.server.walletSeed.warning4') %></li>
   </ul>
+  <%= ob.processingButton({
+    className: `btn clrP clrBr clrSh2 js-hideSeed ${ob.isFetching ? 'processing' : ''}`,
+    btnText: ob.polyT('settings.advancedTab.server.walletSeed.btnHideSeed'),
+  }) %>
 <% } %>

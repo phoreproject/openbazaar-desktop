@@ -22,6 +22,8 @@ import ReceiveMoney from './ReceiveMoney';
 import TransactionsVw from './transactions/Transactions';
 import ReloadTransactions from './ReloadTransactions';
 import CryptoTicker from '../../components/CryptoTicker';
+import { openSimpleMessage } from '../../modals/SimpleMessage';
+import * as moment from 'moment';
 
 export default class extends BaseModal {
   constructor(options = {}) {
@@ -54,7 +56,6 @@ export default class extends BaseModal {
     // If at this point the initialActiveCoin and consequently this.activeCoin
     // are null, it indicates that none of the wallet currencies are supported by
     // this client.
-
     const opts = {
       initialSendModeOn: app.walletBalances.get(initialActiveCoin) &&
         app.walletBalances.get(initialActiveCoin).get('confirmed') || false,
@@ -209,6 +210,10 @@ export default class extends BaseModal {
     return {
       'click .js-createListing': 'onClickCreateListing',
       'click .js-viewCryptoListings': 'onClickViewCryptoListings',
+      'click .js-unlock': 'onUnlockClick',
+      'click .js-lock': 'onLockClick',
+      'click .js-addTime': 'onAddTimeClick',
+      'change .js-walletUnlockTimeout': 'onTimePeriodChange',
       ...super.events(),
     };
   }
@@ -244,6 +249,59 @@ export default class extends BaseModal {
 
   onClickViewCryptoListings() {
     recordEvent('Wallet_ViewCryptoListings');
+  }
+
+  onUnlockClick() {
+    const password = this.$('#walletPassword').val();
+    const unlockTimeout = parseInt(app.profile.get('walletAutoLockTime') || '0', 10) * 60;
+    this.unlockWallet(password, unlockTimeout, true).done((data) => {
+      if (data.isLocked === 'false') {
+        openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
+          app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
+      }
+    }).fail(xhr => {
+      openSimpleMessage(app.polyglot.t('wallet.manage.unlockFailedDialogTitle'),
+        xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
+    });
+  }
+
+  onLockClick() {
+    this.lockWallet().done((data) => {
+      if (data.isLocked === 'false' && data.isEncrypted === 'false') {
+        openSimpleMessage(app.polyglot.t('wallet.manage.cannotLockUntilPassSetUp'),
+          app.polyglot.t('wallet.manage.lockWalletInSettingsFirst'));
+      } else if (data.isLocked !== 'true') {
+        openSimpleMessage(app.polyglot.t('wallet.manage.lockFailedDialogTitle'),
+          app.polyglot.t('wallet.manage.stateChangeFailedUnknownReason'));
+      }
+    }).fail(xhr => {
+      openSimpleMessage(app.polyglot.t('wallet.manage.lockFailedDialogTitle'),
+        xhr && xhr.responseJSON && xhr.responseJSON.reason || '');
+    });
+  }
+
+  onAddTimeClick(ev) {
+    const seconds = parseInt($(ev.currentTarget).data('seconds'), 10);
+    this.updateWalletTimoutAndHint(this.$('#unlockTimeout').val(), seconds);
+  }
+
+  onTimePeriodChange() {
+    this.updateWalletTimoutAndHint(this.$('#unlockTimeout').val(), 0);
+  }
+
+  updateWalletTimoutAndHint(currentStr, addValue) {
+    if (currentStr === '' && addValue === 0) {
+      this.setState({
+        timePeriodHelper: app.polyglot.t('wallet.manage.lockWalletIndefinitely'),
+        walletUnlockTimeout: addValue });
+    } else {
+      const newValue = parseInt(currentStr || '0', 10) + addValue;
+      const timePeriod = moment.duration(newValue * 1000).humanize();
+      this.setState({
+        timePeriodHelper:
+          app.polyglot.t('wallet.manage.lockWalletForParticularTime', { timePeriod }),
+        walletUnlockTimeout: newValue });
+    }
   }
 
   /**
@@ -318,6 +376,18 @@ export default class extends BaseModal {
 
   get sendReceivNavState() {
     return { sendModeOn: this.sendModeOn };
+  }
+
+  get isLocked() {
+    return this.getState().isLocked;
+  }
+
+  get timePeriodHelper() {
+    return this.getState().timePeriodHelper;
+  }
+
+  get walletUnlockTimeout() {
+    return this.getState().walletUnlockTimeout;
   }
 
   checkCoinType(coinType) {
@@ -399,6 +469,57 @@ export default class extends BaseModal {
     return fetch;
   }
 
+  unlockWallet(password, unlockTimestampInSeconds = 0, skipCrypt = true) {
+    const postUnlockDeferred = $.Deferred();
+
+    $.post({
+      url: app.getServerUrl('manage/unlockwallet'),
+      data: JSON.stringify({ password, skipCrypt, unlockTimestamp: unlockTimestampInSeconds }),
+      dataType: 'json',
+      contentType: 'application/json',
+    }).done((data) => {
+      if (data.isLocked === 'false') {
+        this.setState({ isLocked: false });
+        this.trigger('lockStatusChanged', false);
+        if (unlockTimestampInSeconds > 0) {
+          if (this.autoLockTimeout) {
+            clearInterval(this.autoLockTimeout);
+          }
+          this.autoLockTimeout = setTimeout(() => {
+            this.setState({ isLocked: true });
+            this.trigger('lockStatusChanged', true);
+          }, unlockTimestampInSeconds * 1000);
+        }
+      }
+      postUnlockDeferred.resolve(data);
+    }).fail(xhr => {
+      postUnlockDeferred.reject(xhr);
+    });
+
+    return postUnlockDeferred.promise();
+  }
+
+  lockWallet(password = '', skipCrypt = true) {
+    const postLockDeferred = $.Deferred();
+
+    $.post({
+      url: app.getServerUrl('manage/lockwallet'),
+      data: JSON.stringify({ password, skipCrypt }),
+      dataType: 'json',
+      contentType: 'application/json',
+    }).done((data) => {
+      if (data.isLocked === 'true') {
+        this.setState({ isLocked: true });
+        this.trigger('lockStatusChanged', true);
+      }
+      postLockDeferred.resolve(data);
+    }).fail(xhr => {
+      postLockDeferred.reject(xhr);
+    });
+
+    return postLockDeferred.promise();
+  }
+
   getCountAtFirstFetch(coinType = this.activeCoin) {
     this.checkCoinType(coinType);
 
@@ -428,10 +549,7 @@ export default class extends BaseModal {
     this.checkCoinType(coinType);
     const curCount = this.getCountAtFirstFetch(coinType);
 
-    this.setCountAtFirstFetch(
-      typeof curCount === 'number' ? curCount + 1 : 1,
-      coinType
-    );
+    this.setCountAtFirstFetch(typeof curCount === 'number' ? curCount + 1 : 1, coinType);
   }
 
   open(...args) {
@@ -564,6 +682,10 @@ export default class extends BaseModal {
               viewCryptoListingsUrl: this.viewCryptoListingsUrl,
             }),
             activeCoin: this.activeCoin,
+            isLocked: this.isLocked,
+            timePeriodHelper: this.timePeriodHelper ||
+              app.polyglot.t('wallet.manage.lockWalletIndefinitely'),
+            walletUnlockTimeout: this.walletUnlockTimeout || 0,
           }));
 
           super.render();

@@ -48,7 +48,7 @@ describe('the crypto currencies data module', () => {
       currencies.forEach(cur => {
         expect(typeof cur.feeBumpTransactionSize === 'undefined' ||
           (typeof cur.feeBumpTransactionSize === 'number' &&
-          cur.feeBumpTransactionSize > 0)).to.equal(true);
+            cur.feeBumpTransactionSize > 0)).to.equal(true);
       });
     });
 

@@ -109,6 +109,10 @@
     "connectMessaging": {
       "cancelLink": "cancel",
       "connectAttemptMsg": "Connecting to %{serverName}. %{cancelLink}"
+    },
+    "fetchSeed": {
+      "title": "Wallet seed words are encrypted",
+      "message": "Input seed password"
     }
   },
   "notifications": {
@@ -555,7 +559,34 @@
           "warning1": "シードは他人に見せてはいけません。このシードを盗まれると、資金が盗まれる可能性があります。",
           "warning2": "ウェブサイトなどへ入力してはいけません。",
           "warning3": "電子デバイスへ保管しないこと。",
-          "warning4": "シードを失った場合、データが消失した際資産を復元できなくなります。"
+          "warning4": "シードを失った場合、データが消失した際資産を復元できなくなります。",
+          "btnHideSeed": "Hide Seed",
+          "encryptedSeed": "Your seed words are in encrypted form. Encrypted form is not useful for backup purposes, only decrypted form can be used to restore your wallet."
+        },
+        "blockBestHash": "Best Hash: %{hash}",
+        "blockHashUnknown": "The best hash is not available for this currency.",
+        "blockHeight": "Latest Known Block Height: %{height}",
+        "blockHeightUnknown": "The block height is not available for this currency.",
+        "lockOrUnlockWalletLbl": "Lock / Unlock Wallet Seed",
+        "lockOrUnlockWalletHelper": "You are able to encrypt or decrypt your seed words here.",
+        "unableToFetchSeedStatus": "There was an error fetching your seed status",
+        "walletManager": {
+          "btnShowManager": "Show Manager",
+          "btnLockWallet": "Lock wallet seed",
+          "btnUnlockWallet": "Unlock wallet",
+          "introLine": "Here you can encrypt or decrypt your seed words.",
+          "dialogSuccessTitle": "Wallet seed word status successfully changed.",
+          "dialogSuccessMsg": "Seed words are now %{isLocked}.",
+          "dialogFailTitle": "Manager was not able to change seed status",
+          "dialogFailMsg": "Wallet status should be %{shouldBe} but is still %{is}",
+          "encrypted": "encrypted",
+          "decrypted": "decrypted",
+          "shortPassword": "Your password is too short",
+          "passwordLenNotify": "The password length should be at least 8 characters long",
+          "passwordsNotEqual": "Passwords are not equal",
+          "enterPassword": "Enter password",
+          "repeatPassword": "Repeat password",
+          "decryptWalletPopupTitle": "Unlock wallet"
         },
         "blockBestHash": "Best Hash: %{hash}",
         "blockHashUnknown": "The best hash is not available for this currency.",
@@ -1300,6 +1331,11 @@
     "tosScreen": {
       "heading": "利用規約",
       "tos": "Phore マーケットプレイス は暗号通貨を用いて匿名性を担保しつつ二者間の自由な物品の売買を可能にするネットワークです。悪意を持って情報収集を行う業者がいるかもしれませんので、お気を付けください。\n\nPhore マーケットプレイス のユーザーは居住区の法律に従い合法な物品のみを売買するようお願いいたします。Phore マーケットプレイス の開発者は非合法な利用・活動を認めず、その活動におけるいかなる損失に対しても負担いたしません。\n\nPhore マーケットプレイス 開発者コミュニティは自由な売買プラットフォームを提供するために開発を続けています。しかしプログラムにはバグがつきものです。そのようなプログラムの問題による金銭的損失に対しても、我々は負担いたしません。\n\nPhore マーケットプレイス は自由であり、全ての行動は自分のものであり、また責任も自分のものです。"
+    },
+    "encryptScreen": {
+      "heading": "Secure your seed words",
+      "seedPassword": "Seed password",
+      "repeatPassword": "Repeat password"
     }
   },
   "pageControls": {

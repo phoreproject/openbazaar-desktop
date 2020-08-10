@@ -1,0 +1,20 @@
+<div class="contentBox clrP clrBr clrSh3">
+  <div class="padMd">
+    <div class="<%= ob.titleClass %>">
+      <h1><%= ob.title %></h1>
+    </div>
+    <div class="flexRow">
+      <div class="col12 rowMd padMd">
+        <input type="password" class="clrBr clrSh2 js-seedPassword" name="name" id="seedPassword" value="" placeholder="<%= ob.message %>" data-field-standalone="string">
+      </div>
+    </div>
+    <div class="flexRow">
+      <div class="col12 rowMd padMd">
+        <%= ob.processingButton({
+          className: 'btn clrP clrBAttGrad clrBrDec1 clrTOnEmph js-unlock',
+          btnText: ob.polyT('settings.advancedTab.server.walletManager.btnUnlockWallet')
+        }) %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<section class="contentBox pad clrP clrBr clrSh3 sidebar">
+  <div class="js-unlockBtnPlaceholder"></div>
+</section>
+<div id="bottomToolBarContent" class="clrBr">
+  <div class="flexVCent box margLSm posR">
+    <a class="flexHRight">
+      <% if (ob.walletLocked) { %>
+        <i class="iconBtn ion-android-lock js-unlockWallet"></i>
+      <% } else { %>
+        <i class="iconBtn ion-android-unlock js-lockWallet"></i>
+      <% } %>
+      <div class=""></div>
+    </a>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import {
   app, BrowserWindow, ipcMain,
-  Menu, nativeImage, Tray, session, crashReporter,
+  Menu, Tray, session, crashReporter,
   autoUpdater, shell, dialog,
 } from 'electron';
 import homedir from 'homedir';
@@ -17,20 +17,16 @@ import { bindLocalServerEvent } from './js/utils/mainProcLocalServerEvents';
 let mainWindow;
 let trayMenu;
 let closeConfirmed = false;
-// const version = app.getVersion();
+const version = app.getVersion();
 
-// function isOSWin64() {
-//   return process.arch === 'x64' || process.env.hasOwnProperty('PROCESSOR_ARCHITEW6432');
-// }
+// We no longer support win32, but process.platform returns Windows 64 bit as win32.
+const plat = process.platform === 'win32' ? 'win64' : process.platform;
 
-// const plat = process.platform === 'win32' ?
-//  `${isOSWin64() ? 'win' : 'win32'}` : process.platform;
-
-// const feedURL = `https://hazel-server-imflzbzzpa.now.sh/update/${plat}/${version}`;
+const feedURL = `https://search.phore.io/update/${plat}/${version}`;
 
 global.serverLog = '';
 
-function handleStartupEvent() {
+const handleStartupEvent = function () {
   if (process.platform !== 'win32') {
     return false;
   }
@@ -79,7 +75,7 @@ function handleStartupEvent() {
   }
 
   return true;
-}
+};
 
 if (handleStartupEvent()) {
   console.log('Phore Marketplace started on Windows...');
@@ -385,17 +381,10 @@ function createWindow() {
   });
 
   // put logic here to set tray icon based on OS
-  // https://github.com/electron/electron/issues/7657#issuecomment-368236509
   let osTrayIcon = 'openbazaar-system-tray.png';
   if (process.platform === 'darwin') osTrayIcon = 'openbazaar-mac-system-tray.png';
-  const iconPath = path.join(__dirname, 'imgs', osTrayIcon);
-  let trayIcon = nativeImage.createFromPath(iconPath);
-  trayIcon = trayIcon.resize({
-    width: 16,
-    height: 16,
-  });
 
-  trayMenu = new Tray(trayIcon);
+  trayMenu = new Tray(`${__dirname}/imgs/${osTrayIcon}`);
 
   let trayTemplate = [];
 
@@ -559,6 +548,8 @@ function createWindow() {
     ipcMain.on('checkForUpdate', () => {
       checkForUpdates();
     });
+
+    autoUpdater.setFeedURL(feedURL);
   }
 
   mainWindow.webContents.on('dom-ready', () => {
