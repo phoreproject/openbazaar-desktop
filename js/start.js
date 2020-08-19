@@ -150,6 +150,21 @@ const fetchStartupData1Deferred = $.Deferred();
 let configFetch;
 let walletCurDefFetch;
 
+function getSeedWithStatus() {
+  const getSeed = $.Deferred();
+  $.get(app.getServerUrl('wallet/mnemonic'))
+    .done((...args) => {
+      getSeed.resolve(...args);
+    })
+    .fail(xhr => {
+      getSeed.reject();
+      console.error('The seed fetch failed. {0}'
+        .format(xhr && xhr.responseJSON && xhr.responseJSON.reason || ''));
+    });
+
+  return getSeed.promise();
+}
+
 function fetchWalletStatus() {
   function _fetchSeed(retryCnt) {
     $.get(app.getServerUrl('manage/iswalletlocked'))
