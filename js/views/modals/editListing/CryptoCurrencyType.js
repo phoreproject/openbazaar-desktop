@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import app from '../../../app';
 import '../../../lib/select2';
 import { supportedWalletCurs } from '../../../data/walletCurrencies';
@@ -293,14 +294,14 @@ export default class extends BaseView {
     this.$editListingCryptoPriceInput.prop('value', price);
     this.$editListingCryptoPriceInput2.prop('value', price2);
 
-    this.$editListingCryptoPriceHelper.html(polyT('editListing.fixRatePriceHelper',
+    this.$editListingCryptoPriceHelper.html(app.polyglot.t('editListing.fixRatePriceHelper',
       {
         fromCur: this.fromCur,
         rate: price,
         toCur: this.toCur,
       }));
 
-    this.$editListingCryptoPriceHelper2.html(polyT('editListing.fixRatePriceHelper2',
+    this.$editListingCryptoPriceHelper2.html(app.polyglot.t('editListing.fixRatePriceHelper2',
       {
         fromCur: this.toCur,
         rate: price2,
@@ -309,7 +310,7 @@ export default class extends BaseView {
   }
 
   setPriceError(priceField) {
-    priceField.html(polyT('itemModelErrors.provideNumericAmount'));
+    priceField.html(app.polyglot.t('itemModelErrors.provideNumericAmount'));
   }
 
   render() {
@@ -318,7 +319,8 @@ export default class extends BaseView {
     loadTemplate('modals/editListing/viewListingLinks.html', viewListingsT => {
       loadTemplate('modals/editListing/cryptoCurrencyType.html', t => {
         this.$el.html(t({
-          contractTypes: this.model.get('metadata').contractTypesVerbose,
+          contractTypes: this.model.get('metadata').get('contractType'),
+          priceTypes: this.model.get('metadata').get('format'),
           coinTypes: this.coinTypes,
           receiveCurs: this.receiveCurs,
           errors: this.model.validationError || {},
