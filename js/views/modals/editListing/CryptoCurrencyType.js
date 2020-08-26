@@ -7,6 +7,7 @@ import loadTemplate from '../../../utils/loadTemplate';
 import BaseView from '../../baseVw';
 import CryptoTradingPair from '../../components/CryptoTradingPair';
 import CryptoCurrencyTradeField from './CryptoCurrencyTradeField';
+import { convertAndFormatCurrency, formatCurrency } from '../../../utils/currency';
 
 export default class extends BaseView {
   constructor(options = {}) {
@@ -183,7 +184,7 @@ export default class extends BaseView {
       return;
     }
 
-    this.updatePriceFields(formatPrice(1.0 / Number(val), this.fromCur), val);
+    this.updatePriceFields(formatCurrency(1.0 / Number(val), this.fromCur), val);
   }
 
   onChangePrice2(event) {
@@ -193,7 +194,7 @@ export default class extends BaseView {
       return;
     }
 
-    this.updatePriceFields(val, formatPrice(1.0 / Number(val), this.toCur));
+    this.updatePriceFields(val, formatCurrency(1.0 / Number(val), this.toCur));
   }
 
   get defaultFromCur() {
@@ -275,13 +276,13 @@ export default class extends BaseView {
       minimumFractionDigits: 0,
       maximumFractionDigits: 8,
     }).replace(/[^0-9\.-]+/g, ''));
-    formattedFromCurAmount = formatPrice(formattedFromCurAmount, this.toCur);
+    formattedFromCurAmount = formatCurrency(formattedFromCurAmount, this.toCur);
 
     let formattedFromCurAmount2 = Number(convertAndFormatCurrency(1, this.toCur, this.fromCur, {
       minimumFractionDigits: 0,
       maximumFractionDigits: 8,
     }).replace(/[^0-9\.-]+/g, ''));
-    formattedFromCurAmount2 = formatPrice(formattedFromCurAmount2, this.fromCur);
+    formattedFromCurAmount2 = formatCurrency(formattedFromCurAmount2, this.fromCur);
 
     this.$editListingCryptoPriceInput.prop('placeholder', formattedFromCurAmount);
     this.$editListingCryptoPriceInput2.prop('placeholder', formattedFromCurAmount2);
@@ -319,8 +320,8 @@ export default class extends BaseView {
     loadTemplate('modals/editListing/viewListingLinks.html', viewListingsT => {
       loadTemplate('modals/editListing/cryptoCurrencyType.html', t => {
         this.$el.html(t({
-          contractTypes: this.model.get('metadata').get('contractType'),
-          priceTypes: this.model.get('metadata').get('format'),
+          contractTypes: this.model.get('metadata').contractTypesVerbose,
+          priceTypes: this.model.get('metadata').formatsVerbose,
           coinTypes: this.coinTypes,
           receiveCurs: this.receiveCurs,
           errors: this.model.validationError || {},
