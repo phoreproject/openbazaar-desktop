@@ -45,6 +45,16 @@ export default class extends BaseModel {
     ];
   }
 
+  get formatsVerbose() {
+    return this.formats
+      .map((formatType) => (
+        {
+          code: formatType,
+          name: app.polyglot.t(`priceTypes.${formatType}`),
+        }
+      ));
+  }
+
   set(key, val, options = {}) {
     // Handle both `"key", value` and `{key: value}` -style arguments.
     let attrs;
