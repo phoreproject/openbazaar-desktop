@@ -86,6 +86,8 @@ export default class extends BaseView {
       const selected = modelCur || curs[0].code;
 
       const currencies = [...curs];
+      this.toCur = selected;
+      this.updateDefaultCryptoFixPrice();
 
       if (
         modelCur &&
@@ -120,6 +122,10 @@ export default class extends BaseView {
       this.getCachedEl('.js-quantityCoinType')
         .text(selected);
     });
+
+    this.fromCur = this.options.getReceiveCur()
+      || (this.receiveCurs[0] && this.receiveCurs[0].code);
+    this.toCur = '';
 
     this.tradeField.render();
     this.cryptoTradingPair.render();
@@ -184,7 +190,8 @@ export default class extends BaseView {
       return;
     }
 
-    this.updatePriceFields(formatCurrency(1.0 / Number(val), this.fromCur), val);
+    this.updatePriceFields(formatCurrency(1.0 / Number(val), this.fromCur,
+      { includeCryptoCurIdentifier: false }), val);
   }
 
   onChangePrice2(event) {
@@ -194,7 +201,8 @@ export default class extends BaseView {
       return;
     }
 
-    this.updatePriceFields(val, formatCurrency(1.0 / Number(val), this.toCur));
+    this.updatePriceFields(val, formatCurrency(1.0 / Number(val), this.toCur,
+      { includeCryptoCurIdentifier: false }));
   }
 
   get defaultFromCur() {
@@ -276,13 +284,15 @@ export default class extends BaseView {
       minimumFractionDigits: 0,
       maximumFractionDigits: 8,
     }).replace(/[^0-9\.-]+/g, ''));
-    formattedFromCurAmount = formatCurrency(formattedFromCurAmount, this.toCur);
+    formattedFromCurAmount = formatCurrency(formattedFromCurAmount, this.toCur,
+      { includeCryptoCurIdentifier: false });
 
     let formattedFromCurAmount2 = Number(convertAndFormatCurrency(1, this.toCur, this.fromCur, {
       minimumFractionDigits: 0,
       maximumFractionDigits: 8,
     }).replace(/[^0-9\.-]+/g, ''));
-    formattedFromCurAmount2 = formatCurrency(formattedFromCurAmount2, this.fromCur);
+    formattedFromCurAmount2 = formatCurrency(formattedFromCurAmount2, this.fromCur,
+      { includeCryptoCurIdentifier: false });
 
     this.$editListingCryptoPriceInput.prop('placeholder', formattedFromCurAmount);
     this.$editListingCryptoPriceInput2.prop('placeholder', formattedFromCurAmount2);
