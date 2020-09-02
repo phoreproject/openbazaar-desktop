@@ -400,22 +400,26 @@ export default class extends BaseModel {
             'listings.');
         }
 
-        if (
-          item.priceModifier === '' ||
-          item.priceModifier === undefined ||
-          item.priceModifier === null
-        ) {
-          addError('item.priceModifier', app.polyglot.t('listingModelErrors.providePriceModifier'));
-        } else if (typeof item.priceModifier !== 'number') {
-          addError('item.priceModifier', app.polyglot.t('listingModelErrors.numericPriceModifier'));
-        } else if (
-          item.priceModifier < this.max.minPriceModifier ||
-          item.priceModifier > this.max.maxPriceModifier
-        ) {
-          addError('item.priceModifier', app.polyglot.t('listingModelErrors.priceModifierRange', {
-            min: this.max.minPriceModifier,
-            max: this.max.maxPriceModifier,
-          }));
+        if (metadata.format === 'MARKET_PRICE') {
+          if (
+            item.priceModifier === '' ||
+            item.priceModifier === undefined ||
+            item.priceModifier === null
+          ) {
+            addError('item.priceModifier',
+              app.polyglot.t('listingModelErrors.providePriceModifier'));
+          } else if (typeof item.priceModifier !== 'number') {
+            addError('item.priceModifier',
+              app.polyglot.t('listingModelErrors.numericPriceModifier'));
+          } else if (
+            item.priceModifier < this.max.minPriceModifier ||
+            item.priceModifier > this.max.maxPriceModifier
+          ) {
+            addError('item.priceModifier', app.polyglot.t('listingModelErrors.priceModifierRange', {
+              min: this.max.minPriceModifier,
+              max: this.max.maxPriceModifier,
+            }));
+          }
         }
 
         this.validateCurrencyAmount(

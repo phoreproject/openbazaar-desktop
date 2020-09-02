@@ -997,9 +997,11 @@ export default class extends BaseModal {
       if (format === 'MARKET_PRICE') {
         item.unset('price');
         formData.item.price = undefined;
-        metadata.set('priceModifier', formData.metadata.priceModifier);
+        item.unset('price2');
+        formData.item.price2 = undefined;
+        item.set('priceModifier', formData.metadata.priceModifier);
       } else {
-        metadata.set('priceModifier', 0);
+        item.set('priceModifier', 0);
         priceModifier = 0;
       }
 

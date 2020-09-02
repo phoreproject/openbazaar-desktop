@@ -88,17 +88,13 @@ export function renderCryptoPrice(options = {}) {
     throw new Error('Please provide a display currency code as a string.');
   }
 
-  if (typeof options.priceModifier !== 'number') {
-    throw new Error('Please provide a price modifier as a number.');
-  }
-
   if (typeof options.format !== 'string' ||
     (options.format !== 'FIXED_PRICE' && options.format !== 'MARKET_PRICE')) {
     throw new Error('Please provide valid listing format as a string.');
   }
 
-  if (typeof options.acceptedCurrencies === 'undefined') {
-    throw new Error('Please provide valid accepted currencies list.');
+  if (options.format === 'MARKET_PRICE' && typeof options.priceModifier !== 'number') {
+    throw new Error('Please provide a price modifier as a number.');
   }
 
   const opts = {
