@@ -140,8 +140,8 @@ export default class extends BaseView {
       'change #editListingCoinType': 'onChangeCoinType',
       'change #editListingCryptoReceive': 'onChangeReceiveCur',
       'change #editFormatType': 'onChangeFormatType',
-      'change input[name="item.price"]': 'onChangePrice',
-      'change input[name="item.price2"]': 'onChangePrice2',
+      'change input[name="item.bigPrice"]': 'onChangePrice',
+      'change input[name="item.bigPrice2"]': 'onChangePrice2',
     };
   }
 
