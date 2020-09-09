@@ -1044,7 +1044,7 @@
       "stateChangeFailedUnknownReason": "Unknown reason.",
       "lockFailedDialogTitle": "Lock wallet failed.",
       "cannotLockUntilPassSetUp": "Cannot lock wallet, because password is not set up.",
-      "lockWalletInSettingsFirst": "Go to the settings -> advanced -> lock wallet and lock wallet seed with password.",
+      "lockWalletInSettingsFirst": "Go to the settings -> wallet -> Show Manager and lock wallet seed with password.",
       "lockWalletIndefinitely": "Wallet will be locked after application restart. You can adjust this in wallet settings.",
       "unlockHelperPopUp": "Wallet is set to automatically lock in %{minutes} minutes. You can adjust this in wallet settings.",
       "lockWalletForParticularTime": "Wallet will be locked within around %{timePeriod}."
