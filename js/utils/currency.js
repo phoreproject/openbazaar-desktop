@@ -349,9 +349,9 @@ export function fetchExchangeRates(options = {}) {
   let coin;
 
   if (supportedCurs.length) {
-    coin = supportedCurs.includes('BTC') ||
-      supportedCurs.includes('TBTC') ?
-        'BTC' :
+    coin = supportedCurs.includes('PHR') ||
+      supportedCurs.includes('TPHR') ?
+        'PHR' :
         ensureMainnetCode(supportedCurs[0]);
   }
 
