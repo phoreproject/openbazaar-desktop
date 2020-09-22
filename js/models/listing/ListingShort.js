@@ -73,8 +73,8 @@ export default class extends BaseModel {
       if (parsedResponse.price.currencyCode !== '' &&
         typeof(parsedResponse.price.amount) !== 'string') {
         parsedResponse.price = {
-          amount: parsedResponse.price.amount,
-          currency: parsedResponse.price.currencyCode,
+          amount: parsedResponse.amount,
+          currency: parsedResponse.currency,
         };
       } else if (parsedResponse.bigPrice) {
         parsedResponse.price = {
