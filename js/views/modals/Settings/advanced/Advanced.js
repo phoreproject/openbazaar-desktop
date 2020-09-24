@@ -76,8 +76,7 @@ export default class extends baseVw {
       .fail(xhr => {
         openSimpleMessage(
           app.polyglot.t('settings.advancedTab.server.unableToFetchSeedTitle'),
-          xhr.responseJSON && xhr.responseJSON.reason || '',
-        );
+          xhr.responseJSON && xhr.responseJSON.reason || '');
       });
 
     return this.walletSeedFetch;
@@ -88,7 +87,8 @@ export default class extends baseVw {
 
     recordEvent('Settings_Advanced_ShowManager');
 
-    if (this.walletEncryptionStatusFetch && this.walletEncryptionStatusFetch.state() === 'pending') {
+    if (this.walletEncryptionStatusFetch &&
+      this.walletEncryptionStatusFetch.state() === 'pending') {
       return this.walletEncryptionStatusFetch;
     }
 
@@ -105,9 +105,9 @@ export default class extends baseVw {
       .fail(xhr => {
         openSimpleMessage(
           app.polyglot.t('settings.advancedTab.server.unableToFetchSeedStatus'),
-          xhr.responseJSON && xhr.responseJSON.reason || '',
-        );
+          xhr.responseJSON && xhr.responseJSON.reason || '');
       });
+    return this.walletEncryptionStatusFetch;
   }
 
   showConnectionManagement() {

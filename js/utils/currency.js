@@ -5,7 +5,7 @@ import bigNumber from 'bignumber.js';
 import {
   preciseRound,
   validateNumberType,
-  decimalPlaces, upToFixed,
+  decimalPlaces,
 } from './number';
 import { Events } from 'backbone';
 import { getCurrencyByCode } from '../data/currencies';
