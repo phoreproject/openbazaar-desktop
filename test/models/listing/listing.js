@@ -3,6 +3,8 @@ import { describe, it, before } from 'mocha';
 import bigNumber from 'bignumber.js';
 import app from '../../../js/app';
 import Listing from '../../../js/models/listing/Listing';
+import ShippingOptions from '../../../js/collections/listing/ShippingOptions.js';
+import Profile from '../../../js/models/profile/Profile';
 
 describe('the Listing model', () => {
   before(() => {
@@ -12,6 +14,11 @@ describe('the Listing model', () => {
     app.polyglot = {
       t: (str) => str,
     };
+
+    app.profile = new Profile({ refundPolicy: 'test refund policy',
+      termsAndConditions: 'test terms and conditions',
+      shippingOptions: new ShippingOptions(),
+    });
   });
 
   it('throws an error if you attempt to fetch a listing without a peerID set.', () => {

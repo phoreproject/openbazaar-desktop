@@ -712,14 +712,14 @@ describe('the currency utility module', () => {
         btcUnit: 'UBTC',
       }))
         .to
-        .equal('900,719.925474099294185 μBTC');
+        .equal('₿0.90071992547409929419');
 
       expect(cur.formatCurrency(5.12345, 'BTC', {
         ...cryptoOpts,
         btcUnit: 'UBTC',
       }))
         .to
-        .equal('5,123,450 μBTC');
+        .equal('₿5.12345');
 
       expect(cur.formatCurrency(`0.${strNumTooBig}94185`, 'BTC', {
         ...cryptoOpts,
@@ -727,14 +727,14 @@ describe('the currency utility module', () => {
         btcUnit: 'MBTC',
       }))
         .to
-        .equal('900.719925474099294185 mBTC');
+        .equal('₿0.90071992547409929419');
 
       expect(cur.formatCurrency(5.12345, 'BTC', {
         ...cryptoOpts,
         btcUnit: 'MBTC',
       }))
         .to
-        .equal('5,123.45 mBTC');
+        .equal('₿5.12345');
 
       expect(cur.formatCurrency(`0.${strNumTooBig}94185`, 'BTC', {
         ...cryptoOpts,
@@ -742,14 +742,14 @@ describe('the currency utility module', () => {
         btcUnit: 'SATOSHI',
       }))
         .to
-        .equal('90,071,992.5474099294185 sat');
+        .equal('₿0.90071992547409929419');
 
       expect(cur.formatCurrency(5.12345, 'BTC', {
         ...cryptoOpts,
         btcUnit: 'SATOSHI',
       }))
         .to
-        .equal('512,345,000 sat');
+        .equal('₿5.12345');
     });
   });
 
