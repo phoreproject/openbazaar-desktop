@@ -30,24 +30,20 @@ export default class extends baseVw {
     if (urlParts.length > 1 && isMultihash(urlParts[0])) {
       const supportedPages = ['store', 'home', 'followers', 'following'];
       const currentPage = urlParts[1];
-
       if (supportedPages.includes(currentPage)) {
-        const obDotCom = 'http://phore.io';
+        const obDotCom = 'https://marketplace.phore.io';
         const peerID = urlParts[0];
 
         if (currentPage === 'store') {
-          // app: '/peerID/store/' => web: '/store/peerID/'
-          viewOnWebState.url = `${obDotCom}/store/${peerID}`;
+          viewOnWebState.url = `${obDotCom}/listing/${peerID}/store`;
 
           if (urlParts.length === 3) {
             // app: '/peerID/store/slug' => web: '/store/peerID/slug'
             const slug = urlParts[2];
-            viewOnWebState.url = `${viewOnWebState.url}/${slug}`;
+            viewOnWebState.url = `${viewOnWebState.url}/store/${slug}`;
           }
         } else {
-          // app: '/peerID/(home|followers|following)' =>
-          // web: '/store/(home|followers|following)/peerID'
-          viewOnWebState.url = `${obDotCom}/store/${currentPage}/${peerID}`;
+          viewOnWebState.url = `${obDotCom}/listing/${peerID}/store/${currentPage}`;
         }
       }
     }

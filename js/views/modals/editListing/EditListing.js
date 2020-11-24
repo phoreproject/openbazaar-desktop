@@ -270,7 +270,7 @@ export default class extends BaseModal {
   onClickViewListingOnWeb() {
     const slug = this.model.get('slug');
     if (slug) {
-      openExternal(`http://phore.io/store/${app.profile.id}/${slug}`);
+      openExternal(`https://marketplace.phore.io/listing/${app.profile.id}/store/${slug}`);
     } else {
       throw new Error('There is no slug for this listing in order to navigate!');
     }
