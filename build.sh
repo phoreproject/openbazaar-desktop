@@ -152,6 +152,7 @@ case "$TRAVIS_OS_NAME" in
 
     if [[ $BINARY == 'win' ]]; then
 
+        brew install gd c-ares
         brew link --overwrite fontconfig gd gnutls jasper libgphoto2 libicns libtasn1 libusb libusb-compat little-cms2 nettle openssl sane-backends webp wine git-lfs gnu-tar dpkg xz
         brew link libgsf glib pcre
 
@@ -189,12 +190,12 @@ case "$TRAVIS_OS_NAME" in
         mv dist/win64/RELEASES dist/win64/RELEASES-x64
 
         #### CLIENT ONLY
-        echo 'Running Electron Packager...'
-        electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
-
-        echo 'Building Installer...'
-        grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
-        mv dist/win64/PhoreMarketplaceClientSetup.exe dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
+#        echo 'Running Electron Packager...'
+#        electron-packager . PhoreMarketplaceClient --asar --out=dist --protocol-name=PhoreMarketplace --ignore="PHORE_MARKETPLACE_TEMP" --win32metadata.ProductName="PhoreMarketplaceClient" --win32metadata.CompanyName="Phore" --win32metadata.FileDescription='Decentralized p2p marketplace' --win32metadata.OriginalFilename=PhoreMarketplaceClient.exe --protocol=pm --platform=win32 --arch=x64 --icon=imgs/openbazaar2.ico --electron-version=${ELECTRONVER} --overwrite
+#
+#        echo 'Building Installer...'
+#        grunt create-windows-installer --appname=PhoreMarketplaceClient --obversion=$PACKAGE_VERSION --appdir=dist/PhoreMarketplaceClient-win32-x64 --outdir=dist/win64
+#        mv dist/win64/PhoreMarketplaceClientSetup.exe dist/win64/PhoreMarketplaceClient-$PACKAGE_VERSION-Setup-64.exe
 
         echo 'Do not sign the installer'
     #    osslsigncode sign -t http://timestamp.digicert.com -h sha1 -key .travis/phore.keyfile -pass "$PHORE_SECRET" -certs .travis/phore.cert.spc -in dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe -out dist/win64/PhoreMarketplace-$PACKAGE_VERSION-Setup-64.exe
