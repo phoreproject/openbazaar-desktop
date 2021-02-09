@@ -115,6 +115,26 @@ const currencies = [
     blockTime: 1000 * 60 * 10,
   },
   {
+    code: 'ETH',
+    testnetCode: 'TETH',
+    qrCodeText: address => `ethereum:${address}`,
+    icon: 'imgs/cryptoIcons/ETH.png',
+    url: 'https://ethereum.org/',
+    getBlockChainAddressUrl: (address, isTestnet) => (
+      isTestnet ?
+        `https://rinkeby.etherscan.io/address/${address}` :
+        `https://blockchair.com/ethereum/address/${address}`
+    ),
+    getBlockChainTxUrl: (txid, isTestnet) => (
+      isTestnet ?
+        `https://rinkeby.etherscan.io/tx/${txid}` :
+        `https://blockchair.com/ethereum/transaction/${txid}`
+    ),
+    supportsEscrowTimeout: true,
+    blockTime: 1000 * 10,
+    externallyFundableOrders: false,
+  },
+  {
     code: 'LTC',
     testnetCode: 'TLTC',
     baseUnit: 100000000,
