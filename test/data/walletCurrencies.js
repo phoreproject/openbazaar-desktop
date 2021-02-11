@@ -31,19 +31,6 @@ describe('the crypto currencies data module', () => {
       });
     });
 
-    it('that requires the baseUnit to be a number > 0', () => {
-      currencies.forEach(cur => {
-        expect(typeof cur.baseUnit === 'number' && cur.baseUnit > 0).to.equal(true);
-      });
-    });
-
-    it('that requires the averageModeratedTransactionSize to be a number > 0', () => {
-      currencies.forEach(cur => {
-        expect(typeof cur.averageModeratedTransactionSize === 'number' &&
-          cur.averageModeratedTransactionSize > 0).to.equal(true);
-      });
-    });
-
     it('that requires the feeBumpTransactionSize to be undefined or a number > 0', () => {
       currencies.forEach(cur => {
         expect(typeof cur.feeBumpTransactionSize === 'undefined' ||

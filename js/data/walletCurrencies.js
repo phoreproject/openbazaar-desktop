@@ -42,6 +42,7 @@ const currencies = [
     },
     supportsEscrowTimeout: false,
     blockTime: 1000 * 60,
+    externallyFundableOrders: true,
   },
   {
     code: 'BTC',
@@ -83,6 +84,7 @@ const currencies = [
     },
     supportsEscrowTimeout: true,
     blockTime: 1000 * 60 * 10,
+    externallyFundableOrders: true,
   },
   {
     code: 'BCH',
@@ -113,6 +115,7 @@ const currencies = [
     ),
     supportsEscrowTimeout: true,
     blockTime: 1000 * 60 * 10,
+    externallyFundableOrders: true,
   },
   {
     code: 'ETH',
@@ -155,6 +158,7 @@ const currencies = [
     ),
     supportsEscrowTimeout: true,
     blockTime: 1000 * 60 * 2.5,
+    externallyFundableOrders: true,
   },
   {
     code: 'ZEC',
@@ -177,6 +181,7 @@ const currencies = [
     ),
     supportsEscrowTimeout: false,
     blockTime: 1000 * 60 * 2.5,
+    externallyFundableOrders: true,
   },
   {
     code: 'RDD',
@@ -196,7 +201,7 @@ const currencies = [
     ),
     supportsEscrowTimeout: false,
     blockTime: 1000 * 60,
-    externallyFundableOrders: false,
+    externallyFundableOrders: true,
   },
 ];
 
